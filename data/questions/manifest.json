@@ -1,0 +1,14 @@
+{
+  "files": [
+    "e1-vocabulary.json",
+    "e2-retrieval-evidence.json",
+    "e3-inference.json",
+    "e4-character.json",
+    "e5-summary-purpose.json",
+    "m1-word-problems-data.json",
+    "m2-fractions-probability.json",
+    "m3-percentages.json",
+    "m4-time-timetables.json",
+    "m5-measurement.json"
+  ]
+}

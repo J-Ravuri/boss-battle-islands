@@ -1,0 +1,127 @@
+{
+  "sectionId": "E5",
+  "mode": "replace",
+  "title": "Main Idea, Summary and Paragraph Purpose",
+  "questions": [
+    {
+      "id": "E5-Q1",
+      "question": "For many years, otters were rarely seen along Britain's rivers because pollution damaged their habitats and reduced the number of fish. Cleaner water and conservation projects helped them return, but roads, litter and habitat damage still threaten them. What is the main idea?",
+      "options": [
+        "Otters are dangerous animals that should be avoided.",
+        "Otter numbers have recovered, but they still need protection.",
+        "Britain's rivers contain fewer fish than ever before.",
+        "Conservationists want to move otters away from rivers."
+      ],
+      "answer": "Otter numbers have recovered, but they still need protection.",
+      "explanation": "The passage explains both the otters' recovery and the threats that remain."
+    },
+    {
+      "id": "E5-Q2",
+      "question": "Which is the best summary of the first paragraph about otters?",
+      "options": [
+        "Otters disappeared because rivers were too cold.",
+        "Otters became rare, but cleaner rivers helped them return.",
+        "Otters learned to live without fish.",
+        "Conservationists built roads beside rivers."
+      ],
+      "answer": "Otters became rare, but cleaner rivers helped them return.",
+      "explanation": "This includes the paragraph's two main points: decline and recovery."
+    },
+    {
+      "id": "E5-Q3",
+      "question": "What is the purpose of the second paragraph about otters?",
+      "options": [
+        "To explain how otters catch fish",
+        "To describe the appearance of an otter",
+        "To show that the recovery is encouraging but not complete",
+        "To prove that otters no longer face any danger"
+      ],
+      "answer": "To show that the recovery is encouraging but not complete",
+      "explanation": "The paragraph says otters have returned but still face threats."
+    },
+    {
+      "id": "E5-Q4",
+      "question": "Pupils and adults transformed a weed-filled patch of school land into a garden with vegetables, flowers and a pond. Which title best suits the whole passage?",
+      "options": [
+        "The Most Expensive School Project",
+        "From Wasteland to Wildlife Garden",
+        "Why Vegetables Are Difficult to Grow",
+        "A Guide to Building a Large Pond"
+      ],
+      "answer": "From Wasteland to Wildlife Garden",
+      "explanation": "The title captures the change from an untidy area into a useful garden that supports wildlife."
+    },
+    {
+      "id": "E5-Q5",
+      "question": "Which sentence best summarises the whole school garden passage?",
+      "options": [
+        "Pupils and adults worked together to transform unused land into a useful school garden.",
+        "The pupils planted tomatoes because they disliked flowers.",
+        "Local businesses wanted to take control of the school grounds.",
+        "The garden is used only by the gardening club."
+      ],
+      "answer": "Pupils and adults worked together to transform unused land into a useful school garden.",
+      "explanation": "This sentence includes the main people, action and result."
+    },
+    {
+      "id": "E5-Q6",
+      "question": "Why does the writer mention butterflies, bees and birds in the school garden passage?",
+      "options": [
+        "To show that the garden has also benefited wildlife",
+        "To explain why children are no longer allowed outside",
+        "To prove that the vegetables have failed to grow",
+        "To suggest that the pond should be removed"
+      ],
+      "answer": "To show that the garden has also benefited wildlife",
+      "explanation": "The animals are evidence that the garden has created a better habitat."
+    },
+    {
+      "id": "E5-Q7",
+      "question": "Mr Iqbal spends hours carefully repairing watches that others have declared impossible to fix. What is the passage mainly about?",
+      "options": [
+        "Why clocks are becoming less popular",
+        "A careful and highly skilled clock repairer",
+        "A customer who refuses to pay for a watch",
+        "How to build a new workshop"
+      ],
+      "answer": "A careful and highly skilled clock repairer",
+      "explanation": "The passage focuses on Mr Iqbal's skill, patience and careful work."
+    },
+    {
+      "id": "E5-Q8",
+      "question": "What is the main purpose of the second paragraph about Mr Iqbal?",
+      "options": [
+        "To show Mr Iqbal's patience and thoroughness",
+        "To explain why Mr Iqbal dislikes his customers",
+        "To describe the outside of the workshop",
+        "To show that Mr Iqbal repairs watches quickly"
+      ],
+      "answer": "To show Mr Iqbal's patience and thoroughness",
+      "explanation": "The paragraph describes how carefully he examines, cleans and tests every watch."
+    },
+    {
+      "id": "E5-Q9",
+      "question": "A group of walkers became trapped in thick fog. A mountain rescue team found them and guided them safely down. Which is the best summary?",
+      "options": [
+        "Walkers ignored a rescue team and continued climbing.",
+        "A rescue team found and safely guided walkers lost in fog.",
+        "A mountain path was closed permanently because of rain.",
+        "Emergency workers built a stone wall on a mountain."
+      ],
+      "answer": "A rescue team found and safely guided walkers lost in fog.",
+      "explanation": "This includes the problem, the rescue and the safe outcome."
+    },
+    {
+      "id": "E5-Q10",
+      "question": "Which detail is least important in a brief summary of the mountain rescue passage?",
+      "options": [
+        "The walkers became trapped in thick fog.",
+        "They contacted the emergency services.",
+        "The rescue team found and guided them to safety.",
+        "The walkers waited beside a stone wall."
+      ],
+      "answer": "The walkers waited beside a stone wall.",
+      "explanation": "The stone wall is a small detail and is not needed to explain the main event."
+    }
+  ]
+}

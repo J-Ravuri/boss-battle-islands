@@ -544,184 +544,74 @@
 
 
   // ================================================================
-  //  DATA LAYER — EXACT QUESTIONS FROM JSON
-  //  Paste Batch 2 sections into the "sections" array below.
-  //  No other code needs changing to add new islands.
+  //  DATA LAYER — BUILT-IN FALLBACK QUESTIONS
+  //  Add new question packs in data/questions/ instead of editing this block.
+  //  See data/questions/README.md for the drop-in JSON format.
   // ================================================================
   const GAME_DATA = {
-    status: "partial",
-    completedSections: 10,
-    totalPlannedSections: 20,
-    sections: [
+    "status": "partial",
+    "completedSections": 10,
+    "totalPlannedSections": 20,
+    "sections": [
       {
         "sectionId": "E1",
         "subject": "English",
         "title": "Vocabulary: Synonyms, Antonyms and Unfamiliar Phrases in Context",
-        "questions": [
-          {"id":"E1-Q1","question":"Maya was reluctant to enter the dark cave. What does reluctant mean?","options":["Unwilling","Excited","Careless","Noisy"],"answer":"Unwilling","explanation":"Reluctant means you do not really want to do something."},
-          {"id":"E1-Q2","question":"During the drought, clean water became scarce. Which word is the opposite of scarce?","options":["Hidden","Abundant","Costly","Dirty"],"answer":"Abundant","explanation":"Scarce means there is very little of something. Abundant means there is plenty."},
-          {"id":"E1-Q3","question":"The climbers crossed a precarious bridge above the gorge. What does precarious mean?","options":["Comfortable","Colourful","Dangerous and unstable","Newly built"],"answer":"Dangerous and unstable","explanation":"Precarious describes something unsafe or likely to go wrong."},
-          {"id":"E1-Q4","question":"Leo was so engrossed in his book that he did not hear the bell. What does engrossed mean?","options":["Completely absorbed","Deeply annoyed","Very tired","Slightly confused"],"answer":"Completely absorbed","explanation":"Engrossed means giving something all your attention."},
-          {"id":"E1-Q5","question":"Her apology sounded sincere. Which word has the closest meaning to sincere?","options":["Polite","Genuine","Quiet","Brief"],"answer":"Genuine","explanation":"Sincere means honest and truly meant, so genuine is the closest match."},
-          {"id":"E1-Q6","question":"When both paths disappeared in the fog, Arun was at a loss. What does at a loss mean?","options":["Unable to find his money","Ready to continue","Unsure what to do","Certain of the route"],"answer":"Unsure what to do","explanation":"To be at a loss means to feel puzzled and not know what to do next."},
-          {"id":"E1-Q7","question":"The engineer said the plan was feasible. What does feasible mean?","options":["Possible","Expensive","Unfair","Temporary"],"answer":"Possible","explanation":"Feasible means something can realistically be done."},
-          {"id":"E1-Q8","question":"After the final whistle, the crowd dispersed. What does dispersed mean?","options":["Cheered loudly","Moved apart and left","Gathered together","Became silent"],"answer":"Moved apart and left","explanation":"Dispersed means spread out or moved away in different directions."},
-          {"id":"E1-Q9","question":"The stray dog became hostile when the man approached. What does hostile mean?","options":["Playful","Unfriendly and aggressive","Sleepy","Hungry"],"answer":"Unfriendly and aggressive","explanation":"Hostile means unfriendly and possibly ready to attack."},
-          {"id":"E1-Q10","question":"The instructions were ambiguous, so different pupils understood them differently. What does ambiguous mean?","options":["Very detailed","Completely false","Unclear or open to more than one meaning","Easy to remember"],"answer":"Unclear or open to more than one meaning","explanation":"Ambiguous language is unclear because it can be understood in more than one way."}
-        ]
+        "questions": []
       },
       {
         "sectionId": "E2",
         "subject": "English",
         "title": "Direct Retrieval, Accurate Paraphrasing and Evidence Checking",
-        "questions": [
-          {"id":"E2-Q1","question":"The Arctic tern travels from the Arctic to the Antarctic and back each year. What is remarkable about this bird?","options":["It cannot fly over water.","It makes an extremely long yearly journey.","It lives underground in winter.","It eats only plants."],"answer":"It makes an extremely long yearly journey.","explanation":"The passage directly says that the tern travels between the Arctic and Antarctic each year."},
-          {"id":"E2-Q2","question":"When hunting, the Arctic tern hovers above the sea before diving towards a fish. What does it do immediately before it dives?","options":["It rests on the shore.","It swims below the surface.","It hovers above the water.","It returns to its nest."],"answer":"It hovers above the water.","explanation":"The order is clear: the bird hovers first and then dives."},
-          {"id":"E2-Q3","question":"The terns lay their eggs in simple hollows in the ground. Which phrase best paraphrases simple hollows?","options":["Deep underground tunnels","Shallow dips in the ground","Nests high in trees","Rocky caves beside the sea"],"answer":"Shallow dips in the ground","explanation":"A hollow is a dip or lowered area, and simple suggests it is not a complicated nest."},
-          {"id":"E2-Q4","question":"Which statement is supported by the information about Arctic terns?","options":["They remain in one region throughout the year.","They spend parts of the year near both polar regions.","They build large nests from branches.","They catch fish by walking through shallow water."],"answer":"They spend parts of the year near both polar regions.","explanation":"Their yearly journey takes them between the Arctic and Antarctic, so they spend time near both poles."},
-          {"id":"E2-Q5","question":"At the adventure centre, pupils must be at least eight years old to use the climbing wall. Which pupil may use it?","options":["A pupil aged seven","A pupil aged nine","A pupil aged six","A pupil aged five"],"answer":"A pupil aged nine","explanation":"Nine is above the minimum age of eight."},
-          {"id":"E2-Q6","question":"The adventure centre supplies helmets, but visitors must bring their own lunch. What does the centre provide?","options":["Lunch","Helmets","Walking boots","Waterproof coats"],"answer":"Helmets","explanation":"The passage directly states that helmets are supplied."},
-          {"id":"E2-Q7","question":"If heavy rain prevents outdoor activities, sessions are moved into the indoor hall. What happens when the weather is unsuitable?","options":["The centre closes for the day.","Visitors receive their money back.","The activities continue indoors.","Everyone goes home immediately."],"answer":"The activities continue indoors.","explanation":"The session is moved to the indoor hall rather than cancelled."},
-          {"id":"E2-Q8","question":"Noah found a wallet beside the bus stop and handed it to the library receptionist. Where did he take the wallet?","options":["To the police station","To the bus driver","To the library reception desk","To his house"],"answer":"To the library reception desk","explanation":"The passage says he gave it to the library receptionist."},
-          {"id":"E2-Q9","question":"The receptionist used a card inside the wallet to contact its owner. How did she identify the owner?","options":["A shop receipt","A card inside the wallet","A note from Noah","A bus ticket"],"answer":"A card inside the wallet","explanation":"The card contained the information needed to identify and contact the owner."},
-          {"id":"E2-Q10","question":"The owner collected the wallet after lunch and thanked Noah. Which statement is definitely true?","options":["Noah kept the money inside.","The wallet was returned to its owner.","The receptionist took the wallet home.","The owner found it before Noah did."],"answer":"The wallet was returned to its owner.","explanation":"The passage directly says the owner collected the wallet."}
-        ]
+        "questions": []
       },
       {
         "sectionId": "E3",
         "subject": "English",
         "title": "Factual and Descriptive Inference",
-        "questions": [
-          {"id":"E3-Q1","question":"A fennec fox has pale, sandy fur. Why is this useful in the desert?","options":["It makes the fox easier for prey to see.","It keeps the fox wet during the day.","It reflects sunlight and helps the fox blend into the sand.","It allows the fox to breathe underground."],"answer":"It reflects sunlight and helps the fox blend into the sand.","explanation":"Pale fur can reflect some sunlight and also camouflage the fox against sandy ground."},
-          {"id":"E3-Q2","question":"The fennec fox has very large ears containing many blood vessels. What can we infer the ears help it do?","options":["Release body heat","Dig deep tunnels","Store water","Climb rocks"],"answer":"Release body heat","explanation":"Blood flowing through the large ears can lose heat to the surrounding air."},
-          {"id":"E3-Q3","question":"Thick fur covers the bottoms of a fennec fox's feet. What is the most likely reason?","options":["To protect its feet from hot sand","To make it swim faster","To help it hold food","To keep its tracks visible"],"answer":"To protect its feet from hot sand","explanation":"The thick fur acts like a protective layer between the fox's feet and the hot ground."},
-          {"id":"E3-Q4","question":"The lighthouse windows were made from unusually thick glass. What is the best inference?","options":["The keeper wanted the rooms to be dark.","The glass needed to withstand strong wind and sea spray.","The lighthouse had no lamps.","The windows were never opened because of insects."],"answer":"The glass needed to withstand strong wind and sea spray.","explanation":"A lighthouse in an exposed coastal place needs strong windows to survive rough weather."},
-          {"id":"E3-Q5","question":"Before the storm arrived, the keeper checked the lamp twice and secured every door. What does this suggest?","options":["He planned to leave the lighthouse.","He had forgotten how the lamp worked.","He expected dangerous weather and was preparing carefully.","He wanted to welcome visitors."],"answer":"He expected dangerous weather and was preparing carefully.","explanation":"Checking equipment and securing doors are sensible preparations for a storm."},
-          {"id":"E3-Q6","question":"Waves repeatedly struck the base of the lighthouse, and gulls struggled to fly past it. What can we infer about its position?","options":["It stood in a sheltered forest.","It was built in the middle of a town.","It was in a very exposed coastal location.","It was surrounded by farmland."],"answer":"It was in a very exposed coastal location.","explanation":"Strong waves and wind show that the lighthouse stood in an exposed place by the sea."},
-          {"id":"E3-Q7","question":"The iron railings around the lighthouse were streaked with rust. What does this most strongly suggest?","options":["They had been exposed to salty, wet air.","They had recently been painted.","They were made from wood.","They were kept indoors."],"answer":"They had been exposed to salty, wet air.","explanation":"Metal rusts when it is exposed to moisture, and salty sea air speeds up the process."},
-          {"id":"E3-Q8","question":"After days of rain, branches and rubbish were trapped against the river bridge. What can we infer?","options":["The river had completely dried up.","The current had carried debris downstream.","People had built a new footpath.","The bridge had been moved upstream."],"answer":"The current had carried debris downstream.","explanation":"Flowing floodwater can carry branches and rubbish until they become trapped against a bridge."},
-          {"id":"E3-Q9","question":"Farmers moved their animals to higher fields while the river continued to rise. Why did they do this?","options":["The higher fields had better grass.","They were protecting the animals from floodwater.","They wanted the animals closer to the village.","The lower fields were being planted with trees."],"answer":"They were protecting the animals from floodwater.","explanation":"Higher ground is safer when a river is rising and may overflow."},
-          {"id":"E3-Q10","question":"When the water finally fell, a line of mud remained across the road. What is the best inference?","options":["The river had previously overflowed across the road.","A lorry had delivered soil.","The road had never been wet.","Workers had painted a line there."],"answer":"The river had previously overflowed across the road.","explanation":"The mud line shows where floodwater had reached before it went down."}
-        ]
+        "questions": []
       },
       {
         "sectionId": "E4",
         "subject": "English",
         "title": "Character Feelings, Motives and Relationships",
-        "questions": [
-          {"id":"E4-Q1","question":"Maya stood outside the music room, clutching the edges of her folder. Through the door, she could hear another pupil playing the piano confidently. When the music stopped, Maya took a deep breath and checked her notes for the third time. How does Maya feel before the audition?","options":["Bored","Nervous","Angry","Careless"],"answer":"Nervous","explanation":"Clutching her folder, taking a deep breath and checking her notes repeatedly all show nervousness."},
-          {"id":"E4-Q2","question":"Why does Maya check her notes repeatedly?","options":["She has forgotten where the music room is.","She wants to avoid speaking to Leena.","She is worried about making a mistake.","She plans to change the piece completely."],"answer":"She is worried about making a mistake.","explanation":"Checking the notes again and again shows that Maya wants to feel prepared and avoid an error."},
-          {"id":"E4-Q3","question":"Leena says, \"You know this piece better than anyone.\" What does this show about their relationship?","options":["Leena is jealous of Maya.","Leena is trying to encourage Maya.","Leena does not understand music.","Leena wants Maya to withdraw."],"answer":"Leena is trying to encourage Maya.","explanation":"Leena's words are meant to give Maya confidence before the audition."},
-          {"id":"E4-Q4","question":"A few minutes later, Maya emerged with bright eyes and a wide smile. What can we infer from her expression after the audition?","options":["She probably feels pleased with how it went.","She has decided never to play again.","She is still waiting to perform.","She is disappointed with Leena."],"answer":"She probably feels pleased with how it went.","explanation":"Bright eyes and a wide smile are clues that Maya feels happy and relieved."},
-          {"id":"E4-Q5","question":"When Mr Evans entered the classroom, the model bridge lay in pieces on the floor. Theo stared at his shoes. Why does Theo stare at his shoes?","options":["He is proud of the bridge.","He feels guilty or embarrassed.","He is searching for a missing stick.","He is angry with Mr Evans."],"answer":"He feels guilty or embarrassed.","explanation":"Theo avoids eye contact because he knows he dropped the bridge."},
-          {"id":"E4-Q6","question":"Sam says, \"It was an accident, sir. We were moving it together.\" Why does he say \"we\"?","options":["He wants to share the blame and protect Theo.","He cannot remember what happened.","He wants Mr Evans to punish them both.","He believes Theo broke it deliberately."],"answer":"He wants to share the blame and protect Theo.","explanation":"Sam knows Theo dropped it, but he does not want Theo to face the problem alone."},
-          {"id":"E4-Q7","question":"Theo looked up in surprise after Sam accepted some responsibility. How does Theo feel?","options":["Surprised","Amused","Impatient","Suspicious"],"answer":"Surprised","explanation":"The passage directly says that Theo looked up in surprise."},
-          {"id":"E4-Q8","question":"Sam tells Theo, \"We can rebuild it together.\" Which word best describes Sam?","options":["Selfish","Supportive","Dishonest for personal gain","Careless"],"answer":"Supportive","explanation":"Sam protects Theo and offers to help rebuild the bridge."},
-          {"id":"E4-Q9","question":"During a race, Amir turns back to help his brother Zain after Zain falls, even though other runners pass them. Why does Amir turn back?","options":["He is too tired to continue.","He wants Zain to lose.","He cares more about helping his brother than winning.","He has forgotten where the finish line is."],"answer":"He cares more about helping his brother than winning.","explanation":"Amir gives up his chance to win so that he can help his brother."},
-          {"id":"E4-Q10","question":"After the race, Amir says, \"There will be other races.\" What does this reveal?","options":["He regrets helping Zain.","He believes winning is less important than supporting his brother.","He no longer enjoys running.","He expects Zain to repay him."],"answer":"He believes winning is less important than supporting his brother.","explanation":"Amir knows he can race again, but helping Zain mattered more at that moment."}
-        ]
+        "questions": []
       },
       {
         "sectionId": "E5",
         "subject": "English",
         "title": "Main Idea, Summary and Paragraph Purpose",
-        "questions": [
-          {"id":"E5-Q1","question":"For many years, otters were rarely seen along Britain's rivers because pollution damaged their habitats and reduced the number of fish. Cleaner water and conservation projects helped them return, but roads, litter and habitat damage still threaten them. What is the main idea?","options":["Otters are dangerous animals that should be avoided.","Otter numbers have recovered, but they still need protection.","Britain's rivers contain fewer fish than ever before.","Conservationists want to move otters away from rivers."],"answer":"Otter numbers have recovered, but they still need protection.","explanation":"The passage explains both the otters' recovery and the threats that remain."},
-          {"id":"E5-Q2","question":"Which is the best summary of the first paragraph about otters?","options":["Otters disappeared because rivers were too cold.","Otters became rare, but cleaner rivers helped them return.","Otters learned to live without fish.","Conservationists built roads beside rivers."],"answer":"Otters became rare, but cleaner rivers helped them return.","explanation":"This includes the paragraph's two main points: decline and recovery."},
-          {"id":"E5-Q3","question":"What is the purpose of the second paragraph about otters?","options":["To explain how otters catch fish","To describe the appearance of an otter","To show that the recovery is encouraging but not complete","To prove that otters no longer face any danger"],"answer":"To show that the recovery is encouraging but not complete","explanation":"The paragraph says otters have returned but still face threats."},
-          {"id":"E5-Q4","question":"Pupils and adults transformed a weed-filled patch of school land into a garden with vegetables, flowers and a pond. Which title best suits the whole passage?","options":["The Most Expensive School Project","From Wasteland to Wildlife Garden","Why Vegetables Are Difficult to Grow","A Guide to Building a Large Pond"],"answer":"From Wasteland to Wildlife Garden","explanation":"The title captures the change from an untidy area into a useful garden that supports wildlife."},
-          {"id":"E5-Q5","question":"Which sentence best summarises the whole school garden passage?","options":["Pupils and adults worked together to transform unused land into a useful school garden.","The pupils planted tomatoes because they disliked flowers.","Local businesses wanted to take control of the school grounds.","The garden is used only by the gardening club."],"answer":"Pupils and adults worked together to transform unused land into a useful school garden.","explanation":"This sentence includes the main people, action and result."},
-          {"id":"E5-Q6","question":"Why does the writer mention butterflies, bees and birds in the school garden passage?","options":["To show that the garden has also benefited wildlife","To explain why children are no longer allowed outside","To prove that the vegetables have failed to grow","To suggest that the pond should be removed"],"answer":"To show that the garden has also benefited wildlife","explanation":"The animals are evidence that the garden has created a better habitat."},
-          {"id":"E5-Q7","question":"Mr Iqbal spends hours carefully repairing watches that others have declared impossible to fix. What is the passage mainly about?","options":["Why clocks are becoming less popular","A careful and highly skilled clock repairer","A customer who refuses to pay for a watch","How to build a new workshop"],"answer":"A careful and highly skilled clock repairer","explanation":"The passage focuses on Mr Iqbal's skill, patience and careful work."},
-          {"id":"E5-Q8","question":"What is the main purpose of the second paragraph about Mr Iqbal?","options":["To show Mr Iqbal's patience and thoroughness","To explain why Mr Iqbal dislikes his customers","To describe the outside of the workshop","To show that Mr Iqbal repairs watches quickly"],"answer":"To show Mr Iqbal's patience and thoroughness","explanation":"The paragraph describes how carefully he examines, cleans and tests every watch."},
-          {"id":"E5-Q9","question":"A group of walkers became trapped in thick fog. A mountain rescue team found them and guided them safely down. Which is the best summary?","options":["Walkers ignored a rescue team and continued climbing.","A rescue team found and safely guided walkers lost in fog.","A mountain path was closed permanently because of rain.","Emergency workers built a stone wall on a mountain."],"answer":"A rescue team found and safely guided walkers lost in fog.","explanation":"This includes the problem, the rescue and the safe outcome."},
-          {"id":"E5-Q10","question":"Which detail is least important in a brief summary of the mountain rescue passage?","options":["The walkers became trapped in thick fog.","They contacted the emergency services.","The rescue team found and guided them to safety.","The walkers waited beside a stone wall."],"answer":"The walkers waited beside a stone wall.","explanation":"The stone wall is a small detail and is not needed to explain the main event."}
-        ]
+        "questions": []
       },
       {
         "sectionId": "M1",
         "subject": "Maths",
         "title": "Multi-Step Word Problems, Graphs and Data Interpretation",
-        "questions": [
-          {"id":"M1-Q1","question":"A coach can carry 48 passengers. Three coaches are completely full, and a fourth coach carries 37 passengers. How many passengers are travelling altogether?","options":["171","181","192","229"],"answer":"181","explanation":"Three full coaches carry 48 × 3 = 144 passengers. Then 144 + 37 = 181."},
-          {"id":"M1-Q2","question":"An adult ticket costs £8.50 and a child ticket costs £5.25. A family buys 2 adult tickets and 3 child tickets. How much do they pay altogether?","options":["£27.50","£30.75","£32.75","£34.25"],"answer":"£32.75","explanation":"Two adults cost £17.00 and three children cost £15.75. The total is £32.75."},
-          {"id":"M1-Q3","question":"Lena reads 18 pages each day from Monday to Thursday. On Friday, she reads 27 pages. How many pages does she read altogether?","options":["72","81","90","99"],"answer":"99","explanation":"Monday to Thursday is four days, so 18 × 4 = 72. Then 72 + 27 = 99."},
-          {"id":"M1-Q4","question":"A shop has 240 apples. It sells 85 apples in the morning and 67 apples in the afternoon. How many apples remain?","options":["78","88","98","108"],"answer":"88","explanation":"The shop sells 85 + 67 = 152 apples. Then 240 - 152 = 88."},
-          {"id":"M1-Q5","question":"Adam read 7 books, Bella 12, Cara 9, Daniel 15 and Ella 11. How many books did the five pupils read altogether?","options":["44","49","54","59"],"answer":"54","explanation":"Add the five amounts: 7 + 12 + 9 + 15 + 11 = 54."},
-          {"id":"M1-Q6","question":"Daniel read 15 books and Adam read 7. How many more books did Daniel read than Adam?","options":["6","7","8","9"],"answer":"8","explanation":"Find the difference: 15 - 7 = 8."},
-          {"id":"M1-Q7","question":"Bella read 12 books and Ella read 11. Their books are packed equally into two boxes. How many books go into each box?","options":["10","11","11.5","23"],"answer":"11.5","explanation":"Together they read 12 + 11 = 23 books. Then 23 ÷ 2 = 11.5."},
-          {"id":"M1-Q8","question":"A swimming pool contains 1,500 litres of water. During cleaning, 275 litres are removed. Then 180 litres are added. How much water is now in the pool?","options":["1,045 litres","1,225 litres","1,405 litres","1,955 litres"],"answer":"1,405 litres","explanation":"First 1,500 - 275 = 1,225. Then 1,225 + 180 = 1,405 litres."},
-          {"id":"M1-Q9","question":"A group plans to walk 24 kilometres. They walk 7.5 km before lunch and 8.25 km after lunch. How much farther must they walk?","options":["7.25 km","8.25 km","8.75 km","9.25 km"],"answer":"8.25 km","explanation":"They have walked 7.5 + 8.25 = 15.75 km. Then 24 - 15.75 = 8.25 km."},
-          {"id":"M1-Q10","question":"A factory packs 36 bottles into each box. It fills 8 boxes, but 17 bottles are later found to be damaged. How many undamaged bottles remain?","options":["261","271","278","305"],"answer":"271","explanation":"The factory packs 36 × 8 = 288 bottles. Then 288 - 17 = 271."}
-        ]
+        "questions": []
       },
       {
         "sectionId": "M2",
         "subject": "Maths",
         "title": "Fractions and Probability",
-        "questions": [
-          {"id":"M2-Q1","question":"Which fraction is equivalent to 3/5?","options":["6/15","9/15","12/25","15/30"],"answer":"9/15","explanation":"Multiply both the numerator and denominator of 3/5 by 3 to get 9/15."},
-          {"id":"M2-Q2","question":"Which fraction is the largest?","options":["2/3","3/5","5/8","7/12"],"answer":"2/3","explanation":"As decimals, 2/3 is about 0.67, which is greater than 0.60, 0.625 and about 0.58."},
-          {"id":"M2-Q3","question":"What is 3/8 + 1/4?","options":["4/12","4/8","5/8","7/8"],"answer":"5/8","explanation":"Change 1/4 to 2/8. Then 3/8 + 2/8 = 5/8."},
-          {"id":"M2-Q4","question":"What is 5/6 - 1/4?","options":["4/2","7/12","4/10","2/3"],"answer":"7/12","explanation":"Use twelfths: 5/6 = 10/12 and 1/4 = 3/12. Then 10/12 - 3/12 = 7/12."},
-          {"id":"M2-Q5","question":"A box contains 48 chocolates. Three eighths of them are milk chocolates. How many milk chocolates are there?","options":["12","16","18","24"],"answer":"18","explanation":"48 ÷ 8 = 6, and 6 × 3 = 18."},
-          {"id":"M2-Q6","question":"Sofia drinks 2/5 of a bottle of juice in the morning and 1/4 in the afternoon. What fraction of the bottle remains?","options":["7/20","9/20","11/20","13/20"],"answer":"7/20","explanation":"She drinks 8/20 + 5/20 = 13/20. The amount left is 20/20 - 13/20 = 7/20."},
-          {"id":"M2-Q7","question":"A bag contains 5 red counters, 3 blue counters and 2 green counters. One counter is chosen at random. What is the probability of choosing a blue counter?","options":["2/10","3/10","3/7","5/10"],"answer":"3/10","explanation":"There are 10 counters altogether and 3 are blue, so the probability is 3/10."},
-          {"id":"M2-Q8","question":"There are six cards numbered 1, 2, 3, 4, 5 and 6. One card is selected at random. What is the probability of selecting an even number?","options":["1/6","1/3","1/2","2/3"],"answer":"1/2","explanation":"The even cards are 2, 4 and 6, so 3 out of 6 cards work. 3/6 simplifies to 1/2."},
-          {"id":"M2-Q9","question":"A fair spinner has 8 equal sections: 3 yellow, 2 red, 2 blue and 1 green. What is the probability that the spinner lands on red or blue?","options":["1/4","3/8","1/2","5/8"],"answer":"1/2","explanation":"There are 2 red and 2 blue sections, making 4 successful sections out of 8. 4/8 = 1/2."},
-          {"id":"M2-Q10","question":"A bag contains 4 white balls and some black balls. There are 10 balls altogether. What is the probability of choosing a black ball?","options":["2/5","3/5","4/10","4/6"],"answer":"3/5","explanation":"There are 10 - 4 = 6 black balls. The probability is 6/10, which simplifies to 3/5."}
-        ]
+        "questions": []
       },
       {
         "sectionId": "M3",
         "subject": "Maths",
         "title": "Percentages",
-        "questions": [
-          {"id":"M3-Q1","question":"What is 25% of 80?","options":["15","20","25","40"],"answer":"20","explanation":"25% is one quarter, and 80 ÷ 4 = 20."},
-          {"id":"M3-Q2","question":"What is 10% of £370?","options":["£3.70","£27","£37","£370"],"answer":"£37","explanation":"To find 10%, divide by 10: £370 ÷ 10 = £37."},
-          {"id":"M3-Q3","question":"What is 15% of 200?","options":["15","20","30","35"],"answer":"30","explanation":"10% of 200 is 20 and 5% is 10, so 15% is 30."},
-          {"id":"M3-Q4","question":"A jacket costs £60. It is reduced by 20%. What is the sale price?","options":["£40","£48","£50","£52"],"answer":"£48","explanation":"20% of £60 is £12. Subtract the discount: £60 - £12 = £48."},
-          {"id":"M3-Q5","question":"A book costs £40. Its price increases by 25%. What is the new price?","options":["£45","£48","£50","£65"],"answer":"£50","explanation":"25% of £40 is £10. Add the increase: £40 + £10 = £50."},
-          {"id":"M3-Q6","question":"Shauri scores 36 marks out of 40. What percentage did he score?","options":["80%","85%","90%","95%"],"answer":"90%","explanation":"36/40 is the same as 9/10, which is 90%."},
-          {"id":"M3-Q7","question":"20% of a number is 14. What is the number?","options":["28","56","70","84"],"answer":"70","explanation":"20% is one fifth. If one fifth is 14, the whole is 14 × 5 = 70."},
-          {"id":"M3-Q8","question":"A bicycle originally costs £240. It is reduced by 15%. How much money is taken off the original price?","options":["£24","£30","£36","£40"],"answer":"£36","explanation":"10% of £240 is £24 and 5% is £12. Therefore 15% is £36."},
-          {"id":"M3-Q9","question":"A water tank is 75% full. The tank can hold 800 litres altogether. How many litres are needed to fill it completely?","options":["150 litres","200 litres","600 litres","725 litres"],"answer":"200 litres","explanation":"The tank needs 25% more. One quarter of 800 is 200 litres."},
-          {"id":"M3-Q10","question":"A shop has 500 balloons. It sells 30% of them in the morning and then sells another 80 balloons in the afternoon. How many balloons remain?","options":["250","270","300","350"],"answer":"270","explanation":"30% of 500 is 150. After the morning 350 remain, and 350 - 80 = 270."}
-        ]
+        "questions": []
       },
       {
         "sectionId": "M4",
         "subject": "Maths",
         "title": "Time, Dates and Timetables",
-        "questions": [
-          {"id":"M4-Q1","question":"A lesson starts at 9:35 am and finishes at 10:20 am. How long does the lesson last?","options":["35 minutes","40 minutes","45 minutes","55 minutes"],"answer":"45 minutes","explanation":"From 9:35 to 10:00 is 25 minutes, and from 10:00 to 10:20 is 20 minutes. Total: 45 minutes."},
-          {"id":"M4-Q2","question":"A film starts at 2:45 pm and lasts 1 hour 35 minutes. What time does it finish?","options":["4:10 pm","4:20 pm","4:30 pm","4:40 pm"],"answer":"4:20 pm","explanation":"Add one hour to get 3:45 pm, then add 35 minutes to get 4:20 pm."},
-          {"id":"M4-Q3","question":"How many minutes are there in 2 hours 25 minutes?","options":["125 minutes","135 minutes","145 minutes","155 minutes"],"answer":"145 minutes","explanation":"Two hours is 120 minutes. Add 25 minutes to get 145 minutes."},
-          {"id":"M4-Q4","question":"A train leaves at 08:47 and arrives at 10:12. How long is the journey?","options":["1 hour 15 minutes","1 hour 25 minutes","1 hour 35 minutes","2 hours 25 minutes"],"answer":"1 hour 25 minutes","explanation":"From 08:47 to 09:47 is one hour, then to 10:12 is another 25 minutes."},
-          {"id":"M4-Q5","question":"Bus A travels from 09:10 to 09:48, Bus B from 09:35 to 10:08, Bus C from 10:05 to 10:41 and Bus D from 10:30 to 11:02. Which bus has the shortest journey time?","options":["Bus A","Bus B","Bus C","Bus D"],"answer":"Bus D","explanation":"The journey times are 38, 33, 36 and 32 minutes. Bus D is the shortest."},
-          {"id":"M4-Q6","question":"Bus C leaves town at 10:05 and arrives at the museum at 10:41. How long does it take?","options":["32 minutes","34 minutes","36 minutes","41 minutes"],"answer":"36 minutes","explanation":"From 10:05 to 10:41 is 36 minutes."},
-          {"id":"M4-Q7","question":"Bus A arrives at 09:48, Bus B at 10:08, Bus C at 10:41 and Bus D at 11:02. A visitor must arrive by 10:15. What is the latest bus they can take?","options":["Bus A","Bus B","Bus C","Bus D"],"answer":"Bus B","explanation":"Bus B arrives at 10:08, before 10:15. Bus C arrives too late."},
-          {"id":"M4-Q8","question":"The 1st of March is a Monday. What day of the week is the 18th of March?","options":["Wednesday","Thursday","Friday","Saturday"],"answer":"Thursday","explanation":"The 18th is 17 days after the 1st. Fourteen days return to Monday, then three more days gives Thursday."},
-          {"id":"M4-Q9","question":"A holiday begins on 12 August and ends on 27 August. How many days pass between these two dates?","options":["14 days","15 days","16 days","17 days"],"answer":"15 days","explanation":"Find the difference: 27 - 12 = 15 days."},
-          {"id":"M4-Q10","question":"A sports event starts at 11:50 am. The first part lasts 55 minutes, followed by a 20-minute break. The second part then lasts 45 minutes. What time does the event finish?","options":["1:30 pm","1:40 pm","1:50 pm","2:00 pm"],"answer":"1:50 pm","explanation":"11:50 + 55 minutes = 12:45. Add 20 minutes to get 1:05, then add 45 minutes to get 1:50."}
-        ]
+        "questions": []
       },
       {
         "sectionId": "M5",
         "subject": "Maths",
         "title": "2D and 3D Measurement",
-        "questions": [
-          {"id":"M5-Q1","question":"A rectangle is 14 cm long and 9 cm wide. What is its perimeter?","options":["23 cm","46 cm","72 cm","126 cm"],"answer":"46 cm","explanation":"Perimeter is 2 × (14 + 9) = 46 cm."},
-          {"id":"M5-Q2","question":"A playground is 18 m long and 7 m wide. What is its area?","options":["25 m²","50 m²","126 m²","252 m²"],"answer":"126 m²","explanation":"Area is length × width: 18 × 7 = 126 m²."},
-          {"id":"M5-Q3","question":"A rectangle has an area of 96 cm². Its width is 8 cm. What is its length?","options":["12 cm","16 cm","44 cm","88 cm"],"answer":"12 cm","explanation":"Length = area ÷ width, so 96 ÷ 8 = 12 cm."},
-          {"id":"M5-Q4","question":"A square has a perimeter of 36 cm. What is its area?","options":["36 cm²","72 cm²","81 cm²","1296 cm²"],"answer":"81 cm²","explanation":"Each side is 36 ÷ 4 = 9 cm. The area is 9 × 9 = 81 cm²."},
-          {"id":"M5-Q5","question":"A triangle has a base of 12 cm and a perpendicular height of 7 cm. What is its area?","options":["19 cm²","42 cm²","84 cm²","96 cm²"],"answer":"42 cm²","explanation":"Triangle area is base × height ÷ 2: 12 × 7 ÷ 2 = 42 cm²."},
-          {"id":"M5-Q6","question":"A rectangular garden measures 15 m by 10 m. A square pond measuring 4 m by 4 m is built inside it. What area of the garden remains?","options":["134 m²","146 m²","150 m²","166 m²"],"answer":"134 m²","explanation":"The garden area is 150 m² and the pond area is 16 m². The remaining area is 150 - 16 = 134 m²."},
-          {"id":"M5-Q7","question":"A cuboid is 9 cm long, 5 cm wide and 4 cm high. What is its volume?","options":["18 cm³","90 cm³","180 cm³","360 cm³"],"answer":"180 cm³","explanation":"Volume is length × width × height: 9 × 5 × 4 = 180 cm³."},
-          {"id":"M5-Q8","question":"A cuboid has a volume of 240 cm³. Its length is 10 cm and its width is 6 cm. What is its height?","options":["4 cm","6 cm","24 cm","40 cm"],"answer":"4 cm","explanation":"The base area is 10 × 6 = 60 cm². Height = 240 ÷ 60 = 4 cm."},
-          {"id":"M5-Q9","question":"A container holds 3.5 litres of water. How many millilitres is this?","options":["35 ml","350 ml","3,050 ml","3,500 ml"],"answer":"3,500 ml","explanation":"One litre is 1,000 millilitres, so 3.5 × 1,000 = 3,500 ml."},
-          {"id":"M5-Q10","question":"A box measures 6 cm by 4 cm by 3 cm. It is completely filled with cubes measuring 1 cm by 1 cm by 1 cm. How many cubes fit inside?","options":["13","24","72","144"],"answer":"72","explanation":"The box's volume is 6 × 4 × 3 = 72 cm³, so it holds 72 one-centimetre cubes."}
-        ]
+        "questions": []
       }
     ]
   };
@@ -2327,6 +2217,68 @@
   }
 
   // ================================================================
+  //  DROP-IN QUESTION PACK LOADER
+  // ================================================================
+  async function loadExternalQuestionPacks() {
+    // fetch() cannot reliably read sibling files from file:// pages. The
+    // built-in 100 questions remain available in that case.
+    if (window.location.protocol === 'file:') {
+      console.warn('[QUESTIONS] External packs require localhost or another web server.');
+      return 0;
+    }
+
+    let loadedCount = 0;
+    try {
+      const manifestResponse = await fetch('data/questions/manifest.json', { cache: 'no-store' });
+      if (!manifestResponse.ok) {
+        console.warn('[QUESTIONS] No manifest found; using built-in questions.');
+        return 0;
+      }
+      const manifest = await manifestResponse.json();
+      const files = Array.isArray(manifest.files) ? manifest.files : [];
+
+      for (const filename of files) {
+        if (typeof filename !== 'string' || !filename.toLowerCase().endsWith('.json')) {
+          console.warn('[QUESTIONS] Skipping invalid manifest entry:', filename);
+          continue;
+        }
+        try {
+          const response = await fetch('data/questions/' + filename, { cache: 'no-store' });
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+          const pack = await response.json();
+          const target = GAME_DATA.sections.find(section => section.sectionId === pack.sectionId);
+          if (!target) {
+            console.warn(`[QUESTIONS] ${filename}: unknown sectionId "${pack.sectionId}".`);
+            continue;
+          }
+          if (!Array.isArray(pack.questions)) {
+            console.warn(`[QUESTIONS] ${filename}: questions must be an array.`);
+            continue;
+          }
+
+          if (pack.mode === 'replace') target.questions = [];
+          const existingIds = new Set(target.questions.map(question => question.id));
+          pack.questions.forEach(question => {
+            if (!question || !question.id || existingIds.has(question.id)) {
+              console.warn(`[QUESTIONS] ${filename}: skipped missing or duplicate question id.`);
+              return;
+            }
+            target.questions.push(question);
+            existingIds.add(question.id);
+            loadedCount++;
+          });
+          console.log(`[QUESTIONS] Loaded ${filename} into ${pack.sectionId}.`);
+        } catch(e) {
+          console.warn(`[QUESTIONS] Could not load ${filename}:`, e);
+        }
+      }
+    } catch(e) {
+      console.warn('[QUESTIONS] Manifest could not be read; using built-in questions.', e);
+    }
+    return loadedCount;
+  }
+
+  // ================================================================
   //  ERROR HANDLING
   // ================================================================
   function showErrorFallback(message) {
@@ -2452,7 +2404,7 @@
   // ================================================================
   //  BOOT
   // ================================================================
-  function boot() {
+  async function boot() {
     // Bind every static button before WebGL/CDN work can fail.
     initUIControls();
     loadPreferences();
@@ -2476,31 +2428,37 @@
         throw new Error('Three.js not loaded. Check your internet connection — the game needs to download Three.js from a CDN on first load.');
       }
       updateLoadingBar(15);
-      console.log('[BOOT] Step 2: Validating game data...');
+      console.log('[BOOT] Step 2: Loading drop-in question packs...');
+      const externalQuestionCount = await loadExternalQuestionPacks();
+      if (externalQuestionCount > 0) {
+        console.log(`[BOOT] Added ${externalQuestionCount} external questions.`);
+      }
+      updateLoadingBar(20);
+      console.log('[BOOT] Step 3: Validating game data...');
       const dataErrors = validateGameData();
       if (dataErrors.length > 0) {
         console.warn('[BOOT] Data warnings:', dataErrors);
       }
       updateLoadingBar(25);
-      console.log('[BOOT] Step 3: Initialising 3D engine...');
+      console.log('[BOOT] Step 4: Initialising 3D engine...');
       initThree();
       updateLoadingBar(40);
-      console.log('[BOOT] Step 4: Initialising confetti...');
+      console.log('[BOOT] Step 5: Initialising confetti...');
       initConfetti();
       updateLoadingBar(50);
-      console.log('[BOOT] Step 5: Initialising touch controls...');
+      console.log('[BOOT] Step 6: Initialising touch controls...');
       initTouchControls();
       updateLoadingBar(55);
-      console.log('[BOOT] Step 6: Starting render loop...');
+      console.log('[BOOT] Step 7: Starting render loop...');
       animate();
       updateLoadingBar(65);
-      console.log('[BOOT] Step 7: Loading saved progress...');
+      console.log('[BOOT] Step 8: Loading saved progress...');
       loadSave();
       updateLoadingBar(75);
-      console.log('[BOOT] Step 8: Updating HUD...');
+      console.log('[BOOT] Step 9: Updating HUD...');
       updateHUD();
       updateLoadingBar(85);
-      console.log('[BOOT] Step 9: Hiding loader...');
+      console.log('[BOOT] Step 10: Hiding loader...');
       const loader = document.getElementById('loading-overlay');
       if (loader) {
         loader.style.opacity = '0';

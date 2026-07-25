@@ -1,0 +1,127 @@
+{
+  "sectionId": "E1",
+  "mode": "replace",
+  "title": "Vocabulary: Synonyms, Antonyms and Unfamiliar Phrases in Context",
+  "questions": [
+    {
+      "id": "E1-Q1",
+      "question": "Maya was reluctant to enter the dark cave. What does reluctant mean?",
+      "options": [
+        "Unwilling",
+        "Excited",
+        "Careless",
+        "Noisy"
+      ],
+      "answer": "Unwilling",
+      "explanation": "Reluctant means you do not really want to do something."
+    },
+    {
+      "id": "E1-Q2",
+      "question": "During the drought, clean water became scarce. Which word is the opposite of scarce?",
+      "options": [
+        "Hidden",
+        "Abundant",
+        "Costly",
+        "Dirty"
+      ],
+      "answer": "Abundant",
+      "explanation": "Scarce means there is very little of something. Abundant means there is plenty."
+    },
+    {
+      "id": "E1-Q3",
+      "question": "The climbers crossed a precarious bridge above the gorge. What does precarious mean?",
+      "options": [
+        "Comfortable",
+        "Colourful",
+        "Dangerous and unstable",
+        "Newly built"
+      ],
+      "answer": "Dangerous and unstable",
+      "explanation": "Precarious describes something unsafe or likely to go wrong."
+    },
+    {
+      "id": "E1-Q4",
+      "question": "Leo was so engrossed in his book that he did not hear the bell. What does engrossed mean?",
+      "options": [
+        "Completely absorbed",
+        "Deeply annoyed",
+        "Very tired",
+        "Slightly confused"
+      ],
+      "answer": "Completely absorbed",
+      "explanation": "Engrossed means giving something all your attention."
+    },
+    {
+      "id": "E1-Q5",
+      "question": "Her apology sounded sincere. Which word has the closest meaning to sincere?",
+      "options": [
+        "Polite",
+        "Genuine",
+        "Quiet",
+        "Brief"
+      ],
+      "answer": "Genuine",
+      "explanation": "Sincere means honest and truly meant, so genuine is the closest match."
+    },
+    {
+      "id": "E1-Q6",
+      "question": "When both paths disappeared in the fog, Arun was at a loss. What does at a loss mean?",
+      "options": [
+        "Unable to find his money",
+        "Ready to continue",
+        "Unsure what to do",
+        "Certain of the route"
+      ],
+      "answer": "Unsure what to do",
+      "explanation": "To be at a loss means to feel puzzled and not know what to do next."
+    },
+    {
+      "id": "E1-Q7",
+      "question": "The engineer said the plan was feasible. What does feasible mean?",
+      "options": [
+        "Possible",
+        "Expensive",
+        "Unfair",
+        "Temporary"
+      ],
+      "answer": "Possible",
+      "explanation": "Feasible means something can realistically be done."
+    },
+    {
+      "id": "E1-Q8",
+      "question": "After the final whistle, the crowd dispersed. What does dispersed mean?",
+      "options": [
+        "Cheered loudly",
+        "Moved apart and left",
+        "Gathered together",
+        "Became silent"
+      ],
+      "answer": "Moved apart and left",
+      "explanation": "Dispersed means spread out or moved away in different directions."
+    },
+    {
+      "id": "E1-Q9",
+      "question": "The stray dog became hostile when the man approached. What does hostile mean?",
+      "options": [
+        "Playful",
+        "Unfriendly and aggressive",
+        "Sleepy",
+        "Hungry"
+      ],
+      "answer": "Unfriendly and aggressive",
+      "explanation": "Hostile means unfriendly and possibly ready to attack."
+    },
+    {
+      "id": "E1-Q10",
+      "question": "The instructions were ambiguous, so different pupils understood them differently. What does ambiguous mean?",
+      "options": [
+        "Very detailed",
+        "Completely false",
+        "Unclear or open to more than one meaning",
+        "Easy to remember"
+      ],
+      "answer": "Unclear or open to more than one meaning",
+      "explanation": "Ambiguous language is unclear because it can be understood in more than one way."
+    }
+  ]
+}

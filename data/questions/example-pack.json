@@ -1,0 +1,18 @@
+{
+  "sectionId": "E1",
+  "mode": "append",
+  "questions": [
+    {
+      "id": "E1-CUSTOM-001",
+      "question": "Which word is closest in meaning to enormous?",
+      "options": [
+        "Tiny",
+        "Huge",
+        "Quiet",
+        "Smooth"
+      ],
+      "answer": "Huge",
+      "explanation": "Enormous means extremely large, so huge is the closest match."
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "sectionId": "M1",
+  "mode": "replace",
+  "title": "Multi-Step Word Problems, Graphs and Data Interpretation",
+  "questions": [
+    {
+      "id": "M1-Q1",
+      "question": "A coach can carry 48 passengers. Three coaches are completely full, and a fourth coach carries 37 passengers. How many passengers are travelling altogether?",
+      "options": [
+        "171",
+        "181",
+        "192",
+        "229"
+      ],
+      "answer": "181",
+      "explanation": "Three full coaches carry 48 × 3 = 144 passengers. Then 144 + 37 = 181."
+    },
+    {
+      "id": "M1-Q2",
+      "question": "An adult ticket costs £8.50 and a child ticket costs £5.25. A family buys 2 adult tickets and 3 child tickets. How much do they pay altogether?",
+      "options": [
+        "£27.50",
+        "£30.75",
+        "£32.75",
+        "£34.25"
+      ],
+      "answer": "£32.75",
+      "explanation": "Two adults cost £17.00 and three children cost £15.75. The total is £32.75."
+    },
+    {
+      "id": "M1-Q3",
+      "question": "Lena reads 18 pages each day from Monday to Thursday. On Friday, she reads 27 pages. How many pages does she read altogether?",
+      "options": [
+        "72",
+        "81",
+        "90",
+        "99"
+      ],
+      "answer": "99",
+      "explanation": "Monday to Thursday is four days, so 18 × 4 = 72. Then 72 + 27 = 99."
+    },
+    {
+      "id": "M1-Q4",
+      "question": "A shop has 240 apples. It sells 85 apples in the morning and 67 apples in the afternoon. How many apples remain?",
+      "options": [
+        "78",
+        "88",
+        "98",
+        "108"
+      ],
+      "answer": "88",
+      "explanation": "The shop sells 85 + 67 = 152 apples. Then 240 - 152 = 88."
+    },
+    {
+      "id": "M1-Q5",
+      "question": "Adam read 7 books, Bella 12, Cara 9, Daniel 15 and Ella 11. How many books did the five pupils read altogether?",
+      "options": [
+        "44",
+        "49",
+        "54",
+        "59"
+      ],
+      "answer": "54",
+      "explanation": "Add the five amounts: 7 + 12 + 9 + 15 + 11 = 54."
+    },
+    {
+      "id": "M1-Q6",
+      "question": "Daniel read 15 books and Adam read 7. How many more books did Daniel read than Adam?",
+      "options": [
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "answer": "8",
+      "explanation": "Find the difference: 15 - 7 = 8."
+    },
+    {
+      "id": "M1-Q7",
+      "question": "Bella read 12 books and Ella read 11. Their books are packed equally into two boxes. How many books go into each box?",
+      "options": [
+        "10",
+        "11",
+        "11.5",
+        "23"
+      ],
+      "answer": "11.5",
+      "explanation": "Together they read 12 + 11 = 23 books. Then 23 ÷ 2 = 11.5."
+    },
+    {
+      "id": "M1-Q8",
+      "question": "A swimming pool contains 1,500 litres of water. During cleaning, 275 litres are removed. Then 180 litres are added. How much water is now in the pool?",
+      "options": [
+        "1,045 litres",
+        "1,225 litres",
+        "1,405 litres",
+        "1,955 litres"
+      ],
+      "answer": "1,405 litres",
+      "explanation": "First 1,500 - 275 = 1,225. Then 1,225 + 180 = 1,405 litres."
+    },
+    {
+      "id": "M1-Q9",
+      "question": "A group plans to walk 24 kilometres. They walk 7.5 km before lunch and 8.25 km after lunch. How much farther must they walk?",
+      "options": [
+        "7.25 km",
+        "8.25 km",
+        "8.75 km",
+        "9.25 km"
+      ],
+      "answer": "8.25 km",
+      "explanation": "They have walked 7.5 + 8.25 = 15.75 km. Then 24 - 15.75 = 8.25 km."
+    },
+    {
+      "id": "M1-Q10",
+      "question": "A factory packs 36 bottles into each box. It fills 8 boxes, but 17 bottles are later found to be damaged. How many undamaged bottles remain?",
+      "options": [
+        "261",
+        "271",
+        "278",
+        "305"
+      ],
+      "answer": "271",
+      "explanation": "The factory packs 36 × 8 = 288 bottles. Then 288 - 17 = 271."
+    }
+  ]
+}

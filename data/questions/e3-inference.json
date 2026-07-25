@@ -1,0 +1,127 @@
+{
+  "sectionId": "E3",
+  "mode": "replace",
+  "title": "Factual and Descriptive Inference",
+  "questions": [
+    {
+      "id": "E3-Q1",
+      "question": "A fennec fox has pale, sandy fur. Why is this useful in the desert?",
+      "options": [
+        "It makes the fox easier for prey to see.",
+        "It keeps the fox wet during the day.",
+        "It reflects sunlight and helps the fox blend into the sand.",
+        "It allows the fox to breathe underground."
+      ],
+      "answer": "It reflects sunlight and helps the fox blend into the sand.",
+      "explanation": "Pale fur can reflect some sunlight and also camouflage the fox against sandy ground."
+    },
+    {
+      "id": "E3-Q2",
+      "question": "The fennec fox has very large ears containing many blood vessels. What can we infer the ears help it do?",
+      "options": [
+        "Release body heat",
+        "Dig deep tunnels",
+        "Store water",
+        "Climb rocks"
+      ],
+      "answer": "Release body heat",
+      "explanation": "Blood flowing through the large ears can lose heat to the surrounding air."
+    },
+    {
+      "id": "E3-Q3",
+      "question": "Thick fur covers the bottoms of a fennec fox's feet. What is the most likely reason?",
+      "options": [
+        "To protect its feet from hot sand",
+        "To make it swim faster",
+        "To help it hold food",
+        "To keep its tracks visible"
+      ],
+      "answer": "To protect its feet from hot sand",
+      "explanation": "The thick fur acts like a protective layer between the fox's feet and the hot ground."
+    },
+    {
+      "id": "E3-Q4",
+      "question": "The lighthouse windows were made from unusually thick glass. What is the best inference?",
+      "options": [
+        "The keeper wanted the rooms to be dark.",
+        "The glass needed to withstand strong wind and sea spray.",
+        "The lighthouse had no lamps.",
+        "The windows were never opened because of insects."
+      ],
+      "answer": "The glass needed to withstand strong wind and sea spray.",
+      "explanation": "A lighthouse in an exposed coastal place needs strong windows to survive rough weather."
+    },
+    {
+      "id": "E3-Q5",
+      "question": "Before the storm arrived, the keeper checked the lamp twice and secured every door. What does this suggest?",
+      "options": [
+        "He planned to leave the lighthouse.",
+        "He had forgotten how the lamp worked.",
+        "He expected dangerous weather and was preparing carefully.",
+        "He wanted to welcome visitors."
+      ],
+      "answer": "He expected dangerous weather and was preparing carefully.",
+      "explanation": "Checking equipment and securing doors are sensible preparations for a storm."
+    },
+    {
+      "id": "E3-Q6",
+      "question": "Waves repeatedly struck the base of the lighthouse, and gulls struggled to fly past it. What can we infer about its position?",
+      "options": [
+        "It stood in a sheltered forest.",
+        "It was built in the middle of a town.",
+        "It was in a very exposed coastal location.",
+        "It was surrounded by farmland."
+      ],
+      "answer": "It was in a very exposed coastal location.",
+      "explanation": "Strong waves and wind show that the lighthouse stood in an exposed place by the sea."
+    },
+    {
+      "id": "E3-Q7",
+      "question": "The iron railings around the lighthouse were streaked with rust. What does this most strongly suggest?",
+      "options": [
+        "They had been exposed to salty, wet air.",
+        "They had recently been painted.",
+        "They were made from wood.",
+        "They were kept indoors."
+      ],
+      "answer": "They had been exposed to salty, wet air.",
+      "explanation": "Metal rusts when it is exposed to moisture, and salty sea air speeds up the process."
+    },
+    {
+      "id": "E3-Q8",
+      "question": "After days of rain, branches and rubbish were trapped against the river bridge. What can we infer?",
+      "options": [
+        "The river had completely dried up.",
+        "The current had carried debris downstream.",
+        "People had built a new footpath.",
+        "The bridge had been moved upstream."
+      ],
+      "answer": "The current had carried debris downstream.",
+      "explanation": "Flowing floodwater can carry branches and rubbish until they become trapped against a bridge."
+    },
+    {
+      "id": "E3-Q9",
+      "question": "Farmers moved their animals to higher fields while the river continued to rise. Why did they do this?",
+      "options": [
+        "The higher fields had better grass.",
+        "They were protecting the animals from floodwater.",
+        "They wanted the animals closer to the village.",
+        "The lower fields were being planted with trees."
+      ],
+      "answer": "They were protecting the animals from floodwater.",
+      "explanation": "Higher ground is safer when a river is rising and may overflow."
+    },
+    {
+      "id": "E3-Q10",
+      "question": "When the water finally fell, a line of mud remained across the road. What is the best inference?",
+      "options": [
+        "The river had previously overflowed across the road.",
+        "A lorry had delivered soil.",
+        "The road had never been wet.",
+        "Workers had painted a line there."
+      ],
+      "answer": "The river had previously overflowed across the road.",
+      "explanation": "The mud line shows where floodwater had reached before it went down."
+    }
+  ]
+}

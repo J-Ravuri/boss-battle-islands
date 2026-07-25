@@ -1,0 +1,127 @@
+{
+  "sectionId": "E4",
+  "mode": "replace",
+  "title": "Character Feelings, Motives and Relationships",
+  "questions": [
+    {
+      "id": "E4-Q1",
+      "question": "Maya stood outside the music room, clutching the edges of her folder. Through the door, she could hear another pupil playing the piano confidently. When the music stopped, Maya took a deep breath and checked her notes for the third time. How does Maya feel before the audition?",
+      "options": [
+        "Bored",
+        "Nervous",
+        "Angry",
+        "Careless"
+      ],
+      "answer": "Nervous",
+      "explanation": "Clutching her folder, taking a deep breath and checking her notes repeatedly all show nervousness."
+    },
+    {
+      "id": "E4-Q2",
+      "question": "Why does Maya check her notes repeatedly?",
+      "options": [
+        "She has forgotten where the music room is.",
+        "She wants to avoid speaking to Leena.",
+        "She is worried about making a mistake.",
+        "She plans to change the piece completely."
+      ],
+      "answer": "She is worried about making a mistake.",
+      "explanation": "Checking the notes again and again shows that Maya wants to feel prepared and avoid an error."
+    },
+    {
+      "id": "E4-Q3",
+      "question": "Leena says, \"You know this piece better than anyone.\" What does this show about their relationship?",
+      "options": [
+        "Leena is jealous of Maya.",
+        "Leena is trying to encourage Maya.",
+        "Leena does not understand music.",
+        "Leena wants Maya to withdraw."
+      ],
+      "answer": "Leena is trying to encourage Maya.",
+      "explanation": "Leena's words are meant to give Maya confidence before the audition."
+    },
+    {
+      "id": "E4-Q4",
+      "question": "A few minutes later, Maya emerged with bright eyes and a wide smile. What can we infer from her expression after the audition?",
+      "options": [
+        "She probably feels pleased with how it went.",
+        "She has decided never to play again.",
+        "She is still waiting to perform.",
+        "She is disappointed with Leena."
+      ],
+      "answer": "She probably feels pleased with how it went.",
+      "explanation": "Bright eyes and a wide smile are clues that Maya feels happy and relieved."
+    },
+    {
+      "id": "E4-Q5",
+      "question": "When Mr Evans entered the classroom, the model bridge lay in pieces on the floor. Theo stared at his shoes. Why does Theo stare at his shoes?",
+      "options": [
+        "He is proud of the bridge.",
+        "He feels guilty or embarrassed.",
+        "He is searching for a missing stick.",
+        "He is angry with Mr Evans."
+      ],
+      "answer": "He feels guilty or embarrassed.",
+      "explanation": "Theo avoids eye contact because he knows he dropped the bridge."
+    },
+    {
+      "id": "E4-Q6",
+      "question": "Sam says, \"It was an accident, sir. We were moving it together.\" Why does he say \"we\"?",
+      "options": [
+        "He wants to share the blame and protect Theo.",
+        "He cannot remember what happened.",
+        "He wants Mr Evans to punish them both.",
+        "He believes Theo broke it deliberately."
+      ],
+      "answer": "He wants to share the blame and protect Theo.",
+      "explanation": "Sam knows Theo dropped it, but he does not want Theo to face the problem alone."
+    },
+    {
+      "id": "E4-Q7",
+      "question": "Theo looked up in surprise after Sam accepted some responsibility. How does Theo feel?",
+      "options": [
+        "Surprised",
+        "Amused",
+        "Impatient",
+        "Suspicious"
+      ],
+      "answer": "Surprised",
+      "explanation": "The passage directly says that Theo looked up in surprise."
+    },
+    {
+      "id": "E4-Q8",
+      "question": "Sam tells Theo, \"We can rebuild it together.\" Which word best describes Sam?",
+      "options": [
+        "Selfish",
+        "Supportive",
+        "Dishonest for personal gain",
+        "Careless"
+      ],
+      "answer": "Supportive",
+      "explanation": "Sam protects Theo and offers to help rebuild the bridge."
+    },
+    {
+      "id": "E4-Q9",
+      "question": "During a race, Amir turns back to help his brother Zain after Zain falls, even though other runners pass them. Why does Amir turn back?",
+      "options": [
+        "He is too tired to continue.",
+        "He wants Zain to lose.",
+        "He cares more about helping his brother than winning.",
+        "He has forgotten where the finish line is."
+      ],
+      "answer": "He cares more about helping his brother than winning.",
+      "explanation": "Amir gives up his chance to win so that he can help his brother."
+    },
+    {
+      "id": "E4-Q10",
+      "question": "After the race, Amir says, \"There will be other races.\" What does this reveal?",
+      "options": [
+        "He regrets helping Zain.",
+        "He believes winning is less important than supporting his brother.",
+        "He no longer enjoys running.",
+        "He expects Zain to repay him."
+      ],
+      "answer": "He believes winning is less important than supporting his brother.",
+      "explanation": "Amir knows he can race again, but helping Zain mattered more at that moment."
+    }
+  ]
+}

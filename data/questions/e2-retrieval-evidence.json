@@ -1,0 +1,127 @@
+{
+  "sectionId": "E2",
+  "mode": "replace",
+  "title": "Direct Retrieval, Accurate Paraphrasing and Evidence Checking",
+  "questions": [
+    {
+      "id": "E2-Q1",
+      "question": "The Arctic tern travels from the Arctic to the Antarctic and back each year. What is remarkable about this bird?",
+      "options": [
+        "It cannot fly over water.",
+        "It makes an extremely long yearly journey.",
+        "It lives underground in winter.",
+        "It eats only plants."
+      ],
+      "answer": "It makes an extremely long yearly journey.",
+      "explanation": "The passage directly says that the tern travels between the Arctic and Antarctic each year."
+    },
+    {
+      "id": "E2-Q2",
+      "question": "When hunting, the Arctic tern hovers above the sea before diving towards a fish. What does it do immediately before it dives?",
+      "options": [
+        "It rests on the shore.",
+        "It swims below the surface.",
+        "It hovers above the water.",
+        "It returns to its nest."
+      ],
+      "answer": "It hovers above the water.",
+      "explanation": "The order is clear: the bird hovers first and then dives."
+    },
+    {
+      "id": "E2-Q3",
+      "question": "The terns lay their eggs in simple hollows in the ground. Which phrase best paraphrases simple hollows?",
+      "options": [
+        "Deep underground tunnels",
+        "Shallow dips in the ground",
+        "Nests high in trees",
+        "Rocky caves beside the sea"
+      ],
+      "answer": "Shallow dips in the ground",
+      "explanation": "A hollow is a dip or lowered area, and simple suggests it is not a complicated nest."
+    },
+    {
+      "id": "E2-Q4",
+      "question": "Which statement is supported by the information about Arctic terns?",
+      "options": [
+        "They remain in one region throughout the year.",
+        "They spend parts of the year near both polar regions.",
+        "They build large nests from branches.",
+        "They catch fish by walking through shallow water."
+      ],
+      "answer": "They spend parts of the year near both polar regions.",
+      "explanation": "Their yearly journey takes them between the Arctic and Antarctic, so they spend time near both poles."
+    },
+    {
+      "id": "E2-Q5",
+      "question": "At the adventure centre, pupils must be at least eight years old to use the climbing wall. Which pupil may use it?",
+      "options": [
+        "A pupil aged seven",
+        "A pupil aged nine",
+        "A pupil aged six",
+        "A pupil aged five"
+      ],
+      "answer": "A pupil aged nine",
+      "explanation": "Nine is above the minimum age of eight."
+    },
+    {
+      "id": "E2-Q6",
+      "question": "The adventure centre supplies helmets, but visitors must bring their own lunch. What does the centre provide?",
+      "options": [
+        "Lunch",
+        "Helmets",
+        "Walking boots",
+        "Waterproof coats"
+      ],
+      "answer": "Helmets",
+      "explanation": "The passage directly states that helmets are supplied."
+    },
+    {
+      "id": "E2-Q7",
+      "question": "If heavy rain prevents outdoor activities, sessions are moved into the indoor hall. What happens when the weather is unsuitable?",
+      "options": [
+        "The centre closes for the day.",
+        "Visitors receive their money back.",
+        "The activities continue indoors.",
+        "Everyone goes home immediately."
+      ],
+      "answer": "The activities continue indoors.",
+      "explanation": "The session is moved to the indoor hall rather than cancelled."
+    },
+    {
+      "id": "E2-Q8",
+      "question": "Noah found a wallet beside the bus stop and handed it to the library receptionist. Where did he take the wallet?",
+      "options": [
+        "To the police station",
+        "To the bus driver",
+        "To the library reception desk",
+        "To his house"
+      ],
+      "answer": "To the library reception desk",
+      "explanation": "The passage says he gave it to the library receptionist."
+    },
+    {
+      "id": "E2-Q9",
+      "question": "The receptionist used a card inside the wallet to contact its owner. How did she identify the owner?",
+      "options": [
+        "A shop receipt",
+        "A card inside the wallet",
+        "A note from Noah",
+        "A bus ticket"
+      ],
+      "answer": "A card inside the wallet",
+      "explanation": "The card contained the information needed to identify and contact the owner."
+    },
+    {
+      "id": "E2-Q10",
+      "question": "The owner collected the wallet after lunch and thanked Noah. Which statement is definitely true?",
+      "options": [
+        "Noah kept the money inside.",
+        "The wallet was returned to its owner.",
+        "The receptionist took the wallet home.",
+        "The owner found it before Noah did."
+      ],
+      "answer": "The wallet was returned to its owner.",
+      "explanation": "The passage directly says the owner collected the wallet."
+    }
+  ]
+}

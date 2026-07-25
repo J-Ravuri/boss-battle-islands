@@ -1,0 +1,127 @@
+{
+  "sectionId": "M3",
+  "mode": "replace",
+  "title": "Percentages",
+  "questions": [
+    {
+      "id": "M3-Q1",
+      "question": "What is 25% of 80?",
+      "options": [
+        "15",
+        "20",
+        "25",
+        "40"
+      ],
+      "answer": "20",
+      "explanation": "25% is one quarter, and 80 ÷ 4 = 20."
+    },
+    {
+      "id": "M3-Q2",
+      "question": "What is 10% of £370?",
+      "options": [
+        "£3.70",
+        "£27",
+        "£37",
+        "£370"
+      ],
+      "answer": "£37",
+      "explanation": "To find 10%, divide by 10: £370 ÷ 10 = £37."
+    },
+    {
+      "id": "M3-Q3",
+      "question": "What is 15% of 200?",
+      "options": [
+        "15",
+        "20",
+        "30",
+        "35"
+      ],
+      "answer": "30",
+      "explanation": "10% of 200 is 20 and 5% is 10, so 15% is 30."
+    },
+    {
+      "id": "M3-Q4",
+      "question": "A jacket costs £60. It is reduced by 20%. What is the sale price?",
+      "options": [
+        "£40",
+        "£48",
+        "£50",
+        "£52"
+      ],
+      "answer": "£48",
+      "explanation": "20% of £60 is £12. Subtract the discount: £60 - £12 = £48."
+    },
+    {
+      "id": "M3-Q5",
+      "question": "A book costs £40. Its price increases by 25%. What is the new price?",
+      "options": [
+        "£45",
+        "£48",
+        "£50",
+        "£65"
+      ],
+      "answer": "£50",
+      "explanation": "25% of £40 is £10. Add the increase: £40 + £10 = £50."
+    },
+    {
+      "id": "M3-Q6",
+      "question": "Shauri scores 36 marks out of 40. What percentage did he score?",
+      "options": [
+        "80%",
+        "85%",
+        "90%",
+        "95%"
+      ],
+      "answer": "90%",
+      "explanation": "36/40 is the same as 9/10, which is 90%."
+    },
+    {
+      "id": "M3-Q7",
+      "question": "20% of a number is 14. What is the number?",
+      "options": [
+        "28",
+        "56",
+        "70",
+        "84"
+      ],
+      "answer": "70",
+      "explanation": "20% is one fifth. If one fifth is 14, the whole is 14 × 5 = 70."
+    },
+    {
+      "id": "M3-Q8",
+      "question": "A bicycle originally costs £240. It is reduced by 15%. How much money is taken off the original price?",
+      "options": [
+        "£24",
+        "£30",
+        "£36",
+        "£40"
+      ],
+      "answer": "£36",
+      "explanation": "10% of £240 is £24 and 5% is £12. Therefore 15% is £36."
+    },
+    {
+      "id": "M3-Q9",
+      "question": "A water tank is 75% full. The tank can hold 800 litres altogether. How many litres are needed to fill it completely?",
+      "options": [
+        "150 litres",
+        "200 litres",
+        "600 litres",
+        "725 litres"
+      ],
+      "answer": "200 litres",
+      "explanation": "The tank needs 25% more. One quarter of 800 is 200 litres."
+    },
+    {
+      "id": "M3-Q10",
+      "question": "A shop has 500 balloons. It sells 30% of them in the morning and then sells another 80 balloons in the afternoon. How many balloons remain?",
+      "options": [
+        "250",
+        "270",
+        "300",
+        "350"
+      ],
+      "answer": "270",
+      "explanation": "30% of 500 is 150. After the morning 350 remain, and 350 - 80 = 270."
+    }
+  ]
+}

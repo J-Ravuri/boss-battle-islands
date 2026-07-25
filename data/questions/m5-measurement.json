@@ -1,0 +1,127 @@
+{
+  "sectionId": "M5",
+  "mode": "replace",
+  "title": "2D and 3D Measurement",
+  "questions": [
+    {
+      "id": "M5-Q1",
+      "question": "A rectangle is 14 cm long and 9 cm wide. What is its perimeter?",
+      "options": [
+        "23 cm",
+        "46 cm",
+        "72 cm",
+        "126 cm"
+      ],
+      "answer": "46 cm",
+      "explanation": "Perimeter is 2 × (14 + 9) = 46 cm."
+    },
+    {
+      "id": "M5-Q2",
+      "question": "A playground is 18 m long and 7 m wide. What is its area?",
+      "options": [
+        "25 m²",
+        "50 m²",
+        "126 m²",
+        "252 m²"
+      ],
+      "answer": "126 m²",
+      "explanation": "Area is length × width: 18 × 7 = 126 m²."
+    },
+    {
+      "id": "M5-Q3",
+      "question": "A rectangle has an area of 96 cm². Its width is 8 cm. What is its length?",
+      "options": [
+        "12 cm",
+        "16 cm",
+        "44 cm",
+        "88 cm"
+      ],
+      "answer": "12 cm",
+      "explanation": "Length = area ÷ width, so 96 ÷ 8 = 12 cm."
+    },
+    {
+      "id": "M5-Q4",
+      "question": "A square has a perimeter of 36 cm. What is its area?",
+      "options": [
+        "36 cm²",
+        "72 cm²",
+        "81 cm²",
+        "1296 cm²"
+      ],
+      "answer": "81 cm²",
+      "explanation": "Each side is 36 ÷ 4 = 9 cm. The area is 9 × 9 = 81 cm²."
+    },
+    {
+      "id": "M5-Q5",
+      "question": "A triangle has a base of 12 cm and a perpendicular height of 7 cm. What is its area?",
+      "options": [
+        "19 cm²",
+        "42 cm²",
+        "84 cm²",
+        "96 cm²"
+      ],
+      "answer": "42 cm²",
+      "explanation": "Triangle area is base × height ÷ 2: 12 × 7 ÷ 2 = 42 cm²."
+    },
+    {
+      "id": "M5-Q6",
+      "question": "A rectangular garden measures 15 m by 10 m. A square pond measuring 4 m by 4 m is built inside it. What area of the garden remains?",
+      "options": [
+        "134 m²",
+        "146 m²",
+        "150 m²",
+        "166 m²"
+      ],
+      "answer": "134 m²",
+      "explanation": "The garden area is 150 m² and the pond area is 16 m². The remaining area is 150 - 16 = 134 m²."
+    },
+    {
+      "id": "M5-Q7",
+      "question": "A cuboid is 9 cm long, 5 cm wide and 4 cm high. What is its volume?",
+      "options": [
+        "18 cm³",
+        "90 cm³",
+        "180 cm³",
+        "360 cm³"
+      ],
+      "answer": "180 cm³",
+      "explanation": "Volume is length × width × height: 9 × 5 × 4 = 180 cm³."
+    },
+    {
+      "id": "M5-Q8",
+      "question": "A cuboid has a volume of 240 cm³. Its length is 10 cm and its width is 6 cm. What is its height?",
+      "options": [
+        "4 cm",
+        "6 cm",
+        "24 cm",
+        "40 cm"
+      ],
+      "answer": "4 cm",
+      "explanation": "The base area is 10 × 6 = 60 cm². Height = 240 ÷ 60 = 4 cm."
+    },
+    {
+      "id": "M5-Q9",
+      "question": "A container holds 3.5 litres of water. How many millilitres is this?",
+      "options": [
+        "35 ml",
+        "350 ml",
+        "3,050 ml",
+        "3,500 ml"
+      ],
+      "answer": "3,500 ml",
+      "explanation": "One litre is 1,000 millilitres, so 3.5 × 1,000 = 3,500 ml."
+    },
+    {
+      "id": "M5-Q10",
+      "question": "A box measures 6 cm by 4 cm by 3 cm. It is completely filled with cubes measuring 1 cm by 1 cm by 1 cm. How many cubes fit inside?",
+      "options": [
+        "13",
+        "24",
+        "72",
+        "144"
+      ],
+      "answer": "72",
+      "explanation": "The box's volume is 6 × 4 × 3 = 72 cm³, so it holds 72 one-centimetre cubes."
+    }
+  ]
+}
