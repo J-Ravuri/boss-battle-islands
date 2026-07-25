@@ -1,7 +1,8 @@
 # Background audio
 
-The game generates musical sound effects and a calm **Study Focus** background
-track in code. The Study Focus option needs no additional file.
+The **Study Focus** option uses `study_meditation_bgm.wav`, an original
+royalty-free meditation loop created for this game. If that file is missing,
+the game generates a calm fallback track in code.
 
 The **AyaSher** option uses `aayasher_bgm.mp3` from this folder. To replace
 other generated effects with your own files:
@@ -16,6 +17,7 @@ other generated effects with your own files:
    - `victory.mp3`
    - `aayasher_bgm.mp3` — licensed AyaSher background track used in both
      the hub and battles
+   - `study_meditation_bgm.wav` — original royalty-free Study Focus loop
 
 2. Open the repository-root `index.html`.
 3. Serve the repository over HTTP and refresh the game. Custom audio is
@@ -32,3 +34,9 @@ Players can choose AyaSher or Study Focus from the start screen and the in-game
 HUD. Their selection is remembered by the browser.
 
 If a custom file is unavailable, the game continues using generated audio.
+
+To recreate the Study Focus file, run:
+
+```bash
+node tools/generate-study-music.js
+```
