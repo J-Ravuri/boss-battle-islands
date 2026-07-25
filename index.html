@@ -153,6 +153,40 @@
       box-shadow: var(--shadow);
     }
     .hud-btn:hover { background: #E1F5FE; transform: translateY(-1px); }
+    .music-select {
+      min-height: 42px;
+      max-width: 150px;
+      padding: 6px 28px 6px 10px;
+      border: 3px solid var(--ui-border);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.94);
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+    }
+    .music-picker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      flex-wrap: wrap;
+      margin: 0 auto 18px;
+      padding: 10px 14px;
+      max-width: 430px;
+      border: 2px solid #B3E5FC;
+      border-radius: 16px;
+      background: rgba(227,242,253,0.72);
+    }
+    .music-picker label { font-weight: 900; color: var(--text-main); }
+    .music-picker .music-select { min-width: 170px; box-shadow: none; }
+    .music-picker small {
+      flex-basis: 100%;
+      color: var(--text-light);
+      line-height: 1.3;
+    }
     #quest-card {
       position: fixed;
       top: 70px;
@@ -392,6 +426,7 @@
       .hud-stats { gap: 4px; flex-wrap: wrap; }
       .hud-pill { padding: 4px 9px; font-size: 0.78rem; border-width: 2px; }
       .hud-btn { min-width: 38px; min-height: 36px; padding: 5px 8px; border-width: 2px; }
+      .hud-actions .music-select { min-height: 36px; max-width: 118px; padding: 4px 22px 4px 7px; border-width: 2px; }
       #quest-card { top: 58px; left: 8px; max-width: calc(100vw - 16px); padding: 8px 12px; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -444,6 +479,10 @@
       <div class="hud-pill">💎 <span id="hud-xp">0</span> XP</div>
     </div>
     <div class="hud-actions">
+      <select class="music-select" id="hud-music-select" aria-label="Choose background music" title="Background music">
+        <option value="aayasher">🎬 AyaSher</option>
+        <option value="study">📚 Study Focus</option>
+      </select>
       <button class="hud-btn" id="hud-sound-btn" title="Sound (M)">🔊</button>
       <button class="hud-btn" id="hud-help-btn" title="How to play (H)">❓</button>
       <button class="hud-btn" id="hud-menu-btn" title="Main menu">☰</button>
@@ -463,6 +502,14 @@
         Explore floating islands, battle friendly bosses with brain-power,<br>
         and collect trophies across English and Maths!
       </p>
+      <div class="music-picker">
+        <label for="title-music-select">🎵 Background music</label>
+        <select class="music-select" id="title-music-select">
+          <option value="aayasher">🎬 AyaSher</option>
+          <option value="study">📚 Study Focus</option>
+        </select>
+        <small>AyaSher is cinematic. Study Focus is a calm original instrumental.</small>
+      </div>
       <button class="btn btn-primary" id="title-play-btn" onclick="window.Game.startHub()">▶️ Play</button>
       <button class="btn btn-gold" id="title-trophy-btn" onclick="window.Game.showTrophies()">🏆 Trophy Shelf</button>
       <button class="btn btn-info" id="title-help-btn" onclick="window.Game.showHelp()">❓ How to Play</button>
@@ -673,9 +720,9 @@
     wrong: null,
     combo: null,
     victory: null,
-    // Optional licensed soundtrack supplied by the game owner.
-    hubMusic: 'assets/audio/aayasher_bgm.mp3',
-    battleMusic: 'assets/audio/aayasher_bgm.mp3'
+    // Licensed soundtrack supplied by the game owner.
+    ayaSherHubMusic: 'assets/audio/aayasher_bgm.mp3',
+    ayaSherBattleMusic: 'assets/audio/aayasher_bgm.mp3'
   };
 
   let state = {
@@ -705,6 +752,7 @@
   let isTransitioning = false;
   let audioCtx = null;
   let soundEnabled = true;
+  let selectedMusic = 'aayasher';
   let customAudioCache = {};
   let musicTimer = null;
   let musicElement = null;
@@ -820,6 +868,19 @@
 
   function playMusicStep(mode) {
     if (!soundEnabled) return;
+    if (selectedMusic === 'study') {
+      // Slow, low-volume major-7 arpeggios designed to sit behind reading
+      // and problem-solving without demanding attention.
+      const studyHubNotes = [262, 330, 392, 494, 294, 370, 440, 554];
+      const studyBattleNotes = [220, 277, 330, 415, 247, 311, 370, 466];
+      const notes = mode === 'battle' ? studyBattleNotes : studyHubNotes;
+      const note = notes[musicStep % notes.length];
+      musicStep++;
+      scheduleTone(note, 0, 0.9, 'sine', 0.012);
+      scheduleTone(note / 2, 0, 1.15, 'triangle', 0.006);
+      if (musicStep % 4 === 1) scheduleTone(note * 1.5, 0.2, 0.75, 'sine', 0.005);
+      return;
+    }
     const hubNotes = [262, 330, 392, 330, 294, 349, 440, 349];
     const battleNotes = [147, 147, 175, 196, 147, 220, 196, 175];
     const notes = mode === 'battle' ? battleNotes : hubNotes;
@@ -833,8 +894,8 @@
     if (musicMode === mode || !soundEnabled) return;
     stopMusic();
     musicMode = mode;
-    const customKind = mode === 'battle' ? 'battleMusic' : 'hubMusic';
-    const customTrack = customAudioCache[customKind];
+    const customKind = mode === 'battle' ? 'ayaSherBattleMusic' : 'ayaSherHubMusic';
+    const customTrack = selectedMusic === 'aayasher' ? customAudioCache[customKind] : null;
     if (customTrack) {
       musicElement = customTrack.cloneNode();
       musicElement.loop = true;
@@ -844,7 +905,30 @@
     }
     musicStep = 0;
     playMusicStep(mode);
-    musicTimer = setInterval(() => playMusicStep(mode), mode === 'battle' ? 520 : 850);
+    const interval = selectedMusic === 'study'
+      ? (mode === 'battle' ? 900 : 1150)
+      : (mode === 'battle' ? 520 : 850);
+    musicTimer = setInterval(() => playMusicStep(mode), interval);
+  }
+
+  function syncMusicSelectors() {
+    ['title-music-select', 'hud-music-select'].forEach(id => {
+      const select = document.getElementById(id);
+      if (select) select.value = selectedMusic;
+    });
+  }
+
+  function selectMusic(choice) {
+    if (choice !== 'aayasher' && choice !== 'study') return;
+    selectedMusic = choice;
+    try { localStorage.setItem('bossBattleIslands_music', selectedMusic); } catch(e) {}
+    syncMusicSelectors();
+    if (soundEnabled && (state.screen === 'hub' || state.screen === 'battle')) {
+      stopMusic();
+      setMusic(state.screen);
+      playSound('select');
+      showToast(selectedMusic === 'study' ? '📚 Study Focus selected' : '🎬 AyaSher selected', 'save');
+    }
   }
 
   function updateSoundButton() {
@@ -868,8 +952,13 @@
   }
 
   function loadPreferences() {
-    try { soundEnabled = localStorage.getItem('bossBattleIslands_sound') !== 'off'; } catch(e) {}
+    try {
+      soundEnabled = localStorage.getItem('bossBattleIslands_sound') !== 'off';
+      const savedMusic = localStorage.getItem('bossBattleIslands_music');
+      if (savedMusic === 'aayasher' || savedMusic === 'study') selectedMusic = savedMusic;
+    } catch(e) {}
     updateSoundButton();
+    syncMusicSelectors();
     loadCustomAudio();
   }
 
@@ -2336,6 +2425,10 @@
         element.onclick = action;
       }
     });
+    ['title-music-select', 'hud-music-select'].forEach(id => {
+      const select = document.getElementById(id);
+      if (select) select.onchange = event => selectMusic(event.target.value);
+    });
     const hudActions = document.querySelector('.hud-actions');
     if (hudActions) hudActions.addEventListener('pointerdown', e => e.stopPropagation());
   }
@@ -2393,6 +2486,7 @@
     showHelp,
     closeHelp,
     toggleSound,
+    selectMusic,
     closeIslandPopup,
     enterSelectedIsland,
     onExplanationContinue,
