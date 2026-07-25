@@ -1,0 +1,11 @@
+{
+  "name": "boss-battle-islands",
+  "version": "1.0.0",
+  "description": "Shauri's 11+ educational adventure game",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx live-server --port=8080"
+  },
+  "keywords": ["education", "game", "threejs", "11-plus"],
+  "license": "MIT"
+}

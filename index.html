@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Boss Battle Islands — Shauri's 11+ Adventure</title>
+  <style>
+    :root {
+      --sky-top: #87CEEB;
+      --sky-bottom: #E0F7FA;
+      --ui-bg: rgba(255, 255, 255, 0.95);
+      --ui-border: #4FC3F7;
+      --ui-accent: #FF9800;
+      --ui-green: #66BB6A;
+      --ui-red: #EF5350;
+      --ui-gold: #FFD700;
+      --text-main: #37474F;
+      --text-light: #78909C;
+      --shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom));
+      overflow: hidden;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      color: var(--text-main);
+    }
+    #canvas-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 1;
+    }
+    canvas { display: block; }
+    .ui-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .ui-screen.active { opacity: 1; pointer-events: auto; }
+    .ui-panel {
+      background: var(--ui-bg);
+      border: 4px solid var(--ui-border);
+      border-radius: 24px;
+      padding: 28px 36px;
+      max-width: 720px;
+      width: 92%;
+      box-shadow: var(--shadow);
+      text-align: center;
+      pointer-events: auto;
+      animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes popIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    h1 { font-size: 2.4rem; color: var(--ui-accent); margin-bottom: 8px; text-shadow: 2px 2px 0px rgba(0,0,0,0.1); }
+    h2 { font-size: 1.6rem; color: var(--text-main); margin-bottom: 12px; }
+    h3 { font-size: 1.2rem; color: var(--text-light); margin-bottom: 16px; }
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      margin: 8px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.15);
+      pointer-events: auto;
+    }
+    .btn:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
+    .btn-primary { background: var(--ui-accent); color: white; }
+    .btn-success { background: var(--ui-green); color: white; }
+    .btn-danger  { background: var(--ui-red); color: white; }
+    .btn-info    { background: var(--ui-border); color: var(--text-main); }
+    .btn-gold    { background: var(--ui-gold); color: #5D4037; }
+    .btn-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .btn-grid .btn { margin: 0; width: 100%; }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.8rem; }
+      h2 { font-size: 1.3rem; }
+      .btn-grid { grid-template-columns: 1fr; }
+      .ui-panel { padding: 20px 18px; }
+    }
+    #hud {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 9;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    #hud.active { opacity: 1; }
+    .hud-pill {
+      background: rgba(255,255,255,0.9);
+      border: 3px solid var(--ui-border);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: var(--shadow);
+    }
+    #battle-ui {
+      position: fixed;
+      bottom: 0; left: 0;
+      width: 100%;
+      z-index: 10;
+      padding: 16px 20px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+      background: linear-gradient(to top, rgba(255,255,255,0.95) 60%, transparent);
+    }
+    #battle-ui.active { opacity: 1; }
+    .boss-bar-container {
+      width: 280px;
+      height: 22px;
+      background: rgba(0,0,0,0.15);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 10px;
+      border: 2px solid white;
+    }
+    .boss-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #EF5350, #FF8A80);
+      width: 100%;
+      transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border-radius: 12px;
+    }
+    .question-box {
+      background: white;
+      border: 3px solid var(--ui-border);
+      border-radius: 18px;
+      padding: 16px 22px;
+      max-width: 760px;
+      width: 95%;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow);
+      font-size: 1.15rem;
+      font-weight: 600;
+      line-height: 1.5;
+      pointer-events: auto;
+    }
+    .answer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      max-width: 760px;
+      width: 95%;
+      pointer-events: auto;
+    }
+    .answer-btn {
+      padding: 14px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border: 3px solid #B0BEC5;
+      background: white;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: center;
+    }
+    .answer-btn:hover { border-color: var(--ui-accent); background: #FFF3E0; transform: translateY(-2px); }
+    .answer-btn.correct { border-color: var(--ui-green); background: #E8F5E9; }
+    .answer-btn.wrong   { border-color: var(--ui-red); background: #FFEBEE; }
+    .answer-btn:disabled { opacity: 0.6; cursor: default; }
+    @media (max-width: 600px) {
+      .answer-grid { grid-template-columns: 1fr; }
+      .question-box { font-size: 1rem; padding: 12px 14px; }
+    }
+    #explanation-popup {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 20;
+      max-width: 560px;
+      width: 90%;
+      background: white;
+      border: 4px solid var(--ui-border);
+      border-radius: 24px;
+      padding: 24px 28px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+      text-align: center;
+      display: none;
+    }
+    #explanation-popup.active { display: block; animation: popIn 0.3s; }
+    .explanation-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 10px; }
+    .explanation-text  { font-size: 1.1rem; line-height: 1.5; margin-bottom: 18px; color: var(--text-main); }
+    .explanation-correct { color: var(--ui-green); }
+    .explanation-wrong   { color: var(--ui-red); }
+    .trophy-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .trophy-slot {
+      aspect-ratio: 1;
+      border: 3px dashed #B0BEC5;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      padding: 6px;
+      background: rgba(255,255,255,0.6);
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .trophy-slot:hover { transform: scale(1.05); }
+    .trophy-slot.earned {
+      border-color: var(--ui-gold);
+      background: #FFFDE7;
+      border-style: solid;
+    }
+    .trophy-slot .trophy-icon { font-size: 1.8rem; margin-bottom: 4px; }
+    .trophy-slot .trophy-label { font-weight: 700; color: var(--text-main); font-size: 0.7rem; }
+    @media (max-width: 600px) {
+      .trophy-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    #ui-hub.active { pointer-events: none; }
+  #island-popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 11;
+      background: white;
+      border: 3px solid var(--ui-border);
+      border-radius: 20px;
+      padding: 16px 24px;
+      box-shadow: var(--shadow);
+      display: none;
+      text-align: center;
+      pointer-events: auto;
+      min-width: 280px;
+    }
+    #island-popup.active { display: block; animation: popIn 0.3s; }
+    #confetti-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 15;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="loading-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#87CEEB;z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column;font-family:sans-serif;">
+    <div style="font-size:3rem;margin-bottom:10px;">🏝️</div>
+    <div style="font-size:1.5rem;font-weight:bold;color:#37474F;">Loading Boss Battle Islands...</div>
+    <div id="loading-error" style="display:none;margin-top:20px;padding:20px;background:white;border-radius:12px;max-width:400px;text-align:center;color:#EF5350;">
+      <b>Could not load the game engine.</b><br><br>
+      Make sure you are connected to the internet so Three.js can load.<br>
+      Or try opening this file in Firefox/Safari.
+    </div>
+  </div>
+  <div id="canvas-container"></div>
+  <canvas id="confetti-canvas"></canvas>
+  <div id="hud">
+    <div class="hud-pill">⭐ Level <span id="hud-level">1</span></div>
+    <div class="hud-pill">🔥 Streak <span id="hud-streak">0</span></div>
+    <div class="hud-pill">💎 <span id="hud-xp">0</span> XP</div>
+  </div>
+  <div id="ui-title" class="ui-screen active" style="opacity:1; pointer-events:auto;">
+    <div class="ui-panel">
+      <div style="font-size:4rem; margin-bottom:8px; animation: float 3s ease-in-out infinite;">🏝️⚔️🏝️</div>
+      <h1>Boss Battle Islands</h1>
+      <h3>Shauri's 11+ Adventure</h3>
+      <p style="margin-bottom:18px; color: var(--text-light); font-size:1.05rem;">
+        Explore floating islands, battle friendly bosses with brain-power,<br>
+        and collect trophies across English and Maths!
+      </p>
+      <button class="btn btn-primary" onclick="Game.startHub()">▶️ Play</button>
+      <button class="btn btn-gold" onclick="Game.showTrophies()">🏆 Trophy Shelf</button>
+    </div>
+  </div>
+  <div id="ui-hub" class="ui-screen" style="opacity:0; pointer-events:none; background:transparent;"></div>
+  <div id="island-popup">
+    <div id="island-popup-title" style="font-weight:800; font-size:1.2rem; margin-bottom:6px;">Island Name</div>
+    <div id="island-popup-boss" style="color: var(--text-light); font-size:0.95rem; margin-bottom:10px;">Boss Name</div>
+    <div id="island-popup-status" style="font-weight:700; margin-bottom:12px;"></div>
+    <button class="btn btn-success" id="island-popup-btn" onclick="Game.enterSelectedIsland()">⚔️ Start Battle!</button>
+    <button class="btn btn-info" onclick="Game.closeIslandPopup()">Cancel</button>
+  </div>
+  <div id="battle-ui">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:6px;">
+      <span id="boss-name" style="font-weight:800; font-size:1.1rem; color: var(--text-main);">Boss</span>
+      <div class="boss-bar-container"><div class="boss-bar" id="boss-hp-bar"></div></div>
+      <span id="boss-hp-text" style="font-weight:700; font-size:0.9rem;">10/10</span>
+    </div>
+    <div class="question-box" id="question-text">Question goes here...</div>
+    <div class="answer-grid" id="answer-buttons"></div>
+  </div>
+  <div id="explanation-popup">
+    <div class="explanation-title" id="explanation-title">Nice hit!</div>
+    <div class="explanation-text" id="explanation-text">Explanation goes here.</div>
+    <button class="btn btn-primary" id="explanation-btn" onclick="Game.onExplanationContinue()">Continue</button>
+  </div>
+  <div id="ui-victory" class="ui-screen hidden">
+    <div class="ui-panel">
+      <div style="font-size:3.5rem; margin-bottom:8px;">🎉</div>
+      <h1 id="victory-title">Boss Defeated!</h1>
+      <div id="victory-badge" style="font-size:3rem; margin:12px 0; animation: float 2s ease-in-out infinite;">🏆</div>
+      <h2 id="victory-boss-name">Boss Name</h2>
+      <p id="victory-stats" style="font-size:1.1rem; color: var(--text-light); margin-bottom:18px;">Score: 10/10 | +50 XP</p>
+      <button class="btn btn-primary" onclick="Game.onVictoryContinue()">🏠 Back to Hub</button>
+    </div>
+  </div>
+  <div id="ui-trophy" class="ui-screen hidden">
+    <div class="ui-panel" style="max-width: 800px;">
+      <h1>🏆 Trophy Shelf</h1>
+      <p style="color: var(--text-light); margin-bottom:12px;">Click a badge to replay an island!</p>
+      <div class="trophy-grid" id="trophy-grid"></div>
+      <div style="margin-top:16px;">
+        <span style="font-weight:700;">Total Progress: <span id="trophy-progress">0/10</span></span>
+      </div>
+      <button class="btn btn-info" onclick="Game.showTitle()" style="margin-top:16px;">🏠 Main Menu</button>
+    </div>
+  </div>
+  <div id="ui-break" class="ui-screen hidden">
+    <div class="ui-panel">
+      <div style="font-size:3rem; margin-bottom:8px;">☕</div>
+      <h1>Great job!</h1>
+      <p style="font-size:1.15rem; margin-bottom:20px;">
+        You've conquered 2 islands! Want to keep going or take a break?
+      </p>
+      <button class="btn btn-success" onclick="Game.continueAfterBreak()">▶️ Keep Going!</button>
+      <button class="btn btn-info" onclick="Game.takeBreak()">☕ Take a Break</button>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+
+  // ================================================================
+  //  DATA LAYER — EXACT QUESTIONS FROM JSON
+  //  Paste Batch 2 sections into the "sections" array below.
+  //  No other code needs changing to add new islands.
+  // ================================================================
+  const GAME_DATA = {
+    status: "partial",
+    completedSections: 10,
+    totalPlannedSections: 20,
+    sections: [
+      {
+        "sectionId": "E1",
+        "subject": "English",
+        "title": "Vocabulary: Synonyms, Antonyms and Unfamiliar Phrases in Context",
+        "questions": [
+          {"id":"E1-Q1","question":"Maya was reluctant to enter the dark cave. What does reluctant mean?","options":["Unwilling","Excited","Careless","Noisy"],"answer":"Unwilling","explanation":"Reluctant means you do not really want to do something."},
+          {"id":"E1-Q2","question":"During the drought, clean water became scarce. Which word is the opposite of scarce?","options":["Hidden","Abundant","Costly","Dirty"],"answer":"Abundant","explanation":"Scarce means there is very little of something. Abundant means there is plenty."},
+          {"id":"E1-Q3","question":"The climbers crossed a precarious bridge above the gorge. What does precarious mean?","options":["Comfortable","Colourful","Dangerous and unstable","Newly built"],"answer":"Dangerous and unstable","explanation":"Precarious describes something unsafe or likely to go wrong."},
+          {"id":"E1-Q4","question":"Leo was so engrossed in his book that he did not hear the bell. What does engrossed mean?","options":["Completely absorbed","Deeply annoyed","Very tired","Slightly confused"],"answer":"Completely absorbed","explanation":"Engrossed means giving something all your attention."},
+          {"id":"E1-Q5","question":"Her apology sounded sincere. Which word has the closest meaning to sincere?","options":["Polite","Genuine","Quiet","Brief"],"answer":"Genuine","explanation":"Sincere means honest and truly meant, so genuine is the closest match."},
+          {"id":"E1-Q6","question":"When both paths disappeared in the fog, Arun was at a loss. What does at a loss mean?","options":["Unable to find his money","Ready to continue","Unsure what to do","Certain of the route"],"answer":"Unsure what to do","explanation":"To be at a loss means to feel puzzled and not know what to do next."},
+          {"id":"E1-Q7","question":"The engineer said the plan was feasible. What does feasible mean?","options":["Possible","Expensive","Unfair","Temporary"],"answer":"Possible","explanation":"Feasible means something can realistically be done."},
+          {"id":"E1-Q8","question":"After the final whistle, the crowd dispersed. What does dispersed mean?","options":["Cheered loudly","Moved apart and left","Gathered together","Became silent"],"answer":"Moved apart and left","explanation":"Dispersed means spread out or moved away in different directions."},
+          {"id":"E1-Q9","question":"The stray dog became hostile when the man approached. What does hostile mean?","options":["Playful","Unfriendly and aggressive","Sleepy","Hungry"],"answer":"Unfriendly and aggressive","explanation":"Hostile means unfriendly and possibly ready to attack."},
+          {"id":"E1-Q10","question":"The instructions were ambiguous, so different pupils understood them differently. What does ambiguous mean?","options":["Very detailed","Completely false","Unclear or open to more than one meaning","Easy to remember"],"answer":"Unclear or open to more than one meaning","explanation":"Ambiguous language is unclear because it can be understood in more than one way."}
+        ]
+      },
+      {
+        "sectionId": "E2",
+        "subject": "English",
+        "title": "Direct Retrieval, Accurate Paraphrasing and Evidence Checking",
+        "questions": [
+          {"id":"E2-Q1","question":"The Arctic tern travels from the Arctic to the Antarctic and back each year. What is remarkable about this bird?","options":["It cannot fly over water.","It makes an extremely long yearly journey.","It lives underground in winter.","It eats only plants."],"answer":"It makes an extremely long yearly journey.","explanation":"The passage directly says that the tern travels between the Arctic and Antarctic each year."},
+          {"id":"E2-Q2","question":"When hunting, the Arctic tern hovers above the sea before diving towards a fish. What does it do immediately before it dives?","options":["It rests on the shore.","It swims below the surface.","It hovers above the water.","It returns to its nest."],"answer":"It hovers above the water.","explanation":"The order is clear: the bird hovers first and then dives."},
+          {"id":"E2-Q3","question":"The terns lay their eggs in simple hollows in the ground. Which phrase best paraphrases simple hollows?","options":["Deep underground tunnels","Shallow dips in the ground","Nests high in trees","Rocky caves beside the sea"],"answer":"Shallow dips in the ground","explanation":"A hollow is a dip or lowered area, and simple suggests it is not a complicated nest."},
+          {"id":"E2-Q4","question":"Which statement is supported by the information about Arctic terns?","options":["They remain in one region throughout the year.","They spend parts of the year near both polar regions.","They build large nests from branches.","They catch fish by walking through shallow water."],"answer":"They spend parts of the year near both polar regions.","explanation":"Their yearly journey takes them between the Arctic and Antarctic, so they spend time near both poles."},
+          {"id":"E2-Q5","question":"At the adventure centre, pupils must be at least eight years old to use the climbing wall. Which pupil may use it?","options":["A pupil aged seven","A pupil aged nine","A pupil aged six","A pupil aged five"],"answer":"A pupil aged nine","explanation":"Nine is above the minimum age of eight."},
+          {"id":"E2-Q6","question":"The adventure centre supplies helmets, but visitors must bring their own lunch. What does the centre provide?","options":["Lunch","Helmets","Walking boots","Waterproof coats"],"answer":"Helmets","explanation":"The passage directly states that helmets are supplied."},
+          {"id":"E2-Q7","question":"If heavy rain prevents outdoor activities, sessions are moved into the indoor hall. What happens when the weather is unsuitable?","options":["The centre closes for the day.","Visitors receive their money back.","The activities continue indoors.","Everyone goes home immediately."],"answer":"The activities continue indoors.","explanation":"The session is moved to the indoor hall rather than cancelled."},
+          {"id":"E2-Q8","question":"Noah found a wallet beside the bus stop and handed it to the library receptionist. Where did he take the wallet?","options":["To the police station","To the bus driver","To the library reception desk","To his house"],"answer":"To the library reception desk","explanation":"The passage says he gave it to the library receptionist."},
+          {"id":"E2-Q9","question":"The receptionist used a card inside the wallet to contact its owner. How did she identify the owner?","options":["A shop receipt","A card inside the wallet","A note from Noah","A bus ticket"],"answer":"A card inside the wallet","explanation":"The card contained the information needed to identify and contact the owner."},
+          {"id":"E2-Q10","question":"The owner collected the wallet after lunch and thanked Noah. Which statement is definitely true?","options":["Noah kept the money inside.","The wallet was returned to its owner.","The receptionist took the wallet home.","The owner found it before Noah did."],"answer":"The wallet was returned to its owner.","explanation":"The passage directly says the owner collected the wallet."}
+        ]
+      },
+      {
+        "sectionId": "E3",
+        "subject": "English",
+        "title": "Factual and Descriptive Inference",
+        "questions": [
+          {"id":"E3-Q1","question":"A fennec fox has pale, sandy fur. Why is this useful in the desert?","options":["It makes the fox easier for prey to see.","It keeps the fox wet during the day.","It reflects sunlight and helps the fox blend into the sand.","It allows the fox to breathe underground."],"answer":"It reflects sunlight and helps the fox blend into the sand.","explanation":"Pale fur can reflect some sunlight and also camouflage the fox against sandy ground."},
+          {"id":"E3-Q2","question":"The fennec fox has very large ears containing many blood vessels. What can we infer the ears help it do?","options":["Release body heat","Dig deep tunnels","Store water","Climb rocks"],"answer":"Release body heat","explanation":"Blood flowing through the large ears can lose heat to the surrounding air."},
+          {"id":"E3-Q3","question":"Thick fur covers the bottoms of a fennec fox's feet. What is the most likely reason?","options":["To protect its feet from hot sand","To make it swim faster","To help it hold food","To keep its tracks visible"],"answer":"To protect its feet from hot sand","explanation":"The thick fur acts like a protective layer between the fox's feet and the hot ground."},
+          {"id":"E3-Q4","question":"The lighthouse windows were made from unusually thick glass. What is the best inference?","options":["The keeper wanted the rooms to be dark.","The glass needed to withstand strong wind and sea spray.","The lighthouse had no lamps.","The windows were never opened because of insects."],"answer":"The glass needed to withstand strong wind and sea spray.","explanation":"A lighthouse in an exposed coastal place needs strong windows to survive rough weather."},
+          {"id":"E3-Q5","question":"Before the storm arrived, the keeper checked the lamp twice and secured every door. What does this suggest?","options":["He planned to leave the lighthouse.","He had forgotten how the lamp worked.","He expected dangerous weather and was preparing carefully.","He wanted to welcome visitors."],"answer":"He expected dangerous weather and was preparing carefully.","explanation":"Checking equipment and securing doors are sensible preparations for a storm."},
+          {"id":"E3-Q6","question":"Waves repeatedly struck the base of the lighthouse, and gulls struggled to fly past it. What can we infer about its position?","options":["It stood in a sheltered forest.","It was built in the middle of a town.","It was in a very exposed coastal location.","It was surrounded by farmland."],"answer":"It was in a very exposed coastal location.","explanation":"Strong waves and wind show that the lighthouse stood in an exposed place by the sea."},
+          {"id":"E3-Q7","question":"The iron railings around the lighthouse were streaked with rust. What does this most strongly suggest?","options":["They had been exposed to salty, wet air.","They had recently been painted.","They were made from wood.","They were kept indoors."],"answer":"They had been exposed to salty, wet air.","explanation":"Metal rusts when it is exposed to moisture, and salty sea air speeds up the process."},
+          {"id":"E3-Q8","question":"After days of rain, branches and rubbish were trapped against the river bridge. What can we infer?","options":["The river had completely dried up.","The current had carried debris downstream.","People had built a new footpath.","The bridge had been moved upstream."],"answer":"The current had carried debris downstream.","explanation":"Flowing floodwater can carry branches and rubbish until they become trapped against a bridge."},
+          {"id":"E3-Q9","question":"Farmers moved their animals to higher fields while the river continued to rise. Why did they do this?","options":["The higher fields had better grass.","They were protecting the animals from floodwater.","They wanted the animals closer to the village.","The lower fields were being planted with trees."],"answer":"They were protecting the animals from floodwater.","explanation":"Higher ground is safer when a river is rising and may overflow."},
+          {"id":"E3-Q10","question":"When the water finally fell, a line of mud remained across the road. What is the best inference?","options":["The river had previously overflowed across the road.","A lorry had delivered soil.","The road had never been wet.","Workers had painted a line there."],"answer":"The river had previously overflowed across the road.","explanation":"The mud line shows where floodwater had reached before it went down."}
+        ]
+      },
+      {
+        "sectionId": "E4",
+        "subject": "English",
+        "title": "Character Feelings, Motives and Relationships",
+        "questions": [
+          {"id":"E4-Q1","question":"Maya stood outside the music room, clutching the edges of her folder. Through the door, she could hear another pupil playing the piano confidently. When the music stopped, Maya took a deep breath and checked her notes for the third time. How does Maya feel before the audition?","options":["Bored","Nervous","Angry","Careless"],"answer":"Nervous","explanation":"Clutching her folder, taking a deep breath and checking her notes repeatedly all show nervousness."},
+          {"id":"E4-Q2","question":"Why does Maya check her notes repeatedly?","options":["She has forgotten where the music room is.","She wants to avoid speaking to Leena.","She is worried about making a mistake.","She plans to change the piece completely."],"answer":"She is worried about making a mistake.","explanation":"Checking the notes again and again shows that Maya wants to feel prepared and avoid an error."},
+          {"id":"E4-Q3","question":"Leena says, \"You know this piece better than anyone.\" What does this show about their relationship?","options":["Leena is jealous of Maya.","Leena is trying to encourage Maya.","Leena does not understand music.","Leena wants Maya to withdraw."],"answer":"Leena is trying to encourage Maya.","explanation":"Leena's words are meant to give Maya confidence before the audition."},
+          {"id":"E4-Q4","question":"A few minutes later, Maya emerged with bright eyes and a wide smile. What can we infer from her expression after the audition?","options":["She probably feels pleased with how it went.","She has decided never to play again.","She is still waiting to perform.","She is disappointed with Leena."],"answer":"She probably feels pleased with how it went.","explanation":"Bright eyes and a wide smile are clues that Maya feels happy and relieved."},
+          {"id":"E4-Q5","question":"When Mr Evans entered the classroom, the model bridge lay in pieces on the floor. Theo stared at his shoes. Why does Theo stare at his shoes?","options":["He is proud of the bridge.","He feels guilty or embarrassed.","He is searching for a missing stick.","He is angry with Mr Evans."],"answer":"He feels guilty or embarrassed.","explanation":"Theo avoids eye contact because he knows he dropped the bridge."},
+          {"id":"E4-Q6","question":"Sam says, \"It was an accident, sir. We were moving it together.\" Why does he say \"we\"?","options":["He wants to share the blame and protect Theo.","He cannot remember what happened.","He wants Mr Evans to punish them both.","He believes Theo broke it deliberately."],"answer":"He wants to share the blame and protect Theo.","explanation":"Sam knows Theo dropped it, but he does not want Theo to face the problem alone."},
+          {"id":"E4-Q7","question":"Theo looked up in surprise after Sam accepted some responsibility. How does Theo feel?","options":["Surprised","Amused","Impatient","Suspicious"],"answer":"Surprised","explanation":"The passage directly says that Theo looked up in surprise."},
+          {"id":"E4-Q8","question":"Sam tells Theo, \"We can rebuild it together.\" Which word best describes Sam?","options":["Selfish","Supportive","Dishonest for personal gain","Careless"],"answer":"Supportive","explanation":"Sam protects Theo and offers to help rebuild the bridge."},
+          {"id":"E4-Q9","question":"During a race, Amir turns back to help his brother Zain after Zain falls, even though other runners pass them. Why does Amir turn back?","options":["He is too tired to continue.","He wants Zain to lose.","He cares more about helping his brother than winning.","He has forgotten where the finish line is."],"answer":"He cares more about helping his brother than winning.","explanation":"Amir gives up his chance to win so that he can help his brother."},
+          {"id":"E4-Q10","question":"After the race, Amir says, \"There will be other races.\" What does this reveal?","options":["He regrets helping Zain.","He believes winning is less important than supporting his brother.","He no longer enjoys running.","He expects Zain to repay him."],"answer":"He believes winning is less important than supporting his brother.","explanation":"Amir knows he can race again, but helping Zain mattered more at that moment."}
+        ]
+      },
+      {
+        "sectionId": "E5",
+        "subject": "English",
+        "title": "Main Idea, Summary and Paragraph Purpose",
+        "questions": [
+          {"id":"E5-Q1","question":"For many years, otters were rarely seen along Britain's rivers because pollution damaged their habitats and reduced the number of fish. Cleaner water and conservation projects helped them return, but roads, litter and habitat damage still threaten them. What is the main idea?","options":["Otters are dangerous animals that should be avoided.","Otter numbers have recovered, but they still need protection.","Britain's rivers contain fewer fish than ever before.","Conservationists want to move otters away from rivers."],"answer":"Otter numbers have recovered, but they still need protection.","explanation":"The passage explains both the otters' recovery and the threats that remain."},
+          {"id":"E5-Q2","question":"Which is the best summary of the first paragraph about otters?","options":["Otters disappeared because rivers were too cold.","Otters became rare, but cleaner rivers helped them return.","Otters learned to live without fish.","Conservationists built roads beside rivers."],"answer":"Otters became rare, but cleaner rivers helped them return.","explanation":"This includes the paragraph's two main points: decline and recovery."},
+          {"id":"E5-Q3","question":"What is the purpose of the second paragraph about otters?","options":["To explain how otters catch fish","To describe the appearance of an otter","To show that the recovery is encouraging but not complete","To prove that otters no longer face any danger"],"answer":"To show that the recovery is encouraging but not complete","explanation":"The paragraph says otters have returned but still face threats."},
+          {"id":"E5-Q4","question":"Pupils and adults transformed a weed-filled patch of school land into a garden with vegetables, flowers and a pond. Which title best suits the whole passage?","options":["The Most Expensive School Project","From Wasteland to Wildlife Garden","Why Vegetables Are Difficult to Grow","A Guide to Building a Large Pond"],"answer":"From Wasteland to Wildlife Garden","explanation":"The title captures the change from an untidy area into a useful garden that supports wildlife."},
+          {"id":"E5-Q5","question":"Which sentence best summarises the whole school garden passage?","options":["Pupils and adults worked together to transform unused land into a useful school garden.","The pupils planted tomatoes because they disliked flowers.","Local businesses wanted to take control of the school grounds.","The garden is used only by the gardening club."],"answer":"Pupils and adults worked together to transform unused land into a useful school garden.","explanation":"This sentence includes the main people, action and result."},
+          {"id":"E5-Q6","question":"Why does the writer mention butterflies, bees and birds in the school garden passage?","options":["To show that the garden has also benefited wildlife","To explain why children are no longer allowed outside","To prove that the vegetables have failed to grow","To suggest that the pond should be removed"],"answer":"To show that the garden has also benefited wildlife","explanation":"The animals are evidence that the garden has created a better habitat."},
+          {"id":"E5-Q7","question":"Mr Iqbal spends hours carefully repairing watches that others have declared impossible to fix. What is the passage mainly about?","options":["Why clocks are becoming less popular","A careful and highly skilled clock repairer","A customer who refuses to pay for a watch","How to build a new workshop"],"answer":"A careful and highly skilled clock repairer","explanation":"The passage focuses on Mr Iqbal's skill, patience and careful work."},
+          {"id":"E5-Q8","question":"What is the main purpose of the second paragraph about Mr Iqbal?","options":["To show Mr Iqbal's patience and thoroughness","To explain why Mr Iqbal dislikes his customers","To describe the outside of the workshop","To show that Mr Iqbal repairs watches quickly"],"answer":"To show Mr Iqbal's patience and thoroughness","explanation":"The paragraph describes how carefully he examines, cleans and tests every watch."},
+          {"id":"E5-Q9","question":"A group of walkers became trapped in thick fog. A mountain rescue team found them and guided them safely down. Which is the best summary?","options":["Walkers ignored a rescue team and continued climbing.","A rescue team found and safely guided walkers lost in fog.","A mountain path was closed permanently because of rain.","Emergency workers built a stone wall on a mountain."],"answer":"A rescue team found and safely guided walkers lost in fog.","explanation":"This includes the problem, the rescue and the safe outcome."},
+          {"id":"E5-Q10","question":"Which detail is least important in a brief summary of the mountain rescue passage?","options":["The walkers became trapped in thick fog.","They contacted the emergency services.","The rescue team found and guided them to safety.","The walkers waited beside a stone wall."],"answer":"The walkers waited beside a stone wall.","explanation":"The stone wall is a small detail and is not needed to explain the main event."}
+        ]
+      },
+      {
+        "sectionId": "M1",
+        "subject": "Maths",
+        "title": "Multi-Step Word Problems, Graphs and Data Interpretation",
+        "questions": [
+          {"id":"M1-Q1","question":"A coach can carry 48 passengers. Three coaches are completely full, and a fourth coach carries 37 passengers. How many passengers are travelling altogether?","options":["171","181","192","229"],"answer":"181","explanation":"Three full coaches carry 48 × 3 = 144 passengers. Then 144 + 37 = 181."},
+          {"id":"M1-Q2","question":"An adult ticket costs £8.50 and a child ticket costs £5.25. A family buys 2 adult tickets and 3 child tickets. How much do they pay altogether?","options":["£27.50","£30.75","£32.75","£34.25"],"answer":"£32.75","explanation":"Two adults cost £17.00 and three children cost £15.75. The total is £32.75."},
+          {"id":"M1-Q3","question":"Lena reads 18 pages each day from Monday to Thursday. On Friday, she reads 27 pages. How many pages does she read altogether?","options":["72","81","90","99"],"answer":"99","explanation":"Monday to Thursday is four days, so 18 × 4 = 72. Then 72 + 27 = 99."},
+          {"id":"M1-Q4","question":"A shop has 240 apples. It sells 85 apples in the morning and 67 apples in the afternoon. How many apples remain?","options":["78","88","98","108"],"answer":"88","explanation":"The shop sells 85 + 67 = 152 apples. Then 240 - 152 = 88."},
+          {"id":"M1-Q5","question":"Adam read 7 books, Bella 12, Cara 9, Daniel 15 and Ella 11. How many books did the five pupils read altogether?","options":["44","49","54","59"],"answer":"54","explanation":"Add the five amounts: 7 + 12 + 9 + 15 + 11 = 54."},
+          {"id":"M1-Q6","question":"Daniel read 15 books and Adam read 7. How many more books did Daniel read than Adam?","options":["6","7","8","9"],"answer":"8","explanation":"Find the difference: 15 - 7 = 8."},
+          {"id":"M1-Q7","question":"Bella read 12 books and Ella read 11. Their books are packed equally into two boxes. How many books go into each box?","options":["10","11","11.5","23"],"answer":"11.5","explanation":"Together they read 12 + 11 = 23 books. Then 23 ÷ 2 = 11.5."},
+          {"id":"M1-Q8","question":"A swimming pool contains 1,500 litres of water. During cleaning, 275 litres are removed. Then 180 litres are added. How much water is now in the pool?","options":["1,045 litres","1,225 litres","1,405 litres","1,955 litres"],"answer":"1,405 litres","explanation":"First 1,500 - 275 = 1,225. Then 1,225 + 180 = 1,405 litres."},
+          {"id":"M1-Q9","question":"A group plans to walk 24 kilometres. They walk 7.5 km before lunch and 8.25 km after lunch. How much farther must they walk?","options":["7.25 km","8.25 km","8.75 km","9.25 km"],"answer":"8.25 km","explanation":"They have walked 7.5 + 8.25 = 15.75 km. Then 24 - 15.75 = 8.25 km."},
+          {"id":"M1-Q10","question":"A factory packs 36 bottles into each box. It fills 8 boxes, but 17 bottles are later found to be damaged. How many undamaged bottles remain?","options":["261","271","278","305"],"answer":"271","explanation":"The factory packs 36 × 8 = 288 bottles. Then 288 - 17 = 271."}
+        ]
+      },
+      {
+        "sectionId": "M2",
+        "subject": "Maths",
+        "title": "Fractions and Probability",
+        "questions": [
+          {"id":"M2-Q1","question":"Which fraction is equivalent to 3/5?","options":["6/15","9/15","12/25","15/30"],"answer":"9/15","explanation":"Multiply both the numerator and denominator of 3/5 by 3 to get 9/15."},
+          {"id":"M2-Q2","question":"Which fraction is the largest?","options":["2/3","3/5","5/8","7/12"],"answer":"2/3","explanation":"As decimals, 2/3 is about 0.67, which is greater than 0.60, 0.625 and about 0.58."},
+          {"id":"M2-Q3","question":"What is 3/8 + 1/4?","options":["4/12","4/8","5/8","7/8"],"answer":"5/8","explanation":"Change 1/4 to 2/8. Then 3/8 + 2/8 = 5/8."},
+          {"id":"M2-Q4","question":"What is 5/6 - 1/4?","options":["4/2","7/12","4/10","2/3"],"answer":"7/12","explanation":"Use twelfths: 5/6 = 10/12 and 1/4 = 3/12. Then 10/12 - 3/12 = 7/12."},
+          {"id":"M2-Q5","question":"A box contains 48 chocolates. Three eighths of them are milk chocolates. How many milk chocolates are there?","options":["12","16","18","24"],"answer":"18","explanation":"48 ÷ 8 = 6, and 6 × 3 = 18."},
+          {"id":"M2-Q6","question":"Sofia drinks 2/5 of a bottle of juice in the morning and 1/4 in the afternoon. What fraction of the bottle remains?","options":["7/20","9/20","11/20","13/20"],"answer":"7/20","explanation":"She drinks 8/20 + 5/20 = 13/20. The amount left is 20/20 - 13/20 = 7/20."},
+          {"id":"M2-Q7","question":"A bag contains 5 red counters, 3 blue counters and 2 green counters. One counter is chosen at random. What is the probability of choosing a blue counter?","options":["2/10","3/10","3/7","5/10"],"answer":"3/10","explanation":"There are 10 counters altogether and 3 are blue, so the probability is 3/10."},
+          {"id":"M2-Q8","question":"There are six cards numbered 1, 2, 3, 4, 5 and 6. One card is selected at random. What is the probability of selecting an even number?","options":["1/6","1/3","1/2","2/3"],"answer":"1/2","explanation":"The even cards are 2, 4 and 6, so 3 out of 6 cards work. 3/6 simplifies to 1/2."},
+          {"id":"M2-Q9","question":"A fair spinner has 8 equal sections: 3 yellow, 2 red, 2 blue and 1 green. What is the probability that the spinner lands on red or blue?","options":["1/4","3/8","1/2","5/8"],"answer":"1/2","explanation":"There are 2 red and 2 blue sections, making 4 successful sections out of 8. 4/8 = 1/2."},
+          {"id":"M2-Q10","question":"A bag contains 4 white balls and some black balls. There are 10 balls altogether. What is the probability of choosing a black ball?","options":["2/5","3/5","4/10","4/6"],"answer":"3/5","explanation":"There are 10 - 4 = 6 black balls. The probability is 6/10, which simplifies to 3/5."}
+        ]
+      },
+      {
+        "sectionId": "M3",
+        "subject": "Maths",
+        "title": "Percentages",
+        "questions": [
+          {"id":"M3-Q1","question":"What is 25% of 80?","options":["15","20","25","40"],"answer":"20","explanation":"25% is one quarter, and 80 ÷ 4 = 20."},
+          {"id":"M3-Q2","question":"What is 10% of £370?","options":["£3.70","£27","£37","£370"],"answer":"£37","explanation":"To find 10%, divide by 10: £370 ÷ 10 = £37."},
+          {"id":"M3-Q3","question":"What is 15% of 200?","options":["15","20","30","35"],"answer":"30","explanation":"10% of 200 is 20 and 5% is 10, so 15% is 30."},
+          {"id":"M3-Q4","question":"A jacket costs £60. It is reduced by 20%. What is the sale price?","options":["£40","£48","£50","£52"],"answer":"£48","explanation":"20% of £60 is £12. Subtract the discount: £60 - £12 = £48."},
+          {"id":"M3-Q5","question":"A book costs £40. Its price increases by 25%. What is the new price?","options":["£45","£48","£50","£65"],"answer":"£50","explanation":"25% of £40 is £10. Add the increase: £40 + £10 = £50."},
+          {"id":"M3-Q6","question":"Shauri scores 36 marks out of 40. What percentage did he score?","options":["80%","85%","90%","95%"],"answer":"90%","explanation":"36/40 is the same as 9/10, which is 90%."},
+          {"id":"M3-Q7","question":"20% of a number is 14. What is the number?","options":["28","56","70","84"],"answer":"70","explanation":"20% is one fifth. If one fifth is 14, the whole is 14 × 5 = 70."},
+          {"id":"M3-Q8","question":"A bicycle originally costs £240. It is reduced by 15%. How much money is taken off the original price?","options":["£24","£30","£36","£40"],"answer":"£36","explanation":"10% of £240 is £24 and 5% is £12. Therefore 15% is £36."},
+          {"id":"M3-Q9","question":"A water tank is 75% full. The tank can hold 800 litres altogether. How many litres are needed to fill it completely?","options":["150 litres","200 litres","600 litres","725 litres"],"answer":"200 litres","explanation":"The tank needs 25% more. One quarter of 800 is 200 litres."},
+          {"id":"M3-Q10","question":"A shop has 500 balloons. It sells 30% of them in the morning and then sells another 80 balloons in the afternoon. How many balloons remain?","options":["250","270","300","350"],"answer":"270","explanation":"30% of 500 is 150. After the morning 350 remain, and 350 - 80 = 270."}
+        ]
+      },
+      {
+        "sectionId": "M4",
+        "subject": "Maths",
+        "title": "Time, Dates and Timetables",
+        "questions": [
+          {"id":"M4-Q1","question":"A lesson starts at 9:35 am and finishes at 10:20 am. How long does the lesson last?","options":["35 minutes","40 minutes","45 minutes","55 minutes"],"answer":"45 minutes","explanation":"From 9:35 to 10:00 is 25 minutes, and from 10:00 to 10:20 is 20 minutes. Total: 45 minutes."},
+          {"id":"M4-Q2","question":"A film starts at 2:45 pm and lasts 1 hour 35 minutes. What time does it finish?","options":["4:10 pm","4:20 pm","4:30 pm","4:40 pm"],"answer":"4:20 pm","explanation":"Add one hour to get 3:45 pm, then add 35 minutes to get 4:20 pm."},
+          {"id":"M4-Q3","question":"How many minutes are there in 2 hours 25 minutes?","options":["125 minutes","135 minutes","145 minutes","155 minutes"],"answer":"145 minutes","explanation":"Two hours is 120 minutes. Add 25 minutes to get 145 minutes."},
+          {"id":"M4-Q4","question":"A train leaves at 08:47 and arrives at 10:12. How long is the journey?","options":["1 hour 15 minutes","1 hour 25 minutes","1 hour 35 minutes","2 hours 25 minutes"],"answer":"1 hour 25 minutes","explanation":"From 08:47 to 09:47 is one hour, then to 10:12 is another 25 minutes."},
+          {"id":"M4-Q5","question":"Bus A travels from 09:10 to 09:48, Bus B from 09:35 to 10:08, Bus C from 10:05 to 10:41 and Bus D from 10:30 to 11:02. Which bus has the shortest journey time?","options":["Bus A","Bus B","Bus C","Bus D"],"answer":"Bus D","explanation":"The journey times are 38, 33, 36 and 32 minutes. Bus D is the shortest."},
+          {"id":"M4-Q6","question":"Bus C leaves town at 10:05 and arrives at the museum at 10:41. How long does it take?","options":["32 minutes","34 minutes","36 minutes","41 minutes"],"answer":"36 minutes","explanation":"From 10:05 to 10:41 is 36 minutes."},
+          {"id":"M4-Q7","question":"Bus A arrives at 09:48, Bus B at 10:08, Bus C at 10:41 and Bus D at 11:02. A visitor must arrive by 10:15. What is the latest bus they can take?","options":["Bus A","Bus B","Bus C","Bus D"],"answer":"Bus B","explanation":"Bus B arrives at 10:08, before 10:15. Bus C arrives too late."},
+          {"id":"M4-Q8","question":"The 1st of March is a Monday. What day of the week is the 18th of March?","options":["Wednesday","Thursday","Friday","Saturday"],"answer":"Thursday","explanation":"The 18th is 17 days after the 1st. Fourteen days return to Monday, then three more days gives Thursday."},
+          {"id":"M4-Q9","question":"A holiday begins on 12 August and ends on 27 August. How many days pass between these two dates?","options":["14 days","15 days","16 days","17 days"],"answer":"15 days","explanation":"Find the difference: 27 - 12 = 15 days."},
+          {"id":"M4-Q10","question":"A sports event starts at 11:50 am. The first part lasts 55 minutes, followed by a 20-minute break. The second part then lasts 45 minutes. What time does the event finish?","options":["1:30 pm","1:40 pm","1:50 pm","2:00 pm"],"answer":"1:50 pm","explanation":"11:50 + 55 minutes = 12:45. Add 20 minutes to get 1:05, then add 45 minutes to get 1:50."}
+        ]
+      },
+      {
+        "sectionId": "M5",
+        "subject": "Maths",
+        "title": "2D and 3D Measurement",
+        "questions": [
+          {"id":"M5-Q1","question":"A rectangle is 14 cm long and 9 cm wide. What is its perimeter?","options":["23 cm","46 cm","72 cm","126 cm"],"answer":"46 cm","explanation":"Perimeter is 2 × (14 + 9) = 46 cm."},
+          {"id":"M5-Q2","question":"A playground is 18 m long and 7 m wide. What is its area?","options":["25 m²","50 m²","126 m²","252 m²"],"answer":"126 m²","explanation":"Area is length × width: 18 × 7 = 126 m²."},
+          {"id":"M5-Q3","question":"A rectangle has an area of 96 cm². Its width is 8 cm. What is its length?","options":["12 cm","16 cm","44 cm","88 cm"],"answer":"12 cm","explanation":"Length = area ÷ width, so 96 ÷ 8 = 12 cm."},
+          {"id":"M5-Q4","question":"A square has a perimeter of 36 cm. What is its area?","options":["36 cm²","72 cm²","81 cm²","1296 cm²"],"answer":"81 cm²","explanation":"Each side is 36 ÷ 4 = 9 cm. The area is 9 × 9 = 81 cm²."},
+          {"id":"M5-Q5","question":"A triangle has a base of 12 cm and a perpendicular height of 7 cm. What is its area?","options":["19 cm²","42 cm²","84 cm²","96 cm²"],"answer":"42 cm²","explanation":"Triangle area is base × height ÷ 2: 12 × 7 ÷ 2 = 42 cm²."},
+          {"id":"M5-Q6","question":"A rectangular garden measures 15 m by 10 m. A square pond measuring 4 m by 4 m is built inside it. What area of the garden remains?","options":["134 m²","146 m²","150 m²","166 m²"],"answer":"134 m²","explanation":"The garden area is 150 m² and the pond area is 16 m². The remaining area is 150 - 16 = 134 m²."},
+          {"id":"M5-Q7","question":"A cuboid is 9 cm long, 5 cm wide and 4 cm high. What is its volume?","options":["18 cm³","90 cm³","180 cm³","360 cm³"],"answer":"180 cm³","explanation":"Volume is length × width × height: 9 × 5 × 4 = 180 cm³."},
+          {"id":"M5-Q8","question":"A cuboid has a volume of 240 cm³. Its length is 10 cm and its width is 6 cm. What is its height?","options":["4 cm","6 cm","24 cm","40 cm"],"answer":"4 cm","explanation":"The base area is 10 × 6 = 60 cm². Height = 240 ÷ 60 = 4 cm."},
+          {"id":"M5-Q9","question":"A container holds 3.5 litres of water. How many millilitres is this?","options":["35 ml","350 ml","3,050 ml","3,500 ml"],"answer":"3,500 ml","explanation":"One litre is 1,000 millilitres, so 3.5 × 1,000 = 3,500 ml."},
+          {"id":"M5-Q10","question":"A box measures 6 cm by 4 cm by 3 cm. It is completely filled with cubes measuring 1 cm by 1 cm by 1 cm. How many cubes fit inside?","options":["13","24","72","144"],"answer":"72","explanation":"The box's volume is 6 × 4 × 3 = 72 cm³, so it holds 72 one-centimetre cubes."}
+        ]
+      }
+    ]
+  };
+
+  // ================================================================
+  //  THEME METADATA — visual settings for each island/boss
+  //  Parents: edit colours, names, or emoji here to reskin easily.
+  // ================================================================
+  const ISLAND_THEMES = {
+    "E1": { name: "The Jungle Library",      boss: "The Word Wyrm",              emoji: "📚", islandColor: 0x4CAF50, bossColor: 0xFFD700, accent: 0x8BC34A, type: "english" },
+    "E2": { name: "The Ruin of Runes",       boss: "The Evidence Elemental",     emoji: "🗿", islandColor: 0x9E9E9E, bossColor: 0x2196F3, accent: 0xBDBDBD, type: "english" },
+    "E3": { name: "The Misty Marsh",         boss: "The Riddle Raven",           emoji: "🌫️", islandColor: 0x7B1FA2, bossColor: 0xCE93D8, accent: 0xAB47BC, type: "english" },
+    "E4": { name: "The Crystal Caverns",     boss: "The Heart Guardian",         emoji: "💎", islandColor: 0xEC407A, bossColor: 0xF48FB1, accent: 0xF06292, type: "english" },
+    "E5": { name: "The Sky Sanctuary",       boss: "The Paragraph Phoenix",      emoji: "☁️", islandColor: 0xE1F5FE, bossColor: 0xFF9800, accent: 0x81D4FA, type: "english" },
+    "M1": { name: "The Clockwork Factory",   boss: "The Gear Golem",             emoji: "⚙️", islandColor: 0x607D8B, bossColor: 0xFFC107, accent: 0x90A4AE, type: "maths" },
+    "M2": { name: "The Crystal Cave of Chance",boss: "The Fraction Dragon",        emoji: "🎲", islandColor: 0x00BCD4, bossColor: 0xFF5722, accent: 0x4DD0E1, type: "maths" },
+    "M3": { name: "The Percentage Volcano",  boss: "The Percentage Phantom",     emoji: "🌋", islandColor: 0xD84315, bossColor: 0xFFEB3B, accent: 0xFF7043, type: "maths" },
+    "M4": { name: "The Time Temple",         boss: "The Clockwork Colossus",     emoji: "⏰", islandColor: 0xFFB300, bossColor: 0x3E2723, accent: 0xFFD54F, type: "maths" },
+    "M5": { name: "The Geometry Gardens",    boss: "The Shape Shifter",          emoji: "📐", islandColor: 0x66BB6A, bossColor: 0x9C27B0, accent: 0xA5D6A7, type: "maths" }
+  };
+
+  // Island 3D positions [x, y, z] — two branches from centre
+  const ISLAND_LAYOUT = {
+    "E1": [-12,  3, -4],  "E2": [-18,  6, -10], "E3": [-20,  9, -18],
+    "E4": [-16, 12, -26], "E5": [-10, 15, -32],
+    "M1": [ 12,  3, -4],  "M2": [ 18,  6, -10], "M3": [ 20,  9, -18],
+    "M4": [ 16, 12, -26], "M5": [ 10, 15, -32]
+  };
+
+  const BADGES = {
+    "E1": "📖 Vocabulary Vanguard",   "E2": "🔍 Evidence Expert",
+    "E3": "🦊 Inference Investigator", "E4": "❤️ Character Champion",
+    "E5": "🦅 Summary Sage",          "M1": "📊 Data Defender",
+    "M2": "🍕 Fraction Fighter",     "M3": "🔥 Percentage Paladin",
+    "M4": "⏱️ Timekeeper Titan",    "M5": "📏 Measurement Master"
+  };
+
+  // ================================================================
+  //  CONFIG & STATE
+  // ================================================================
+  const CONFIG = {
+    heroSpeed: 0.15,
+    camOffsetHub: new THREE.Vector3(0, 12, 18),
+    camOffsetBattle: new THREE.Vector3(0, 4, 10),
+    xpPerCorrect: 10,
+    xpPerBoss: 50,
+    xpPerStreakBonus: 5,
+    levelThreshold: 100
+  };
+
+  let state = {
+    screen: 'title', // title | hub | battle | victory | trophy | break
+    xp: 0,
+    level: 1,
+    streak: 0,
+    bestStreak: 0,
+    completed: {}, // sectionId -> {score, total, date}
+    sessionIslandsCompleted: 0,
+    selectedIsland: null,
+    battle: null // active battle state
+  };
+
+  // Three.js globals
+  let scene, camera, renderer, clock;
+  let hubScene, battleScene;
+  let hero, hubGroup, battleGroup;
+  let islands = {}; // sectionId -> {mesh, theme, bossMesh, status}
+  let bosses = {};  // sectionId -> boss group
+  let particles = [];
+  let raycaster = new THREE.Raycaster();
+  let mouse = new THREE.Vector2();
+  let keys = {};
+  let clickTarget = null;
+  let isTransitioning = false;
+
+  // ================================================================
+  //  SAVE SYSTEM
+  // ================================================================
+  const SAVE_KEY = 'bossBattleIslands_save_v1';
+  function loadSave() {
+    try {
+      const raw = localStorage.getItem(SAVE_KEY);
+      if (raw) {
+        const data = JSON.parse(raw);
+        state.xp = data.xp || 0;
+        state.level = data.level || 1;
+        state.bestStreak = data.bestStreak || 0;
+        state.completed = data.completed || {};
+      }
+    } catch(e) { console.log('No save found'); }
+  }
+  function saveGame() {
+    try {
+      localStorage.setItem(SAVE_KEY, JSON.stringify({
+        xp: state.xp,
+        level: state.level,
+        bestStreak: state.bestStreak,
+        completed: state.completed
+      }));
+    } catch(e) { console.log('Save failed', e); }
+  }
+  function clearSave() {
+    localStorage.removeItem(SAVE_KEY);
+    state.xp = 0; state.level = 1; state.streak = 0; state.bestStreak = 0; state.completed = {};
+    updateHUD();
+  }
+
+  // ================================================================
+  //  THREE.JS CORE SETUP
+  // ================================================================
+  function initThree() {
+    const container = document.getElementById('canvas-container');
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x87CEEB);
+    scene.fog = new THREE.Fog(0x87CEEB, 30, 90);
+
+    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 200);
+    camera.position.set(0, 12, 18);
+
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    container.appendChild(renderer.domElement);
+
+    clock = new THREE.Clock();
+
+    // Lights
+    const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(ambient);
+
+    const sun = new THREE.DirectionalLight(0xffffff, 0.9);
+    sun.position.set(20, 40, 20);
+    sun.castShadow = true;
+    sun.shadow.mapSize.width = 2048;
+    sun.shadow.mapSize.height = 2048;
+    sun.shadow.camera.near = 0.5;
+    sun.shadow.camera.far = 100;
+    sun.shadow.camera.left = -40;
+    sun.shadow.camera.right = 40;
+    sun.shadow.camera.top = 40;
+    sun.shadow.camera.bottom = -40;
+    scene.add(sun);
+
+    // Ground plane for raycasting click-to-move
+    const groundGeo = new THREE.PlaneGeometry(200, 200);
+    const groundMat = new THREE.MeshBasicMaterial({ visible: false });
+    const ground = new THREE.Mesh(groundGeo, groundMat);
+    ground.rotation.x = -Math.PI / 2;
+    ground.name = 'ground';
+    scene.add(ground);
+
+    window.addEventListener('resize', onWindowResize);
+    window.addEventListener('keydown', e => keys[e.key.toLowerCase()] = true);
+    window.addEventListener('keyup', e => keys[e.key.toLowerCase()] = false);
+    window.addEventListener('pointerdown', onPointerDown);
+    window.addEventListener('pointermove', onPointerMove);
+  }
+
+  function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+
+  // ================================================================
+  //  ASSET BUILDERS — Low-poly, colourful, kid-friendly
+  // ================================================================
+
+  // Create the hero character: Quiz, the Pencil Knight
+  function createHero() {
+    const group = new THREE.Group();
+    group.name = 'hero';
+
+    // Body
+    const bodyGeo = new THREE.BoxGeometry(0.6, 0.8, 0.4);
+    const bodyMat = new THREE.MeshLambertMaterial({ color: 0x2196F3 });
+    const body = new THREE.Mesh(bodyGeo, bodyMat);
+    body.position.y = 0.8;
+    body.castShadow = true;
+    group.add(body);
+
+    // Head
+    const headGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+    const headMat = new THREE.MeshLambertMaterial({ color: 0xFFCC80 });
+    const head = new THREE.Mesh(headGeo, headMat);
+    head.position.y = 1.45;
+    head.castShadow = true;
+    group.add(head);
+
+    // Eyes
+    const eyeGeo = new THREE.BoxGeometry(0.08, 0.08, 0.05);
+    const eyeMat = new THREE.MeshBasicMaterial({ color: 0x333333 });
+    const eyeL = new THREE.Mesh(eyeGeo, eyeMat);
+    eyeL.position.set(-0.12, 1.5, 0.23);
+    const eyeR = new THREE.Mesh(eyeGeo, eyeMat);
+    eyeR.position.set(0.12, 1.5, 0.23);
+    group.add(eyeL, eyeR);
+
+    // Backpack
+    const packGeo = new THREE.BoxGeometry(0.5, 0.5, 0.3);
+    const packMat = new THREE.MeshLambertMaterial({ color: 0x8D6E63 });
+    const pack = new THREE.Mesh(packGeo, packMat);
+    pack.position.set(0, 0.9, -0.35);
+    pack.castShadow = true;
+    group.add(pack);
+
+    // Pencil Sword
+    const pencilGeo = new THREE.CylinderGeometry(0.04, 0.04, 1.2, 8);
+    const pencilMat = new THREE.MeshLambertMaterial({ color: 0xFFEB3B });
+    const pencil = new THREE.Mesh(pencilGeo, pencilMat);
+    pencil.rotation.z = -0.3;
+    pencil.position.set(0.45, 1.1, 0.2);
+    group.add(pencil);
+
+    // Tip
+    const tipGeo = new THREE.ConeGeometry(0.04, 0.15, 8);
+    const tipMat = new THREE.MeshLambertMaterial({ color: 0xFF9800 });
+    const tip = new THREE.Mesh(tipGeo, tipMat);
+    tip.rotation.z = -0.3;
+    tip.position.set(0.52, 1.75, 0.2);
+    group.add(tip);
+
+    // Legs
+    const legGeo = new THREE.BoxGeometry(0.18, 0.5, 0.18);
+    const legMat = new THREE.MeshLambertMaterial({ color: 0x1565C0 });
+    const legL = new THREE.Mesh(legGeo, legMat);
+    legL.position.set(-0.15, 0.25, 0);
+    const legR = new THREE.Mesh(legGeo, legMat);
+    legR.position.set(0.15, 0.25, 0);
+    group.add(legL, legR);
+
+    group.userData.legL = legL;
+    group.userData.legR = legR;
+    group.userData.body = body;
+
+    return group;
+  }
+
+  // Create an island mesh with theme-appropriate decorations
+  function createIsland(sectionId, pos, theme) {
+    const group = new THREE.Group();
+    group.position.set(pos[0], pos[1], pos[2]);
+
+    // Main terrain
+    const radius = 3.2;
+    const height = 1.2;
+    const islandGeo = new THREE.CylinderGeometry(radius, radius * 0.85, height, 10);
+    const islandMat = new THREE.MeshLambertMaterial({ color: theme.islandColor });
+    const island = new THREE.Mesh(islandGeo, islandMat);
+    island.position.y = height / 2;
+    island.castShadow = true;
+    island.receiveShadow = true;
+    group.add(island);
+
+    // Grass top
+    const topGeo = new THREE.CylinderGeometry(radius * 0.95, radius * 0.95, 0.15, 10);
+    const topMat = new THREE.MeshLambertMaterial({ color: 0x81C784 });
+    const top = new THREE.Mesh(topGeo, topMat);
+    top.position.y = height + 0.05;
+    top.receiveShadow = true;
+    group.add(top);
+
+    // Decorations based on theme
+    addIslandDecorations(group, theme, radius);
+
+    // Status indicator (crystal pillar)
+    const pillarGeo = new THREE.CylinderGeometry(0.15, 0.15, 1.5, 6);
+    const pillarMat = new THREE.MeshLambertMaterial({ color: 0xB0BEC5 });
+    const pillar = new THREE.Mesh(pillarGeo, pillarMat);
+    pillar.position.set(0, height + 1, 0);
+    group.add(pillar);
+
+    // Glow orb on top
+    const orbGeo = new THREE.SphereGeometry(0.25, 8, 8);
+    const orbMat = new THREE.MeshBasicMaterial({ color: 0xB0BEC5 });
+    const orb = new THREE.Mesh(orbGeo, orbMat);
+    orb.position.set(0, height + 1.9, 0);
+    group.add(orb);
+
+    group.userData = { sectionId, theme, pillar, orb, radius, height };
+    return group;
+  }
+
+  function addIslandDecorations(group, theme, radius) {
+    const h = group.userData ? group.userData.height : 1.2;
+    if (theme.type === 'english') {
+      // Book rocks for English islands
+      for (let i = 0; i < 3; i++) {
+        const book = new THREE.Mesh(
+          new THREE.BoxGeometry(0.4, 0.5, 0.15),
+          new THREE.MeshLambertMaterial({ color: 0x5D4037 })
+        );
+        const angle = (i / 3) * Math.PI * 2;
+        book.position.set(Math.cos(angle) * radius * 0.6, h + 0.25, Math.sin(angle) * radius * 0.6);
+        book.rotation.y = angle;
+        group.add(book);
+      }
+    } else {
+      // Number blocks / gear shapes for Maths islands
+      for (let i = 0; i < 3; i++) {
+        const block = new THREE.Mesh(
+          new THREE.BoxGeometry(0.35, 0.35, 0.35),
+          new THREE.MeshLambertMaterial({ color: theme.accent })
+        );
+        const angle = (i / 3) * Math.PI * 2;
+        block.position.set(Math.cos(angle) * radius * 0.6, h + 0.2, Math.sin(angle) * radius * 0.6);
+        block.rotation.set(0.2, angle, 0.1);
+        group.add(block);
+      }
+    }
+  }
+
+  // Create a bridge between two points
+  function createBridge(p1, p2, color) {
+    const mid = new THREE.Vector3().addVectors(p1, p2).multiplyScalar(0.5);
+    const dist = p1.distanceTo(p2);
+    const bridge = new THREE.Mesh(
+      new THREE.BoxGeometry(0.8, 0.15, dist),
+      new THREE.MeshLambertMaterial({ color: color || 0x8D6E63 })
+    );
+    bridge.position.copy(mid);
+    bridge.lookAt(p2);
+    bridge.receiveShadow = true;
+    return bridge;
+  }
+
+  // ================================================================
+  //  BOSS BUILDERS — 10 unique low-poly bosses
+  // ================================================================
+  function createBoss(sectionId) {
+    const theme = ISLAND_THEMES[sectionId];
+    const group = new THREE.Group();
+    const c = theme.bossColor;
+
+    switch(sectionId) {
+      case 'E1': // Word Wyrm — segmented dragon of letters
+        for (let i = 0; i < 5; i++) {
+          const seg = new THREE.Mesh(
+            new THREE.BoxGeometry(0.8 - i*0.1, 0.6, 0.4),
+            new THREE.MeshLambertMaterial({ color: i % 2 === 0 ? c : 0xFFFFFF })
+          );
+          seg.position.set(0, 1.2 + i * 0.5, -i * 0.3);
+          group.add(seg);
+        }
+        // Head
+        const wyrmHead = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.5, 0.6), new THREE.MeshLambertMaterial({color: c}));
+        wyrmHead.position.set(0, 3.4, -1.2);
+        group.add(wyrmHead);
+        // Wings (flat boxes)
+        const wingGeo = new THREE.BoxGeometry(1.2, 0.05, 0.6);
+        const wingL = new THREE.Mesh(wingGeo, new THREE.MeshLambertMaterial({color: 0xFFFFFF}));
+        wingL.position.set(-0.8, 2.5, -0.5); wingL.rotation.z = 0.3;
+        const wingR = new THREE.Mesh(wingGeo, new THREE.MeshLambertMaterial({color: 0xFFFFFF}));
+        wingR.position.set(0.8, 2.5, -0.5); wingR.rotation.z = -0.3;
+        group.add(wingL, wingR);
+        break;
+
+      case 'E2': // Evidence Elemental — stone golem
+        const body2 = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.4, 0.8), new THREE.MeshLambertMaterial({color: 0x78909C}));
+        body2.position.y = 1.4; group.add(body2);
+        const head2 = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.6, 0.6), new THREE.MeshLambertMaterial({color: 0x90A4AE}));
+        head2.position.y = 2.5; group.add(head2);
+        // Rune eyes
+        const eyeGeo2 = new THREE.SphereGeometry(0.08, 8, 8);
+        const eyeMat2 = new THREE.MeshBasicMaterial({color: theme.bossColor});
+        const eyeL2 = new THREE.Mesh(eyeGeo2, eyeMat2); eyeL2.position.set(-0.18, 2.55, 0.32);
+        const eyeR2 = new THREE.Mesh(eyeGeo2, eyeMat2); eyeR2.position.set(0.18, 2.55, 0.32);
+        group.add(eyeL2, eyeR2);
+        // Shield (magnifying glass)
+        const shield = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.4, 0.05, 16), new THREE.MeshLambertMaterial({color: 0xB3E5FC, transparent: true, opacity: 0.7}));
+        shield.rotation.x = Math.PI / 2; shield.position.set(0.8, 1.4, 0.5); group.add(shield);
+        break;
+
+      case 'E3': // Riddle Raven — crystal bird
+        const ravenBody = new THREE.Mesh(new THREE.ConeGeometry(0.5, 1.4, 6), new THREE.MeshLambertMaterial({color: 0x4A148C}));
+        ravenBody.position.y = 1.2; group.add(ravenBody);
+        const ravenHead = new THREE.Mesh(new THREE.ConeGeometry(0.25, 0.5, 6), new THREE.MeshLambertMaterial({color: 0x6A1B9A}));
+        ravenHead.position.set(0, 2.1, 0.2); ravenHead.rotation.x = -0.4; group.add(ravenHead);
+        const beak = new THREE.Mesh(new THREE.ConeGeometry(0.06, 0.3, 4), new THREE.MeshLambertMaterial({color: 0xFFD700}));
+        beak.position.set(0, 2.0, 0.5); beak.rotation.x = -1.2; group.add(beak);
+        // Wings
+        const ravenWingGeo = new THREE.BoxGeometry(1.0, 0.1, 0.4);
+        const ravenWingL = new THREE.Mesh(ravenWingGeo, new THREE.MeshLambertMaterial({color: 0x7B1FA2}));
+        ravenWingL.position.set(-0.6, 1.5, 0); ravenWingL.rotation.z = 0.4;
+        const ravenWingR = new THREE.Mesh(ravenWingGeo, new THREE.MeshLambertMaterial({color: 0x7B1FA2}));
+        ravenWingR.position.set(0.6, 1.5, 0); ravenWingR.rotation.z = -0.4;
+        group.add(ravenWingL, ravenWingR);
+        break;
+
+      case 'E4': // Heart Guardian — crystal giant
+        const hgBody = new THREE.Mesh(new THREE.BoxGeometry(1.0, 1.2, 0.6), new THREE.MeshLambertMaterial({color: 0xF06292}));
+        hgBody.position.y = 1.3; group.add(hgBody);
+        const hgHead = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.5, 0.5), new THREE.MeshLambertMaterial({color: 0xF48FB1}));
+        hgHead.position.y = 2.3; group.add(hgHead);
+        // Heart chest
+        const heart = new THREE.Mesh(new THREE.SphereGeometry(0.3, 8, 8), new THREE.MeshBasicMaterial({color: 0xE91E63}));
+        heart.position.set(0, 1.5, 0.35); heart.scale.set(1, 1.2, 0.5); group.add(heart);
+        // Arms
+        const armGeo = new THREE.BoxGeometry(0.25, 0.8, 0.25);
+        const armL = new THREE.Mesh(armGeo, new THREE.MeshLambertMaterial({color: 0xF06292}));
+        armL.position.set(-0.7, 1.4, 0); armL.rotation.z = 0.2;
+        const armR = new THREE.Mesh(armGeo, new THREE.MeshLambertMaterial({color: 0xF06292}));
+        armR.position.set(0.7, 1.4, 0); armR.rotation.z = -0.2;
+        group.add(armL, armR);
+        break;
+
+      case 'E5': // Paragraph Phoenix — bird of pages
+        const phoenixBody = new THREE.Mesh(new THREE.ConeGeometry(0.45, 1.2, 5), new THREE.MeshLambertMaterial({color: 0xFF9800}));
+        phoenixBody.position.y = 1.1; group.add(phoenixBody);
+        const phoenixHead = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.35, 0.4), new THREE.MeshLambertMaterial({color: 0xFFB74D}));
+        phoenixHead.position.set(0, 1.9, 0.15); group.add(phoenixHead);
+        // Page wings
+        const pageWingGeo = new THREE.BoxGeometry(1.1, 0.05, 0.5);
+        const pageL = new THREE.Mesh(pageWingGeo, new THREE.MeshLambertMaterial({color: 0xFFFFFF}));
+        pageL.position.set(-0.65, 1.4, 0); pageL.rotation.z = 0.35;
+        const pageR = new THREE.Mesh(pageWingGeo, new THREE.MeshLambertMaterial({color: 0xFFFFFF}));
+        pageR.position.set(0.65, 1.4, 0); pageR.rotation.z = -0.35;
+        group.add(pageL, pageR);
+        // Tail feathers
+        for (let i = 0; i < 3; i++) {
+          const tail = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.6, 0.05), new THREE.MeshLambertMaterial({color: 0xFFCC80}));
+          tail.position.set((i-1)*0.15, 0.6, -0.3); tail.rotation.x = 0.4;
+          group.add(tail);
+        }
+        break;
+
+      case 'M1': // Gear Golem — box robot
+        const ggBody = new THREE.Mesh(new THREE.BoxGeometry(1.1, 1.3, 0.7), new THREE.MeshLambertMaterial({color: 0x607D8B}));
+        ggBody.position.y = 1.35; group.add(ggBody);
+        const ggHead = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.5, 0.5), new THREE.MeshLambertMaterial({color: 0x78909C}));
+        ggHead.position.y = 2.4; group.add(ggHead);
+        // Gear decorations
+        const gear = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.25, 0.1, 8), new THREE.MeshLambertMaterial({color: 0xFFC107}));
+        gear.rotation.x = Math.PI / 2; gear.position.set(0, 1.5, 0.38); group.add(gear);
+        // Chart eyes (pie chart-ish)
+        const chartEye = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.05, 8), new THREE.MeshBasicMaterial({color: 0x00E676}));
+        chartEye.rotation.x = Math.PI / 2;
+        const ceL = chartEye.clone(); ceL.position.set(-0.18, 2.45, 0.26);
+        const ceR = chartEye.clone(); ceR.position.set(0.18, 2.45, 0.26);
+        group.add(ceL, ceR);
+        break;
+
+      case 'M2': // Fraction Dragon — stout dragon with pie-chart scales
+        const fdBody = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.8, 0.7), new THREE.MeshLambertMaterial({color: 0x00BCD4}));
+        fdBody.position.y = 0.9; group.add(fdBody);
+        const fdHead = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.5, 0.5), new THREE.MeshLambertMaterial({color: 0x26C6DA}));
+        fdHead.position.set(0, 1.6, 0.2); group.add(fdHead);
+        // Pie-chart scale on back
+        const pie = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 0.05, 8), new THREE.MeshLambertMaterial({color: 0xFF5722}));
+        pie.rotation.x = Math.PI / 2; pie.position.set(0, 1.1, -0.4); group.add(pie);
+        // Small wings
+        const fdWing = new THREE.BoxGeometry(0.6, 0.05, 0.3);
+        const fdWL = new THREE.Mesh(fdWing, new THREE.MeshLambertMaterial({color: 0x4DD0E1}));
+        fdWL.position.set(-0.55, 1.2, 0); fdWL.rotation.z = 0.3;
+        const fdWR = new THREE.Mesh(fdWing, new THREE.MeshLambertMaterial({color: 0x4DD0E1}));
+        fdWR.position.set(0.55, 1.2, 0); fdWR.rotation.z = -0.3;
+        group.add(fdWL, fdWR);
+        break;
+
+      case 'M3': // Percentage Phantom — fiery ghost of % symbols
+        const ppBody = new THREE.Mesh(new THREE.SphereGeometry(0.5, 12, 12), new THREE.MeshLambertMaterial({color: 0xFF5722}));
+        ppBody.position.y = 1.2; group.add(ppBody);
+        const ppHead = new THREE.Mesh(new THREE.SphereGeometry(0.35, 12, 12), new THREE.MeshLambertMaterial({color: 0xFF9800}));
+        ppHead.position.y = 2.0; group.add(ppHead);
+        // % symbol floating
+        const pctBar1 = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.06, 0.06), new THREE.MeshBasicMaterial({color: 0xFFEB3B}));
+        pctBar1.position.set(0, 2.6, 0);
+        const pctBar2 = pctBar1.clone(); pctBar2.position.set(0, 2.3, 0);
+        const pctSlash = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.5, 0.06), new THREE.MeshBasicMaterial({color: 0xFFEB3B}));
+        pctSlash.position.set(0, 2.45, 0); pctSlash.rotation.z = 0.3;
+        group.add(pctBar1, pctBar2, pctSlash);
+        // Ghost tail
+        const tail = new THREE.Mesh(new THREE.ConeGeometry(0.3, 0.8, 8), new THREE.MeshLambertMaterial({color: 0xBF360C}));
+        tail.position.y = 0.4; group.add(tail);
+        break;
+
+      case 'M4': // Clockwork Colossus — tall thin robot with clock chest
+        const ccBody = new THREE.Mesh(new THREE.BoxGeometry(0.7, 1.6, 0.5), new THREE.MeshLambertMaterial({color: 0xFFB300}));
+        ccBody.position.y = 1.6; group.add(ccBody);
+        const ccHead = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.45, 0.4), new THREE.MeshLambertMaterial({color: 0xFFCA28}));
+        ccHead.position.y = 2.8; group.add(ccHead);
+        // Clock face
+        const clockFace = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.25, 0.05, 16), new THREE.MeshBasicMaterial({color: 0xFFFFFF}));
+        clockFace.rotation.x = Math.PI / 2; clockFace.position.set(0, 1.8, 0.28); group.add(clockFace);
+        // Hands
+        const hand1 = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.18, 0.02), new THREE.MeshBasicMaterial({color: 0x333333}));
+        hand1.position.set(0, 1.85, 0.3); hand1.rotation.z = 0.5;
+        const hand2 = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.12, 0.02), new THREE.MeshBasicMaterial({color: 0x333333}));
+        hand2.position.set(0, 1.78, 0.3); hand2.rotation.z = -0.3;
+        group.add(hand1, hand2);
+        // Pendulum arms
+        const pendulum = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.08, 0.08), new THREE.MeshLambertMaterial({color: 0x5D4037}));
+        pendulum.position.set(0, 1.2, 0.35); group.add(pendulum);
+        break;
+
+      case 'M5': // Shape Shifter — morphing geometry creature
+        const ssGroup = new THREE.Group();
+        const cube = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.5, 0.5), new THREE.MeshLambertMaterial({color: 0x9C27B0}));
+        cube.position.y = 0.8; ssGroup.add(cube);
+        const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.28, 12, 12), new THREE.MeshLambertMaterial({color: 0xAB47BC}));
+        sphere.position.y = 1.5; ssGroup.add(sphere);
+        const pyramid = new THREE.Mesh(new THREE.ConeGeometry(0.3, 0.5, 4), new THREE.MeshLambertMaterial({color: 0xCE93D8}));
+        pyramid.position.y = 2.1; ssGroup.add(pyramid);
+        ssGroup.userData = { cube, sphere, pyramid, morphTime: 0 };
+        group.add(ssGroup);
+        group.userData.shapes = ssGroup;
+        break;
+    }
+
+    group.userData.sectionId = sectionId;
+    group.userData.theme = theme;
+    return group;
+  }
+
+  // ================================================================
+  //  HUB WORLD LOGIC
+  // ================================================================
+  function buildHub() {
+    hubGroup = new THREE.Group();
+    scene.add(hubGroup);
+
+    // Central home island
+    const homeIsland = createIsland('HOME', [0, 0, 0], { islandColor: 0xFFD700, type: 'home' });
+    homeIsland.userData.isHome = true;
+    // Make home island smaller
+    homeIsland.children[0].scale.set(0.6, 0.6, 0.6);
+    homeIsland.children[1].scale.set(0.6, 1, 0.6);
+    hubGroup.add(homeIsland);
+
+    // Spawn hero
+    hero = createHero();
+    hero.position.set(0, 0, 0);
+    hubGroup.add(hero);
+
+    // Build each section island
+    GAME_DATA.sections.forEach((section, idx) => {
+      const sid = section.sectionId;
+      const theme = ISLAND_THEMES[sid];
+      const pos = ISLAND_LAYOUT[sid];
+      const island = createIsland(sid, pos, theme);
+      hubGroup.add(island);
+      islands[sid] = island;
+
+      // Bridge from previous island (or home for first of each branch)
+      let prevPos;
+      if (sid === 'E1' || sid === 'M1') {
+        prevPos = new THREE.Vector3(0, 0, 0);
+      } else {
+        const prevId = GAME_DATA.sections[idx - 1].sectionId;
+        prevPos = new THREE.Vector3(...ISLAND_LAYOUT[prevId]);
+      }
+      const currPos = new THREE.Vector3(...pos);
+      const bridge = createBridge(prevPos, currPos, 0xA1887F);
+      hubGroup.add(bridge);
+
+      // Boss floating above island (hidden until battle)
+      const boss = createBoss(sid);
+      boss.position.set(pos[0], pos[1] + 5, pos[2]);
+      boss.visible = false;
+      hubGroup.add(boss);
+      bosses[sid] = boss;
+    });
+
+    updateIslandVisuals();
+  }
+
+  function updateIslandVisuals() {
+    GAME_DATA.sections.forEach((section, idx) => {
+      const sid = section.sectionId;
+      const island = islands[sid];
+      if (!island) return;
+      const orb = island.userData.orb;
+      const pillar = island.userData.pillar;
+      const prevId = idx > 0 ? GAME_DATA.sections[idx - 1].sectionId : null;
+
+      let status = 'locked';
+      if (state.completed[sid]) {
+        status = 'completed';
+      } else if (!prevId || state.completed[prevId]) {
+        status = 'unlocked';
+      }
+      island.userData.status = status;
+
+      if (status === 'locked') {
+        orb.material.color.setHex(0xB0BEC5);
+        pillar.material.color.setHex(0x78909C);
+        island.children[0].material.color.setHex(0xB0BEC5); // grey out
+      } else if (status === 'unlocked') {
+        orb.material.color.setHex(0x29B6F6);
+        pillar.material.color.setHex(0x4FC3F7);
+      } else {
+        orb.material.color.setHex(0xFFD700);
+        pillar.material.color.setHex(0xFFC107);
+        // Trophy on top
+        if (!island.userData.hasTrophy) {
+          const trophy = new THREE.Mesh(
+            new THREE.ConeGeometry(0.2, 0.4, 4),
+            new THREE.MeshLambertMaterial({ color: 0xFFD700 })
+          );
+          trophy.position.set(0, island.userData.height + 2.3, 0);
+          island.add(trophy);
+          island.userData.hasTrophy = true;
+        }
+      }
+    });
+  }
+
+  function updateHub(dt) {
+    if (!hero || state.screen !== 'hub') return;
+
+    // WASD / Arrow movement
+    const move = new THREE.Vector3();
+    if (keys['w'] || keys['arrowup']) move.z -= 1;
+    if (keys['s'] || keys['arrowdown']) move.z += 1;
+    if (keys['a'] || keys['arrowleft']) move.x -= 1;
+    if (keys['d'] || keys['arrowright']) move.x += 1;
+
+    // Normalize and apply speed relative to camera
+    if (move.length() > 0) {
+      move.normalize().multiplyScalar(CONFIG.heroSpeed);
+      // Rotate to camera yaw
+      const camYaw = Math.atan2(camera.position.x - hero.position.x, camera.position.z - hero.position.z);
+      move.applyAxisAngle(new THREE.Vector3(0, 1, 0), camYaw + Math.PI);
+      hero.position.add(move);
+      // Animate legs
+      const walkCycle = Math.sin(Date.now() * 0.01) * 0.3;
+      hero.userData.legL.rotation.x = walkCycle;
+      hero.userData.legR.rotation.x = -walkCycle;
+      hero.userData.body.rotation.y = Math.sin(Date.now() * 0.005) * 0.05;
+    } else {
+      hero.userData.legL.rotation.x = 0;
+      hero.userData.legR.rotation.x = 0;
+    }
+
+    // Click-to-move
+    if (clickTarget) {
+      const dir = new THREE.Vector3().subVectors(clickTarget, hero.position);
+      dir.y = 0;
+      if (dir.length() > 0.2) {
+        dir.normalize().multiplyScalar(CONFIG.heroSpeed * 1.2);
+        hero.position.add(dir);
+        const walkCycle = Math.sin(Date.now() * 0.01) * 0.3;
+        hero.userData.legL.rotation.x = walkCycle;
+        hero.userData.legR.rotation.x = -walkCycle;
+      } else {
+        clickTarget = null;
+      }
+    }
+
+    // Camera follow
+    const targetPos = hero.position.clone().add(CONFIG.camOffsetHub);
+    camera.position.lerp(targetPos, 0.05);
+    camera.lookAt(hero.position.clone().add(new THREE.Vector3(0, 1, 0)));
+
+    // Animate bosses floating above completed islands
+    Object.keys(bosses).forEach(sid => {
+      const boss = bosses[sid];
+      if (state.completed[sid]) {
+        boss.visible = true;
+        boss.rotation.y += dt * 0.5;
+        boss.position.y = islands[sid].position.y + 5 + Math.sin(Date.now() * 0.002) * 0.3;
+      } else {
+        boss.visible = false;
+      }
+    });
+
+    // Animate Shape Shifter if visible
+    if (bosses['M5'] && bosses['M5'].visible) {
+      const shapes = bosses['M5'].userData.shapes;
+      if (shapes) {
+        shapes.userData.morphTime += dt;
+        const t = shapes.userData.morphTime;
+        shapes.userData.cube.scale.setScalar(0.8 + Math.sin(t * 2) * 0.2);
+        shapes.userData.sphere.scale.setScalar(0.8 + Math.sin(t * 2 + 2) * 0.2);
+        shapes.userData.pyramid.scale.setScalar(0.8 + Math.sin(t * 2 + 4) * 0.2);
+      }
+    }
+  }
+
+  function onPointerMove(e) {
+    mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  }
+
+  function onPointerDown(e) {
+    if (state.screen !== 'hub' || isTransitioning) return;
+    mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(scene.children, true);
+
+    // Check if clicked an island
+    for (let hit of intersects) {
+      let obj = hit.object;
+      while (obj.parent && obj.parent !== hubGroup && obj.parent !== scene) {
+        obj = obj.parent;
+      }
+      if (obj.userData && obj.userData.sectionId && obj.userData.sectionId !== 'HOME') {
+        selectIsland(obj.userData.sectionId);
+        return;
+      }
+      // Click ground to move
+      if (obj.name === 'ground' || (hit.object.name === 'ground')) {
+        clickTarget = new THREE.Vector3(hit.point.x, 0, hit.point.z);
+        return;
+      }
+    }
+  }
+
+  function selectIsland(sid) {
+    const island = islands[sid];
+    const status = island.userData.status;
+    if (status === 'locked') {
+      showIslandPopup(sid, true);
+      return;
+    }
+    state.selectedIsland = sid;
+    showIslandPopup(sid, false);
+  }
+
+  function showIslandPopup(sid, locked) {
+    const theme = ISLAND_THEMES[sid];
+    document.getElementById('island-popup-title').textContent = theme.emoji + ' ' + theme.name;
+    document.getElementById('island-popup-boss').textContent = 'Guarded by ' + theme.boss;
+    const statusEl = document.getElementById('island-popup-status');
+    const btn = document.getElementById('island-popup-btn');
+    if (locked) {
+      statusEl.textContent = '🔒 Locked — defeat the previous boss first!';
+      statusEl.style.color = '#EF5350';
+      btn.style.display = 'none';
+    } else if (state.completed[sid]) {
+      statusEl.textContent = '✅ Completed — replay to improve your score!';
+      statusEl.style.color = '#66BB6A';
+      btn.style.display = 'inline-block';
+      btn.textContent = '⚔️ Replay Battle';
+    } else {
+      statusEl.textContent = '⚔️ Ready to battle!';
+      statusEl.style.color = '#FF9800';
+      btn.style.display = 'inline-block';
+      btn.textContent = '⚔️ Start Battle!';
+    }
+    document.getElementById('island-popup').classList.add('active');
+  }
+
+  // ================================================================
+  //  BATTLE SYSTEM
+  // ================================================================
+  function enterBattle(sid) {
+    if (isTransitioning) return;
+    isTransitioning = true;
+    state.screen = 'battle';
+    state.selectedIsland = sid;
+
+    // Hide hub UI, show battle UI
+    document.getElementById('ui-hub').classList.add('hidden');
+    document.getElementById('island-popup').classList.remove('active');
+    document.getElementById('battle-ui').classList.add('active');
+
+    // Build battle state with retry queue logic
+    const section = GAME_DATA.sections.find(s => s.sectionId === sid);
+    const pool = section.questions.map(q => ({...q}));
+    // Shuffle pool for variety
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+
+    state.battle = {
+      sectionId: sid,
+      pool: pool,
+      retryQueue: [],
+      currentQuestion: null,
+      correctCount: 0,
+      wrongCount: 0,
+      totalQuestions: section.questions.length,
+      bossHP: section.questions.length,
+      maxBossHP: section.questions.length,
+      waitingForContinue: false,
+      isRetry: false
+    };
+
+    // Update boss bar
+    document.getElementById('boss-name').textContent = ISLAND_THEMES[sid].boss;
+    updateBossBar();
+
+    // Move hero to battle position
+    const islandPos = islands[sid].position.clone();
+    const battleOffset = new THREE.Vector3(0, 0, 5);
+    const heroTarget = islandPos.clone().add(battleOffset);
+    const bossTarget = islandPos.clone().add(new THREE.Vector3(0, 0, -5));
+
+    // Simple transition: move hero to island, then snap to battle view
+    hero.position.copy(heroTarget);
+
+    // Position camera behind hero
+    const camPos = hero.position.clone().add(CONFIG.camOffsetBattle);
+    camera.position.copy(camPos);
+    camera.lookAt(bossTarget);
+
+    // Show boss in battle
+    const boss = bosses[sid];
+    if (boss) {
+      boss.visible = true;
+      boss.position.copy(bossTarget);
+      boss.rotation.y = Math.PI; // face hero
+    }
+
+    setTimeout(() => {
+      isTransitioning = false;
+      nextBattleQuestion();
+    }, 600);
+  }
+
+  function updateBossBar() {
+    const b = state.battle;
+    const pct = (b.bossHP / b.maxBossHP) * 100;
+    document.getElementById('boss-hp-bar').style.width = pct + '%';
+    document.getElementById('boss-hp-text').textContent = b.bossHP + '/' + b.maxBossHP;
+  }
+
+  function nextBattleQuestion() {
+    const b = state.battle;
+    if (b.bossHP <= 0) {
+      endBattle(true);
+      return;
+    }
+
+    // Pick next question: prefer unseen pool over retry queue
+    if (b.pool.length > 0) {
+      b.currentQuestion = b.pool.shift();
+      b.isRetry = false;
+    } else if (b.retryQueue.length > 0) {
+      b.currentQuestion = b.retryQueue.shift();
+      b.isRetry = true;
+    } else {
+      endBattle(true);
+      return;
+    }
+
+    renderQuestion(b.currentQuestion);
+  }
+
+  function renderQuestion(q) {
+    document.getElementById('question-text').textContent = q.question;
+    const grid = document.getElementById('answer-buttons');
+    grid.innerHTML = '';
+    q.options.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'answer-btn';
+      btn.textContent = opt;
+      btn.onclick = () => handleAnswer(idx);
+      grid.appendChild(btn);
+    });
+    state.battle.waitingForContinue = false;
+  }
+
+  function handleAnswer(idx) {
+    const b = state.battle;
+    if (b.waitingForContinue) return;
+    const q = b.currentQuestion;
+    const selected = q.options[idx];
+    const isCorrect = selected === q.answer;
+    const buttons = document.querySelectorAll('.answer-btn');
+    buttons.forEach((btn, i) => {
+      btn.disabled = true;
+      if (q.options[i] === q.answer) btn.classList.add('correct');
+      else if (i === idx) btn.classList.add('wrong');
+    });
+
+    if (isCorrect) {
+      b.correctCount++;
+      b.bossHP--;
+      state.streak++;
+      if (state.streak > state.bestStreak) state.bestStreak = state.streak;
+      updateBossBar();
+      animateBossHit();
+      showExplanation(q.explanation, true);
+      // Auto-continue after 2.5s on correct
+      setTimeout(() => {
+        if (state.screen === 'battle') onExplanationContinue();
+      }, 2500);
+    } else {
+      b.wrongCount++;
+      state.streak = 0;
+      // Add to retry queue if not already there
+      if (!b.retryQueue.find(rq => rq.id === q.id)) {
+        b.retryQueue.push(q);
+      }
+      animateBossCounter();
+      showExplanation(q.explanation, false);
+      // Wait for manual continue on wrong
+    }
+    updateHUD();
+    saveGame();
+  }
+
+  function showExplanation(text, isCorrect) {
+    const popup = document.getElementById('explanation-popup');
+    const title = document.getElementById('explanation-title');
+    const body = document.getElementById('explanation-text');
+    const btn = document.getElementById('explanation-btn');
+
+    if (isCorrect) {
+      title.textContent = ['Great hit! 💥', 'Nice one! ⚡', 'Brain power! 🧠', 'Smash! 💪'][Math.floor(Math.random()*4)];
+      title.className = 'explanation-title explanation-correct';
+      btn.textContent = 'Continue';
+    } else {
+      title.textContent = 'Not quite! 🤔';
+      title.className = 'explanation-title explanation-wrong';
+      btn.textContent = 'Try Again';
+    }
+    body.textContent = text;
+    popup.classList.add('active');
+    state.battle.waitingForContinue = true;
+  }
+
+  function onExplanationContinue() {
+    const popup = document.getElementById('explanation-popup');
+    popup.classList.remove('active');
+    if (state.screen !== 'battle') return;
+    nextBattleQuestion();
+  }
+
+  // ================================================================
+  //  BATTLE ANIMATIONS (playful, non-violent)
+  // ================================================================
+  function animateBossHit() {
+    const boss = bosses[state.battle.sectionId];
+    if (!boss) return;
+    // Flash white, shake, scale bump
+    const originalScale = boss.scale.clone();
+    let t = 0;
+    const interval = setInterval(() => {
+      t += 0.15;
+      boss.scale.setScalar(1 + Math.sin(t * 10) * 0.1);
+      boss.rotation.z = Math.sin(t * 20) * 0.1;
+      if (t > 1) {
+        clearInterval(interval);
+        boss.scale.copy(originalScale);
+        boss.rotation.z = 0;
+      }
+    }, 16);
+    // Spawn sparkle particles
+    spawnParticles(boss.position, 0xFFD700, 12);
+  }
+
+  function animateBossCounter() {
+    const boss = bosses[state.battle.sectionId];
+    if (!boss) return;
+    // Boss "laughs" — bobs up and down playfully
+    let t = 0;
+    const baseY = boss.position.y;
+    const interval = setInterval(() => {
+      t += 0.15;
+      boss.position.y = baseY + Math.sin(t * 8) * 0.3;
+      if (t > 1.5) {
+        clearInterval(interval);
+        boss.position.y = baseY;
+      }
+    }, 16);
+    // Harmless puff
+    spawnParticles(boss.position, 0xB0BEC5, 6);
+  }
+
+  function spawnParticles(pos, color, count) {
+    const geo = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+    const mat = new THREE.MeshBasicMaterial({ color: color });
+    for (let i = 0; i < count; i++) {
+      const p = new THREE.Mesh(geo, mat);
+      p.position.copy(pos);
+      p.position.x += (Math.random() - 0.5) * 2;
+      p.position.y += (Math.random() - 0.5) * 2;
+      p.position.z += (Math.random() - 0.5) * 2;
+      p.userData.velocity = new THREE.Vector3(
+        (Math.random() - 0.5) * 0.1,
+        Math.random() * 0.15,
+        (Math.random() - 0.5) * 0.1
+      );
+      p.userData.life = 1.0;
+      scene.add(p);
+      particles.push(p);
+    }
+  }
+
+  function updateParticles(dt) {
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.position.add(p.userData.velocity);
+      p.userData.velocity.y -= 0.005; // gravity
+      p.userData.life -= dt * 1.5;
+      p.scale.setScalar(p.userData.life);
+      p.rotation.x += dt; p.rotation.y += dt;
+      if (p.userData.life <= 0) {
+        scene.remove(p);
+        particles.splice(i, 1);
+      }
+    }
+  }
+
+  // ================================================================
+  //  BATTLE END & VICTORY
+  // ================================================================
+  function endBattle(victory) {
+    if (!victory) return; // We only have victory states
+    const sid = state.battle.sectionId;
+    const section = GAME_DATA.sections.find(s => s.sectionId === sid);
+
+    // Calculate rewards
+    const correct = state.battle.correctCount;
+    const total = state.battle.totalQuestions;
+    const streakBonus = Math.floor(state.streak / 3) * CONFIG.xpPerStreakBonus;
+    const earnedXP = (correct * CONFIG.xpPerCorrect) + CONFIG.xpPerBoss + streakBonus;
+    state.xp += earnedXP;
+    const newLevel = Math.floor(state.xp / CONFIG.levelThreshold) + 1;
+    const levelUp = newLevel > state.level;
+    state.level = newLevel;
+
+    // Record completion
+    state.completed[sid] = {
+      score: correct,
+      total: total,
+      date: new Date().toISOString(),
+      xp: earnedXP
+    };
+    saveGame();
+
+    // Show victory screen
+    document.getElementById('battle-ui').classList.remove('active');
+    document.getElementById('explanation-popup').classList.remove('active');
+    document.getElementById('ui-victory').classList.add('active');
+    document.getElementById('victory-boss-name').textContent = ISLAND_THEMES[sid].boss;
+    document.getElementById('victory-stats').innerHTML =
+      `Score: ${correct}/${total} | +${earnedXP} XP` + (levelUp ? '<br><b>🎉 Level Up! You are now Level ' + state.level + '!</b>' : '');
+    document.getElementById('victory-badge').textContent = ISLAND_THEMES[sid].emoji;
+
+    // Confetti
+    startConfetti();
+
+    // Boss defeat animation (silly)
+    const boss = bosses[sid];
+    if (boss) {
+      let t = 0;
+      const interval = setInterval(() => {
+        t += 0.02;
+        boss.rotation.x = Math.sin(t * 10) * 0.3;
+        boss.position.y -= 0.02;
+        boss.scale.setScalar(1 - t * 0.3);
+        if (t > 1) {
+          clearInterval(interval);
+          boss.visible = false;
+          boss.scale.setScalar(1);
+          boss.rotation.x = 0;
+        }
+      }, 16);
+    }
+
+    state.screen = 'victory';
+    state.sessionIslandsCompleted++;
+    updateHUD();
+  }
+
+  function onVictoryContinue() {
+    stopConfetti();
+    document.getElementById('ui-victory').classList.remove('active');
+
+    // Check for break prompt every 2 islands
+    if (state.sessionIslandsCompleted > 0 && state.sessionIslandsCompleted % 2 === 0) {
+      state.screen = 'break';
+      document.getElementById('ui-break').classList.add('active');
+    } else {
+      returnToHub();
+    }
+  }
+
+  function continueAfterBreak() {
+    document.getElementById('ui-break').classList.remove('active');
+    returnToHub();
+  }
+
+  function takeBreak() {
+    document.getElementById('ui-break').classList.remove('active');
+    state.screen = 'title';
+    document.getElementById('ui-title').classList.add('active');
+    returnToHub(true);
+  }
+
+  function returnToHub(keepTitle) {
+    state.screen = 'hub';
+    state.battle = null;
+    if (!keepTitle) {
+      document.getElementById('ui-hub').classList.remove('hidden');
+    }
+    document.getElementById('battle-ui').classList.remove('active');
+    document.getElementById('explanation-popup').classList.remove('active');
+
+    // Reset hero position near the completed island
+    if (state.selectedIsland && islands[state.selectedIsland]) {
+      hero.position.copy(islands[state.selectedIsland].position).add(new THREE.Vector3(0, 0, 5));
+    }
+
+    updateIslandVisuals();
+    updateHUD();
+  }
+
+  // ================================================================
+  //  UI & SCREEN MANAGEMENT
+  // ================================================================
+  function updateHUD() {
+    document.getElementById('hud-level').textContent = state.level;
+    document.getElementById('hud-streak').textContent = state.streak;
+    document.getElementById('hud-xp').textContent = state.xp;
+  }
+
+  function showScreen(name) {
+    const allScreens = ['ui-title','ui-hub','ui-victory','ui-trophy','ui-break'];
+    // Hide all screens first
+    allScreens.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.style.opacity = '0';
+        el.style.pointerEvents = 'none';
+      }
+    });
+    // Show target screen
+    if (name === 'hub') {
+      const hub = document.getElementById('ui-hub');
+      if (hub) {
+        hub.style.opacity = '1';
+        hub.style.pointerEvents = 'none'; // let clicks pass through to canvas
+      }
+      document.getElementById('hud').classList.add('active');
+    } else {
+      document.getElementById('hud').classList.remove('active');
+      const el = document.getElementById('ui-' + name);
+      if (el) {
+        el.style.opacity = '1';
+        el.style.pointerEvents = 'auto';
+      }
+    }
+    state.screen = name;
+  }
+
+  function showTrophies() {
+    const grid = document.getElementById('trophy-grid');
+    grid.innerHTML = '';
+    let earned = 0;
+    GAME_DATA.sections.forEach(section => {
+      const sid = section.sectionId;
+      const theme = ISLAND_THEMES[sid];
+      const isEarned = !!state.completed[sid];
+      if (isEarned) earned++;
+      const slot = document.createElement('div');
+      slot.className = 'trophy-slot' + (isEarned ? ' earned' : '');
+      slot.innerHTML = '<div class="trophy-icon">' + (isEarned ? theme.emoji : '🔒') + '</div>' +
+                       '<div class="trophy-label">' + BADGES[sid] + '</div>';
+      if (isEarned) {
+        slot.onclick = () => {
+          Game.showTitle();
+          setTimeout(() => Game.enterSelectedIsland(sid), 300);
+        };
+      }
+      grid.appendChild(slot);
+    });
+    document.getElementById('trophy-progress').textContent = earned + '/' + GAME_DATA.sections.length;
+    showScreen('trophy');
+  }
+
+  function showTitle() {
+    showScreen('title');
+  }
+
+  function startHub() {
+    console.log('Starting hub...');
+    try {
+      loadSave();
+      updateHUD();
+      if (!hubGroup) {
+        console.log('Building hub world...');
+        buildHub();
+        console.log('Hub built successfully');
+      }
+      showScreen('hub');
+      // Force camera to correct position
+      if (hero) {
+        const targetPos = hero.position.clone().add(CONFIG.camOffsetHub);
+        camera.position.copy(targetPos);
+        camera.lookAt(hero.position.clone().add(new THREE.Vector3(0, 1, 0)));
+      }
+      if (renderer && scene && camera) {
+        renderer.render(scene, camera);
+      }
+    } catch(e) {
+      console.error('Error starting hub:', e);
+      alert('Oops! Something went wrong starting the game. Check the console (Cmd+Option+J) for details.');
+    }
+  }
+
+  function closeIslandPopup() {
+    document.getElementById('island-popup').classList.remove('active');
+    state.selectedIsland = null;
+  }
+
+  function enterSelectedIsland(forceSid) {
+    const sid = forceSid || state.selectedIsland;
+    if (!sid) return;
+    closeIslandPopup();
+    enterBattle(sid);
+  }
+
+  // ================================================================
+  //  CONFETTI SYSTEM (2D canvas overlay)
+  // ================================================================
+  let confettiCtx, confettiPieces = [], confettiAnim = null;
+  function initConfetti() {
+    const c = document.getElementById('confetti-canvas');
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
+    confettiCtx = c.getContext('2d');
+  }
+  function startConfetti() {
+    confettiPieces = [];
+    const colors = ['#FFD700','#FF5722','#4CAF50','#2196F3','#E91E63','#FFEB3B'];
+    for (let i = 0; i < 120; i++) {
+      confettiPieces.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * -window.innerHeight,
+        w: Math.random() * 10 + 5,
+        h: Math.random() * 6 + 4,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        vy: Math.random() * 3 + 2,
+        vx: Math.random() * 2 - 1,
+        rot: Math.random() * 360,
+        vrot: Math.random() * 4 - 2
+      });
+    }
+    if (confettiAnim) cancelAnimationFrame(confettiAnim);
+    drawConfetti();
+  }
+  function drawConfetti() {
+    if (!confettiCtx) return;
+    confettiCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    let active = false;
+    confettiPieces.forEach(p => {
+      p.y += p.vy; p.x += p.vx; p.rot += p.vrot;
+      if (p.y < window.innerHeight + 20) active = true;
+      confettiCtx.save();
+      confettiCtx.translate(p.x, p.y);
+      confettiCtx.rotate(p.rot * Math.PI / 180);
+      confettiCtx.fillStyle = p.color;
+      confettiCtx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      confettiCtx.restore();
+    });
+    if (active) confettiAnim = requestAnimationFrame(drawConfetti);
+  }
+  function stopConfetti() {
+    if (confettiAnim) cancelAnimationFrame(confettiAnim);
+    if (confettiCtx) confettiCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    confettiPieces = [];
+  }
+
+  // ================================================================
+  //  MAIN LOOP
+  // ================================================================
+  function animate() {
+    requestAnimationFrame(animate);
+    const dt = clock.getDelta();
+
+    if (state.screen === 'hub') {
+      updateHub(dt);
+    } else if (state.screen === 'battle') {
+      // Gentle idle animations in battle
+      if (hero) {
+        hero.userData.legL.rotation.x = Math.sin(Date.now() * 0.003) * 0.05;
+        hero.userData.legR.rotation.x = Math.sin(Date.now() * 0.003 + Math.PI) * 0.05;
+      }
+      const boss = state.battle ? bosses[state.battle.sectionId] : null;
+      if (boss && boss.visible) {
+        boss.position.y += Math.sin(Date.now() * 0.002) * 0.002;
+        boss.rotation.y = Math.PI + Math.sin(Date.now() * 0.001) * 0.1;
+      }
+    }
+
+    updateParticles(dt);
+    renderer.render(scene, camera);
+  }
+
+  // ================================================================
+  //  PUBLIC GAME API (attached to window for HTML onclick access)
+  // ================================================================
+  window.Game = {
+    startHub,
+    showTrophies,
+    showTitle,
+    closeIslandPopup,
+    enterSelectedIsland,
+    onExplanationContinue,
+    onVictoryContinue,
+    continueAfterBreak,
+    takeBreak
+  };
+
+  // ================================================================
+  //  BOOT
+  // ================================================================
+  try {
+    if (typeof THREE === 'undefined') {
+      throw new Error('Three.js not loaded. Check internet connection.');
+    }
+    initThree();
+    initConfetti();
+    animate();
+    loadSave();
+    updateHUD();
+    // Hide loading overlay
+    const loader = document.getElementById('loading-overlay');
+    if (loader) loader.style.display = 'none';
+  } catch (err) {
+    console.error('Game failed to load:', err);
+    document.getElementById('loading-error').style.display = 'block';
+  }
+
+  </script>
+</body>
+</html>
