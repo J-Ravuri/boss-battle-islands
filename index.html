@@ -49,6 +49,12 @@
       transition: opacity 0.4s ease;
     }
     .ui-screen.active { opacity: 1; pointer-events: auto; }
+    /* Inactive screens stay in the DOM for fade transitions, but none of
+       their invisible panels or buttons may intercept title/game clicks. */
+    .ui-screen:not(.active),
+    .ui-screen:not(.active) * {
+      pointer-events: none !important;
+    }
     .ui-panel {
       background: var(--ui-bg);
       border: 4px solid var(--ui-border);
@@ -118,6 +124,12 @@
       transition: opacity 0.3s;
     }
     #hud.active { opacity: 1; }
+    .hud-stats, .hud-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hud-actions { pointer-events: auto; }
     .hud-pill {
       background: rgba(255,255,255,0.9);
       border: 3px solid var(--ui-border);
@@ -127,6 +139,55 @@
       font-size: 0.95rem;
       box-shadow: var(--shadow);
     }
+    .hud-btn {
+      min-width: 44px;
+      min-height: 42px;
+      padding: 7px 12px;
+      border: 3px solid var(--ui-border);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.94);
+      color: var(--text-main);
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+    }
+    .hud-btn:hover { background: #E1F5FE; transform: translateY(-1px); }
+    #quest-card {
+      position: fixed;
+      top: 70px;
+      left: 20px;
+      z-index: 8;
+      max-width: 330px;
+      padding: 12px 16px;
+      border: 3px solid var(--ui-border);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.92);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    #quest-card.active { opacity: 1; }
+    #quest-card-title { font-weight: 900; color: var(--ui-accent); margin-bottom: 4px; }
+    #quest-card-text { font-size: 0.9rem; line-height: 1.35; }
+    #save-toast {
+      position: fixed;
+      top: 76px;
+      right: 20px;
+      z-index: 30;
+      padding: 10px 16px;
+      border-radius: 16px;
+      background: rgba(46,125,50,0.94);
+      color: white;
+      font-weight: 800;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(-8px);
+      pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s;
+    }
+    #save-toast.active { opacity: 1; transform: translateY(0); }
     #battle-ui {
       position: fixed;
       bottom: 0; left: 0;
@@ -142,6 +203,7 @@
       background: linear-gradient(to top, rgba(255,255,255,0.95) 60%, transparent);
     }
     #battle-ui.active { opacity: 1; }
+    #battle-ui > div:first-child { flex-wrap: wrap; justify-content: center; }
     .boss-bar-container {
       width: 280px;
       height: 22px;
@@ -157,6 +219,24 @@
       width: 100%;
       transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
       border-radius: 12px;
+    }
+    #combo-meter {
+      min-width: 108px;
+      padding: 5px 10px;
+      border: 2px solid #FFD54F;
+      border-radius: 14px;
+      background: rgba(255,253,231,0.95);
+      color: #E65100;
+      font-weight: 900;
+      text-align: center;
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    #combo-meter.active { opacity: 1; transform: scale(1); }
+    #combo-meter.pulse { animation: comboPulse 0.35s ease; }
+    @keyframes comboPulse {
+      50% { transform: scale(1.18) rotate(-2deg); background: #FFF59D; }
     }
     .question-box {
       background: white;
@@ -307,7 +387,19 @@
     .touch-down { grid-column: 2; grid-row: 2; }
     .touch-right { grid-column: 3; grid-row: 2; }
     @media (max-width: 900px) {
-      .touch-controls { display: grid; }
+      .touch-controls.active { display: grid; }
+      #hud { padding: 8px; align-items: flex-start; }
+      .hud-stats { gap: 4px; flex-wrap: wrap; }
+      .hud-pill { padding: 4px 9px; font-size: 0.78rem; border-width: 2px; }
+      .hud-btn { min-width: 38px; min-height: 36px; padding: 5px 8px; border-width: 2px; }
+      #quest-card { top: 58px; left: 8px; max-width: calc(100vw - 16px); padding: 8px 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
     /* Error fallback */
     #error-fallback {
@@ -346,10 +438,22 @@
   <div id="canvas-container"></div>
   <canvas id="confetti-canvas"></canvas>
   <div id="hud">
-    <div class="hud-pill">⭐ Level <span id="hud-level">1</span></div>
-    <div class="hud-pill">🔥 Streak <span id="hud-streak">0</span></div>
-    <div class="hud-pill">💎 <span id="hud-xp">0</span> XP</div>
+    <div class="hud-stats">
+      <div class="hud-pill">⭐ Level <span id="hud-level">1</span></div>
+      <div class="hud-pill">🔥 Streak <span id="hud-streak">0</span></div>
+      <div class="hud-pill">💎 <span id="hud-xp">0</span> XP</div>
+    </div>
+    <div class="hud-actions">
+      <button class="hud-btn" id="hud-sound-btn" title="Sound (M)">🔊</button>
+      <button class="hud-btn" id="hud-help-btn" title="How to play (H)">❓</button>
+      <button class="hud-btn" id="hud-menu-btn" title="Main menu">☰</button>
+    </div>
   </div>
+  <div id="quest-card">
+    <div id="quest-card-title">🧭 Next missions</div>
+    <div id="quest-card-text">Choose a glowing island to begin.</div>
+  </div>
+  <div id="save-toast">✅ Progress saved</div>
   <div id="ui-title" class="ui-screen active">
     <div class="ui-panel">
       <div style="font-size:4rem; margin-bottom:8px; animation: float 3s ease-in-out infinite;">🏝️⚔️🏝️</div>
@@ -359,8 +463,9 @@
         Explore floating islands, battle friendly bosses with brain-power,<br>
         and collect trophies across English and Maths!
       </p>
-      <button class="btn btn-primary" onclick="Game.startHub()">▶️ Play</button>
-      <button class="btn btn-gold" onclick="Game.showTrophies()">🏆 Trophy Shelf</button>
+      <button class="btn btn-primary" id="title-play-btn" onclick="window.Game.startHub()">▶️ Play</button>
+      <button class="btn btn-gold" id="title-trophy-btn" onclick="window.Game.showTrophies()">🏆 Trophy Shelf</button>
+      <button class="btn btn-info" id="title-help-btn" onclick="window.Game.showHelp()">❓ How to Play</button>
     </div>
   </div>
   <div id="ui-hub" class="ui-screen"></div>
@@ -368,14 +473,15 @@
     <div id="island-popup-title" style="font-weight:800; font-size:1.2rem; margin-bottom:6px;">Island Name</div>
     <div id="island-popup-boss" style="color: var(--text-light); font-size:0.95rem; margin-bottom:10px;">Boss Name</div>
     <div id="island-popup-status" style="font-weight:700; margin-bottom:12px;"></div>
-    <button class="btn btn-success" id="island-popup-btn" onclick="Game.enterSelectedIsland()">⚔️ Start Battle!</button>
-    <button class="btn btn-info" onclick="Game.closeIslandPopup()">Cancel</button>
+    <button class="btn btn-success" id="island-popup-btn" onclick="window.Game.enterSelectedIsland()">⚔️ Start Battle!</button>
+    <button class="btn btn-info" id="island-popup-cancel-btn" onclick="window.Game.closeIslandPopup()">Cancel</button>
   </div>
   <div id="battle-ui">
     <div style="display:flex; align-items:center; gap:12px; margin-bottom:6px;">
       <span id="boss-name" style="font-weight:800; font-size:1.1rem; color: var(--text-main);">Boss</span>
       <div class="boss-bar-container"><div class="boss-bar" id="boss-hp-bar"></div></div>
       <span id="boss-hp-text" style="font-weight:700; font-size:0.9rem;">10/10</span>
+      <span id="combo-meter">🔥 Combo x1</span>
     </div>
     <div class="question-box" id="question-text">Question goes here...</div>
     <div class="answer-grid" id="answer-buttons"></div>
@@ -383,19 +489,20 @@
   <div id="explanation-popup">
     <div class="explanation-title" id="explanation-title">Nice hit!</div>
     <div class="explanation-text" id="explanation-text">Explanation goes here.</div>
-    <button class="btn btn-primary" id="explanation-btn" onclick="Game.onExplanationContinue()">Continue</button>
+    <button class="btn btn-primary" id="explanation-btn" onclick="window.Game.onExplanationContinue()">Continue</button>
   </div>
-  <div id="ui-victory" class="ui-screen hidden">
+  <div id="ui-victory" class="ui-screen">
     <div class="ui-panel">
       <div style="font-size:3.5rem; margin-bottom:8px;">🎉</div>
       <h1 id="victory-title">Boss Defeated!</h1>
       <div id="victory-badge" style="font-size:3rem; margin:12px 0; animation: float 2s ease-in-out infinite;">🏆</div>
       <h2 id="victory-boss-name">Boss Name</h2>
+      <div id="victory-rank" style="font-size:2rem; margin:6px 0 10px;">⭐⭐⭐</div>
       <p id="victory-stats" style="font-size:1.1rem; color: var(--text-light); margin-bottom:18px;">Score: 10/10 | +50 XP</p>
-      <button class="btn btn-primary" onclick="Game.onVictoryContinue()">🏠 Back to Hub</button>
+      <button class="btn btn-primary" id="victory-continue-btn" onclick="window.Game.onVictoryContinue()">🏠 Back to Hub</button>
     </div>
   </div>
-  <div id="ui-trophy" class="ui-screen hidden">
+  <div id="ui-trophy" class="ui-screen">
     <div class="ui-panel" style="max-width: 800px;">
       <h1>🏆 Trophy Shelf</h1>
       <p style="color: var(--text-light); margin-bottom:12px;">Click a badge to replay an island!</p>
@@ -403,21 +510,35 @@
       <div style="margin-top:16px;">
         <span style="font-weight:700;">Total Progress: <span id="trophy-progress">0/10</span></span>
       </div>
-      <button class="btn btn-info" onclick="Game.showTitle()" style="margin-top:16px;">🏠 Main Menu</button>
+      <button class="btn btn-info" id="trophy-main-menu-btn" onclick="window.Game.showTitle()" style="margin-top:16px;">🏠 Main Menu</button>
     </div>
   </div>
-  <div id="ui-break" class="ui-screen hidden">
+  <div id="ui-break" class="ui-screen">
     <div class="ui-panel">
       <div style="font-size:3rem; margin-bottom:8px;">☕</div>
       <h1>Great job!</h1>
       <p style="font-size:1.15rem; margin-bottom:20px;">
         You've conquered 2 islands! Want to keep going or take a break?
       </p>
-      <button class="btn btn-success" onclick="Game.continueAfterBreak()">▶️ Keep Going!</button>
-      <button class="btn btn-info" onclick="Game.takeBreak()">☕ Take a Break</button>
+      <button class="btn btn-success" id="break-continue-btn" onclick="window.Game.continueAfterBreak()">▶️ Keep Going!</button>
+      <button class="btn btn-info" id="break-take-btn" onclick="window.Game.takeBreak()">☕ Take a Break</button>
     </div>
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/three.min.js"></script>
+  <div id="ui-help" class="ui-screen">
+    <div class="ui-panel" style="max-width:760px;">
+      <div style="font-size:3rem; margin-bottom:8px;">🗺️</div>
+      <h1>How to Play</h1>
+      <div style="text-align:left; line-height:1.65; font-size:1.05rem;">
+        <p><b>Explore:</b> Move with WASD/arrow keys, the mobile D-pad, or click/tap the ground.</p>
+        <p><b>Battle:</b> Select a glowing island, then answer four-choice questions to lower the boss's HP.</p>
+        <p><b>Learn:</b> Wrong answers return later. Read the explanation, then try again.</p>
+        <p><b>Progress:</b> Defeat bosses to earn XP, gold islands, trophies, and new paths.</p>
+        <p><b>Shortcuts:</b> H = help, M = mute, Esc = close a popup.</p>
+      </div>
+      <button class="btn btn-primary" id="help-close-btn" onclick="window.Game.closeHelp()">✅ Got it!</button>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
   <script>
 
 
@@ -643,12 +764,28 @@
   // ================================================================
   const CONFIG = {
     heroSpeed: 0.15,
-    camOffsetHub: new THREE.Vector3(0, 12, 18),
-    camOffsetBattle: new THREE.Vector3(0, 4, 10),
+    // Assigned in initThree so a failed CDN load can reach the fallback UI.
+    camOffsetHub: null,
+    camOffsetBattle: null,
     xpPerCorrect: 10,
     xpPerBoss: 50,
     xpPerStreakBonus: 5,
-    levelThreshold: 100
+    levelThreshold: 100,
+    // Custom effects/music load from assets/audio; generated audio is fallback.
+    customAudio: true
+  };
+
+  const CUSTOM_AUDIO_FILES = {
+    // Keep these null to use the built-in procedural effects.
+    select: null,
+    start: null,
+    correct: null,
+    wrong: null,
+    combo: null,
+    victory: null,
+    // Optional licensed soundtrack supplied by the game owner.
+    hubMusic: 'assets/audio/aayasher_bgm.mp3',
+    battleMusic: 'assets/audio/aayasher_bgm.mp3'
   };
 
   let state = {
@@ -671,11 +808,20 @@
   let bosses = {};  // sectionId -> boss group
   let particles = [];
   let confettiCtx = null, confettiPieces = [], confettiAnim = null;
-  let raycaster = new THREE.Raycaster();
-  let mouse = new THREE.Vector2();
+  let raycaster = null;
+  let mouse = null;
   let keys = {};
   let clickTarget = null;
   let isTransitioning = false;
+  let audioCtx = null;
+  let soundEnabled = true;
+  let customAudioCache = {};
+  let musicTimer = null;
+  let musicElement = null;
+  let musicMode = null;
+  let musicStep = 0;
+  let saveToastTimer = null;
+  let helpReturnScreen = 'title';
 
   // ================================================================
   //  SAVE SYSTEM
@@ -703,6 +849,155 @@
       }));
     } catch(e) { console.log('Save failed', e); }
   }
+
+  function ensureAudioContext() {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return null;
+    audioCtx = audioCtx || new AudioContextClass();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    return audioCtx;
+  }
+
+  function scheduleTone(frequency, delay, duration, type, volume) {
+    const ctx = ensureAudioContext();
+    if (!ctx) return;
+    const oscillator = ctx.createOscillator();
+    const gain = ctx.createGain();
+    const start = ctx.currentTime + delay;
+    oscillator.type = type || 'triangle';
+    oscillator.frequency.setValueAtTime(frequency, start);
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.exponentialRampToValueAtTime(volume || 0.08, start + 0.012);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+    oscillator.connect(gain);
+    gain.connect(ctx.destination);
+    oscillator.start(start);
+    oscillator.stop(start + duration + 0.03);
+  }
+
+  function loadCustomAudio() {
+    if (!CONFIG.customAudio) return;
+    Object.entries(CUSTOM_AUDIO_FILES).forEach(([kind, path]) => {
+      if (!path) return;
+      const audio = new Audio(path);
+      audio.preload = 'auto';
+      audio.addEventListener('canplaythrough', () => {
+        customAudioCache[kind] = audio;
+      }, { once: true });
+      audio.load();
+    });
+  }
+
+  function playCustomSound(kind, volume) {
+    const source = customAudioCache[kind];
+    if (!source) return false;
+    const sound = source.cloneNode();
+    sound.volume = volume || 0.55;
+    sound.play().catch(() => {});
+    return true;
+  }
+
+  // Layered procedural cues are the zero-file fallback and sound musical
+  // rather than like plain beeps.
+  function playSound(kind) {
+    if (!soundEnabled) return;
+    try {
+      if (playCustomSound(kind)) return;
+      const patterns = {
+        select: [[523,0,0.09,'sine',0.07],[659,0.06,0.11,'triangle',0.06]],
+        start: [[392,0,0.12,'triangle',0.08],[523,0.09,0.14,'triangle',0.08],[659,0.18,0.18,'triangle',0.09]],
+        correct: [[659,0,0.12,'triangle',0.09],[784,0.07,0.14,'triangle',0.1],[988,0.14,0.2,'sine',0.08]],
+        wrong: [[233,0,0.16,'sawtooth',0.055],[196,0.12,0.22,'square',0.045]],
+        combo: [[784,0,0.1,'triangle',0.08],[988,0.06,0.13,'triangle',0.09],[1175,0.12,0.2,'sine',0.08]],
+        victory: [[523,0,0.2,'triangle',0.08],[659,0.12,0.22,'triangle',0.09],[784,0.24,0.25,'triangle',0.1],[1047,0.38,0.55,'sine',0.1]]
+      };
+      (patterns[kind] || patterns.select).forEach(note => scheduleTone(...note));
+    } catch(e) {
+      console.warn('Sound unavailable:', e);
+    }
+  }
+
+  function stopMusic() {
+    clearInterval(musicTimer);
+    musicTimer = null;
+    if (musicElement) {
+      musicElement.pause();
+      musicElement.currentTime = 0;
+      musicElement = null;
+    }
+    musicMode = null;
+  }
+
+  function playMusicStep(mode) {
+    if (!soundEnabled) return;
+    const hubNotes = [262, 330, 392, 330, 294, 349, 440, 349];
+    const battleNotes = [147, 147, 175, 196, 147, 220, 196, 175];
+    const notes = mode === 'battle' ? battleNotes : hubNotes;
+    const note = notes[musicStep % notes.length];
+    musicStep++;
+    scheduleTone(note, 0, mode === 'battle' ? 0.28 : 0.5, mode === 'battle' ? 'triangle' : 'sine', mode === 'battle' ? 0.025 : 0.018);
+    if (mode === 'hub' && musicStep % 4 === 1) scheduleTone(note * 1.5, 0.12, 0.45, 'sine', 0.01);
+  }
+
+  function setMusic(mode) {
+    if (musicMode === mode || !soundEnabled) return;
+    stopMusic();
+    musicMode = mode;
+    const customKind = mode === 'battle' ? 'battleMusic' : 'hubMusic';
+    const customTrack = customAudioCache[customKind];
+    if (customTrack) {
+      musicElement = customTrack.cloneNode();
+      musicElement.loop = true;
+      musicElement.volume = 0.22;
+      musicElement.play().catch(() => {});
+      return;
+    }
+    musicStep = 0;
+    playMusicStep(mode);
+    musicTimer = setInterval(() => playMusicStep(mode), mode === 'battle' ? 520 : 850);
+  }
+
+  function updateSoundButton() {
+    const button = document.getElementById('hud-sound-btn');
+    if (button) {
+      button.textContent = soundEnabled ? '🔊' : '🔇';
+      button.setAttribute('aria-label', soundEnabled ? 'Mute sound' : 'Enable sound');
+    }
+  }
+
+  function toggleSound() {
+    soundEnabled = !soundEnabled;
+    try { localStorage.setItem('bossBattleIslands_sound', soundEnabled ? 'on' : 'off'); } catch(e) {}
+    updateSoundButton();
+    if (!soundEnabled) {
+      stopMusic();
+    } else {
+      playSound('select');
+      if (state.screen === 'hub' || state.screen === 'battle') setMusic(state.screen);
+    }
+  }
+
+  function loadPreferences() {
+    try { soundEnabled = localStorage.getItem('bossBattleIslands_sound') !== 'off'; } catch(e) {}
+    updateSoundButton();
+    loadCustomAudio();
+  }
+
+  function showToast(message, kind) {
+    const toast = document.getElementById('save-toast');
+    if (!toast) return;
+    toast.textContent = message || '✅ Progress saved';
+    toast.style.background = kind === 'combo'
+      ? 'rgba(230,81,0,0.95)'
+      : 'rgba(46,125,50,0.94)';
+    toast.classList.add('active');
+    clearTimeout(saveToastTimer);
+    saveToastTimer = setTimeout(() => toast.classList.remove('active'), 1600);
+  }
+
+  function showSaveToast() {
+    showToast('✅ Progress saved', 'save');
+  }
   function clearSave() {
     localStorage.removeItem(SAVE_KEY);
     state.xp = 0; state.level = 1; state.streak = 0; state.bestStreak = 0; state.completed = {};
@@ -714,6 +1009,10 @@
   // ================================================================
   function initThree() {
     const container = document.getElementById('canvas-container');
+    CONFIG.camOffsetHub = new THREE.Vector3(0, 12, 18);
+    CONFIG.camOffsetBattle = new THREE.Vector3(0, 4, 10);
+    raycaster = new THREE.Raycaster();
+    mouse = new THREE.Vector2();
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0x87CEEB);
     scene.fog = new THREE.Fog(0x87CEEB, 30, 90);
@@ -755,8 +1054,8 @@
     scene.add(ground);
 
     window.addEventListener('resize', onWindowResize);
-    window.addEventListener('keydown', e => keys[e.key.toLowerCase()] = true);
-    window.addEventListener('keyup', e => keys[e.key.toLowerCase()] = false);
+    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener('keyup', onKeyUp);
     window.addEventListener('pointerdown', onPointerDown);
     window.addEventListener('pointermove', onPointerMove);
   }
@@ -765,6 +1064,25 @@
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+
+  function onKeyDown(e) {
+    const key = e.key.toLowerCase();
+    keys[key] = true;
+    if (e.repeat) return;
+    if (key === 'm') toggleSound();
+    if (key === 'h' && (state.screen === 'title' || state.screen === 'hub')) showHelp();
+    if (key === 'escape') {
+      if (document.getElementById('island-popup').classList.contains('active')) {
+        closeIslandPopup();
+      } else if (state.screen === 'help') {
+        closeHelp();
+      }
+    }
+  }
+
+  function onKeyUp(e) {
+    keys[e.key.toLowerCase()] = false;
   }
 
   // ================================================================
@@ -1178,7 +1496,12 @@
       if (!island) return;
       const orb = island.userData.orb;
       const pillar = island.userData.pillar;
-      const prevId = idx > 0 ? GAME_DATA.sections[idx - 1].sectionId : null;
+      // English and Maths form two independent paths from HOME.
+      const previousSection = GAME_DATA.sections
+        .slice(0, idx)
+        .reverse()
+        .find(candidate => candidate.subject === section.subject);
+      const prevId = previousSection ? previousSection.sectionId : null;
 
       let status = 'locked';
       if (state.completed[sid]) {
@@ -1195,9 +1518,11 @@
       } else if (status === 'unlocked') {
         orb.material.color.setHex(0x29B6F6);
         pillar.material.color.setHex(0x4FC3F7);
+        island.children[0].material.color.setHex(ISLAND_THEMES[sid].islandColor);
       } else {
         orb.material.color.setHex(0xFFD700);
         pillar.material.color.setHex(0xFFC107);
+        island.children[0].material.color.setHex(0xFFD700);
         // Trophy on top
         if (!island.userData.hasTrophy) {
           const trophy = new THREE.Mesh(
@@ -1328,6 +1653,7 @@
 
   function showIslandPopup(sid, locked) {
     const theme = ISLAND_THEMES[sid];
+    playSound(locked ? 'wrong' : 'select');
     document.getElementById('island-popup-title').textContent = theme.emoji + ' ' + theme.name;
     document.getElementById('island-popup-boss').textContent = 'Guarded by ' + theme.boss;
     const statusEl = document.getElementById('island-popup-status');
@@ -1356,11 +1682,11 @@
   function enterBattle(sid) {
     if (isTransitioning) return;
     isTransitioning = true;
-    state.screen = 'battle';
     state.selectedIsland = sid;
+    showScreen('battle');
+    playSound('start');
 
     // Hide hub UI, show battle UI
-    // ui-hub visibility handled by showScreen
     document.getElementById('island-popup').classList.remove('active');
     document.getElementById('battle-ui').classList.add('active');
 
@@ -1426,6 +1752,19 @@
     document.getElementById('boss-hp-text').textContent = b.bossHP + '/' + b.maxBossHP;
   }
 
+  function updateComboMeter() {
+    const meter = document.getElementById('combo-meter');
+    if (!meter) return;
+    const multiplier = 1 + Math.min(3, Math.floor(state.streak / 3));
+    meter.textContent = `🔥 ${state.streak} streak • x${multiplier}`;
+    meter.classList.toggle('active', state.streak >= 2);
+    meter.classList.remove('pulse');
+    if (state.streak >= 2) {
+      void meter.offsetWidth;
+      meter.classList.add('pulse');
+    }
+  }
+
   function nextBattleQuestion() {
     const b = state.battle;
     if (b.bossHP <= 0) {
@@ -1460,6 +1799,7 @@
       grid.appendChild(btn);
     });
     state.battle.waitingForContinue = false;
+    updateComboMeter();
   }
 
   function handleAnswer(idx) {
@@ -1481,7 +1821,11 @@
       state.streak++;
       if (state.streak > state.bestStreak) state.bestStreak = state.streak;
       updateBossBar();
+      updateComboMeter();
       animateBossHit();
+      const comboMilestone = state.streak > 0 && state.streak % 3 === 0;
+      playSound(comboMilestone ? 'combo' : 'correct');
+      if (comboMilestone) showToast(`🔥 ${state.streak} answer streak! XP multiplier up!`, 'combo');
       showExplanation(q.explanation, true);
       // Auto-continue after 2.5s on correct
       setTimeout(() => {
@@ -1490,11 +1834,13 @@
     } else {
       b.wrongCount++;
       state.streak = 0;
+      updateComboMeter();
       // Add to retry queue if not already there
       if (!b.retryQueue.find(rq => rq.id === q.id)) {
         b.retryQueue.push(q);
       }
       animateBossCounter();
+      playSound('wrong');
       showExplanation(q.explanation, false);
       // Wait for manual continue on wrong
     }
@@ -1627,10 +1973,12 @@
     state.completed[sid] = {
       score: correct,
       total: total,
+      wrong: state.battle.wrongCount,
       date: new Date().toISOString(),
       xp: earnedXP
     };
     saveGame();
+    showSaveToast();
 
     // Show victory screen
     document.getElementById('battle-ui').classList.remove('active');
@@ -1640,9 +1988,13 @@
     document.getElementById('victory-stats').innerHTML =
       `Score: ${correct}/${total} | +${earnedXP} XP` + (levelUp ? '<br><b>🎉 Level Up! You are now Level ' + state.level + '!</b>' : '');
     document.getElementById('victory-badge').textContent = ISLAND_THEMES[sid].emoji;
+    const stars = state.battle.wrongCount === 0 ? 3 : state.battle.wrongCount <= 2 ? 2 : 1;
+    document.getElementById('victory-rank').textContent =
+      '⭐'.repeat(stars) + '☆'.repeat(3 - stars) + (stars === 3 ? ' Perfect!' : stars === 2 ? ' Great run!' : ' Boss beaten!');
 
     // Confetti
     startConfetti();
+    playSound('victory');
 
     // Boss defeat animation (silly)
     const boss = bosses[sid];
@@ -1671,9 +2023,7 @@
     stopConfetti();
     showScreen('hub');
     if (state.sessionIslandsCompleted > 0 && state.sessionIslandsCompleted % 2 === 0) {
-      const breakEl = document.getElementById('ui-break');
-      if (breakEl) breakEl.classList.add('active');
-      state.screen = 'break';
+      showScreen('break');
     } else {
       returnToHub();
     }
@@ -1715,13 +2065,28 @@
       if (levelEl) levelEl.textContent = state.level;
       if (streakEl) streakEl.textContent = state.streak;
       if (xpEl) xpEl.textContent = state.xp;
+      updateQuestCard();
     } catch(e) {
       console.warn('HUD update failed:', e);
     }
   }
 
+  function updateQuestCard() {
+    const text = document.getElementById('quest-card-text');
+    if (!text) return;
+    const nextEnglish = GAME_DATA.sections.find(section => section.subject === 'English' && !state.completed[section.sectionId]);
+    const nextMaths = GAME_DATA.sections.find(section => section.subject === 'Maths' && !state.completed[section.sectionId]);
+    const completedCount = Object.keys(state.completed).length;
+    const missions = [];
+    if (nextEnglish) missions.push(`${ISLAND_THEMES[nextEnglish.sectionId].emoji} ${ISLAND_THEMES[nextEnglish.sectionId].name}`);
+    if (nextMaths) missions.push(`${ISLAND_THEMES[nextMaths.sectionId].emoji} ${ISLAND_THEMES[nextMaths.sectionId].name}`);
+    text.textContent = missions.length
+      ? `${completedCount}/10 conquered • Next: ${missions.join(' or ')}`
+      : '🏆 All 10 bosses defeated — replay islands to improve your scores!';
+  }
+
   function showScreen(name) {
-    const allScreens = ['ui-title','ui-hub','ui-victory','ui-trophy','ui-break'];
+    const allScreens = ['ui-title','ui-hub','ui-victory','ui-trophy','ui-break','ui-help'];
     allScreens.forEach(id => {
       const el = document.getElementById(id);
       if (el) {
@@ -1741,6 +2106,13 @@
       const el = document.getElementById('ui-' + name);
       if (el) el.classList.add('active');
     }
+    const touchControls = document.getElementById('touch-controls');
+    if (touchControls) touchControls.classList.toggle('active', name === 'hub');
+    const questCard = document.getElementById('quest-card');
+    if (questCard) questCard.classList.toggle('active', name === 'hub');
+    if (name === 'hub') setMusic('hub');
+    else if (name === 'battle') setMusic('battle');
+    else stopMusic();
     state.screen = name;
   }
 
@@ -1759,8 +2131,11 @@
                        '<div class="trophy-label">' + BADGES[sid] + '</div>';
       if (isEarned) {
         slot.onclick = () => {
-          Game.showTitle();
-          setTimeout(() => Game.enterSelectedIsland(sid), 300);
+          // Build/show the hub first so a trophy can be replayed directly
+          // after a fresh page load, before the player has pressed Play.
+          startHub();
+          state.selectedIsland = sid;
+          enterSelectedIsland(sid);
         };
       }
       grid.appendChild(slot);
@@ -1770,11 +2145,24 @@
   }
 
   function showTitle() {
+    closeIslandPopup();
     showScreen('title');
+  }
+
+  function showHelp() {
+    if (state.screen !== 'title' && state.screen !== 'hub') return;
+    helpReturnScreen = state.screen;
+    closeIslandPopup();
+    showScreen('help');
+  }
+
+  function closeHelp() {
+    showScreen(helpReturnScreen === 'hub' ? 'hub' : 'title');
   }
 
   function startHub() {
     try {
+      playSound('start');
       updateLoadingBar(30);
       loadSave();
       updateLoadingBar(50);
@@ -1814,7 +2202,6 @@
   // ================================================================
   //  CONFETTI SYSTEM (2D canvas overlay)
   // ================================================================
-  let confettiCtx, confettiPieces = [], confettiAnim = null;
   function initConfetti() {
     try {
       const c = document.getElementById('confetti-canvas');
@@ -1965,6 +2352,43 @@
   }
 
   // ================================================================
+  //  STATIC UI CONTROLS
+  // ================================================================
+  function initUIControls() {
+    const actions = {
+      'title-play-btn': startHub,
+      'title-trophy-btn': showTrophies,
+      'title-help-btn': showHelp,
+      'island-popup-btn': () => enterSelectedIsland(),
+      'island-popup-cancel-btn': closeIslandPopup,
+      'explanation-btn': onExplanationContinue,
+      'victory-continue-btn': onVictoryContinue,
+      'trophy-main-menu-btn': showTitle,
+      'break-continue-btn': continueAfterBreak,
+      'break-take-btn': takeBreak,
+      'help-close-btn': closeHelp,
+      'hud-sound-btn': toggleSound,
+      'hud-help-btn': showHelp,
+      'hud-menu-btn': showTitle,
+      'error-reload-btn': () => window.location.reload(),
+      'error-title-btn': () => {
+        document.getElementById('error-fallback').classList.remove('active');
+        showTitle();
+      }
+    };
+    Object.entries(actions).forEach(([id, action]) => {
+      const element = document.getElementById(id);
+      if (element) {
+        // Property assignment is deliberate: it is easy to inspect, safe to
+        // call more than once, and works when inline handlers are blocked.
+        element.onclick = action;
+      }
+    });
+    const hudActions = document.querySelector('.hud-actions');
+    if (hudActions) hudActions.addEventListener('pointerdown', e => e.stopPropagation());
+  }
+
+  // ================================================================
   //  MOBILE TOUCH CONTROLS
   // ================================================================
   function initTouchControls() {
@@ -1976,23 +2400,28 @@
         const key = btn.dataset.key;
         btn.addEventListener('touchstart', (e) => {
           e.preventDefault();
+          e.stopPropagation();
           keys[key] = true;
           btn.style.background = 'var(--ui-border)';
         }, {passive: false});
         btn.addEventListener('touchend', (e) => {
           e.preventDefault();
+          e.stopPropagation();
           keys[key] = false;
           btn.style.background = '';
         }, {passive: false});
         btn.addEventListener('mousedown', (e) => {
+          e.stopPropagation();
           keys[key] = true;
           btn.style.background = 'var(--ui-border)';
         });
         btn.addEventListener('mouseup', (e) => {
+          e.stopPropagation();
           keys[key] = false;
           btn.style.background = '';
         });
         btn.addEventListener('mouseleave', (e) => {
+          e.stopPropagation();
           keys[key] = false;
           btn.style.background = '';
         });
@@ -2009,6 +2438,9 @@
     startHub,
     showTrophies,
     showTitle,
+    showHelp,
+    closeHelp,
+    toggleSound,
     closeIslandPopup,
     enterSelectedIsland,
     onExplanationContinue,
@@ -2020,7 +2452,10 @@
   // ================================================================
   //  BOOT
   // ================================================================
-  (function boot() {
+  function boot() {
+    // Bind every static button before WebGL/CDN work can fail.
+    initUIControls();
+    loadPreferences();
     console.log('[BOOT] Starting Boss Battle Islands...');
     // Safety timeout: force hide loader after 10 seconds no matter what
     const safetyTimeout = setTimeout(function() {
@@ -2084,7 +2519,14 @@
       } catch(e) {}
       showErrorFallback('The game could not start: ' + (err.message || err));
     }
-  })();
+  }
+
+  // Wait until controls and fallback markup below this script are available.
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', boot, { once: true });
+  } else {
+    boot();
+  }
 
   
   
@@ -2105,8 +2547,8 @@
     <p id="error-message" style="max-width: 500px; margin-bottom: 20px; font-size: 1.1rem; color: var(--text-main);">
       The game hit a problem. Try refreshing the page, or check that your browser supports WebGL.
     </p>
-    <button class="btn btn-primary" onclick="location.reload()">🔄 Try Again</button>
-    <button class="btn btn-info" onclick="document.getElementById('error-fallback').classList.remove('active'); window.Game.showTitle();">🏠 Back to Title</button>
+    <button class="btn btn-primary" id="error-reload-btn" onclick="window.location.reload()">🔄 Try Again</button>
+    <button class="btn btn-info" id="error-title-btn" onclick="document.getElementById('error-fallback').classList.remove('active'); window.Game.showTitle()">🏠 Back to Title</button>
   </div>
 
 </body>
