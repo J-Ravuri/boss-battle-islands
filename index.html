@@ -275,11 +275,67 @@
       z-index: 15;
       pointer-events: none;
     }
+
+    /* Mobile touch controls */
+    .touch-controls {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 12;
+      display: none;
+      gap: 4px;
+      grid-template-columns: 60px 60px 60px;
+      grid-template-rows: 60px 60px;
+      touch-action: manipulation;
+      pointer-events: auto;
+    }
+    .touch-btn {
+      width: 60px; height: 60px;
+      background: rgba(255,255,255,0.85);
+      border: 3px solid var(--ui-border);
+      border-radius: 14px;
+      font-size: 1.6rem;
+      display: flex; align-items: center; justify-content: center;
+      user-select: none; -webkit-user-select: none;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      pointer-events: auto;
+    }
+    .touch-btn:active { background: var(--ui-border); transform: scale(0.95); }
+    .touch-up { grid-column: 2; grid-row: 1; }
+    .touch-left { grid-column: 1; grid-row: 2; }
+    .touch-down { grid-column: 2; grid-row: 2; }
+    .touch-right { grid-column: 3; grid-row: 2; }
+    @media (max-width: 900px) {
+      .touch-controls { display: grid; }
+    }
+    /* Error fallback */
+    #error-fallback {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom));
+      z-index: 200; display: none; flex-direction: column;
+      align-items: center; justify-content: center; padding: 20px; text-align: center;
+    }
+    #error-fallback.active { display: flex; }
+    /* Loading progress */
+    #loading-bar {
+      width: 200px; height: 8px; background: rgba(255,255,255,0.4);
+      border-radius: 4px; margin-top: 12px; overflow: hidden;
+    }
+    #loading-bar-fill {
+      width: 0%; height: 100%; background: #FF9800;
+      border-radius: 4px; transition: width 0.3s;
+    }
+    /* Utility */
+    .hidden { display: none !important; }
+    #ui-hub { background: transparent !important; }
+
   </style>
 </head>
 <body>
   <div id="loading-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#87CEEB;z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column;font-family:sans-serif;">
     <div style="font-size:3rem;margin-bottom:10px;">🏝️</div>
+    <div id="loading-bar"><div id="loading-bar-fill"></div></div>
     <div style="font-size:1.5rem;font-weight:bold;color:#37474F;">Loading Boss Battle Islands...</div>
     <div id="loading-error" style="display:none;margin-top:20px;padding:20px;background:white;border-radius:12px;max-width:400px;text-align:center;color:#EF5350;">
       <b>Could not load the game engine.</b><br><br>
@@ -294,7 +350,7 @@
     <div class="hud-pill">🔥 Streak <span id="hud-streak">0</span></div>
     <div class="hud-pill">💎 <span id="hud-xp">0</span> XP</div>
   </div>
-  <div id="ui-title" class="ui-screen active" style="opacity:1; pointer-events:auto;">
+  <div id="ui-title" class="ui-screen active">
     <div class="ui-panel">
       <div style="font-size:4rem; margin-bottom:8px; animation: float 3s ease-in-out infinite;">🏝️⚔️🏝️</div>
       <h1>Boss Battle Islands</h1>
@@ -307,7 +363,7 @@
       <button class="btn btn-gold" onclick="Game.showTrophies()">🏆 Trophy Shelf</button>
     </div>
   </div>
-  <div id="ui-hub" class="ui-screen" style="opacity:0; pointer-events:none; background:transparent;"></div>
+  <div id="ui-hub" class="ui-screen"></div>
   <div id="island-popup">
     <div id="island-popup-title" style="font-weight:800; font-size:1.2rem; margin-bottom:6px;">Island Name</div>
     <div id="island-popup-boss" style="color: var(--text-light); font-size:0.95rem; margin-bottom:10px;">Boss Name</div>
@@ -361,8 +417,10 @@
       <button class="btn btn-info" onclick="Game.takeBreak()">☕ Take a Break</button>
     </div>
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/three.min.js"></script>
   <script>
+
+
 
   // ================================================================
   //  DATA LAYER — EXACT QUESTIONS FROM JSON
@@ -612,6 +670,7 @@
   let islands = {}; // sectionId -> {mesh, theme, bossMesh, status}
   let bosses = {};  // sectionId -> boss group
   let particles = [];
+  let confettiCtx = null, confettiPieces = [], confettiAnim = null;
   let raycaster = new THREE.Raycaster();
   let mouse = new THREE.Vector2();
   let keys = {};
@@ -858,14 +917,16 @@
 
   // Create a bridge between two points
   function createBridge(p1, p2, color) {
-    const mid = new THREE.Vector3().addVectors(p1, p2).multiplyScalar(0.5);
-    const dist = p1.distanceTo(p2);
+    const start = p1 instanceof THREE.Vector3 ? p1.clone() : new THREE.Vector3(...p1);
+    const end = p2 instanceof THREE.Vector3 ? p2.clone() : new THREE.Vector3(...p2);
+    const mid = new THREE.Vector3().addVectors(start, end).multiplyScalar(0.5);
+    const dist = start.distanceTo(end);
     const bridge = new THREE.Mesh(
       new THREE.BoxGeometry(0.8, 0.15, dist),
       new THREE.MeshLambertMaterial({ color: color || 0x8D6E63 })
     );
     bridge.position.copy(mid);
-    bridge.lookAt(p2);
+    bridge.lookAt(end);
     bridge.receiveShadow = true;
     return bridge;
   }
@@ -1299,7 +1360,7 @@
     state.selectedIsland = sid;
 
     // Hide hub UI, show battle UI
-    document.getElementById('ui-hub').classList.add('hidden');
+    // ui-hub visibility handled by showScreen
     document.getElementById('island-popup').classList.remove('active');
     document.getElementById('battle-ui').classList.add('active');
 
@@ -1574,7 +1635,7 @@
     // Show victory screen
     document.getElementById('battle-ui').classList.remove('active');
     document.getElementById('explanation-popup').classList.remove('active');
-    document.getElementById('ui-victory').classList.add('active');
+    showScreen('victory');
     document.getElementById('victory-boss-name').textContent = ISLAND_THEMES[sid].boss;
     document.getElementById('victory-stats').innerHTML =
       `Score: ${correct}/${total} | +${earnedXP} XP` + (levelUp ? '<br><b>🎉 Level Up! You are now Level ' + state.level + '!</b>' : '');
@@ -1608,43 +1669,37 @@
 
   function onVictoryContinue() {
     stopConfetti();
-    document.getElementById('ui-victory').classList.remove('active');
-
-    // Check for break prompt every 2 islands
+    showScreen('hub');
     if (state.sessionIslandsCompleted > 0 && state.sessionIslandsCompleted % 2 === 0) {
+      const breakEl = document.getElementById('ui-break');
+      if (breakEl) breakEl.classList.add('active');
       state.screen = 'break';
-      document.getElementById('ui-break').classList.add('active');
     } else {
       returnToHub();
     }
   }
 
-  function continueAfterBreak() {
-    document.getElementById('ui-break').classList.remove('active');
-    returnToHub();
-  }
-
   function takeBreak() {
-    document.getElementById('ui-break').classList.remove('active');
-    state.screen = 'title';
-    document.getElementById('ui-title').classList.add('active');
+    showScreen('title');
     returnToHub(true);
   }
 
-  function returnToHub(keepTitle) {
-    state.screen = 'hub';
-    state.battle = null;
-    if (!keepTitle) {
-      document.getElementById('ui-hub').classList.remove('hidden');
-    }
-    document.getElementById('battle-ui').classList.remove('active');
-    document.getElementById('explanation-popup').classList.remove('active');
+  function continueAfterBreak() {
+    returnToHub();
+  }
 
-    // Reset hero position near the completed island
+  function returnToHub(keepTitle) {
+    if (!keepTitle) {
+      showScreen('hub');
+    }
+    state.battle = null;
+    const battleUi = document.getElementById('battle-ui');
+    if (battleUi) battleUi.classList.remove('active');
+    const expl = document.getElementById('explanation-popup');
+    if (expl) expl.classList.remove('active');
     if (state.selectedIsland && islands[state.selectedIsland]) {
       hero.position.copy(islands[state.selectedIsland].position).add(new THREE.Vector3(0, 0, 5));
     }
-
     updateIslandVisuals();
     updateHUD();
   }
@@ -1653,36 +1708,38 @@
   //  UI & SCREEN MANAGEMENT
   // ================================================================
   function updateHUD() {
-    document.getElementById('hud-level').textContent = state.level;
-    document.getElementById('hud-streak').textContent = state.streak;
-    document.getElementById('hud-xp').textContent = state.xp;
+    try {
+      const levelEl = document.getElementById('hud-level');
+      const streakEl = document.getElementById('hud-streak');
+      const xpEl = document.getElementById('hud-xp');
+      if (levelEl) levelEl.textContent = state.level;
+      if (streakEl) streakEl.textContent = state.streak;
+      if (xpEl) xpEl.textContent = state.xp;
+    } catch(e) {
+      console.warn('HUD update failed:', e);
+    }
   }
 
   function showScreen(name) {
     const allScreens = ['ui-title','ui-hub','ui-victory','ui-trophy','ui-break'];
-    // Hide all screens first
     allScreens.forEach(id => {
       const el = document.getElementById(id);
       if (el) {
-        el.style.opacity = '0';
-        el.style.pointerEvents = 'none';
+        el.classList.remove('active');
+        el.style.opacity = '';
+        el.style.pointerEvents = '';
       }
     });
-    // Show target screen
     if (name === 'hub') {
       const hub = document.getElementById('ui-hub');
-      if (hub) {
-        hub.style.opacity = '1';
-        hub.style.pointerEvents = 'none'; // let clicks pass through to canvas
-      }
-      document.getElementById('hud').classList.add('active');
+      if (hub) hub.classList.add('active');
+      const hud = document.getElementById('hud');
+      if (hud) hud.classList.add('active');
     } else {
-      document.getElementById('hud').classList.remove('active');
+      const hud = document.getElementById('hud');
+      if (hud) hud.classList.remove('active');
       const el = document.getElementById('ui-' + name);
-      if (el) {
-        el.style.opacity = '1';
-        el.style.pointerEvents = 'auto';
-      }
+      if (el) el.classList.add('active');
     }
     state.screen = name;
   }
@@ -1717,17 +1774,16 @@
   }
 
   function startHub() {
-    console.log('Starting hub...');
     try {
+      updateLoadingBar(30);
       loadSave();
+      updateLoadingBar(50);
       updateHUD();
       if (!hubGroup) {
-        console.log('Building hub world...');
         buildHub();
-        console.log('Hub built successfully');
       }
+      updateLoadingBar(80);
       showScreen('hub');
-      // Force camera to correct position
       if (hero) {
         const targetPos = hero.position.clone().add(CONFIG.camOffsetHub);
         camera.position.copy(targetPos);
@@ -1736,9 +1792,10 @@
       if (renderer && scene && camera) {
         renderer.render(scene, camera);
       }
+      updateLoadingBar(100);
     } catch(e) {
       console.error('Error starting hub:', e);
-      alert('Oops! Something went wrong starting the game. Check the console (Cmd+Option+J) for details.');
+      showErrorFallback('Could not start the game world. ' + (e.message || e));
     }
   }
 
@@ -1759,50 +1816,65 @@
   // ================================================================
   let confettiCtx, confettiPieces = [], confettiAnim = null;
   function initConfetti() {
-    const c = document.getElementById('confetti-canvas');
-    c.width = window.innerWidth;
-    c.height = window.innerHeight;
-    confettiCtx = c.getContext('2d');
+    try {
+      const c = document.getElementById('confetti-canvas');
+      if (!c) return;
+      c.width = window.innerWidth;
+      c.height = window.innerHeight;
+      confettiCtx = c.getContext('2d');
+    } catch(e) {
+      console.warn('Confetti init failed:', e);
+    }
   }
   function startConfetti() {
-    confettiPieces = [];
-    const colors = ['#FFD700','#FF5722','#4CAF50','#2196F3','#E91E63','#FFEB3B'];
-    for (let i = 0; i < 120; i++) {
-      confettiPieces.push({
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * -window.innerHeight,
-        w: Math.random() * 10 + 5,
-        h: Math.random() * 6 + 4,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        vy: Math.random() * 3 + 2,
-        vx: Math.random() * 2 - 1,
-        rot: Math.random() * 360,
-        vrot: Math.random() * 4 - 2
-      });
+    try {
+      confettiPieces = [];
+      const colors = ['#FFD700','#FF5722','#4CAF50','#2196F3','#E91E63','#FFEB3B'];
+      for (let i = 0; i < 120; i++) {
+        confettiPieces.push({
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * -window.innerHeight,
+          w: Math.random() * 10 + 5,
+          h: Math.random() * 6 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          vy: Math.random() * 3 + 2,
+          vx: Math.random() * 2 - 1,
+          rot: Math.random() * 360,
+          vrot: Math.random() * 4 - 2
+        });
+      }
+      if (confettiAnim) cancelAnimationFrame(confettiAnim);
+      drawConfetti();
+    } catch(e) {
+      console.warn('Start confetti failed:', e);
     }
-    if (confettiAnim) cancelAnimationFrame(confettiAnim);
-    drawConfetti();
   }
   function drawConfetti() {
-    if (!confettiCtx) return;
-    confettiCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-    let active = false;
-    confettiPieces.forEach(p => {
-      p.y += p.vy; p.x += p.vx; p.rot += p.vrot;
-      if (p.y < window.innerHeight + 20) active = true;
-      confettiCtx.save();
-      confettiCtx.translate(p.x, p.y);
-      confettiCtx.rotate(p.rot * Math.PI / 180);
-      confettiCtx.fillStyle = p.color;
-      confettiCtx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
-      confettiCtx.restore();
-    });
-    if (active) confettiAnim = requestAnimationFrame(drawConfetti);
+    try {
+      if (!confettiCtx) return;
+      confettiCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      let active = false;
+      confettiPieces.forEach(p => {
+        p.y += p.vy; p.x += p.vx; p.rot += p.vrot;
+        if (p.y < window.innerHeight + 20) active = true;
+        confettiCtx.save();
+        confettiCtx.translate(p.x, p.y);
+        confettiCtx.rotate(p.rot * Math.PI / 180);
+        confettiCtx.fillStyle = p.color;
+        confettiCtx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        confettiCtx.restore();
+      });
+      if (active) confettiAnim = requestAnimationFrame(drawConfetti);
+    } catch(e) {}
   }
   function stopConfetti() {
-    if (confettiAnim) cancelAnimationFrame(confettiAnim);
-    if (confettiCtx) confettiCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-    confettiPieces = [];
+    try {
+      if (confettiAnim) cancelAnimationFrame(confettiAnim);
+      confettiAnim = null;
+      if (confettiCtx) {
+        confettiCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      }
+    } catch(e) {}
   }
 
   // ================================================================
@@ -1831,6 +1903,105 @@
     renderer.render(scene, camera);
   }
 
+
+  // ================================================================
+  //  DATA VALIDATION
+  // ================================================================
+  function validateGameData() {
+    const errors = [];
+    if (!GAME_DATA.sections || !Array.isArray(GAME_DATA.sections)) {
+      errors.push('GAME_DATA.sections is missing or not an array');
+      return errors;
+    }
+    const expectedSections = ['E1','E2','E3','E4','E5','M1','M2','M3','M4','M5'];
+    const foundIds = GAME_DATA.sections.map(s => s.sectionId);
+    for (const sid of expectedSections) {
+      if (!foundIds.includes(sid)) errors.push('Missing section: ' + sid);
+    }
+    for (const section of GAME_DATA.sections) {
+      if (!section.questions || !Array.isArray(section.questions)) {
+        errors.push(section.sectionId + ' has no questions'); continue;
+      }
+      for (const q of section.questions) {
+        if (!q.question || !q.options || !q.answer || !q.explanation) {
+          errors.push(section.sectionId + ' question ' + q.id + ' is missing fields');
+        }
+        if (!Array.isArray(q.options) || q.options.length !== 4) {
+          errors.push(section.sectionId + ' question ' + q.id + ' does not have 4 options');
+        }
+        if (q.options && !q.options.includes(q.answer)) {
+          errors.push(section.sectionId + ' question ' + q.id + ' answer is not in options');
+        }
+      }
+      if (!ISLAND_THEMES[section.sectionId]) errors.push('Missing ISLAND_THEME for ' + section.sectionId);
+      if (!BADGES[section.sectionId]) errors.push('Missing BADGE for ' + section.sectionId);
+    }
+    return errors;
+  }
+
+  // ================================================================
+  //  ERROR HANDLING
+  // ================================================================
+  function showErrorFallback(message) {
+    try {
+      const fallback = document.getElementById('error-fallback');
+      const msgEl = document.getElementById('error-message');
+      if (fallback && msgEl) {
+        msgEl.textContent = message || 'Something went wrong. Try refreshing the page.';
+        fallback.classList.add('active');
+      }
+      const loader = document.getElementById('loading-overlay');
+      if (loader) loader.style.display = 'none';
+    } catch(e) {
+      console.error('Even error fallback failed:', e);
+    }
+  }
+
+  function updateLoadingBar(percent) {
+    try {
+      const fill = document.getElementById('loading-bar-fill');
+      if (fill) fill.style.width = Math.max(0, Math.min(100, percent)) + '%';
+    } catch(e) {}
+  }
+
+  // ================================================================
+  //  MOBILE TOUCH CONTROLS
+  // ================================================================
+  function initTouchControls() {
+    try {
+      const container = document.getElementById('touch-controls');
+      if (!container) return;
+      const buttons = container.querySelectorAll('.touch-btn');
+      buttons.forEach(btn => {
+        const key = btn.dataset.key;
+        btn.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          keys[key] = true;
+          btn.style.background = 'var(--ui-border)';
+        }, {passive: false});
+        btn.addEventListener('touchend', (e) => {
+          e.preventDefault();
+          keys[key] = false;
+          btn.style.background = '';
+        }, {passive: false});
+        btn.addEventListener('mousedown', (e) => {
+          keys[key] = true;
+          btn.style.background = 'var(--ui-border)';
+        });
+        btn.addEventListener('mouseup', (e) => {
+          keys[key] = false;
+          btn.style.background = '';
+        });
+        btn.addEventListener('mouseleave', (e) => {
+          keys[key] = false;
+          btn.style.background = '';
+        });
+      });
+    } catch(e) {
+      console.warn('Touch controls init failed:', e);
+    }
+  }
+
   // ================================================================
   //  PUBLIC GAME API (attached to window for HTML onclick access)
   // ================================================================
@@ -1849,23 +2020,94 @@
   // ================================================================
   //  BOOT
   // ================================================================
-  try {
-    if (typeof THREE === 'undefined') {
-      throw new Error('Three.js not loaded. Check internet connection.');
-    }
-    initThree();
-    initConfetti();
-    animate();
-    loadSave();
-    updateHUD();
-    // Hide loading overlay
-    const loader = document.getElementById('loading-overlay');
-    if (loader) loader.style.display = 'none';
-  } catch (err) {
-    console.error('Game failed to load:', err);
-    document.getElementById('loading-error').style.display = 'block';
-  }
+  (function boot() {
+    console.log('[BOOT] Starting Boss Battle Islands...');
+    // Safety timeout: force hide loader after 10 seconds no matter what
+    const safetyTimeout = setTimeout(function() {
+      console.warn('[BOOT] Safety timeout triggered — forcing loader hide');
+      const loader = document.getElementById('loading-overlay');
+      if (loader) {
+        loader.style.opacity = '0';
+        loader.style.transition = 'opacity 0.5s';
+        setTimeout(function() { if (loader) loader.style.display = 'none'; }, 500);
+      }
+      showErrorFallback('The game took too long to load. This might be a connection issue or your browser may not support WebGL. Try refreshing or using a different browser.');
+    }, 10000);
 
+    try {
+      updateLoadingBar(5);
+      console.log('[BOOT] Step 1: Checking Three.js...');
+      if (typeof THREE === 'undefined') {
+        throw new Error('Three.js not loaded. Check your internet connection — the game needs to download Three.js from a CDN on first load.');
+      }
+      updateLoadingBar(15);
+      console.log('[BOOT] Step 2: Validating game data...');
+      const dataErrors = validateGameData();
+      if (dataErrors.length > 0) {
+        console.warn('[BOOT] Data warnings:', dataErrors);
+      }
+      updateLoadingBar(25);
+      console.log('[BOOT] Step 3: Initialising 3D engine...');
+      initThree();
+      updateLoadingBar(40);
+      console.log('[BOOT] Step 4: Initialising confetti...');
+      initConfetti();
+      updateLoadingBar(50);
+      console.log('[BOOT] Step 5: Initialising touch controls...');
+      initTouchControls();
+      updateLoadingBar(55);
+      console.log('[BOOT] Step 6: Starting render loop...');
+      animate();
+      updateLoadingBar(65);
+      console.log('[BOOT] Step 7: Loading saved progress...');
+      loadSave();
+      updateLoadingBar(75);
+      console.log('[BOOT] Step 8: Updating HUD...');
+      updateHUD();
+      updateLoadingBar(85);
+      console.log('[BOOT] Step 9: Hiding loader...');
+      const loader = document.getElementById('loading-overlay');
+      if (loader) {
+        loader.style.opacity = '0';
+        loader.style.transition = 'opacity 0.5s';
+        setTimeout(function() { if (loader) loader.style.display = 'none'; }, 500);
+      }
+      updateLoadingBar(100);
+      clearTimeout(safetyTimeout);
+      console.log('[BOOT] ✅ Game loaded successfully!');
+    } catch (err) {
+      clearTimeout(safetyTimeout);
+      console.error('[BOOT] Game failed to load:', err);
+      try {
+        const errEl = document.getElementById('loading-error');
+        if (errEl) errEl.style.display = 'block';
+      } catch(e) {}
+      showErrorFallback('The game could not start: ' + (err.message || err));
+    }
+  })();
+
+  
+  
   </script>
+
+  <!-- Mobile touch controls -->
+  <div id="touch-controls" class="touch-controls">
+    <div class="touch-btn touch-up" data-key="w">⬆️</div>
+    <div class="touch-btn touch-left" data-key="a">⬅️</div>
+    <div class="touch-btn touch-down" data-key="s">⬇️</div>
+    <div class="touch-btn touch-right" data-key="d">➡️</div>
+  </div>
+
+  <!-- Error fallback screen -->
+  <div id="error-fallback">
+    <div style="font-size:4rem; margin-bottom:12px;">🛠️</div>
+    <h2 style="color: var(--ui-red); margin-bottom: 12px;">Something went wrong</h2>
+    <p id="error-message" style="max-width: 500px; margin-bottom: 20px; font-size: 1.1rem; color: var(--text-main);">
+      The game hit a problem. Try refreshing the page, or check that your browser supports WebGL.
+    </p>
+    <button class="btn btn-primary" onclick="location.reload()">🔄 Try Again</button>
+    <button class="btn btn-info" onclick="document.getElementById('error-fallback').classList.remove('active'); window.Game.showTitle();">🏠 Back to Title</button>
+  </div>
+
 </body>
 </html>
