@@ -233,10 +233,11 @@
       align-items: center;
       pointer-events: none;
       opacity: 0;
+      visibility: hidden;
       transition: opacity 0.3s;
       background: linear-gradient(to top, rgba(255,255,255,0.95) 60%, transparent);
     }
-    #battle-ui.active { opacity: 1; }
+    #battle-ui.active { opacity: 1; visibility: visible; }
     #battle-ui > div:first-child { flex-wrap: wrap; justify-content: center; }
     .boss-bar-container {
       width: 280px;
@@ -361,8 +362,35 @@
     }
     .trophy-slot .trophy-icon { font-size: 1.8rem; margin-bottom: 4px; }
     .trophy-slot .trophy-label { font-weight: 700; color: var(--text-main); font-size: 0.7rem; }
+    .level-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(240px, 1fr));
+      gap: 18px;
+      margin: 20px 0;
+      text-align: left;
+    }
+    .level-card {
+      border: 3px solid var(--ui-border);
+      border-radius: 20px;
+      background: rgba(255,255,255,0.92);
+      padding: 20px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: transform 0.18s, border-color 0.18s;
+    }
+    .level-card:hover, .level-card:focus-visible {
+      transform: translateY(-4px);
+      border-color: var(--ui-accent);
+      outline: none;
+    }
+    .level-card h2 { margin: 6px 0; }
+    .level-card-progress { font-weight: 800; color: var(--ui-green); margin-top: 12px; }
+    .level-card.unavailable { opacity: 0.55; cursor: not-allowed; }
+    .trophy-tabs { display: flex; justify-content: center; gap: 10px; margin-top: 12px; }
+    .trophy-tab.active { background: var(--ui-accent); color: white; }
     @media (max-width: 600px) {
       .trophy-grid { grid-template-columns: repeat(3, 1fr); }
+      .level-card-grid { grid-template-columns: 1fr; }
     }
     #ui-hub.active { pointer-events: none; }
   #island-popup {
@@ -573,6 +601,7 @@
       </select>
       <button class="hud-btn" id="hud-sound-btn" title="Sound (M)">🔊</button>
       <button class="hud-btn" id="hud-help-btn" title="How to play (H)">❓</button>
+      <button class="hud-btn" id="hud-level-switch-btn" title="Switch level">⇄</button>
       <button class="hud-btn" id="hud-menu-btn" title="Main menu">☰</button>
     </div>
   </div>
@@ -588,7 +617,7 @@
       <h3>Shauri's 11+ Adventure</h3>
       <p style="margin-bottom:18px; color: var(--text-light); font-size:1.05rem;">
         Explore floating islands, battle friendly bosses with brain-power,<br>
-        and collect trophies across English and Maths!
+        and collect trophies across English, Maths, and Spelling!
       </p>
       <div class="music-picker">
         <label for="title-music-select">🎵 Background music</label>
@@ -598,9 +627,18 @@
         </select>
         <small>AyaSher is cinematic. Study Focus is a calm original instrumental.</small>
       </div>
-      <button class="btn btn-primary" id="title-play-btn" onclick="window.Game.startHub()">▶️ Play</button>
+      <button class="btn btn-primary" id="title-play-btn" onclick="window.Game.showLevelSelect()">▶️ Choose Level</button>
       <button class="btn btn-gold" id="title-trophy-btn" onclick="window.Game.showTrophies()">🏆 Trophy Shelf</button>
       <button class="btn btn-info" id="title-help-btn" onclick="window.Game.showHelp()">❓ How to Play</button>
+    </div>
+  </div>
+  <div id="ui-level-select" class="ui-screen">
+    <div class="ui-panel" style="max-width:860px;">
+      <div style="font-size:3.2rem;">🗺️</div>
+      <h1>Choose an Adventure</h1>
+      <p style="color:var(--text-light);">Each level has its own world, XP, streaks, and trophies.</p>
+      <div class="level-card-grid" id="level-card-grid"></div>
+      <button class="btn btn-info" id="level-select-back-btn">← Main Menu</button>
     </div>
   </div>
   <div id="ui-hub" class="ui-screen"></div>
@@ -641,6 +679,7 @@
     <div class="ui-panel" style="max-width: 800px;">
       <h1>🏆 Trophy Shelf</h1>
       <p style="color: var(--text-light); margin-bottom:12px;">Click a badge to replay an island!</p>
+      <div class="trophy-tabs" id="trophy-tabs"></div>
       <div class="trophy-grid" id="trophy-grid"></div>
       <div style="margin-top:16px;">
         <span style="font-weight:700;">Total Progress: <span id="trophy-progress">0/10</span></span>
@@ -679,110 +718,30 @@
 
 
   // ================================================================
-  //  DATA LAYER — BUILT-IN FALLBACK QUESTIONS
-  //  Add new question packs in data/questions/ instead of editing this block.
-  //  See data/questions/README.md for the drop-in JSON format.
+  //  LEVEL REGISTRY
+  //  Each level is declared by data/questions/manifest.json and its own
+  //  nested manifest. Core world/battle code only reads the active registry,
+  //  so a future level can be added without another engine rewrite.
   // ================================================================
-  const GAME_DATA = {
-    "status": "partial",
-    "completedSections": 10,
-    "totalPlannedSections": 20,
-    "sections": [
-      {
-        "sectionId": "E1",
-        "subject": "English",
-        "title": "Vocabulary: Synonyms, Antonyms and Unfamiliar Phrases in Context",
-        "questions": []
-      },
-      {
-        "sectionId": "E2",
-        "subject": "English",
-        "title": "Direct Retrieval, Accurate Paraphrasing and Evidence Checking",
-        "questions": []
-      },
-      {
-        "sectionId": "E3",
-        "subject": "English",
-        "title": "Factual and Descriptive Inference",
-        "questions": []
-      },
-      {
-        "sectionId": "E4",
-        "subject": "English",
-        "title": "Character Feelings, Motives and Relationships",
-        "questions": []
-      },
-      {
-        "sectionId": "E5",
-        "subject": "English",
-        "title": "Main Idea, Summary and Paragraph Purpose",
-        "questions": []
-      },
-      {
-        "sectionId": "M1",
-        "subject": "Maths",
-        "title": "Multi-Step Word Problems, Graphs and Data Interpretation",
-        "questions": []
-      },
-      {
-        "sectionId": "M2",
-        "subject": "Maths",
-        "title": "Fractions and Probability",
-        "questions": []
-      },
-      {
-        "sectionId": "M3",
-        "subject": "Maths",
-        "title": "Percentages",
-        "questions": []
-      },
-      {
-        "sectionId": "M4",
-        "subject": "Maths",
-        "title": "Time, Dates and Timetables",
-        "questions": []
-      },
-      {
-        "sectionId": "M5",
-        "subject": "Maths",
-        "title": "2D and 3D Measurement",
-        "questions": []
-      }
-    ]
-  };
+  const LEVEL_REGISTRY = new Map();
+  let activeLevelRegistry = null;
 
-  // ================================================================
-  //  THEME METADATA — visual settings for each island/boss
-  //  Parents: edit colours, names, or emoji here to reskin easily.
-  // ================================================================
-  const ISLAND_THEMES = {
-    "E1": { name: "The Jungle Library",      boss: "The Word Wyrm",              emoji: "📚", islandColor: 0x4CAF50, bossColor: 0xFFD700, accent: 0x8BC34A, type: "english" },
-    "E2": { name: "The Ruin of Runes",       boss: "The Evidence Elemental",     emoji: "🗿", islandColor: 0x9E9E9E, bossColor: 0x2196F3, accent: 0xBDBDBD, type: "english" },
-    "E3": { name: "The Misty Marsh",         boss: "The Riddle Raven",           emoji: "🌫️", islandColor: 0x7B1FA2, bossColor: 0xCE93D8, accent: 0xAB47BC, type: "english" },
-    "E4": { name: "The Crystal Caverns",     boss: "The Heart Guardian",         emoji: "💎", islandColor: 0xEC407A, bossColor: 0xF48FB1, accent: 0xF06292, type: "english" },
-    "E5": { name: "The Sky Sanctuary",       boss: "The Paragraph Phoenix",      emoji: "☁️", islandColor: 0xE1F5FE, bossColor: 0xFF9800, accent: 0x81D4FA, type: "english" },
-    "M1": { name: "The Clockwork Factory",   boss: "The Gear Golem",             emoji: "⚙️", islandColor: 0x607D8B, bossColor: 0xFFC107, accent: 0x90A4AE, type: "maths" },
-    "M2": { name: "The Crystal Cave of Chance",boss: "The Fraction Dragon",        emoji: "🎲", islandColor: 0x00BCD4, bossColor: 0xFF5722, accent: 0x4DD0E1, type: "maths" },
-    "M3": { name: "The Percentage Volcano",  boss: "The Percentage Phantom",     emoji: "🌋", islandColor: 0xD84315, bossColor: 0xFFEB3B, accent: 0xFF7043, type: "maths" },
-    "M4": { name: "The Time Temple",         boss: "The Clockwork Colossus",     emoji: "⏰", islandColor: 0xFFB300, bossColor: 0x3E2723, accent: 0xFFD54F, type: "maths" },
-    "M5": { name: "The Geometry Gardens",    boss: "The Shape Shifter",          emoji: "📐", islandColor: 0x66BB6A, bossColor: 0x9C27B0, accent: 0xA5D6A7, type: "maths" }
-  };
+  function currentLevel() {
+    if (!activeLevelRegistry) throw new Error('No content level is selected.');
+    return activeLevelRegistry;
+  }
 
-  // Island 3D positions [x, y, z] — two branches from centre
-  const ISLAND_LAYOUT = {
-    "E1": [-12,  3, -4],  "E2": [-18,  6, -10], "E3": [-20,  9, -18],
-    "E4": [-16, 12, -26], "E5": [-10, 15, -32],
-    "M1": [ 12,  3, -4],  "M2": [ 18,  6, -10], "M3": [ 20,  9, -18],
-    "M4": [ 16, 12, -26], "M5": [ 10, 15, -32]
-  };
+  function currentSections() {
+    return currentLevel().sections;
+  }
 
-  const BADGES = {
-    "E1": "📖 Vocabulary Vanguard",   "E2": "🔍 Evidence Expert",
-    "E3": "🦊 Inference Investigator", "E4": "❤️ Character Champion",
-    "E5": "🦅 Summary Sage",          "M1": "📊 Data Defender",
-    "M2": "🍕 Fraction Fighter",     "M3": "🔥 Percentage Paladin",
-    "M4": "⏱️ Timekeeper Titan",    "M5": "📏 Measurement Master"
-  };
+  function getSection(sectionId) {
+    return currentLevel().sectionMap.get(sectionId);
+  }
+
+  function getIslandTheme(sectionId) {
+    return getSection(sectionId)?.theme;
+  }
 
   // ================================================================
   //  CONFIG & STATE
@@ -850,6 +809,7 @@
   let clickTarget = null;
   let pendingIsland = null;
   let isTransitioning = false;
+  let hubBuildSerial = 0;
   let battleFeedbackTimer = null;
   let runtimeErrorScopes = new Set();
   let audioCtx = null;
@@ -869,31 +829,46 @@
   // ================================================================
   //  SAVE SYSTEM
   // ================================================================
-  const SAVE_KEY = 'bossBattleIslands_save_v1';
-  function getSaveKey() {
-    // Preserve existing Level 1 saves, while keeping future spelling
-    // progress independent from the original English/Maths adventure.
-    return activeContentLevel === 'level-1'
-      ? SAVE_KEY
-      : `${SAVE_KEY}_${activeContentLevel}`;
+  const LEGACY_SAVE_KEY = 'bossBattleIslands_save_v1';
+  const SAVE_KEY_PREFIX = 'bossBattleIslands_progress_';
+  function getSaveKey(levelId = activeContentLevel) {
+    return SAVE_KEY_PREFIX + levelId;
+  }
+  function emptyProgress() {
+    return { xp: 0, level: 1, streak: 0, bestStreak: 0, completed: {} };
+  }
+  function readProgress(levelId) {
+    try {
+      let raw = localStorage.getItem(getSaveKey(levelId));
+      // One-time migration keeps existing players' Level 1 achievements.
+      if (!raw && levelId === 'level-1') {
+        raw = localStorage.getItem(LEGACY_SAVE_KEY);
+        if (raw) localStorage.setItem(getSaveKey(levelId), raw);
+      }
+      return raw ? { ...emptyProgress(), ...JSON.parse(raw) } : emptyProgress();
+    } catch (error) {
+      console.warn(`[SAVE] Could not read ${levelId} progress.`, error);
+      return emptyProgress();
+    }
   }
   function loadSave() {
-    try {
-      const raw = localStorage.getItem(getSaveKey());
-      if (raw) {
-        const data = JSON.parse(raw);
-        state.xp = data.xp || 0;
-        state.level = data.level || 1;
-        state.bestStreak = data.bestStreak || 0;
-        state.completed = data.completed || {};
-      }
-    } catch(e) { console.log('No save found'); }
+    const data = readProgress(activeContentLevel);
+    state.xp = data.xp || 0;
+    state.level = data.level || 1;
+    state.streak = data.streak || 0;
+    state.bestStreak = data.bestStreak || 0;
+    state.completed = data.completed || {};
+    state.sessionIslandsCompleted = 0;
+    state.selectedIsland = null;
+    state.battle = null;
   }
   function saveGame() {
     try {
       localStorage.setItem(getSaveKey(), JSON.stringify({
+        levelId: activeContentLevel,
         xp: state.xp,
         level: state.level,
+        streak: state.streak,
         bestStreak: state.bestStreak,
         completed: state.completed
       }));
@@ -1964,6 +1939,43 @@
           group.add(crown);
         });
       }
+    } else if (theme.type === 'spelling') {
+      // Floating alphabet tiles distinguish the dedicated spelling world.
+      const letters = ['A', 'B', 'C', 'X', 'Y'];
+      letters.forEach((letter, index) => {
+        const tile = new THREE.Group();
+        const block = new THREE.Mesh(
+          new THREE.BoxGeometry(0.58, 0.58, 0.16),
+          new THREE.MeshStandardMaterial({
+            color: index % 2 ? theme.accent : theme.bossColor,
+            emissive: index % 2 ? theme.accent : theme.bossColor,
+            emissiveIntensity: 0.12,
+            roughness: 0.48
+          })
+        );
+        block.castShadow = true;
+        tile.add(block);
+        const letterCanvas = document.createElement('canvas');
+        letterCanvas.width = 96;
+        letterCanvas.height = 96;
+        const letterContext = letterCanvas.getContext('2d');
+        letterContext.fillStyle = '#17324D';
+        letterContext.font = '900 68px Segoe UI';
+        letterContext.textAlign = 'center';
+        letterContext.textBaseline = 'middle';
+        letterContext.fillText(letter, 48, 50);
+        const letterTexture = new THREE.CanvasTexture(letterCanvas);
+        const face = new THREE.Mesh(
+          new THREE.PlaneGeometry(0.44, 0.44),
+          new THREE.MeshBasicMaterial({ map: letterTexture, transparent: true })
+        );
+        face.position.z = 0.086;
+        tile.add(face);
+        const angle = index / letters.length * Math.PI * 2 + 0.3;
+        tile.position.set(Math.cos(angle) * radius * 0.67, h + 0.55, Math.sin(angle) * radius * 0.67);
+        tile.rotation.y = -angle;
+        group.add(tile);
+      });
     } else if (theme.type === 'maths') {
       // Glowing number blocks and gear rings for Maths islands.
       for (let i = 0; i < 4; i++) {
@@ -2037,12 +2049,14 @@
   // ================================================================
   //  BOSS BUILDERS — 10 unique low-poly bosses
   // ================================================================
-  function createBoss(sectionId) {
-    const theme = ISLAND_THEMES[sectionId];
+  function createBoss(sectionId, theme = getIslandTheme(sectionId)) {
+    if (!theme) throw new Error(`Missing boss theme for ${activeContentLevel}/${sectionId}`);
     const group = new THREE.Group();
     const c = theme.bossColor;
 
-    switch(sectionId) {
+    // Boss archetypes are reusable visual recipes. Level manifests choose an
+    // archetype while supplying their own spelling/subject-specific identity.
+    switch(theme.bossArchetype || sectionId) {
       case 'E1': // Word Wyrm — segmented dragon of letters
         for (let i = 0; i < 5; i++) {
           const seg = new THREE.Mesh(
@@ -2225,9 +2239,47 @@
   // ================================================================
   //  HUB WORLD LOGIC
   // ================================================================
+  function disposeObject3D(root) {
+    if (!root) return;
+    root.traverse(object => {
+      if (object.geometry) object.geometry.dispose();
+      const materials = Array.isArray(object.material) ? object.material : [object.material];
+      materials.filter(Boolean).forEach(material => {
+        ['map','alphaMap','normalMap','roughnessMap','metalnessMap','emissiveMap'].forEach(key => {
+          if (material[key]) material[key].dispose();
+        });
+        material.dispose();
+      });
+    });
+    if (root.parent) root.parent.remove(root);
+  }
+
+  function teardownHub() {
+    clearBattleFeedbackTimer();
+    clearShauriBubble();
+    clickTarget = null;
+    pendingIsland = null;
+    keys = {};
+    particles.forEach(particle => disposeObject3D(particle));
+    particles = [];
+    disposeObject3D(hubGroup);
+    disposeObject3D(battleGroup);
+    hubGroup = null;
+    battleGroup = null;
+    hero = null;
+    homeIsland = null;
+    islands = {};
+    bosses = {};
+    navigationIslands = [];
+    navigationBridges = [];
+    walkSurfaces = [];
+  }
+
   function buildHub() {
+    if (hubGroup || battleGroup) teardownHub();
+    const level = currentLevel();
     hubGroup = new THREE.Group();
-    hubGroup.name = 'hub-world';
+    hubGroup.name = `hub-world-${level.id}`;
     scene.add(hubGroup);
     islands = {};
     bosses = {};
@@ -2237,10 +2289,10 @@
 
     // Central home island
     homeIsland = createIsland('HOME', [0, 0, 0], {
-      name: 'Home Base',
-      emoji: '🏠',
-      islandColor: 0xD6A928,
-      accent: 0xFFF59D,
+      name: level.hub.name || 'Home Base',
+      emoji: level.hub.emoji || '🏠',
+      islandColor: level.hub.homeColor,
+      accent: level.hub.homeAccent,
       type: 'home'
     });
     homeIsland.userData.isHome = true;
@@ -2262,10 +2314,10 @@
     hero.userData.lumi = lumi;
 
     // Build each section island
-    GAME_DATA.sections.forEach((section, idx) => {
+    level.sections.forEach(section => {
       const sid = section.sectionId;
-      const theme = ISLAND_THEMES[sid];
-      const pos = ISLAND_LAYOUT[sid];
+      const theme = section.theme;
+      const pos = section.position;
       const island = createIsland(sid, pos, theme);
       hubGroup.add(island);
       islands[sid] = island;
@@ -2277,13 +2329,13 @@
       });
       walkSurfaces.push(island.userData.topMesh);
 
-      // Bridge from previous island (or home for first of each branch)
-      let previousIsland;
-      if (sid === 'E1' || sid === 'M1') {
-        previousIsland = homeIsland;
-      } else {
-        const prevId = GAME_DATA.sections[idx - 1].sectionId;
-        previousIsland = islands[prevId];
+      // bridgeFrom is level data, so any future level can define its own
+      // path/branches without changing hub construction.
+      const previousIsland = section.bridgeFrom === 'HOME'
+        ? homeIsland
+        : islands[section.bridgeFrom];
+      if (!previousIsland) {
+        throw new Error(`${level.id}/${sid}: bridgeFrom "${section.bridgeFrom}" has not been built.`);
       }
       const previousSurface = previousIsland.position.clone();
       previousSurface.y += previousIsland.userData.surfaceY;
@@ -2298,7 +2350,7 @@
       walkSurfaces.push(bridge.userData.deck);
 
       // Boss floating above island (hidden until battle)
-      const boss = createBoss(sid);
+      const boss = createBoss(sid, theme);
       boss.position.set(pos[0], pos[1] + 5, pos[2]);
       boss.visible = false;
       hubGroup.add(boss);
@@ -2309,6 +2361,19 @@
     battleGroup.visible = false;
     scene.add(battleGroup);
     updateIslandVisuals();
+    hubBuildSerial++;
+    // Lightweight diagnostics make scene-cleanliness testable without
+    // exposing mutable game state.
+    if (renderer?.domElement) {
+      renderer.domElement.dataset.activeLevel = level.id;
+      renderer.domElement.dataset.hubBuild = String(hubBuildSerial);
+      renderer.domElement.dataset.hubGroups = String(
+        scene.children.filter(child => child.name?.startsWith('hub-world-')).length
+      );
+      renderer.domElement.dataset.battleArenas = String(
+        scene.children.filter(child => child.name === 'battle-arena').length
+      );
+    }
   }
 
   function createBattleArena() {
@@ -2364,24 +2429,21 @@
     return arena;
   }
 
+  function isSectionUnlocked(section, completed = state.completed) {
+    return section.unlockAfter.every(requiredId => completed[requiredId]);
+  }
+
   function updateIslandVisuals() {
-    GAME_DATA.sections.forEach((section, idx) => {
+    currentSections().forEach(section => {
       const sid = section.sectionId;
       const island = islands[sid];
       if (!island) return;
       const orb = island.userData.orb;
       const pillar = island.userData.pillar;
-      // English and Maths form two independent paths from HOME.
-      const previousSection = GAME_DATA.sections
-        .slice(0, idx)
-        .reverse()
-        .find(candidate => candidate.subject === section.subject);
-      const prevId = previousSection ? previousSection.sectionId : null;
-
       let status = 'locked';
       if (state.completed[sid]) {
         status = 'completed';
-      } else if (!prevId || state.completed[prevId]) {
+      } else if (isSectionUnlocked(section)) {
         status = 'unlocked';
       }
       island.userData.status = status;
@@ -2393,7 +2455,7 @@
       } else if (status === 'unlocked') {
         orb.material.color.setHex(0x29B6F6);
         pillar.material.color.setHex(0x4FC3F7);
-        island.children[0].material.color.setHex(ISLAND_THEMES[sid].islandColor);
+        island.children[0].material.color.setHex(section.theme.islandColor);
       } else {
         orb.material.color.setHex(0xFFD700);
         pillar.material.color.setHex(0xFFC107);
@@ -2636,7 +2698,8 @@
   }
 
   function showIslandPopup(sid, locked) {
-    const theme = ISLAND_THEMES[sid];
+    const theme = getIslandTheme(sid);
+    if (!theme) return;
     playSound(locked ? 'wrong' : 'select');
     document.getElementById('island-popup-title').textContent = theme.emoji + ' ' + theme.name;
     document.getElementById('island-popup-boss').textContent = 'Guarded by ' + theme.boss;
@@ -2689,7 +2752,7 @@
 
   function enterBattle(sid) {
     if (isTransitioning) return;
-    const section = GAME_DATA.sections.find(s => s.sectionId === sid);
+    const section = getSection(sid);
     if (!section || !Array.isArray(section.questions) || section.questions.length === 0) {
       showErrorFallback('This island has no valid questions yet.');
       return;
@@ -2728,7 +2791,7 @@
     };
 
     // Update boss bar
-    document.getElementById('boss-name').textContent = ISLAND_THEMES[sid].boss;
+    document.getElementById('boss-name').textContent = section.theme.boss;
     updateBossBar();
 
     clearBattleFeedbackTimer();
@@ -2779,7 +2842,7 @@
       b.isRetry = true;
     } else {
       // Defensive recovery: victory is never granted while HP remains.
-      const section = GAME_DATA.sections.find(item => item.sectionId === b.sectionId);
+      const section = getSection(b.sectionId);
       const missing = section.questions.filter(question => !b.answeredCorrect.has(question.id));
       if (missing.length === 0) {
         b.bossHP = 0;
@@ -3002,7 +3065,7 @@
     if (!victory) return; // We only have victory states
     clearBattleFeedbackTimer();
     const sid = state.battle.sectionId;
-    const section = GAME_DATA.sections.find(s => s.sectionId === sid);
+    const section = getSection(sid);
 
     // Calculate rewards
     const correct = state.battle.correctCount;
@@ -3030,10 +3093,10 @@
     document.getElementById('battle-ui').classList.remove('active');
     document.getElementById('explanation-popup').classList.remove('active');
     showScreen('victory');
-    document.getElementById('victory-boss-name').textContent = ISLAND_THEMES[sid].boss;
+    document.getElementById('victory-boss-name').textContent = section.theme.boss;
     document.getElementById('victory-stats').innerHTML =
       `Score: ${correct}/${total} | +${earnedXP} XP` + (levelUp ? '<br><b>🎉 Level Up! You are now Level ' + state.level + '!</b>' : '');
-    document.getElementById('victory-badge').textContent = ISLAND_THEMES[sid].emoji;
+    document.getElementById('victory-badge').textContent = section.theme.emoji;
     const stars = state.battle.wrongCount === 0 ? 3 : state.battle.wrongCount <= 2 ? 2 : 1;
     document.getElementById('victory-rank').textContent =
       '⭐'.repeat(stars) + '☆'.repeat(3 - stars) + (stars === 3 ? ' Perfect!' : stars === 2 ? ' Great run!' : ' Boss beaten!');
@@ -3164,19 +3227,23 @@
   function updateQuestCard() {
     const text = document.getElementById('quest-card-text');
     if (!text) return;
-    const nextEnglish = GAME_DATA.sections.find(section => section.subject === 'English' && !state.completed[section.sectionId]);
-    const nextMaths = GAME_DATA.sections.find(section => section.subject === 'Maths' && !state.completed[section.sectionId]);
+    const title = document.getElementById('quest-card-title');
+    const level = currentLevel();
+    if (title) title.textContent = `${level.hub.emoji || '🧭'} ${level.title}`;
     const completedCount = Object.keys(state.completed).length;
-    const missions = [];
-    if (nextEnglish) missions.push(`${ISLAND_THEMES[nextEnglish.sectionId].emoji} ${ISLAND_THEMES[nextEnglish.sectionId].name}`);
-    if (nextMaths) missions.push(`${ISLAND_THEMES[nextMaths.sectionId].emoji} ${ISLAND_THEMES[nextMaths.sectionId].name}`);
+    const missions = level.sections
+      .filter(section => !state.completed[section.sectionId] && isSectionUnlocked(section))
+      .slice(0, 2)
+      .map(section => `${section.theme.emoji} ${section.theme.name}`);
     text.textContent = missions.length
-      ? `${completedCount}/10 conquered • Next: ${missions.join(' or ')}`
-      : '🏆 All 10 bosses defeated — replay islands to improve your scores!';
+      ? `${completedCount}/${level.sections.length} conquered • Next: ${missions.join(' or ')}`
+      : completedCount === level.sections.length
+        ? `🏆 All ${level.sections.length} bosses defeated — replay islands to improve your scores!`
+        : 'Follow the glowing bridge to unlock the next spelling challenge.';
   }
 
   function showScreen(name) {
-    const allScreens = ['ui-title','ui-hub','ui-victory','ui-trophy','ui-break','ui-help'];
+    const allScreens = ['ui-title','ui-level-select','ui-hub','ui-victory','ui-trophy','ui-break','ui-help'];
     allScreens.forEach(id => {
       const el = document.getElementById(id);
       if (el) {
@@ -3206,35 +3273,116 @@
     state.screen = name;
   }
 
-  function showTrophies() {
+  function renderLevelCards() {
+    const grid = document.getElementById('level-card-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    LEVEL_REGISTRY.forEach(level => {
+      const progress = readProgress(level.id);
+      const completed = Object.keys(progress.completed || {}).length;
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'level-card' + (level.ready ? '' : ' unavailable');
+      card.disabled = !level.ready;
+      card.innerHTML =
+        `<div style="font-size:2.4rem;">${level.hub.emoji || '🏝️'}</div>` +
+        `<h2>${level.title}</h2>` +
+        `<p>${level.description}</p>` +
+        `<div class="level-card-progress">${completed}/${level.sections.length} islands • ${progress.xp || 0} XP</div>`;
+      card.onclick = () => selectLevel(level.id);
+      grid.appendChild(card);
+    });
+  }
+
+  function showLevelSelect() {
+    if (activeLevelRegistry) saveGame();
+    closeIslandPopup();
+    renderLevelCards();
+    showScreen('level-select');
+  }
+
+  function selectLevel(levelId) {
+    const target = LEVEL_REGISTRY.get(levelId);
+    if (!target || !target.ready) {
+      showToast(`${target?.title || levelId} is not ready yet.`, 'combo');
+      return;
+    }
+    try {
+      if (activeLevelRegistry) saveGame();
+      const changed = !activeLevelRegistry || activeLevelRegistry.id !== levelId;
+      if (changed || !hubGroup) {
+        teardownHub();
+        activeLevelRegistry = target;
+        activeContentLevel = levelId;
+        loadSave();
+        buildHub();
+      }
+      isTransitioning = false;
+      updateHUD();
+      updateIslandVisuals();
+      showScreen('hub');
+      const targetPos = hero.position.clone().add(CONFIG.camOffsetHub);
+      camera.position.copy(targetPos);
+      camera.lookAt(hero.position.clone().add(new THREE.Vector3(0, 1, 0)));
+      renderer.render(scene, camera);
+      showShauriBubble('welcome', 2200);
+      showToast(`${target.hub.emoji || '🏝️'} Entering ${target.title}`, 'save');
+    } catch (error) {
+      console.error(`[LEVEL] Could not switch to ${levelId}:`, error);
+      showErrorFallback(`Could not build ${target.title}. ${error.message || error}`);
+    }
+  }
+
+  function renderTrophyLevel(levelId) {
+    const level = LEVEL_REGISTRY.get(levelId);
+    if (!level) return;
+    const progress = readProgress(levelId);
     const grid = document.getElementById('trophy-grid');
     grid.innerHTML = '';
     let earned = 0;
-    GAME_DATA.sections.forEach(section => {
+    level.sections.forEach(section => {
       const sid = section.sectionId;
-      const theme = ISLAND_THEMES[sid];
-      const isEarned = !!state.completed[sid];
+      const theme = section.theme;
+      const isEarned = !!progress.completed?.[sid];
       if (isEarned) earned++;
       const slot = document.createElement('div');
       slot.className = 'trophy-slot' + (isEarned ? ' earned' : '');
       slot.innerHTML = '<div class="trophy-icon">' + (isEarned ? theme.emoji : '🔒') + '</div>' +
-                       '<div class="trophy-label">' + BADGES[sid] + '</div>';
+                       '<div class="trophy-label">' + section.badge + '</div>';
       if (isEarned) {
         slot.onclick = () => {
-          // Build/show the hub first so a trophy can be replayed directly
-          // after a fresh page load, before the player has pressed Play.
-          startHub();
+          selectLevel(levelId);
           state.selectedIsland = sid;
           enterSelectedIsland(sid);
         };
       }
       grid.appendChild(slot);
     });
-    document.getElementById('trophy-progress').textContent = earned + '/' + GAME_DATA.sections.length;
+    document.getElementById('trophy-progress').textContent =
+      `${level.title}: ${earned}/${level.sections.length}`;
+    document.querySelectorAll('.trophy-tab').forEach(tab => {
+      tab.classList.toggle('active', tab.dataset.levelId === levelId);
+    });
+  }
+
+  function showTrophies(initialLevelId = activeContentLevel) {
+    if (typeof initialLevelId !== 'string') initialLevelId = activeContentLevel;
+    const tabs = document.getElementById('trophy-tabs');
+    tabs.innerHTML = '';
+    LEVEL_REGISTRY.forEach(level => {
+      const tab = document.createElement('button');
+      tab.className = 'btn btn-info trophy-tab';
+      tab.dataset.levelId = level.id;
+      tab.textContent = level.title;
+      tab.onclick = () => renderTrophyLevel(level.id);
+      tabs.appendChild(tab);
+    });
+    renderTrophyLevel(LEVEL_REGISTRY.has(initialLevelId) ? initialLevelId : LEVEL_REGISTRY.keys().next().value);
     showScreen('trophy');
   }
 
   function showTitle() {
+    if (activeLevelRegistry) saveGame();
     closeIslandPopup();
     showScreen('title');
   }
@@ -3250,32 +3398,9 @@
     showScreen(helpReturnScreen === 'hub' ? 'hub' : 'title');
   }
 
-  function startHub() {
-    try {
-      playSound('start');
-      updateLoadingBar(30);
-      loadSave();
-      updateLoadingBar(50);
-      updateHUD();
-      if (!hubGroup) {
-        buildHub();
-      }
-      updateLoadingBar(80);
-      showScreen('hub');
-      if (hero) {
-        showShauriBubble('welcome', 2500);
-        const targetPos = hero.position.clone().add(CONFIG.camOffsetHub);
-        camera.position.copy(targetPos);
-        camera.lookAt(hero.position.clone().add(new THREE.Vector3(0, 1, 0)));
-      }
-      if (renderer && scene && camera) {
-        renderer.render(scene, camera);
-      }
-      updateLoadingBar(100);
-    } catch(e) {
-      console.error('Error starting hub:', e);
-      showErrorFallback('Could not start the game world. ' + (e.message || e));
-    }
+  function startHub(levelId = activeContentLevel) {
+    playSound('start');
+    selectLevel(levelId);
   }
 
   function closeIslandPopup() {
@@ -3416,35 +3541,30 @@
   //  DATA VALIDATION
   // ================================================================
   function validateGameData() {
-    const errors = [];
-    if (!GAME_DATA.sections || !Array.isArray(GAME_DATA.sections)) {
-      errors.push('GAME_DATA.sections is missing or not an array');
-      return errors;
-    }
-    const expectedSections = ['E1','E2','E3','E4','E5','M1','M2','M3','M4','M5'];
-    const foundIds = GAME_DATA.sections.map(s => s.sectionId);
-    for (const sid of expectedSections) {
-      if (!foundIds.includes(sid)) errors.push('Missing section: ' + sid);
-    }
-    for (const section of GAME_DATA.sections) {
-      if (!section.questions || !Array.isArray(section.questions)) {
-        errors.push(section.sectionId + ' has no questions'); continue;
+    const warnings = [];
+    LEVEL_REGISTRY.forEach(level => {
+      if (level.sections.length !== 10) {
+        warnings.push(`${level.id}: expected 10 sections, found ${level.sections.length}`);
       }
-      for (const q of section.questions) {
-        if (!q.question || !q.options || !q.answer || !q.explanation) {
-          errors.push(section.sectionId + ' question ' + q.id + ' is missing fields');
+      level.sections.forEach(section => {
+        if (!section.theme || !section.badge || !Array.isArray(section.position)) {
+          warnings.push(`${level.id}/${section.sectionId}: incomplete world metadata`);
         }
-        if (!Array.isArray(q.options) || q.options.length !== 4) {
-          errors.push(section.sectionId + ' question ' + q.id + ' does not have 4 options');
+        if (section.questions.length !== level.questionsPerFile) {
+          warnings.push(
+            `${level.id}/${section.sectionId}: expected ${level.questionsPerFile} questions, ` +
+            `found ${section.questions.length}`
+          );
         }
-        if (q.options && !q.options.includes(q.answer)) {
-          errors.push(section.sectionId + ' question ' + q.id + ' answer is not in options');
-        }
+      });
+      if (level.loadedQuestionCount !== level.expectedQuestions) {
+        warnings.push(
+          `${level.id}: expected ${level.expectedQuestions} questions, ` +
+          `loaded ${level.loadedQuestionCount}`
+        );
       }
-      if (!ISLAND_THEMES[section.sectionId]) errors.push('Missing ISLAND_THEME for ' + section.sectionId);
-      if (!BADGES[section.sectionId]) errors.push('Missing BADGE for ' + section.sectionId);
-    }
-    return errors;
+    });
+    return warnings;
   }
 
   // ================================================================
@@ -3456,91 +3576,170 @@
     return /^[a-z0-9_./-]+$/i.test(path);
   }
 
+  function colourNumber(value, fallback) {
+    if (typeof value === 'number') return value;
+    if (typeof value === 'string' && /^#[0-9a-f]{6}$/i.test(value)) {
+      return Number.parseInt(value.slice(1), 16);
+    }
+    return fallback;
+  }
+
+  function normaliseSection(section) {
+    const theme = section.theme || {};
+    return {
+      ...section,
+      position: Array.isArray(section.position) ? section.position.slice(0, 3) : [0, 0, 0],
+      bridgeFrom: section.bridgeFrom || 'HOME',
+      unlockAfter: Array.isArray(section.unlockAfter) ? section.unlockAfter : [],
+      badge: section.badge || '🏅 Island Champion',
+      questions: [],
+      theme: {
+        ...theme,
+        islandColor: colourNumber(theme.islandColor, 0x4CAF50),
+        bossColor: colourNumber(theme.bossColor, 0xFFD700),
+        accent: colourNumber(theme.accent, 0x8BC34A)
+      }
+    };
+  }
+
+  function validateQuestionPack(level, pack, questionPath, seenIds) {
+    const problems = [];
+    // Level 1 predates levelId metadata; keep those files byte-for-byte
+    // compatible. New levels must identify themselves explicitly.
+    if ((pack.levelId && pack.levelId !== level.id) || (!pack.levelId && level.id !== 'level-1')) {
+      problems.push(`levelId must be "${level.id}"`);
+    }
+    const section = level.sectionMap.get(pack.sectionId);
+    if (!section) problems.push(`unknown sectionId "${pack.sectionId}"`);
+    if (!Array.isArray(pack.questions)) {
+      problems.push('questions must be an array');
+    } else {
+      if (pack.questions.length !== level.questionsPerFile) {
+        problems.push(`expected ${level.questionsPerFile} questions, found ${pack.questions.length}`);
+      }
+      pack.questions.forEach((question, index) => {
+        const label = question?.id || `question ${index + 1}`;
+        if (!question?.id || !question.question || !question.explanation) {
+          problems.push(`${label}: missing id, question, or explanation`);
+        }
+        if (!Array.isArray(question?.options) || question.options.length !== 4) {
+          problems.push(`${label}: options must contain exactly four items`);
+        } else if (!question.options.includes(question.answer)) {
+          problems.push(`${label}: answer does not match an option`);
+        }
+        if (question?.id && seenIds.has(question.id)) {
+          problems.push(`${label}: duplicate id`);
+        }
+      });
+    }
+    if (problems.length) {
+      console.warn(`[QUESTIONS] ${questionPath} rejected: ${problems.join('; ')}`);
+      return null;
+    }
+    return section;
+  }
+
+  async function loadQuestionLevel(levelId, descriptor) {
+    if (!descriptor || !isSafeQuestionJsonPath(descriptor.manifest)) {
+      throw new Error(`${levelId}: invalid manifest path`);
+    }
+    const manifestPath = descriptor.manifest;
+    const response = await fetch('data/questions/' + manifestPath, { cache: 'no-store' });
+    if (!response.ok) throw new Error(`${levelId}: manifest HTTP ${response.status}`);
+    const manifest = await response.json();
+    if (manifest.levelId !== levelId) {
+      throw new Error(`${manifestPath}: levelId must be "${levelId}"`);
+    }
+    if (!Array.isArray(manifest.sections) || manifest.sections.length === 0) {
+      throw new Error(`${manifestPath}: sections metadata is required`);
+    }
+
+    const sections = manifest.sections.map(normaliseSection);
+    const level = {
+      id: levelId,
+      title: manifest.title || descriptor.title || levelId,
+      description: manifest.description || '',
+      subject: manifest.subject || '',
+      hub: {
+        ...(manifest.hub || {}),
+        homeColor: colourNumber(manifest.hub?.homeColor, 0xD6A928),
+        homeAccent: colourNumber(manifest.hub?.homeAccent, 0xFFF59D)
+      },
+      expectedQuestions: Number.isInteger(manifest.expectedQuestions) ? manifest.expectedQuestions : 100,
+      questionsPerFile: Number.isInteger(manifest.questionsPerFile) ? manifest.questionsPerFile : 10,
+      sections,
+      sectionMap: new Map(sections.map(section => [section.sectionId, section])),
+      loadedQuestionCount: 0,
+      ready: false
+    };
+
+    const slash = manifestPath.lastIndexOf('/');
+    const basePath = slash >= 0 ? manifestPath.slice(0, slash + 1) : '';
+    const seenIds = new Set();
+    for (const filename of Array.isArray(manifest.files) ? manifest.files : []) {
+      if (!isSafeQuestionJsonPath(filename)) {
+        console.warn(`[QUESTIONS] ${levelId}: skipped unsafe file entry "${filename}".`);
+        continue;
+      }
+      const questionPath = basePath + filename;
+      try {
+        const packResponse = await fetch('data/questions/' + questionPath, { cache: 'no-store' });
+        if (!packResponse.ok) throw new Error('HTTP ' + packResponse.status);
+        const pack = await packResponse.json();
+        const target = validateQuestionPack(level, pack, questionPath, seenIds);
+        if (!target) continue;
+        target.questions = pack.questions.map(question => ({ ...question }));
+        target.questions.forEach(question => seenIds.add(question.id));
+        level.loadedQuestionCount += target.questions.length;
+        console.log(`[QUESTIONS] ${levelId}: loaded ${questionPath} into ${pack.sectionId}.`);
+      } catch (error) {
+        console.warn(`[QUESTIONS] ${questionPath} could not be loaded: ${error.message || error}`);
+      }
+    }
+    level.ready =
+      level.loadedQuestionCount === level.expectedQuestions &&
+      level.sections.every(section => section.questions.length === level.questionsPerFile);
+    if (!level.ready) {
+      console.warn(
+        `[QUESTIONS] ${levelId} is incomplete: loaded ${level.loadedQuestionCount}/` +
+        `${level.expectedQuestions} valid questions.`
+      );
+    }
+    LEVEL_REGISTRY.set(levelId, level);
+    return level.loadedQuestionCount;
+  }
+
   async function loadExternalQuestionPacks() {
-    // fetch() cannot reliably read sibling files from file:// pages. The
-    // question-level folders require an HTTP server.
     if (window.location.protocol === 'file:') {
-      console.warn('[QUESTIONS] External packs require localhost or another web server.');
+      console.warn('[QUESTIONS] Level packs require localhost or another web server.');
       return 0;
     }
-
-    let loadedCount = 0;
+    LEVEL_REGISTRY.clear();
+    let totalLoaded = 0;
     try {
-      const manifestResponse = await fetch('data/questions/manifest.json', { cache: 'no-store' });
-      if (!manifestResponse.ok) {
-        console.warn('[QUESTIONS] No manifest found; using built-in questions.');
-        return 0;
-      }
-      const rootManifest = await manifestResponse.json();
-      let packManifest = rootManifest;
-      let packBasePath = '';
-
-      // New format: the root manifest selects a curriculum level and points
-      // at that level's own manifest. The old flat "files" format remains
-      // supported for backwards compatibility.
-      if (rootManifest.levels && rootManifest.activeLevel) {
-        const selectedLevel = rootManifest.levels[rootManifest.activeLevel];
-        if (!selectedLevel || !isSafeQuestionJsonPath(selectedLevel.manifest)) {
-          throw new Error(`Invalid active question level "${rootManifest.activeLevel}".`);
-        }
-        activeContentLevel = rootManifest.activeLevel;
-        const levelManifestPath = selectedLevel.manifest;
-        const levelResponse = await fetch('data/questions/' + levelManifestPath, { cache: 'no-store' });
-        if (!levelResponse.ok) throw new Error(`Could not load ${levelManifestPath}: HTTP ${levelResponse.status}`);
-        packManifest = await levelResponse.json();
-        const slash = levelManifestPath.lastIndexOf('/');
-        packBasePath = slash >= 0 ? levelManifestPath.slice(0, slash + 1) : '';
-        console.log(`[QUESTIONS] Active content: ${selectedLevel.title || activeContentLevel}.`);
-      }
-
-      const files = Array.isArray(packManifest.files) ? packManifest.files : [];
-
-      for (const filename of files) {
-        if (!isSafeQuestionJsonPath(filename)) {
-          console.warn('[QUESTIONS] Skipping invalid manifest entry:', filename);
-          continue;
-        }
-        const questionPath = packBasePath + filename;
+      const response = await fetch('data/questions/manifest.json', { cache: 'no-store' });
+      if (!response.ok) throw new Error('Root manifest HTTP ' + response.status);
+      const rootManifest = await response.json();
+      const entries = Object.entries(rootManifest.levels || {});
+      for (const [levelId, descriptor] of entries) {
         try {
-          const response = await fetch('data/questions/' + questionPath, { cache: 'no-store' });
-          if (!response.ok) throw new Error('HTTP ' + response.status);
-          const pack = await response.json();
-          const target = GAME_DATA.sections.find(section => section.sectionId === pack.sectionId);
-          if (!target) {
-            console.warn(`[QUESTIONS] ${questionPath}: unknown sectionId "${pack.sectionId}".`);
-            continue;
-          }
-          if (!Array.isArray(pack.questions)) {
-            console.warn(`[QUESTIONS] ${questionPath}: questions must be an array.`);
-            continue;
-          }
-
-          if (pack.mode === 'replace') target.questions = [];
-          const existingIds = new Set(target.questions.map(question => question.id));
-          pack.questions.forEach(question => {
-            if (!question || !question.id || existingIds.has(question.id)) {
-              console.warn(`[QUESTIONS] ${questionPath}: skipped missing or duplicate question id.`);
-              return;
-            }
-            target.questions.push(question);
-            existingIds.add(question.id);
-            loadedCount++;
-          });
-          console.log(`[QUESTIONS] Loaded ${questionPath} into ${pack.sectionId}.`);
-        } catch(e) {
-          console.warn(`[QUESTIONS] Could not load ${questionPath}:`, e);
+          totalLoaded += await loadQuestionLevel(levelId, descriptor);
+        } catch (error) {
+          console.warn(`[QUESTIONS] ${levelId} was not registered: ${error.message || error}`);
         }
       }
-      if (Number.isInteger(packManifest.expectedQuestions) && loadedCount !== packManifest.expectedQuestions) {
-        console.warn(
-          `[QUESTIONS] ${activeContentLevel} expected ${packManifest.expectedQuestions} questions, ` +
-          `but loaded ${loadedCount}.`
-        );
-      }
-    } catch(e) {
-      console.warn('[QUESTIONS] Manifest could not be read; no external questions were loaded.', e);
+      const preferred = rootManifest.activeLevel;
+      activeLevelRegistry = LEVEL_REGISTRY.get(preferred) || LEVEL_REGISTRY.values().next().value || null;
+      if (!activeLevelRegistry) throw new Error('No playable content levels were registered.');
+      activeContentLevel = activeLevelRegistry.id;
+      console.log(
+        `[QUESTIONS] Registered ${LEVEL_REGISTRY.size} levels; ` +
+        `default is ${activeLevelRegistry.title}.`
+      );
+    } catch (error) {
+      console.warn('[QUESTIONS] Level registry could not be loaded.', error);
     }
-    return loadedCount;
+    return totalLoaded;
   }
 
   // ================================================================
@@ -3573,9 +3772,10 @@
   // ================================================================
   function initUIControls() {
     const actions = {
-      'title-play-btn': startHub,
-      'title-trophy-btn': showTrophies,
+      'title-play-btn': showLevelSelect,
+      'title-trophy-btn': () => showTrophies(),
       'title-help-btn': showHelp,
+      'level-select-back-btn': showTitle,
       'island-popup-btn': () => enterSelectedIsland(),
       'island-popup-cancel-btn': closeIslandPopup,
       'explanation-btn': onExplanationContinue,
@@ -3586,6 +3786,7 @@
       'help-close-btn': closeHelp,
       'hud-sound-btn': toggleSound,
       'hud-help-btn': showHelp,
+      'hud-level-switch-btn': showLevelSelect,
       'hud-menu-btn': showTitle,
       'error-reload-btn': () => window.location.reload(),
       'error-title-btn': () => {
@@ -3677,6 +3878,8 @@
   // ================================================================
   window.Game = {
     startHub,
+    showLevelSelect,
+    selectLevel,
     showTrophies,
     showTitle,
     showHelp,

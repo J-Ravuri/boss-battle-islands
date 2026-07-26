@@ -1,0 +1,128 @@
+{
+  "levelId": "level-2",
+  "title": "Level 2 — Spelling",
+  "description": "Ten spelling realms with 100 challenges",
+  "subject": "Spelling",
+  "expectedQuestions": 100,
+  "questionsPerFile": 10,
+  "hub": {
+    "name": "The Lexicon Skies",
+    "emoji": "🔤",
+    "homeColor": "#6A4C93",
+    "homeAccent": "#F4D35E"
+  },
+  "sections": [
+    {
+      "sectionId": "E1",
+      "subject": "Spelling",
+      "title": "Spelling Island 1",
+      "position": [-12, 3, -4],
+      "bridgeFrom": "HOME",
+      "unlockAfter": [],
+      "theme": {"name":"Serpent's Scriptwood","boss":"The Spelling Serpent","emoji":"🐍","islandColor":"#2A9D8F","bossColor":"#F4D35E","accent":"#80ED99","type":"spelling","bossArchetype":"E1"},
+      "badge": "🐍 Script Starter"
+    },
+    {
+      "sectionId": "E2",
+      "subject": "Spelling",
+      "title": "Spelling Island 2",
+      "position": [-18, 6, -10],
+      "bridgeFrom": "E1",
+      "unlockAfter": ["E1"],
+      "theme": {"name":"The Whispering Woods","boss":"The Silent-Letter Sprite","emoji":"🤫","islandColor":"#577590","bossColor":"#90E0EF","accent":"#A8DADC","type":"spelling","bossArchetype":"E2"},
+      "badge": "🤫 Silent-Letter Seeker"
+    },
+    {
+      "sectionId": "E3",
+      "subject": "Spelling",
+      "title": "Spelling Island 3",
+      "position": [-20, 9, -18],
+      "bridgeFrom": "E2",
+      "unlockAfter": ["E2"],
+      "theme": {"name":"The Twin-Letter Tundra","boss":"The Double-Letter Dragon","emoji":"🐉","islandColor":"#4361EE","bossColor":"#FF9F1C","accent":"#4CC9F0","type":"spelling","bossArchetype":"M2"},
+      "badge": "🐉 Double-Letter Defender"
+    },
+    {
+      "sectionId": "E4",
+      "subject": "Spelling",
+      "title": "Spelling Island 4",
+      "position": [-16, 12, -26],
+      "bridgeFrom": "E3",
+      "unlockAfter": ["E3"],
+      "theme": {"name":"Suffix Spellspire","boss":"The Suffix Sorcerer","emoji":"🪄","islandColor":"#9D4EDD","bossColor":"#FF70A6","accent":"#E0AAFF","type":"spelling","bossArchetype":"E4"},
+      "badge": "🪄 Suffix Spellbreaker"
+    },
+    {
+      "sectionId": "E5",
+      "subject": "Spelling",
+      "title": "Spelling Island 5",
+      "position": [-10, 15, -32],
+      "bridgeFrom": "E4",
+      "unlockAfter": ["E4"],
+      "theme": {"name":"Prefix Peak","boss":"The Prefix Phantom","emoji":"👻","islandColor":"#F77F00","bossColor":"#FCBF49","accent":"#FDE68A","type":"spelling","bossArchetype":"M3"},
+      "badge": "👻 Prefix Pathfinder"
+    },
+    {
+      "sectionId": "E6",
+      "subject": "Spelling",
+      "title": "Spelling Island 6",
+      "position": [10, 15, -32],
+      "bridgeFrom": "E5",
+      "unlockAfter": ["E5"],
+      "theme": {"name":"Homophone Hollow","boss":"The Homophone Hydra","emoji":"🐲","islandColor":"#00B4D8","bossColor":"#FF595E","accent":"#90E0EF","type":"spelling","bossArchetype":"E1"},
+      "badge": "🐲 Homophone Hero"
+    },
+    {
+      "sectionId": "E7",
+      "subject": "Spelling",
+      "title": "Spelling Island 7",
+      "position": [16, 12, -26],
+      "bridgeFrom": "E6",
+      "unlockAfter": ["E6"],
+      "theme": {"name":"The Vowel Vault","boss":"The Vowel Vault Guardian","emoji":"🔐","islandColor":"#1982C4","bossColor":"#FFCA3A","accent":"#8AC926","type":"spelling","bossArchetype":"E2"},
+      "badge": "🔐 Vowel Vaultbreaker"
+    },
+    {
+      "sectionId": "E8",
+      "subject": "Spelling",
+      "title": "Spelling Island 8",
+      "position": [20, 9, -18],
+      "bridgeFrom": "E7",
+      "unlockAfter": ["E7"],
+      "theme": {"name":"Exception Expanse","boss":"The Exception Enchanter","emoji":"🧙","islandColor":"#6A4C93","bossColor":"#F72585","accent":"#B5179E","type":"spelling","bossArchetype":"E4"},
+      "badge": "🧙 Exception Expert"
+    },
+    {
+      "sectionId": "E9",
+      "subject": "Spelling",
+      "title": "Spelling Island 9",
+      "position": [18, 6, -10],
+      "bridgeFrom": "E8",
+      "unlockAfter": ["E8"],
+      "theme": {"name":"Rootword Ruins","boss":"The Word-Root Warden","emoji":"🌱","islandColor":"#588157","bossColor":"#DDA15E","accent":"#A3B18A","type":"spelling","bossArchetype":"M1"},
+      "badge": "🌱 Rootword Ranger"
+    },
+    {
+      "sectionId": "E10",
+      "subject": "Spelling",
+      "title": "Spelling Island 10",
+      "position": [12, 3, -4],
+      "bridgeFrom": "E9",
+      "unlockAfter": ["E9"],
+      "theme": {"name":"The Lexicon Citadel","boss":"The Lexicon Leviathan","emoji":"📜","islandColor":"#E76F51","bossColor":"#F4A261","accent":"#E9C46A","type":"spelling","bossArchetype":"M5"},
+      "badge": "📜 Lexicon Legend"
+    }
+  ],
+  "files": [
+    "spelling-island-01.json",
+    "spelling-island-02.json",
+    "spelling-island-03.json",
+    "spelling-island-04.json",
+    "spelling-island-05.json",
+    "spelling-island-06.json",
+    "spelling-island-07.json",
+    "spelling-island-08.json",
+    "spelling-island-09.json",
+    "spelling-island-10.json"
+  ]
+}

@@ -1,8 +1,118 @@
 {
   "levelId": "level-1",
   "title": "Level 1 — English and Maths",
+  "description": "The original English and Maths adventure",
   "subject": "Mixed English and Maths",
   "expectedQuestions": 100,
+  "questionsPerFile": 10,
+  "hub": {
+    "name": "Scholar's Sky",
+    "emoji": "🏝️",
+    "homeColor": "#D6A928",
+    "homeAccent": "#FFF59D"
+  },
+  "sections": [
+    {
+      "sectionId": "E1",
+      "subject": "English",
+      "title": "Vocabulary: Synonyms, Antonyms and Unfamiliar Phrases in Context",
+      "position": [-12, 3, -4],
+      "bridgeFrom": "HOME",
+      "unlockAfter": [],
+      "theme": {"name":"The Jungle Library","boss":"The Word Wyrm","emoji":"📚","islandColor":"#4CAF50","bossColor":"#FFD700","accent":"#8BC34A","type":"english","bossArchetype":"E1"},
+      "badge": "📖 Vocabulary Vanguard"
+    },
+    {
+      "sectionId": "E2",
+      "subject": "English",
+      "title": "Direct Retrieval, Accurate Paraphrasing and Evidence Checking",
+      "position": [-18, 6, -10],
+      "bridgeFrom": "E1",
+      "unlockAfter": ["E1"],
+      "theme": {"name":"The Ruin of Runes","boss":"The Evidence Elemental","emoji":"🗿","islandColor":"#9E9E9E","bossColor":"#2196F3","accent":"#BDBDBD","type":"english","bossArchetype":"E2"},
+      "badge": "🔍 Evidence Expert"
+    },
+    {
+      "sectionId": "E3",
+      "subject": "English",
+      "title": "Factual and Descriptive Inference",
+      "position": [-20, 9, -18],
+      "bridgeFrom": "E2",
+      "unlockAfter": ["E2"],
+      "theme": {"name":"The Misty Marsh","boss":"The Riddle Raven","emoji":"🌫️","islandColor":"#7B1FA2","bossColor":"#CE93D8","accent":"#AB47BC","type":"english","bossArchetype":"E3"},
+      "badge": "🦊 Inference Investigator"
+    },
+    {
+      "sectionId": "E4",
+      "subject": "English",
+      "title": "Character Feelings, Motives and Relationships",
+      "position": [-16, 12, -26],
+      "bridgeFrom": "E3",
+      "unlockAfter": ["E3"],
+      "theme": {"name":"The Crystal Caverns","boss":"The Heart Guardian","emoji":"💎","islandColor":"#EC407A","bossColor":"#F48FB1","accent":"#F06292","type":"english","bossArchetype":"E4"},
+      "badge": "❤️ Character Champion"
+    },
+    {
+      "sectionId": "E5",
+      "subject": "English",
+      "title": "Main Idea, Summary and Paragraph Purpose",
+      "position": [-10, 15, -32],
+      "bridgeFrom": "E4",
+      "unlockAfter": ["E4"],
+      "theme": {"name":"The Sky Sanctuary","boss":"The Paragraph Phoenix","emoji":"☁️","islandColor":"#E1F5FE","bossColor":"#FF9800","accent":"#81D4FA","type":"english","bossArchetype":"E5"},
+      "badge": "🦅 Summary Sage"
+    },
+    {
+      "sectionId": "M1",
+      "subject": "Maths",
+      "title": "Multi-Step Word Problems, Graphs and Data Interpretation",
+      "position": [12, 3, -4],
+      "bridgeFrom": "HOME",
+      "unlockAfter": [],
+      "theme": {"name":"The Clockwork Factory","boss":"The Gear Golem","emoji":"⚙️","islandColor":"#607D8B","bossColor":"#FFC107","accent":"#90A4AE","type":"maths","bossArchetype":"M1"},
+      "badge": "📊 Data Defender"
+    },
+    {
+      "sectionId": "M2",
+      "subject": "Maths",
+      "title": "Fractions and Probability",
+      "position": [18, 6, -10],
+      "bridgeFrom": "M1",
+      "unlockAfter": ["M1"],
+      "theme": {"name":"The Crystal Cave of Chance","boss":"The Fraction Dragon","emoji":"🎲","islandColor":"#00BCD4","bossColor":"#FF5722","accent":"#4DD0E1","type":"maths","bossArchetype":"M2"},
+      "badge": "🍕 Fraction Fighter"
+    },
+    {
+      "sectionId": "M3",
+      "subject": "Maths",
+      "title": "Percentages",
+      "position": [20, 9, -18],
+      "bridgeFrom": "M2",
+      "unlockAfter": ["M2"],
+      "theme": {"name":"The Percentage Volcano","boss":"The Percentage Phantom","emoji":"🌋","islandColor":"#D84315","bossColor":"#FFEB3B","accent":"#FF7043","type":"maths","bossArchetype":"M3"},
+      "badge": "🔥 Percentage Paladin"
+    },
+    {
+      "sectionId": "M4",
+      "subject": "Maths",
+      "title": "Time, Dates and Timetables",
+      "position": [16, 12, -26],
+      "bridgeFrom": "M3",
+      "unlockAfter": ["M3"],
+      "theme": {"name":"The Time Temple","boss":"The Clockwork Colossus","emoji":"⏰","islandColor":"#FFB300","bossColor":"#3E2723","accent":"#FFD54F","type":"maths","bossArchetype":"M4"},
+      "badge": "⏱️ Timekeeper Titan"
+    },
+    {
+      "sectionId": "M5",
+      "subject": "Maths",
+      "title": "2D and 3D Measurement",
+      "position": [10, 15, -32],
+      "bridgeFrom": "M4",
+      "unlockAfter": ["M4"],
+      "theme": {"name":"The Geometry Gardens","boss":"The Shape Shifter","emoji":"📐","islandColor":"#66BB6A","bossColor":"#9C27B0","accent":"#A5D6A7","type":"maths","bossArchetype":"M5"},
+      "badge": "📏 Measurement Master"
+    }
+  ],
   "files": [
     "e1-vocabulary.json",
     "e2-retrieval-evidence.json",
