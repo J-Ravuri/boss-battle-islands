@@ -68,7 +68,7 @@
       "title": "Multi-Step Word Problems, Graphs and Data Interpretation",
       "position": [12, 3, -4],
       "bridgeFrom": "HOME",
-      "unlockAfter": [],
+      "unlockAfter": ["E1"],
       "theme": {"name":"The Clockwork Factory","boss":"The Gear Golem","emoji":"⚙️","islandColor":"#607D8B","bossColor":"#FFC107","accent":"#90A4AE","type":"maths","bossArchetype":"M1"},
       "badge": "📊 Data Defender"
     },

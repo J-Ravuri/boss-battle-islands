@@ -1,0 +1,140 @@
+{
+  "version": 1,
+  "starterItem": {
+    "id": "starter-pencil",
+    "name": "Mighty Pencil",
+    "slot": "weapon",
+    "rarity": "common",
+    "form": "pencil",
+    "color": "#FFD740",
+    "accent": "#F48FB1",
+    "description": "Shauri's trusty starter weapon."
+  },
+  "offers": [
+    {"levelId":"level-1","sectionId":"E1","items":[
+      {"id":"l1-e1-grammar-blade","name":"Grammar Blade","slot":"weapon","rarity":"common","form":"blade","color":"#42A5F5","accent":"#FFF176","description":"A bright blade powered by precise sentences."},
+      {"id":"l1-e1-word-scout-cape","name":"Word Scout Cape","slot":"back","rarity":"common","form":"cape","color":"#1E88E5","accent":"#FFEE58","description":"A brave blue cape for vocabulary explorers."}
+    ]},
+    {"levelId":"level-1","sectionId":"E2","items":[
+      {"id":"l1-e2-rune-reader-wand","name":"Rune Reader Wand","slot":"weapon","rarity":"common","form":"wand","color":"#78909C","accent":"#29B6F6","description":"Reveals the evidence hidden in every clue."},
+      {"id":"l1-e2-evidence-lens-visor","name":"Evidence Lens Visor","slot":"head","rarity":"common","form":"visor","color":"#455A64","accent":"#4FC3F7","description":"Makes important details shine."}
+    ]},
+    {"levelId":"level-1","sectionId":"E3","items":[
+      {"id":"l1-e3-riddle-raven-bow","name":"Riddle Raven Bow","slot":"weapon","rarity":"rare","form":"bow","color":"#5E35B1","accent":"#CE93D8","description":"Fires clever answers through the mist."},
+      {"id":"l1-e3-miststep-cape","name":"Miststep Cape","slot":"back","rarity":"rare","form":"cape","color":"#7E57C2","accent":"#B39DDB","description":"Shimmers when an inference is discovered."}
+    ]},
+    {"levelId":"level-1","sectionId":"E4","items":[
+      {"id":"l1-e4-crystal-heart-shield","name":"Crystal Heart Shield","slot":"weapon","rarity":"rare","form":"shield","color":"#EC407A","accent":"#F8BBD0","description":"A friendly shield strengthened by empathy."},
+      {"id":"l1-e4-empathy-crown","name":"Empathy Crown","slot":"head","rarity":"rare","form":"crown","color":"#F06292","accent":"#FFD54F","description":"For champions who understand every character."}
+    ]},
+    {"levelId":"level-1","sectionId":"E5","items":[
+      {"id":"l1-e5-phoenix-pencil-staff","name":"Phoenix Pencil Staff","slot":"weapon","rarity":"epic","form":"staff","color":"#FB8C00","accent":"#FFEE58","description":"Turns strong summaries into sparks."},
+      {"id":"l1-e5-sky-scholar-wings","name":"Sky Scholar Wings","slot":"back","rarity":"epic","form":"wings","color":"#81D4FA","accent":"#FFF59D","description":"Cloud-bright wings for a summary master."}
+    ]},
+    {"levelId":"level-1","sectionId":"M1","items":[
+      {"id":"l1-m1-cogwheel-hammer","name":"Cogwheel Hammer","slot":"weapon","rarity":"common","form":"hammer","color":"#607D8B","accent":"#FFC107","description":"Built for smashing multi-step problems."},
+      {"id":"l1-m1-clockwork-backpack","name":"Clockwork Backpack","slot":"back","rarity":"common","form":"backpack","color":"#546E7A","accent":"#FFCA28","description":"Carries every useful graph and tool."}
+    ]},
+    {"levelId":"level-1","sectionId":"M2","items":[
+      {"id":"l1-m2-fraction-bow","name":"Fraction Bow","slot":"weapon","rarity":"rare","form":"bow","color":"#00ACC1","accent":"#FF7043","description":"Splits every challenge into manageable parts."},
+      {"id":"l1-m2-dragon-scale-helmet","name":"Dragon-Scale Helmet","slot":"head","rarity":"rare","form":"helmet","color":"#00838F","accent":"#FF8A65","description":"A cool helmet for probability adventurers."}
+    ]},
+    {"levelId":"level-1","sectionId":"M3","items":[
+      {"id":"l1-m3-percent-saber","name":"Percent Saber","slot":"weapon","rarity":"rare","form":"saber","color":"#E64A19","accent":"#FFEB3B","description":"Glows brighter with every percentage solved."},
+      {"id":"l1-m3-volcano-victory-cape","name":"Volcano Victory Cape","slot":"back","rarity":"rare","form":"cape","color":"#D84315","accent":"#FFB300","description":"A lava-coloured cape with a golden edge."}
+    ]},
+    {"levelId":"level-1","sectionId":"M4","items":[
+      {"id":"l1-m4-timekeeper-wand","name":"Timekeeper Wand","slot":"weapon","rarity":"epic","form":"wand","color":"#FFB300","accent":"#6A1B9A","description":"Keeps every timetable adventure on track."},
+      {"id":"l1-m4-chrono-visor","name":"Chrono Visor","slot":"head","rarity":"epic","form":"visor","color":"#4E342E","accent":"#FFD54F","description":"Animated clock-light races across its lens."}
+    ]},
+    {"levelId":"level-1","sectionId":"M5","items":[
+      {"id":"l1-m5-geometry-glaive","name":"Geometry Glaive","slot":"weapon","rarity":"epic","form":"glaive","color":"#43A047","accent":"#AB47BC","description":"A perfectly measured geometric weapon."},
+      {"id":"l1-m5-prism-armour","name":"Prism Armour","slot":"outfit","rarity":"epic","form":"armour","color":"#3949AB","accent":"#66BB6A","description":"A faceted scholar outfit with prism trim."},
+      {"id":"l1-m5-architect-cape","name":"Architect Cape","slot":"back","rarity":"epic","form":"cape","color":"#5C6BC0","accent":"#A5D6A7","description":"Marked with the shapes of a master builder."}
+    ]},
+
+    {"levelId":"level-2","sectionId":"E1","items":[
+      {"id":"l2-e1-serpent-script-staff","name":"Serpent Script Staff","slot":"weapon","rarity":"rare","form":"staff","color":"#2A9D8F","accent":"#F4D35E","description":"A curling staff that writes glowing letters."},
+      {"id":"l2-e1-scriptwood-hood","name":"Scriptwood Hood","slot":"head","rarity":"rare","form":"hood","color":"#26796F","accent":"#80ED99","description":"A leafy hood for fearless spellers."}
+    ]},
+    {"levelId":"level-2","sectionId":"E2","items":[
+      {"id":"l2-e2-silent-letter-saber","name":"Silent-Letter Saber","slot":"weapon","rarity":"rare","form":"saber","color":"#577590","accent":"#90E0EF","description":"Quiet, quick and impossible to misspell."},
+      {"id":"l2-e2-whisper-sprite-cape","name":"Whisper Sprite Cape","slot":"back","rarity":"rare","form":"cape","color":"#415A77","accent":"#A8DADC","description":"A cape that ripples without making a sound."}
+    ]},
+    {"levelId":"level-2","sectionId":"E3","items":[
+      {"id":"l2-e3-twin-pencil-blades","name":"Twin Pencil Blades","slot":"weapon","rarity":"rare","form":"twin-blades","color":"#4361EE","accent":"#FF9F1C","description":"Double letters deserve double blades."},
+      {"id":"l2-e3-double-dragon-helmet","name":"Double-Dragon Helmet","slot":"head","rarity":"rare","form":"helmet","color":"#3F37C9","accent":"#4CC9F0","description":"Two friendly horns celebrate doubled consonants."}
+    ]},
+    {"levelId":"level-2","sectionId":"E4","items":[
+      {"id":"l2-e4-suffix-spellwand","name":"Suffix Spellwand","slot":"weapon","rarity":"epic","form":"wand","color":"#9D4EDD","accent":"#FF70A6","description":"Adds a magical ending to every word."},
+      {"id":"l2-e4-spellspire-cape","name":"Spellspire Cape","slot":"back","rarity":"epic","form":"cape","color":"#7B2CBF","accent":"#E0AAFF","description":"A bright cape patterned with suffix sparks."}
+    ]},
+    {"levelId":"level-2","sectionId":"E5","items":[
+      {"id":"l2-e5-prefix-phantom-bow","name":"Prefix Phantom Bow","slot":"weapon","rarity":"epic","form":"bow","color":"#F77F00","accent":"#FCBF49","description":"Adds power before the arrow leaves the bow."},
+      {"id":"l2-e5-phantom-hoodie","name":"Phantom Hoodie","slot":"outfit","rarity":"epic","form":"armour","color":"#5A189A","accent":"#FDE68A","description":"A spectral upgrade to Shauri's blue hoodie."}
+    ]},
+    {"levelId":"level-2","sectionId":"E6","items":[
+      {"id":"l2-e6-echo-trident","name":"Echo Trident","slot":"weapon","rarity":"epic","form":"trident","color":"#00B4D8","accent":"#FF595E","description":"Three glowing points for sound-alike words."},
+      {"id":"l2-e6-soundwave-backpack","name":"Soundwave Backpack","slot":"back","rarity":"epic","form":"backpack","color":"#0077B6","accent":"#90E0EF","description":"Pulses whenever two words sound alike."}
+    ]},
+    {"levelId":"level-2","sectionId":"E7","items":[
+      {"id":"l2-e7-vowel-keyblade","name":"Vowel Keyblade","slot":"weapon","rarity":"epic","form":"keyblade","color":"#1982C4","accent":"#FFCA3A","description":"Unlocks even the trickiest vowel vault."},
+      {"id":"l2-e7-vault-guardian-helmet","name":"Vault Guardian Helmet","slot":"head","rarity":"epic","form":"helmet","color":"#00509D","accent":"#8AC926","description":"A secure helmet with a glowing key crest."}
+    ]},
+    {"levelId":"level-2","sectionId":"E8","items":[
+      {"id":"l2-e8-exception-staff","name":"Exception Staff","slot":"weapon","rarity":"epic","form":"staff","color":"#6A4C93","accent":"#F72585","description":"Rule-breaking words orbit its crystal."},
+      {"id":"l2-e8-rulebreaker-cape","name":"Rulebreaker Cape","slot":"back","rarity":"epic","form":"cape","color":"#5A189A","accent":"#B5179E","description":"For spellers who master every exception."}
+    ]},
+    {"levelId":"level-2","sectionId":"E9","items":[
+      {"id":"l2-e9-rootword-ranger-bow","name":"Rootword Ranger Bow","slot":"weapon","rarity":"epic","form":"bow","color":"#588157","accent":"#DDA15E","description":"Its arrows grow from powerful word roots."},
+      {"id":"l2-e9-ancient-roots-pack","name":"Ancient-Roots Pack","slot":"back","rarity":"epic","form":"backpack","color":"#3A5A40","accent":"#A3B18A","description":"Carries a glowing garden of word origins."}
+    ]},
+    {"levelId":"level-2","sectionId":"E10","items":[
+      {"id":"l2-e10-lexicon-lightblade","name":"Lexicon Lightblade","slot":"weapon","rarity":"legendary","form":"lightblade","color":"#E76F51","accent":"#FFD166","description":"A legendary blade made from living letters."},
+      {"id":"l2-e10-living-scroll-cape","name":"Living Scroll Cape","slot":"back","rarity":"legendary","form":"cape","color":"#9C6644","accent":"#FFE8A1","description":"Golden words travel across this animated cape."},
+      {"id":"l2-e10-wordmaster-crown","name":"Wordmaster Crown","slot":"head","rarity":"legendary","form":"crown","color":"#F4A261","accent":"#FFF176","description":"The crown of a true Level 2 spelling master."}
+    ]},
+
+    {"levelId":"level-3","sectionId":"E1","items":[
+      {"id":"l3-e1-comet-quill-saber","name":"Comet Quill Saber","slot":"weapon","rarity":"epic","form":"saber","color":"#00B4D8","accent":"#FFD166","description":"Writes a comet trail through difficult suffixes."},
+      {"id":"l3-e1-star-suffix-cape","name":"Star-Suffix Cape","slot":"back","rarity":"epic","form":"cape","color":"#023E8A","accent":"#90E0EF","description":"A night-sky cape filled with suffix stars."}
+    ]},
+    {"levelId":"level-3","sectionId":"E2","items":[
+      {"id":"l3-e2-echo-baton","name":"Echo Baton","slot":"weapon","rarity":"epic","form":"wand","color":"#4361EE","accent":"#FF9F1C","description":"Each correct ending creates a bright echo."},
+      {"id":"l3-e2-sonic-scholar-headset","name":"Sonic Scholar Headset","slot":"head","rarity":"epic","form":"headset","color":"#3A0CA3","accent":"#4CC9F0","description":"Animated sound rings surround each ear."}
+    ]},
+    {"levelId":"level-3","sectionId":"E3","items":[
+      {"id":"l3-e3-pattern-prism-bow","name":"Pattern Prism Bow","slot":"weapon","rarity":"epic","form":"bow","color":"#2A9D8F","accent":"#F4A261","description":"Refracts unusual patterns into coloured light."},
+      {"id":"l3-e3-feather-code-backpack","name":"Feather-Code Backpack","slot":"back","rarity":"epic","form":"backpack","color":"#1B4332","accent":"#80ED99","description":"A clever pack decorated with prism feathers."}
+    ]},
+    {"levelId":"level-3","sectionId":"E4","items":[
+      {"id":"l3-e4-vowel-veil-wand","name":"Vowel-Veil Wand","slot":"weapon","rarity":"epic","form":"wand","color":"#577590","accent":"#F72585","description":"Reveals the vowels hiding behind every veil."},
+      {"id":"l3-e4-arctic-fox-hood","name":"Arctic Fox Hood","slot":"head","rarity":"epic","form":"hood","color":"#E3F2FD","accent":"#BDE0FE","description":"A friendly fox hood for the icy vowel fields."}
+    ]},
+    {"levelId":"level-3","sectionId":"E5","items":[
+      {"id":"l3-e5-pencil-knight-lance","name":"Pencil Knight Lance","slot":"weapon","rarity":"epic","form":"lance","color":"#6A4C93","accent":"#FFCA3A","description":"A heroic pencil lance for silent-letter knights."},
+      {"id":"l3-e5-silent-castle-cape","name":"Silent Castle Cape","slot":"back","rarity":"epic","form":"cape","color":"#5A189A","accent":"#C77DFF","description":"A royal cape with a silent golden crest."}
+    ]},
+    {"levelId":"level-3","sectionId":"E6","items":[
+      {"id":"l3-e6-mirror-manta-trident","name":"Mirror Manta Trident","slot":"weapon","rarity":"legendary","form":"trident","color":"#0077B6","accent":"#FF70A6","description":"Creates mirrored waves of legendary light."},
+      {"id":"l3-e6-tideglass-backpack","name":"Tideglass Backpack","slot":"back","rarity":"legendary","form":"backpack","color":"#03045E","accent":"#48CAE4","description":"A glassy ocean swirls safely inside."}
+    ]},
+    {"levelId":"level-3","sectionId":"E7","items":[
+      {"id":"l3-e7-exception-express-hammer","name":"Exception Express Hammer","slot":"weapon","rarity":"legendary","form":"hammer","color":"#F77F00","accent":"#90BE6D","description":"Powered by a tiny glowing spelling engine."},
+      {"id":"l3-e7-conductor-champion-cap","name":"Conductor Champion Cap","slot":"head","rarity":"legendary","form":"cap","color":"#1D3557","accent":"#FCBF49","description":"The legendary cap of the Exception Express."}
+    ]},
+    {"levelId":"level-3","sectionId":"E8","items":[
+      {"id":"l3-e8-gemini-twin-wands","name":"Gemini Twin Wands","slot":"weapon","rarity":"legendary","form":"twin-wands","color":"#9D4EDD","accent":"#06D6A0","description":"Two wands for unstoppable double letters."},
+      {"id":"l3-e8-double-letter-neon-cape","name":"Double-Letter Neon Cape","slot":"back","rarity":"legendary","form":"cape","color":"#7209B7","accent":"#E0AAFF","description":"Twin neon lines race down this cape."}
+    ]},
+    {"levelId":"level-3","sectionId":"E9","items":[
+      {"id":"l3-e9-mischief-meadow-blade","name":"Mischief Meadow Blade","slot":"weapon","rarity":"legendary","form":"blade","color":"#588157","accent":"#FF595E","description":"Playful flower sparks follow every movement."},
+      {"id":"l3-e9-meadow-shadow-outfit","name":"Meadow Shadow Outfit","slot":"outfit","rarity":"legendary","form":"armour","color":"#344E41","accent":"#A3B18A","description":"A dark-green hoodie upgrade with glowing trim."}
+    ]},
+    {"levelId":"level-3","sectionId":"E10","items":[
+      {"id":"l3-e10-grapheme-galaxy-sword","name":"Grapheme Galaxy Sword","slot":"weapon","rarity":"legendary","form":"lightblade","color":"#3A0CA3","accent":"#FFD166","description":"Every grapheme shines like a tiny galaxy."},
+      {"id":"l3-e10-grand-guardian-crown","name":"Grand Guardian Crown","slot":"head","rarity":"legendary","form":"crown","color":"#E76F51","accent":"#FFF176","description":"The crown of Shauri's greatest spelling victory."},
+      {"id":"l3-e10-mastery-star-cape","name":"Mastery Star Cape","slot":"back","rarity":"legendary","form":"cape","color":"#240046","accent":"#FFD166","description":"A starfield cape for mastering all three levels."}
+    ]}
+  ]
+}

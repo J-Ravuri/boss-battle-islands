@@ -44,3 +44,5 @@ the game. Files must be served over HTTP, such as
 
 To add another level, add its folder and manifest, then register that manifest in the
 root `levels` object. No core engine changes are required.
+
+Boss reward choices are configured separately in `../gear/catalog.json`.

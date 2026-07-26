@@ -389,6 +389,118 @@
     .level-card.unavailable { opacity: 0.55; cursor: not-allowed; }
     .trophy-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 12px; }
     .trophy-tab.active { background: var(--ui-accent); color: white; }
+    .locker-panel {
+      width: min(760px, 68vw);
+      max-width: none;
+      height: calc(100vh - 24px);
+      margin-left: auto;
+      margin-right: 12px;
+      overflow-y: auto;
+      text-align: left;
+    }
+    .locker-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .locker-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
+    .locker-tabs .btn { margin: 0; padding: 10px 14px; font-size: 0.9rem; }
+    .locker-tabs .active { background: var(--ui-accent); color: white; }
+    .locker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      margin: 14px 0;
+    }
+    .gear-card {
+      position: relative;
+      min-height: 176px;
+      padding: 14px;
+      border: 3px solid #CFD8DC;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.94);
+      text-align: left;
+      transition: transform 0.18s, border-color 0.18s;
+    }
+    .gear-card.unlocked { cursor: pointer; }
+    .gear-card.unlocked:hover { transform: translateY(-3px); }
+    .gear-card.equipped { border-color: var(--ui-gold); box-shadow: 0 0 0 3px rgba(255,215,0,0.22); }
+    .gear-card.locked { filter: grayscale(0.78); opacity: 0.66; }
+    .gear-card.common { border-color: #90A4AE; }
+    .gear-card.rare { border-color: #42A5F5; }
+    .gear-card.epic { border-color: #AB47BC; }
+    .gear-card.legendary { border-color: #FFB300; background: linear-gradient(145deg,#FFFDE7,#FFF3E0); }
+    .gear-rarity { font-size: 0.76rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; }
+    .gear-name { font-size: 1.05rem; font-weight: 900; margin: 4px 0; }
+    .gear-description, .gear-requirement { font-size: 0.82rem; line-height: 1.35; color: var(--text-light); }
+    .gear-equipped-tag {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 4px 8px;
+      border-radius: 10px;
+      background: #FFF3CD;
+      color: #7A5200;
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+    .equipped-summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(100px, 1fr));
+      gap: 8px;
+      margin: 10px 0;
+    }
+    .equipped-slot {
+      padding: 8px;
+      border-radius: 12px;
+      background: #E3F2FD;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-align: center;
+    }
+    .reward-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .reward-card {
+      border: 4px solid var(--ui-border);
+      border-radius: 20px;
+      background: white;
+      padding: 18px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .reward-card:hover, .reward-card:focus-visible {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.2);
+      outline: none;
+    }
+    .reward-icon { font-size: 2.6rem; margin-bottom: 8px; }
+    #reset-confirm {
+      position: fixed;
+      inset: 0;
+      z-index: 240;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(24,35,45,0.72);
+    }
+    #reset-confirm.active { display: flex; }
+    .danger-card {
+      width: min(520px, 94vw);
+      padding: 26px;
+      border: 4px solid var(--ui-red);
+      border-radius: 24px;
+      background: white;
+      text-align: center;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.32);
+    }
     @media (max-width: 600px) {
       .trophy-grid { grid-template-columns: repeat(3, 1fr); }
       .level-card-grid { grid-template-columns: 1fr; }
@@ -400,6 +512,13 @@
       .level-card { padding: 14px 16px; }
       .level-card-grid { gap: 10px; margin: 12px 0; }
       .trophy-tabs .btn { padding: 10px 12px; margin: 3px; font-size: 0.85rem; }
+      .locker-panel {
+        width: calc(100vw - 12px);
+        height: calc(100vh - 12px);
+        margin: 6px;
+      }
+      .locker-grid, .reward-grid { grid-template-columns: 1fr; }
+      .equipped-summary { grid-template-columns: repeat(2, 1fr); }
     }
     #ui-hub.active { pointer-events: none; }
   #island-popup {
@@ -610,7 +729,9 @@
       </select>
       <button class="hud-btn" id="hud-sound-btn" title="Sound (M)">🔊</button>
       <button class="hud-btn" id="hud-help-btn" title="How to play (H)">❓</button>
+      <button class="hud-btn" id="hud-locker-btn" title="Hero Locker">🎒</button>
       <button class="hud-btn" id="hud-level-switch-btn" title="Switch level">⇄</button>
+      <button class="hud-btn" id="hud-settings-btn" title="Settings">⚙️</button>
       <button class="hud-btn" id="hud-menu-btn" title="Main menu">☰</button>
     </div>
   </div>
@@ -638,6 +759,8 @@
       </div>
       <button class="btn btn-primary" id="title-play-btn" onclick="window.Game.showLevelSelect()">▶️ Choose Level</button>
       <button class="btn btn-gold" id="title-trophy-btn" onclick="window.Game.showTrophies()">🏆 Trophy Shelf</button>
+      <button class="btn btn-success" id="title-locker-btn" onclick="window.Game.showLocker()">🎒 Hero Locker</button>
+      <button class="btn btn-info" id="title-settings-btn" onclick="window.Game.showSettings()">⚙️ Settings</button>
       <button class="btn btn-info" id="title-help-btn" onclick="window.Game.showHelp()">❓ How to Play</button>
     </div>
   </div>
@@ -696,6 +819,38 @@
       <button class="btn btn-info" id="trophy-main-menu-btn" onclick="window.Game.showTitle()" style="margin-top:16px;">🏠 Main Menu</button>
     </div>
   </div>
+  <div id="ui-locker" class="ui-screen">
+    <div class="ui-panel locker-panel">
+      <div class="locker-header">
+        <div>
+          <h1>🎒 Hero Locker</h1>
+          <p style="color:var(--text-light);">Equip earned gear. Your choices carry across every level.</p>
+        </div>
+        <button class="btn btn-info" id="locker-close-btn">✕ Close</button>
+      </div>
+      <div class="equipped-summary" id="locker-equipped-summary"></div>
+      <div class="locker-tabs" id="locker-tabs"></div>
+      <div class="locker-grid" id="locker-grid"></div>
+    </div>
+  </div>
+  <div id="ui-reward" class="ui-screen">
+    <div class="ui-panel" style="max-width:850px;max-height:calc(100vh - 20px);overflow-y:auto;">
+      <div style="font-size:3.3rem;">🎁✨</div>
+      <h1 id="reward-title">Choose Your Reward!</h1>
+      <p id="reward-subtitle" style="color:var(--text-light);font-size:1.05rem;"></p>
+      <div class="reward-grid" id="reward-grid"></div>
+      <button class="btn btn-primary" id="reward-continue-btn" style="display:none;">🏠 Continue to Hub</button>
+    </div>
+  </div>
+  <div id="ui-settings" class="ui-screen">
+    <div class="ui-panel" style="max-width:620px;">
+      <div style="font-size:3rem;">⚙️</div>
+      <h1>Settings</h1>
+      <p style="color:var(--text-light);margin-bottom:18px;">Music and sound can be changed from the title screen or HUD.</p>
+      <button class="btn btn-danger" id="settings-reset-btn">🗑️ Reset Progress</button>
+      <button class="btn btn-info" id="settings-close-btn">← Back</button>
+    </div>
+  </div>
   <div id="ui-break" class="ui-screen">
     <div class="ui-panel">
       <div style="font-size:3rem; margin-bottom:8px;">☕</div>
@@ -715,10 +870,24 @@
         <p><b>Explore:</b> Move with WASD/arrow keys, the mobile D-pad, or click/tap the ground.</p>
         <p><b>Battle:</b> Select a glowing island, then answer four-choice questions to lower the boss's HP.</p>
         <p><b>Learn:</b> Wrong answers return later. Read the explanation, then try again.</p>
-        <p><b>Progress:</b> Defeat bosses to earn XP, gold islands, trophies, and new paths.</p>
+        <p><b>Rewards:</b> Defeat bosses to choose collectible gear. Perfect replays unlock the alternative.</p>
+        <p><b>Hero Locker:</b> Use 🎒 to switch weapons, headgear, capes, backpacks, and outfits.</p>
+        <p><b>Progress:</b> Earn XP, gold islands, trophies, gear, and new paths. ⚙️ contains the reset option.</p>
         <p><b>Shortcuts:</b> H = help, M = mute, Esc = close a popup.</p>
       </div>
       <button class="btn btn-primary" id="help-close-btn" onclick="window.Game.closeHelp()">✅ Got it!</button>
+    </div>
+  </div>
+  <div id="reset-confirm" role="dialog" aria-modal="true" aria-labelledby="reset-confirm-title">
+    <div class="danger-card">
+      <div style="font-size:3rem;">⚠️</div>
+      <h1 id="reset-confirm-title" style="color:var(--ui-red);">Reset everything?</h1>
+      <p style="line-height:1.55;margin:12px 0 18px;">
+        This clears all three levels, XP, streaks, scores, trophies and Hero Locker rewards.
+        <b>This can't be undone!</b>
+      </p>
+      <button class="btn btn-danger" id="reset-confirm-btn">Yes, Reset Everything</button>
+      <button class="btn btn-info" id="reset-cancel-btn">Cancel</button>
     </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
@@ -750,6 +919,150 @@
 
   function getIslandTheme(sectionId) {
     return getSection(sectionId)?.theme;
+  }
+
+  // ================================================================
+  //  CROSS-LEVEL HERO GEAR
+  //  The catalogue is content data; the profile is deliberately separate
+  //  from learning progress so one loadout follows Shauri between worlds.
+  // ================================================================
+  const HERO_PROFILE_KEY = 'bossBattleIslands_hero_profile_v1';
+  const RESET_EPOCH_KEY = 'bossBattleIslands_reset_epoch';
+  const RESET_EPOCH = 1;
+  const GEAR_SLOTS = ['weapon', 'head', 'back', 'outfit'];
+  const RARITY_META = {
+    common: { label: 'Common', color: 0x90A4AE, icon: '⚪' },
+    rare: { label: 'Rare', color: 0x42A5F5, icon: '🔵' },
+    epic: { label: 'Epic', color: 0xAB47BC, icon: '🟣' },
+    legendary: { label: 'Legendary', color: 0xFFB300, icon: '🟡' }
+  };
+  const GEAR_SLOT_META = {
+    weapon: { label: 'Weapons', icon: '⚔️' },
+    head: { label: 'Headgear', icon: '🪖' },
+    back: { label: 'Back Gear', icon: '🎒' },
+    outfit: { label: 'Outfits', icon: '🧥' }
+  };
+  let gearItems = new Map();
+  let rewardOffers = new Map();
+  let heroProfile = null;
+  let pendingReward = null;
+  let lockerActiveSlot = 'weapon';
+  let lockerReturnScreen = 'title';
+  let lockerCameraState = null;
+  let settingsReturnScreen = 'title';
+  let resetInProgress = false;
+
+  function rewardKey(levelId, sectionId) {
+    return `${levelId}:${sectionId}`;
+  }
+
+  function defaultHeroProfile() {
+    return {
+      version: 1,
+      unlocked: ['starter-pencil'],
+      equipped: { weapon: 'starter-pencil', head: null, back: null, outfit: null },
+      claims: {}
+    };
+  }
+
+  function loadHeroProfile() {
+    const fallback = defaultHeroProfile();
+    try {
+      const parsed = JSON.parse(localStorage.getItem(HERO_PROFILE_KEY) || 'null');
+      if (!parsed || typeof parsed !== 'object') {
+        heroProfile = fallback;
+        return heroProfile;
+      }
+      const unlocked = Array.isArray(parsed.unlocked)
+        ? parsed.unlocked.filter(id => gearItems.has(id))
+        : [];
+      if (!unlocked.includes('starter-pencil')) unlocked.unshift('starter-pencil');
+      const equipped = { ...fallback.equipped, ...(parsed.equipped || {}) };
+      GEAR_SLOTS.forEach(slot => {
+        const itemId = equipped[slot];
+        if (itemId && (!unlocked.includes(itemId) || gearItems.get(itemId)?.slot !== slot)) {
+          equipped[slot] = slot === 'weapon' ? 'starter-pencil' : null;
+        }
+      });
+      heroProfile = {
+        version: 1,
+        unlocked,
+        equipped,
+        claims: parsed.claims && typeof parsed.claims === 'object' ? parsed.claims : {}
+      };
+    } catch (error) {
+      console.warn('[GEAR] Hero profile was invalid; a fresh Locker was created.', error);
+      heroProfile = fallback;
+    }
+    return heroProfile;
+  }
+
+  function saveHeroProfile() {
+    if (!heroProfile || resetInProgress) return;
+    try {
+      localStorage.setItem(HERO_PROFILE_KEY, JSON.stringify(heroProfile));
+    } catch (error) {
+      console.warn('[GEAR] Could not save the Hero Locker.', error);
+    }
+  }
+
+  async function loadGearCatalog() {
+    gearItems.clear();
+    rewardOffers.clear();
+    try {
+      const response = await fetch('data/gear/catalog.json', { cache: 'no-store' });
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      const catalog = await response.json();
+      const starter = catalog.starterItem;
+      if (!starter?.id || starter.slot !== 'weapon') throw new Error('starterItem is invalid');
+      gearItems.set(starter.id, starter);
+      (catalog.offers || []).forEach(offer => {
+        if (!offer.levelId || !offer.sectionId || !Array.isArray(offer.items) || offer.items.length < 2) {
+          throw new Error('A reward offer is incomplete');
+        }
+        const key = rewardKey(offer.levelId, offer.sectionId);
+        const itemIds = [];
+        offer.items.forEach(item => {
+          if (!item.id || !GEAR_SLOTS.includes(item.slot) || !RARITY_META[item.rarity] || gearItems.has(item.id)) {
+            throw new Error(`Invalid or duplicate gear item "${item?.id || 'unknown'}"`);
+          }
+          gearItems.set(item.id, { ...item, milestone: key });
+          itemIds.push(item.id);
+        });
+        rewardOffers.set(key, { ...offer, itemIds });
+      });
+      console.log(`[GEAR] Loaded ${gearItems.size} items across ${rewardOffers.size} boss rewards.`);
+    } catch (error) {
+      console.warn('[GEAR] Reward catalogue could not be loaded; the starter pencil remains available.', error);
+      const starter = {
+        id: 'starter-pencil', name: 'Mighty Pencil', slot: 'weapon', rarity: 'common',
+        form: 'pencil', color: '#FFD740', accent: '#F48FB1',
+        description: "Shauri's trusty starter weapon."
+      };
+      gearItems.set(starter.id, starter);
+    }
+    loadHeroProfile();
+  }
+
+  function removeAllProgressKeys() {
+    ['level-1', 'level-2', 'level-3'].forEach(levelId => {
+      localStorage.removeItem('bossBattleIslands_progress_' + levelId);
+    });
+    localStorage.removeItem('bossBattleIslands_save_v1');
+    localStorage.removeItem(HERO_PROFILE_KEY);
+  }
+
+  function runResetEpochMigration() {
+    try {
+      const appliedEpoch = Number(localStorage.getItem(RESET_EPOCH_KEY) || 0);
+      if (appliedEpoch < RESET_EPOCH) {
+        removeAllProgressKeys();
+        localStorage.setItem(RESET_EPOCH_KEY, String(RESET_EPOCH));
+        console.log(`[RESET] Applied clean-start reset epoch ${RESET_EPOCH}.`);
+      }
+    } catch (error) {
+      console.warn('[RESET] One-time reset could not access browser storage.', error);
+    }
   }
 
   // ================================================================
@@ -872,6 +1185,7 @@
     state.battle = null;
   }
   function saveGame() {
+    if (resetInProgress) return;
     try {
       localStorage.setItem(getSaveKey(), JSON.stringify({
         levelId: activeContentLevel,
@@ -1447,6 +1761,262 @@
 
   // Personalised low-poly Shauri: dark textured hair, black glasses, navy
   // hoodie and light patterned trousers inspired by the supplied photograph.
+  function hexColour(value, fallback) {
+    return typeof value === 'string' && /^#[0-9a-f]{6}$/i.test(value)
+      ? Number.parseInt(value.slice(1), 16)
+      : fallback;
+  }
+
+  function makeGearMaterial(item, accent = false, options = {}) {
+    const rarity = item.rarity || 'common';
+    const color = hexColour(accent ? item.accent : item.color, accent ? 0xFFD54F : 0x607D8B);
+    const glowing = rarity === 'epic' || rarity === 'legendary';
+    const materialOptions = {
+      color,
+      roughness: options.roughness ?? (rarity === 'common' ? 0.72 : 0.38),
+      metalness: options.metalness ?? (rarity === 'common' ? 0.08 : 0.36),
+      emissive: glowing ? color : 0x000000,
+      emissiveIntensity: rarity === 'legendary' ? 0.52 : rarity === 'epic' ? 0.25 : 0,
+      transparent: !!options.transparent,
+      opacity: options.opacity ?? 1
+    };
+    if (options.side !== undefined) materialOptions.side = options.side;
+    return new THREE.MeshStandardMaterial(materialOptions);
+  }
+
+  function addGearMesh(group, geometry, material, position = [0, 0, 0], rotation = [0, 0, 0]) {
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(...position);
+    mesh.rotation.set(...rotation);
+    mesh.castShadow = true;
+    group.add(mesh);
+    return mesh;
+  }
+
+  function decorateGearRarity(group, item) {
+    const rarity = item.rarity || 'common';
+    group.userData.rarity = rarity;
+    group.userData.effectNodes = [];
+    if (rarity === 'epic' || rarity === 'legendary') {
+      const ring = addGearMesh(
+        group,
+        new THREE.TorusGeometry(item.slot === 'weapon' ? 0.16 : 0.24, 0.018, 6, 24),
+        makeGearMaterial(item, true),
+        item.slot === 'weapon' ? [0, 0.46, 0] : [0, 0, 0.04],
+        [Math.PI / 2, 0, 0]
+      );
+      group.userData.effectNodes.push(ring);
+    }
+    if (rarity === 'legendary') {
+      for (let i = 0; i < 3; i++) {
+        const orb = addGearMesh(
+          group,
+          new THREE.OctahedronGeometry(0.035, 0),
+          makeGearMaterial(item, true),
+          [Math.cos(i / 3 * Math.PI * 2) * 0.24, 0.18 + i * 0.06, Math.sin(i / 3 * Math.PI * 2) * 0.12]
+        );
+        orb.userData.orbitIndex = i;
+        group.userData.effectNodes.push(orb);
+      }
+      const light = new THREE.PointLight(hexColour(item.accent, 0xFFD54F), 0.55, 3.2);
+      light.position.set(0, 0.25, 0.2);
+      group.add(light);
+    }
+  }
+
+  function createWeaponGear(item) {
+    const group = new THREE.Group();
+    const main = makeGearMaterial(item);
+    const accent = makeGearMaterial(item, true);
+    const wood = new THREE.MeshStandardMaterial({ color: 0x6D4C41, roughness: 0.78 });
+    const form = item.form || 'blade';
+
+    if (form === 'pencil') {
+      addGearMesh(group, new THREE.CylinderGeometry(0.035, 0.035, 1.05, 8), main);
+      addGearMesh(group, new THREE.ConeGeometry(0.055, 0.18, 8), wood, [0, 0.61, 0]);
+      addGearMesh(group, new THREE.CylinderGeometry(0.04, 0.04, 0.13, 8), accent, [0, -0.58, 0]);
+    } else if (form === 'bow') {
+      addGearMesh(group, new THREE.TorusGeometry(0.38, 0.035, 8, 28, Math.PI * 1.5), main, [0, 0.1, 0], [0, 0, -Math.PI * 0.75]);
+      const points = [new THREE.Vector3(-0.27, -0.18, 0), new THREE.Vector3(0.1, 0.1, 0), new THREE.Vector3(-0.27, 0.38, 0)];
+      group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(points), new THREE.LineBasicMaterial({ color: hexColour(item.accent, 0xFFFFFF) })));
+    } else if (form === 'hammer') {
+      addGearMesh(group, new THREE.CylinderGeometry(0.035, 0.05, 0.9, 8), wood, [0, 0.05, 0]);
+      addGearMesh(group, new THREE.BoxGeometry(0.5, 0.22, 0.24), main, [0, 0.52, 0]);
+      addGearMesh(group, new THREE.BoxGeometry(0.12, 0.28, 0.3), accent, [0, 0.52, 0]);
+    } else if (form === 'shield') {
+      addGearMesh(group, new THREE.CylinderGeometry(0.34, 0.34, 0.09, 10), main, [0, 0.08, 0], [Math.PI / 2, 0, 0]);
+      addGearMesh(group, new THREE.TorusGeometry(0.25, 0.025, 6, 20), accent, [0, 0.08, 0.055]);
+    } else if (form === 'wand' || form === 'staff') {
+      const length = form === 'staff' ? 1.15 : 0.78;
+      addGearMesh(group, new THREE.CylinderGeometry(0.025, 0.04, length, 8), main, [0, 0.05, 0]);
+      addGearMesh(group, new THREE.OctahedronGeometry(form === 'staff' ? 0.15 : 0.11, 0), accent, [0, 0.05 + length / 2, 0]);
+    } else if (form === 'trident' || form === 'lance' || form === 'glaive') {
+      addGearMesh(group, new THREE.CylinderGeometry(0.025, 0.04, 1.2, 8), main, [0, 0.08, 0]);
+      if (form === 'trident') {
+        [-0.12, 0, 0.12].forEach((x, index) => {
+          addGearMesh(group, new THREE.ConeGeometry(0.05, 0.25, 6), accent, [x, 0.78 - Math.abs(index - 1) * 0.05, 0]);
+        });
+      } else {
+        addGearMesh(group, new THREE.ConeGeometry(0.11, 0.36, 6), accent, [0, 0.84, 0]);
+      }
+    } else if (form === 'twin-blades' || form === 'twin-wands') {
+      [-0.09, 0.09].forEach((x, index) => {
+        addGearMesh(group, new THREE.CylinderGeometry(0.025, 0.035, 0.76, 7), index ? accent : main, [x, 0.08, index ? 0.03 : -0.03], [0, 0, index ? -0.14 : 0.14]);
+        if (form === 'twin-blades') {
+          addGearMesh(group, new THREE.ConeGeometry(0.055, 0.2, 6), accent, [x + (index ? 0.05 : -0.05), 0.55, 0]);
+        }
+      });
+    } else {
+      addGearMesh(group, new THREE.CylinderGeometry(0.035, 0.05, 0.38, 8), accent, [0, -0.32, 0]);
+      const bladeLength = form === 'lightblade' || form === 'keyblade' ? 0.92 : 0.72;
+      addGearMesh(group, new THREE.BoxGeometry(0.1, bladeLength, 0.045), main, [0, 0.22, 0]);
+      addGearMesh(group, new THREE.ConeGeometry(0.07, 0.18, 6), accent, [0, 0.22 + bladeLength / 2, 0]);
+      addGearMesh(group, new THREE.BoxGeometry(0.34, 0.06, 0.09), accent, [0, -0.12, 0]);
+    }
+    group.rotation.z = -0.22;
+    decorateGearRarity(group, item);
+    return group;
+  }
+
+  function createHeadGear(item) {
+    const group = new THREE.Group();
+    const main = makeGearMaterial(item);
+    const accent = makeGearMaterial(item, true);
+    const form = item.form || 'helmet';
+    if (form === 'crown') {
+      addGearMesh(group, new THREE.CylinderGeometry(0.27, 0.31, 0.16, 8), main, [0, 0.04, 0]);
+      for (let i = 0; i < 5; i++) {
+        const angle = i / 5 * Math.PI * 2;
+        addGearMesh(group, new THREE.ConeGeometry(0.065, 0.2, 5), accent, [Math.cos(angle) * 0.23, 0.2, Math.sin(angle) * 0.23]);
+      }
+    } else if (form === 'visor') {
+      addGearMesh(group, new THREE.BoxGeometry(0.58, 0.16, 0.08), main, [0, -0.12, 0.25]);
+      addGearMesh(group, new THREE.BoxGeometry(0.45, 0.085, 0.025), accent, [0, -0.12, 0.3]);
+    } else if (form === 'headset') {
+      addGearMesh(group, new THREE.TorusGeometry(0.3, 0.045, 8, 22, Math.PI), main, [0, 0.02, 0], [0, 0, 0]);
+      [-0.31, 0.31].forEach(x => addGearMesh(group, new THREE.CylinderGeometry(0.11, 0.11, 0.08, 12), accent, [x, -0.1, 0], [0, 0, Math.PI / 2]));
+    } else if (form === 'hood') {
+      addGearMesh(group, new THREE.SphereGeometry(0.38, 12, 9, 0, Math.PI * 2, 0, Math.PI * 0.66), main, [0, -0.03, -0.03]);
+      addGearMesh(group, new THREE.TorusGeometry(0.3, 0.04, 7, 22), accent, [0, -0.07, 0.12], [Math.PI / 2, 0, 0]);
+    } else if (form === 'cap') {
+      addGearMesh(group, new THREE.SphereGeometry(0.34, 12, 8, 0, Math.PI * 2, 0, Math.PI / 2), main, [0, 0, 0]);
+      addGearMesh(group, new THREE.BoxGeometry(0.42, 0.045, 0.2), accent, [0, -0.01, 0.25]);
+    } else {
+      addGearMesh(group, new THREE.SphereGeometry(0.36, 12, 8, 0, Math.PI * 2, 0, Math.PI * 0.58), main, [0, 0, 0]);
+      addGearMesh(group, new THREE.BoxGeometry(0.42, 0.08, 0.18), accent, [0, -0.03, 0.27]);
+      if (item.id.includes('dragon')) {
+        [-0.18, 0.18].forEach(x => addGearMesh(group, new THREE.ConeGeometry(0.06, 0.24, 6), accent, [x, 0.27, 0]));
+      }
+    }
+    decorateGearRarity(group, item);
+    return group;
+  }
+
+  function createBackGear(item) {
+    const group = new THREE.Group();
+    const main = makeGearMaterial(item, false, { side: THREE.DoubleSide });
+    const accent = makeGearMaterial(item, true, { side: THREE.DoubleSide });
+    const form = item.form || 'cape';
+    if (form === 'backpack') {
+      addGearMesh(group, new THREE.BoxGeometry(0.58, 0.72, 0.28), main, [0, -0.15, -0.05]);
+      addGearMesh(group, new THREE.BoxGeometry(0.42, 0.18, 0.32), accent, [0, -0.28, -0.12]);
+      addGearMesh(group, new THREE.TorusGeometry(0.19, 0.025, 6, 18), accent, [0, 0.13, -0.2]);
+    } else if (form === 'wings') {
+      [-1, 1].forEach(side => {
+        const wing = addGearMesh(group, new THREE.ConeGeometry(0.32, 1.05, 4), side < 0 ? main : accent, [side * 0.38, -0.1, 0], [0, 0, side * 0.42]);
+        wing.scale.z = 0.22;
+      });
+    } else {
+      const cape = addGearMesh(group, new THREE.PlaneGeometry(0.82, 1.05, 1, 3), main, [0, -0.28, 0], [0.08, 0, 0]);
+      cape.geometry.translate(0, -0.12, 0);
+      addGearMesh(group, new THREE.BoxGeometry(0.75, 0.055, 0.04), accent, [0, 0.26, 0.02]);
+    }
+    decorateGearRarity(group, item);
+    return group;
+  }
+
+  function createOutfitGear(item) {
+    const group = new THREE.Group();
+    const main = makeGearMaterial(item, false, { transparent: true, opacity: 0.92 });
+    const accent = makeGearMaterial(item, true);
+    addGearMesh(group, new THREE.CylinderGeometry(0.4, 0.48, 0.82, 8, 1, true), main, [0, 0, 0]);
+    addGearMesh(group, new THREE.TorusGeometry(0.38, 0.035, 6, 20), accent, [0, 0.3, 0], [Math.PI / 2, 0, 0]);
+    decorateGearRarity(group, item);
+    return group;
+  }
+
+  function createGearModel(item) {
+    if (!item) return null;
+    let model;
+    if (item.slot === 'weapon') model = createWeaponGear(item);
+    else if (item.slot === 'head') model = createHeadGear(item);
+    else if (item.slot === 'back') model = createBackGear(item);
+    else model = createOutfitGear(item);
+    model.name = 'gear-' + item.id;
+    model.userData.itemId = item.id;
+    model.userData.slot = item.slot;
+    return model;
+  }
+
+  function clearGearAttachment(slotGroup) {
+    if (!slotGroup) return;
+    while (slotGroup.children.length) {
+      const child = slotGroup.children[slotGroup.children.length - 1];
+      slotGroup.remove(child);
+      child.traverse(node => {
+        if (node.geometry) node.geometry.dispose();
+        if (Array.isArray(node.material)) node.material.forEach(material => material.dispose());
+        else if (node.material) node.material.dispose();
+      });
+    }
+  }
+
+  function applyHeroLoadout(targetHero = hero) {
+    if (!targetHero?.userData?.gearSlots || !heroProfile) return;
+    GEAR_SLOTS.forEach(slot => {
+      const slotGroup = targetHero.userData.gearSlots[slot];
+      clearGearAttachment(slotGroup);
+      const itemId = heroProfile.equipped[slot];
+      const item = itemId ? gearItems.get(itemId) : null;
+      if (!item || item.slot !== slot) return;
+      const model = createGearModel(item);
+      slotGroup.add(model);
+      slotGroup.userData.rarity = item.rarity;
+      slotGroup.userData.itemId = item.id;
+    });
+    if (renderer?.domElement) {
+      renderer.domElement.dataset.weapon = heroProfile.equipped.weapon || '';
+      renderer.domElement.dataset.headGear = heroProfile.equipped.head || '';
+      renderer.domElement.dataset.backGear = heroProfile.equipped.back || '';
+      renderer.domElement.dataset.outfit = heroProfile.equipped.outfit || '';
+    }
+  }
+
+  function updateGearEffects(dt, moving = false) {
+    if (!hero?.userData?.gearSlots) return;
+    const time = performance.now() * 0.001;
+    GEAR_SLOTS.forEach(slot => {
+      const slotGroup = hero.userData.gearSlots[slot];
+      const model = slotGroup.children[0];
+      if (!model) return;
+      (model.userData.effectNodes || []).forEach((node, index) => {
+        node.rotation.y += dt * (1.2 + index * 0.35);
+        if (node.userData.orbitIndex !== undefined) {
+          const angle = time * 1.7 + node.userData.orbitIndex / 3 * Math.PI * 2;
+          node.position.x = Math.cos(angle) * 0.24;
+          node.position.z = Math.sin(angle) * 0.12;
+        }
+      });
+      if (moving && model.userData.rarity === 'legendary') {
+        hero.userData.gearTrailAge = (hero.userData.gearTrailAge || 0) + dt;
+        if (hero.userData.gearTrailAge > 0.16) {
+          hero.userData.gearTrailAge = 0;
+          spawnParticles(hero.position.clone().add(new THREE.Vector3(0, 1.1, 0)), RARITY_META.legendary.color, 1);
+        }
+      }
+    });
+  }
+
   // The photograph itself is deliberately not shipped with the public game.
   function createHero() {
     const group = new THREE.Group();
@@ -1591,26 +2161,24 @@
     const legL = makeLeg(-1);
     const legR = makeLeg(1);
 
-    // The Pencil Blade remains the playful learning-game weapon.
-    const pencil = new THREE.Group();
-    pencil.position.set(0.08, -0.5, 0.08);
-    pencil.rotation.z = -0.22;
-    const shaft = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.035, 0.035, 1.05, 8),
-      new THREE.MeshStandardMaterial({ color: 0xFFD740, roughness: 0.55 })
-    );
-    const tip = new THREE.Mesh(
-      new THREE.ConeGeometry(0.055, 0.18, 8),
-      new THREE.MeshStandardMaterial({ color: 0x5D4037 })
-    );
-    tip.position.y = 0.61;
-    const eraser = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.04, 0.04, 0.13, 8),
-      new THREE.MeshStandardMaterial({ color: 0xF48FB1 })
-    );
-    eraser.position.y = -0.58;
-    pencil.add(shaft, tip, eraser);
-    armR.add(pencil);
+    // Lightweight attachment points let gear change without rebuilding or
+    // rigging a new character model.
+    const weaponSlot = new THREE.Group();
+    weaponSlot.name = 'hero-weapon-slot';
+    weaponSlot.position.set(0.08, -0.5, 0.08);
+    armR.add(weaponSlot);
+    const headSlot = new THREE.Group();
+    headSlot.name = 'hero-head-slot';
+    headSlot.position.set(0, 2.02, 0);
+    group.add(headSlot);
+    const backSlot = new THREE.Group();
+    backSlot.name = 'hero-back-slot';
+    backSlot.position.set(0, 1.38, -0.42);
+    group.add(backSlot);
+    const outfitSlot = new THREE.Group();
+    outfitSlot.name = 'hero-outfit-slot';
+    outfitSlot.position.set(0, 1.02, 0);
+    group.add(outfitSlot);
 
     // Compact always-facing name plate.
     const canvas = document.createElement('canvas');
@@ -1637,12 +2205,14 @@
       ...group.userData,
       eyeL, eyeR, head, hair: hairCap,
       legL, legR, body, armL, armR,
-      pencil, eraser, tip,
+      hoodieMat, hoodieDarkMat,
+      gearSlots: { weapon: weaponSlot, head: headSlot, back: backSlot, outfit: outfitSlot },
       nameTag,
       baseBodyY: body.position.y,
       baseHeadY: head.position.y
     };
     group.scale.setScalar(1.08);
+    applyHeroLoadout(group);
     return group;
   }
 
@@ -2599,6 +3169,7 @@
 
     const moved = movement.lengthSq() > 0 && moveHeroOnWorld(movement);
     animateHeroWalk(moved, dt, movement);
+    updateGearEffects(dt, moved);
     if (moved && hero.position.distanceTo(hero.userData.lastStepPos) > 1.15) {
       spawnFootstep(hero.position);
       hero.userData.lastStepPos.copy(hero.position);
@@ -3075,6 +3646,91 @@
     }
   }
 
+  function prepareReward(levelId, sectionId, firstClear, perfectScore) {
+    const key = rewardKey(levelId, sectionId);
+    const offer = rewardOffers.get(key);
+    if (!offer || !heroProfile) return null;
+    const remaining = offer.itemIds.filter(itemId => !heroProfile.unlocked.includes(itemId));
+    if (!remaining.length) return null;
+    if (firstClear) {
+      return { key, offer, itemIds: remaining, mastery: false, chosen: null };
+    }
+    if (perfectScore) {
+      return { key, offer, itemIds: remaining, mastery: true, chosen: null };
+    }
+    return null;
+  }
+
+  function gearIcon(item) {
+    if (item.slot === 'weapon') return item.form === 'bow' ? '🏹' : item.form === 'wand' || item.form === 'staff' ? '🪄' : '⚔️';
+    if (item.slot === 'head') return item.form === 'crown' ? '👑' : '🪖';
+    if (item.slot === 'back') return item.form === 'cape' ? '🦸' : item.form === 'wings' ? '🪽' : '🎒';
+    return '🧥';
+  }
+
+  function showRewardChoice() {
+    if (!pendingReward) return;
+    const grid = document.getElementById('reward-grid');
+    const title = document.getElementById('reward-title');
+    const subtitle = document.getElementById('reward-subtitle');
+    const continueButton = document.getElementById('reward-continue-btn');
+    grid.innerHTML = '';
+    continueButton.style.display = 'none';
+    title.textContent = pendingReward.mastery ? 'Perfect Replay Reward!' : 'Choose Your Reward!';
+    subtitle.textContent = pendingReward.mastery
+      ? 'Mastery unlocked every remaining reward from this island. Choose one to equip now!'
+      : 'Pick one item to unlock and equip. Earn 10/10 on a replay to collect the alternative.';
+    pendingReward.itemIds.forEach(itemId => {
+      const item = gearItems.get(itemId);
+      if (!item) return;
+      const rarity = RARITY_META[item.rarity];
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = `reward-card ${item.rarity}`;
+      card.dataset.itemId = item.id;
+      card.setAttribute('aria-label', `Choose ${item.name}, ${rarity.label} ${GEAR_SLOT_META[item.slot].label}`);
+      card.innerHTML =
+        `<div class="reward-icon">${gearIcon(item)}</div>` +
+        `<div class="gear-rarity" style="color:#${rarity.color.toString(16).padStart(6,'0')}">${rarity.icon} ${rarity.label}</div>` +
+        `<div class="gear-name">${item.name}</div>` +
+        `<div class="gear-description">${item.description}</div>` +
+        `<div class="gear-equipped-tag">${GEAR_SLOT_META[item.slot].icon} ${GEAR_SLOT_META[item.slot].label}</div>`;
+      card.onclick = () => chooseRewardItem(item.id);
+      grid.appendChild(card);
+    });
+    showScreen('reward');
+  }
+
+  function chooseRewardItem(itemId) {
+    if (!pendingReward || pendingReward.chosen || !pendingReward.itemIds.includes(itemId)) return;
+    const item = gearItems.get(itemId);
+    if (!item) return;
+    const unlockIds = pendingReward.mastery ? pendingReward.itemIds : [itemId];
+    unlockIds.forEach(id => {
+      if (!heroProfile.unlocked.includes(id)) heroProfile.unlocked.push(id);
+    });
+    heroProfile.equipped[item.slot] = item.id;
+    const existingClaims = Array.isArray(heroProfile.claims[pendingReward.key])
+      ? heroProfile.claims[pendingReward.key]
+      : [];
+    heroProfile.claims[pendingReward.key] = Array.from(new Set([...existingClaims, ...unlockIds]));
+    pendingReward.chosen = item.id;
+    saveHeroProfile();
+    applyHeroLoadout();
+    spawnParticles(hero.position.clone().add(new THREE.Vector3(0, 1.1, 0)), RARITY_META[item.rarity].color, item.rarity === 'legendary' ? 24 : 12);
+    playSound('victory');
+
+    const grid = document.getElementById('reward-grid');
+    grid.innerHTML =
+      `<div class="gear-card ${item.rarity} equipped" style="grid-column:1/-1;text-align:center;">` +
+      `<div class="reward-icon">${gearIcon(item)}</div>` +
+      `<div class="gear-name">${item.name} equipped!</div>` +
+      `<div class="gear-description">${pendingReward.mastery ? `${unlockIds.length} mastery reward${unlockIds.length === 1 ? '' : 's'} added to your Locker.` : 'The other choice can be earned with a perfect replay.'}</div>` +
+      `</div>`;
+    document.getElementById('reward-subtitle').textContent = 'Shauri looks stronger already!';
+    document.getElementById('reward-continue-btn').style.display = 'inline-block';
+  }
+
   // ================================================================
   //  BATTLE END & VICTORY
   // ================================================================
@@ -3083,6 +3739,7 @@
     clearBattleFeedbackTimer();
     const sid = state.battle.sectionId;
     const section = getSection(sid);
+    const firstClear = !state.completed[sid];
 
     // Calculate rewards
     const correct = state.battle.correctCount;
@@ -3103,6 +3760,7 @@
       date: new Date().toISOString(),
       xp: earnedXP
     };
+    pendingReward = prepareReward(activeContentLevel, sid, firstClear, state.battle.wrongCount === 0);
     saveGame();
     showSaveToast();
 
@@ -3117,6 +3775,8 @@
     const stars = state.battle.wrongCount === 0 ? 3 : state.battle.wrongCount <= 2 ? 2 : 1;
     document.getElementById('victory-rank').textContent =
       '⭐'.repeat(stars) + '☆'.repeat(3 - stars) + (stars === 3 ? ' Perfect!' : stars === 2 ? ' Great run!' : ' Boss beaten!');
+    document.getElementById('victory-continue-btn').textContent =
+      pendingReward ? '🎁 Choose Your Reward' : '🏠 Back to Hub';
 
     setShauriMood('victory');
     showShauriBubble('victory', 3000);
@@ -3165,7 +3825,17 @@
     }, 16);
   }
   function onVictoryContinue() {
+    if (pendingReward && !pendingReward.chosen) {
+      stopConfetti();
+      showRewardChoice();
+      return;
+    }
+    finishVictoryReturn();
+  }
+
+  function finishVictoryReturn() {
     stopConfetti();
+    pendingReward = null;
     showScreen('hub');
     if (state.sessionIslandsCompleted > 0 && state.sessionIslandsCompleted % 2 === 0) {
       showScreen('break');
@@ -3260,7 +3930,10 @@
   }
 
   function showScreen(name) {
-    const allScreens = ['ui-title','ui-level-select','ui-hub','ui-victory','ui-trophy','ui-break','ui-help'];
+    const allScreens = [
+      'ui-title','ui-level-select','ui-hub','ui-victory','ui-trophy','ui-break','ui-help',
+      'ui-locker','ui-reward','ui-settings'
+    ];
     allScreens.forEach(id => {
       const el = document.getElementById(id);
       if (el) {
@@ -3288,6 +3961,157 @@
     else if (name === 'battle') setMusic('battle');
     else stopMusic();
     state.screen = name;
+  }
+
+  function getGearRequirement(item) {
+    if (!item?.milestone) return 'Starter gear';
+    const [levelId, sectionId] = item.milestone.split(':');
+    const level = LEVEL_REGISTRY.get(levelId);
+    const section = level?.sectionMap.get(sectionId);
+    return section
+      ? `${level.title} • defeat ${section.theme.boss}`
+      : item.milestone;
+  }
+
+  function renderLocker(slot = lockerActiveSlot) {
+    lockerActiveSlot = GEAR_SLOTS.includes(slot) ? slot : 'weapon';
+    const summary = document.getElementById('locker-equipped-summary');
+    summary.innerHTML = GEAR_SLOTS.map(slotId => {
+      const item = gearItems.get(heroProfile?.equipped?.[slotId]);
+      return `<div class="equipped-slot">${GEAR_SLOT_META[slotId].icon} ${GEAR_SLOT_META[slotId].label}<br>${item?.name || 'None'}</div>`;
+    }).join('');
+
+    const tabs = document.getElementById('locker-tabs');
+    tabs.innerHTML = '';
+    GEAR_SLOTS.forEach(slotId => {
+      const button = document.createElement('button');
+      button.className = 'btn btn-info' + (slotId === lockerActiveSlot ? ' active' : '');
+      button.textContent = `${GEAR_SLOT_META[slotId].icon} ${GEAR_SLOT_META[slotId].label}`;
+      button.onclick = () => renderLocker(slotId);
+      tabs.appendChild(button);
+    });
+
+    const grid = document.getElementById('locker-grid');
+    grid.innerHTML = '';
+    const items = Array.from(gearItems.values()).filter(item => item.slot === lockerActiveSlot);
+    items.forEach(item => {
+      const unlocked = heroProfile.unlocked.includes(item.id);
+      const equipped = heroProfile.equipped[item.slot] === item.id;
+      const rarity = RARITY_META[item.rarity];
+      const card = document.createElement(unlocked ? 'button' : 'div');
+      if (unlocked) card.type = 'button';
+      card.className = `gear-card ${item.rarity} ${unlocked ? 'unlocked' : 'locked'}${equipped ? ' equipped' : ''}`;
+      card.dataset.itemId = item.id;
+      if (unlocked) {
+        card.setAttribute('aria-label', equipped ? `${item.name} equipped` : `Equip ${item.name}`);
+        card.onclick = () => equipGear(item.id);
+      }
+      card.innerHTML =
+        `<div style="font-size:2rem;">${unlocked ? gearIcon(item) : '🔒'}</div>` +
+        `<div class="gear-rarity" style="color:#${rarity.color.toString(16).padStart(6,'0')}">${rarity.icon} ${rarity.label}</div>` +
+        `<div class="gear-name">${item.name}</div>` +
+        `<div class="gear-description">${item.description}</div>` +
+        (unlocked
+          ? (equipped ? '<div class="gear-equipped-tag">✓ Equipped</div>' : '<div class="gear-equipped-tag">Tap to equip</div>')
+          : `<div class="gear-requirement">Unlock: ${getGearRequirement(item)}</div>`);
+      grid.appendChild(card);
+    });
+  }
+
+  function equipGear(itemId) {
+    const item = gearItems.get(itemId);
+    if (!item || !heroProfile.unlocked.includes(itemId)) return;
+    heroProfile.equipped[item.slot] = item.id;
+    saveHeroProfile();
+    applyHeroLoadout();
+    renderLocker(item.slot);
+    showToast(`${gearIcon(item)} ${item.name} equipped`, 'combo');
+    if (renderer && scene && camera) renderer.render(scene, camera);
+  }
+
+  function showLocker() {
+    lockerReturnScreen = state.screen === 'hub' ? 'hub' : 'title';
+    closeIslandPopup();
+    if (!hero && activeLevelRegistry) {
+      loadSave();
+      buildHub();
+    }
+    if (hero && camera) {
+      lockerCameraState = {
+        position: camera.position.clone(),
+        rotation: camera.rotation.clone()
+      };
+      camera.position.copy(hero.position.clone().add(new THREE.Vector3(3.6, 2.5, 4.8)));
+      const previewTarget = hero.position.clone().add(new THREE.Vector3(0, 1.25, 0));
+      const previewDirection = previewTarget.clone().sub(camera.position).normalize();
+      const previewRight = new THREE.Vector3().crossVectors(previewDirection, camera.up).normalize();
+      // Aim slightly past Shauri so he remains visible beside the right-hand
+      // Locker panel instead of being hidden underneath it.
+      camera.lookAt(previewTarget.add(previewRight.multiplyScalar(1.75)));
+      renderer.render(scene, camera);
+    }
+    renderLocker();
+    showScreen('locker');
+  }
+
+  function closeLocker() {
+    if (camera && lockerCameraState) {
+      camera.position.copy(lockerCameraState.position);
+      camera.rotation.copy(lockerCameraState.rotation);
+    }
+    lockerCameraState = null;
+    showScreen(lockerReturnScreen === 'hub' ? 'hub' : 'title');
+  }
+
+  function showSettings() {
+    settingsReturnScreen = state.screen === 'hub' ? 'hub' : 'title';
+    closeIslandPopup();
+    showScreen('settings');
+  }
+
+  function closeSettings() {
+    showScreen(settingsReturnScreen === 'hub' ? 'hub' : 'title');
+  }
+
+  function showResetConfirmation() {
+    document.getElementById('reset-confirm')?.classList.add('active');
+  }
+
+  function closeResetConfirmation() {
+    document.getElementById('reset-confirm')?.classList.remove('active');
+  }
+
+  function confirmResetAll() {
+    resetInProgress = true;
+    try {
+      clearBattleFeedbackTimer();
+      stopConfetti();
+      closeResetConfirmation();
+      removeAllProgressKeys();
+      heroProfile = defaultHeroProfile();
+      pendingReward = null;
+      state.xp = 0;
+      state.level = 1;
+      state.streak = 0;
+      state.bestStreak = 0;
+      state.completed = {};
+      state.sessionIslandsCompleted = 0;
+      state.selectedIsland = null;
+      state.battle = null;
+      teardownHub();
+      if (activeLevelRegistry) buildHub();
+      updateHUD();
+      updateIslandVisuals();
+      renderLevelCards();
+      showScreen('title');
+      showToast('🧹 All progress and gear reset', 'save');
+      console.log('[RESET] All learning progress, trophies and Hero Locker data were cleared.');
+    } catch (error) {
+      console.error('[RESET] Reset failed:', error);
+      showErrorFallback('Progress could not be reset safely. Please refresh and try again.');
+    } finally {
+      resetInProgress = false;
+    }
   }
 
   function renderLevelCards() {
@@ -3522,6 +4346,7 @@
       } else if (state.screen === 'battle') {
         const t = performance.now() * 0.003;
         if (hero) {
+          updateGearEffects(dt, false);
           hero.userData.legL.rotation.x = THREE.MathUtils.lerp(hero.userData.legL.rotation.x, Math.sin(t) * 0.045, 0.08);
           hero.userData.legR.rotation.x = THREE.MathUtils.lerp(hero.userData.legR.rotation.x, Math.sin(t + Math.PI) * 0.045, 0.08);
           hero.userData.body.position.y = hero.userData.baseBodyY + Math.sin(t * 1.25) * 0.012;
@@ -3796,19 +4621,29 @@
     const actions = {
       'title-play-btn': showLevelSelect,
       'title-trophy-btn': () => showTrophies(),
+      'title-locker-btn': showLocker,
+      'title-settings-btn': showSettings,
       'title-help-btn': showHelp,
       'level-select-back-btn': showTitle,
       'island-popup-btn': () => enterSelectedIsland(),
       'island-popup-cancel-btn': closeIslandPopup,
       'explanation-btn': onExplanationContinue,
       'victory-continue-btn': onVictoryContinue,
+      'reward-continue-btn': finishVictoryReturn,
       'trophy-main-menu-btn': showTitle,
+      'locker-close-btn': closeLocker,
+      'settings-reset-btn': showResetConfirmation,
+      'settings-close-btn': closeSettings,
+      'reset-confirm-btn': confirmResetAll,
+      'reset-cancel-btn': closeResetConfirmation,
       'break-continue-btn': continueAfterBreak,
       'break-take-btn': takeBreak,
       'help-close-btn': closeHelp,
       'hud-sound-btn': toggleSound,
       'hud-help-btn': showHelp,
+      'hud-locker-btn': showLocker,
       'hud-level-switch-btn': showLevelSelect,
+      'hud-settings-btn': showSettings,
       'hud-menu-btn': showTitle,
       'error-reload-btn': () => window.location.reload(),
       'error-title-btn': () => {
@@ -3903,6 +4738,8 @@
     showLevelSelect,
     selectLevel,
     showTrophies,
+    showLocker,
+    showSettings,
     showTitle,
     showHelp,
     closeHelp,
@@ -3927,6 +4764,7 @@
       showAccessGate();
       return;
     }
+    runResetEpochMigration();
     loadPreferences();
     console.log('[BOOT] Starting Boss Battle Islands...');
     // Safety timeout: force hide loader after 10 seconds no matter what
@@ -3956,6 +4794,8 @@
       if (!activeLevelRegistry) {
         throw new Error('No playable question levels could be loaded. Please check the question manifests and refresh.');
       }
+      console.log('[BOOT] Step 2b: Loading Hero Locker rewards...');
+      await loadGearCatalog();
       updateLoadingBar(20);
       console.log('[BOOT] Step 3: Validating game data...');
       const dataErrors = validateGameData();
