@@ -1,0 +1,170 @@
+{
+  "levelId": "level-3",
+  "subject": "Spelling",
+  "sectionId": "E4",
+  "round": 4,
+  "title": "Spelling Island 4",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L3-SP-031",
+      "question": "Which spelling is correct?",
+      "options": [
+        "scheem",
+        "scheme",
+        "sheme",
+        "sceme"
+      ],
+      "answer": "scheme",
+      "explanation": "Scheme includes the silent h after sc.",
+      "word": "scheme",
+      "skill": "silent-letters",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-032",
+      "question": "Which spelling is correct?",
+      "options": [
+        "plauge",
+        "plague",
+        "plaigue",
+        "plage"
+      ],
+      "answer": "plague",
+      "explanation": "Plague ends in gue.",
+      "word": "plague",
+      "skill": "unusual-letter-patterns",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-033",
+      "question": "Which spelling is correct?",
+      "options": [
+        "wayed",
+        "wieghed",
+        "waighed",
+        "weighed"
+      ],
+      "answer": "weighed",
+      "explanation": "Weighed uses eigh for the long a sound.",
+      "word": "weighed",
+      "skill": "vowel-sound-patterns",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-034",
+      "question": "Which spelling is correct?",
+      "options": [
+        "reseipt",
+        "reciept",
+        "receipt",
+        "receit"
+      ],
+      "answer": "receipt",
+      "explanation": "Receipt has ei after c and a silent p.",
+      "word": "receipt",
+      "skill": "ie-ei-rule",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-035",
+      "question": "Which spelling is correct?",
+      "options": [
+        "cafeine",
+        "caffiene",
+        "caffeene",
+        "caffeine"
+      ],
+      "answer": "caffeine",
+      "explanation": "Caffeine is spelt with eine at the end.",
+      "word": "caffeine",
+      "skill": "ie-ei-rule",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-036",
+      "question": "Which spelling is correct?",
+      "options": [
+        "seized",
+        "seised",
+        "siezed",
+        "seizd"
+      ],
+      "answer": "seized",
+      "explanation": "Seized uses ei.",
+      "word": "seized",
+      "skill": "ie-ei-rule",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-037",
+      "question": "Which spelling is correct?",
+      "options": [
+        "ceiling",
+        "cieling",
+        "ceilling",
+        "seiling"
+      ],
+      "answer": "ceiling",
+      "explanation": "Ceiling uses ei after c.",
+      "word": "ceiling",
+      "skill": "ie-ei-rule",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-038",
+      "question": "Which spelling is correct?",
+      "options": [
+        "disobies",
+        "dissobeys",
+        "disobays",
+        "disobeys"
+      ],
+      "answer": "disobeys",
+      "explanation": "Disobeys ends in eys.",
+      "word": "disobeys",
+      "skill": "vowel-sound-patterns",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-039",
+      "question": "Which spelling is correct?",
+      "options": [
+        "veil",
+        "viel",
+        "vail",
+        "veill"
+      ],
+      "answer": "veil",
+      "explanation": "A bridal veil is spelt veil.",
+      "word": "veil",
+      "skill": "vowel-sound-patterns",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-040",
+      "question": "Which spelling is correct?",
+      "options": [
+        "frieze",
+        "friez",
+        "friese",
+        "freize"
+      ],
+      "answer": "frieze",
+      "explanation": "Frieze uses ie and ends in ze.",
+      "word": "frieze",
+      "skill": "ie-ei-rule",
+      "difficulty": 3,
+      "verified": true
+    }
+  ]
+}

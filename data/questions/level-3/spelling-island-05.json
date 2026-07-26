@@ -1,0 +1,170 @@
+{
+  "levelId": "level-3",
+  "subject": "Spelling",
+  "sectionId": "E5",
+  "round": 5,
+  "title": "Spelling Island 5",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L3-SP-041",
+      "question": "Which spelling is correct?",
+      "options": [
+        "survay",
+        "survey",
+        "sirvey",
+        "survee"
+      ],
+      "answer": "survey",
+      "explanation": "Survey ends in ey.",
+      "word": "survey",
+      "skill": "vowel-sound-patterns",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-042",
+      "question": "Which spelling is correct?",
+      "options": [
+        "veyn",
+        "vane",
+        "vein",
+        "vien"
+      ],
+      "answer": "vein",
+      "explanation": "A vein carries blood; vane is a different word.",
+      "word": "vein",
+      "skill": "homophones",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-043",
+      "question": "Which spelling is correct?",
+      "options": [
+        "bage",
+        "beige",
+        "beije",
+        "biege"
+      ],
+      "answer": "beige",
+      "explanation": "Beige is spelt eige.",
+      "word": "beige",
+      "skill": "ie-ei-rule",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-044",
+      "question": "Which spelling is correct?",
+      "options": [
+        "achieving",
+        "acheeving",
+        "acheiving",
+        "achiveing"
+      ],
+      "answer": "achieving",
+      "explanation": "Achieving keeps ie from achieve before ing.",
+      "word": "achieving",
+      "skill": "ie-ei-rule",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-045",
+      "question": "Which spelling is correct?",
+      "options": [
+        "cassle",
+        "castel",
+        "casle",
+        "castle"
+      ],
+      "answer": "castle",
+      "explanation": "Castle contains a silent t.",
+      "word": "castle",
+      "skill": "silent-letters",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-046",
+      "question": "Which spelling is correct?",
+      "options": [
+        "knuckles",
+        "nuckles",
+        "knuckels",
+        "knukles"
+      ],
+      "answer": "knuckles",
+      "explanation": "Knuckles begins with a silent k.",
+      "word": "knuckles",
+      "skill": "silent-letters",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-047",
+      "question": "Which spelling is correct?",
+      "options": [
+        "debree",
+        "debri",
+        "debries",
+        "debris"
+      ],
+      "answer": "debris",
+      "explanation": "Debris ends in silent s.",
+      "word": "debris",
+      "skill": "silent-letters",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-048",
+      "question": "Which spelling is correct?",
+      "options": [
+        "swored",
+        "sord",
+        "sword",
+        "swoord"
+      ],
+      "answer": "sword",
+      "explanation": "Sword contains a silent w.",
+      "word": "sword",
+      "skill": "silent-letters",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-049",
+      "question": "Which spelling is correct?",
+      "options": [
+        "aghast",
+        "agast",
+        "agharst",
+        "aghhast"
+      ],
+      "answer": "aghast",
+      "explanation": "Aghast contains a silent h.",
+      "word": "aghast",
+      "skill": "silent-letters",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-050",
+      "question": "Which spelling is correct?",
+      "options": [
+        "pneumonia",
+        "pneumonea",
+        "neumonia",
+        "pnumonia"
+      ],
+      "answer": "pneumonia",
+      "explanation": "Pneumonia begins with silent p.",
+      "word": "pneumonia",
+      "skill": "silent-letters",
+      "difficulty": 3,
+      "verified": true
+    }
+  ]
+}

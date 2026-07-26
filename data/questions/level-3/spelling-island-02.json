@@ -1,0 +1,170 @@
+{
+  "levelId": "level-3",
+  "subject": "Spelling",
+  "sectionId": "E2",
+  "round": 2,
+  "title": "Spelling Island 2",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L3-SP-011",
+      "question": "Which spelling is correct?",
+      "options": [
+        "comprehention",
+        "comprehenshion",
+        "comprehension",
+        "comprahension"
+      ],
+      "answer": "comprehension",
+      "explanation": "Comprehension ends in sion.",
+      "word": "comprehension",
+      "skill": "tion-sion-cian-endings",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-012",
+      "question": "Which spelling is correct?",
+      "options": [
+        "possesion",
+        "possessian",
+        "possession",
+        "posession"
+      ],
+      "answer": "possession",
+      "explanation": "Possession has double s in both key positions.",
+      "word": "possession",
+      "skill": "double-consonants",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-013",
+      "question": "Which spelling is correct?",
+      "options": [
+        "intencian",
+        "intention",
+        "intentian",
+        "intension"
+      ],
+      "answer": "intention",
+      "explanation": "Intention ends in tion.",
+      "word": "intention",
+      "skill": "tion-sion-cian-endings",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-014",
+      "question": "Which spelling is correct?",
+      "options": [
+        "injecshion",
+        "injektion",
+        "injecton",
+        "injection"
+      ],
+      "answer": "injection",
+      "explanation": "Injection ends in ction.",
+      "word": "injection",
+      "skill": "tion-sion-cian-endings",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-015",
+      "question": "Which spelling is correct?",
+      "options": [
+        "confesion",
+        "confessian",
+        "confetion",
+        "confession"
+      ],
+      "answer": "confession",
+      "explanation": "Confession has double s and ends in sion.",
+      "word": "confession",
+      "skill": "tion-sion-cian-endings",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-016",
+      "question": "Which spelling is correct?",
+      "options": [
+        "optician",
+        "opticion",
+        "optitian",
+        "optiscian"
+      ],
+      "answer": "optician",
+      "explanation": "Optician ends in cian because it names a person.",
+      "word": "optician",
+      "skill": "tion-sion-cian-endings",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-017",
+      "question": "Which spelling is correct?",
+      "options": [
+        "confussion",
+        "confution",
+        "confusian",
+        "confusion"
+      ],
+      "answer": "confusion",
+      "explanation": "Confusion ends in sion.",
+      "word": "confusion",
+      "skill": "tion-sion-cian-endings",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-018",
+      "question": "Which spelling is correct?",
+      "options": [
+        "discusion",
+        "discution",
+        "discussian",
+        "discussion"
+      ],
+      "answer": "discussion",
+      "explanation": "Discussion has double s and ends in sion.",
+      "word": "discussion",
+      "skill": "tion-sion-cian-endings",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-019",
+      "question": "Which spelling is correct?",
+      "options": [
+        "extenshion",
+        "extention",
+        "extension",
+        "extansion"
+      ],
+      "answer": "extension",
+      "explanation": "Extension ends in sion.",
+      "word": "extension",
+      "skill": "tion-sion-cian-endings",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-020",
+      "question": "Which spelling is correct?",
+      "options": [
+        "omision",
+        "omissian",
+        "ommission",
+        "omission"
+      ],
+      "answer": "omission",
+      "explanation": "Omission has double s and ends in sion.",
+      "word": "omission",
+      "skill": "tion-sion-cian-endings",
+      "difficulty": 2,
+      "verified": true
+    }
+  ]
+}

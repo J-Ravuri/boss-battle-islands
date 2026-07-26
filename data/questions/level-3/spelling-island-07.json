@@ -1,0 +1,170 @@
+{
+  "levelId": "level-3",
+  "subject": "Spelling",
+  "sectionId": "E7",
+  "round": 7,
+  "title": "Spelling Island 7",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L3-SP-061",
+      "question": "Which spelling is correct?",
+      "options": [
+        "ascent",
+        "assent",
+        "asscent",
+        "ascentt"
+      ],
+      "answer": "ascent",
+      "explanation": "Ascent means a climb; assent means agreement.",
+      "word": "ascent",
+      "skill": "homophones",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-062",
+      "question": "Which spelling is correct?",
+      "options": [
+        "exceptian",
+        "exception",
+        "exeption",
+        "exseption"
+      ],
+      "answer": "exception",
+      "explanation": "Exception ends in ception.",
+      "word": "exception",
+      "skill": "tion-sion-cian-endings",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-063",
+      "question": "Which spelling is correct?",
+      "options": [
+        "stationry",
+        "stationairy",
+        "stationery",
+        "stationary"
+      ],
+      "answer": "stationery",
+      "explanation": "Stationery means writing materials; stationary means not moving.",
+      "word": "stationery",
+      "skill": "homophones",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-064",
+      "question": "Which spelling is correct?",
+      "options": [
+        "rackett",
+        "raket",
+        "racket",
+        "rackit"
+      ],
+      "answer": "racket",
+      "explanation": "Racket is the standard British spelling for the sports bat.",
+      "word": "racket",
+      "skill": "frequently-misspelt",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-065",
+      "question": "Which spelling is correct?",
+      "options": [
+        "wayste",
+        "waist",
+        "wast",
+        "waste"
+      ],
+      "answer": "waste",
+      "explanation": "Waste means misuse; waist is part of the body.",
+      "word": "waste",
+      "skill": "homophones",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-066",
+      "question": "Which spelling is correct?",
+      "options": [
+        "reigns",
+        "rains",
+        "reins",
+        "riens"
+      ],
+      "answer": "reins",
+      "explanation": "Reins are straps used to control a horse.",
+      "word": "reins",
+      "skill": "homophones",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-067",
+      "question": "Which spelling is correct?",
+      "options": [
+        "principle",
+        "principal",
+        "principel",
+        "prinsipal"
+      ],
+      "answer": "principal",
+      "explanation": "A school principal is a person; a principle is a rule.",
+      "word": "principal",
+      "skill": "homophones",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-068",
+      "question": "Which spelling is correct?",
+      "options": [
+        "necesary",
+        "neccessary",
+        "necessary",
+        "necessery"
+      ],
+      "answer": "necessary",
+      "explanation": "Necessary has one c and two s letters.",
+      "word": "necessary",
+      "skill": "frequently-misspelt",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-069",
+      "question": "Which spelling is correct?",
+      "options": [
+        "lightening",
+        "lightnning",
+        "lightning",
+        "litening"
+      ],
+      "answer": "lightning",
+      "explanation": "Lightning is the flash in a storm; lightening means making lighter.",
+      "word": "lightning",
+      "skill": "homophones",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-070",
+      "question": "Which spelling is correct?",
+      "options": [
+        "refferee",
+        "refree",
+        "referee",
+        "referree"
+      ],
+      "answer": "referee",
+      "explanation": "Referee has one r in the middle and ends in ee.",
+      "word": "referee",
+      "skill": "double-consonants",
+      "difficulty": 2,
+      "verified": true
+    }
+  ]
+}

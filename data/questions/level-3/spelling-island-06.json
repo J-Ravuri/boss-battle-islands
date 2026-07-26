@@ -1,0 +1,170 @@
+{
+  "levelId": "level-3",
+  "subject": "Spelling",
+  "sectionId": "E6",
+  "round": 6,
+  "title": "Spelling Island 6",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L3-SP-051",
+      "question": "Which spelling is correct?",
+      "options": [
+        "whistled",
+        "whisteld",
+        "whisled",
+        "wistled"
+      ],
+      "answer": "whistled",
+      "explanation": "Whistled keeps the t from whistle.",
+      "word": "whistled",
+      "skill": "silent-letters",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-052",
+      "question": "Which spelling is correct?",
+      "options": [
+        "speceis",
+        "species",
+        "speces",
+        "speecies"
+      ],
+      "answer": "species",
+      "explanation": "Species ends in cies.",
+      "word": "species",
+      "skill": "unusual-letter-patterns",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-053",
+      "question": "Which spelling is correct?",
+      "options": [
+        "autum",
+        "autumn",
+        "autmun",
+        "awtumn"
+      ],
+      "answer": "autumn",
+      "explanation": "Autumn ends with a silent n.",
+      "word": "autumn",
+      "skill": "silent-letters",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-054",
+      "question": "Which spelling is correct?",
+      "options": [
+        "governement",
+        "govermant",
+        "government",
+        "goverment"
+      ],
+      "answer": "government",
+      "explanation": "Government keeps the n from govern.",
+      "word": "government",
+      "skill": "silent-letters",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-055",
+      "question": "Which spelling is correct?",
+      "options": [
+        "wales",
+        "whails",
+        "whales",
+        "whels"
+      ],
+      "answer": "whales",
+      "explanation": "Whales begins with wh.",
+      "word": "whales",
+      "skill": "silent-letters",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-056",
+      "question": "Which spelling is correct?",
+      "options": [
+        "cereal",
+        "cereall",
+        "ceriel",
+        "serial"
+      ],
+      "answer": "cereal",
+      "explanation": "Cereal is food eaten at breakfast; serial means in a series.",
+      "word": "cereal",
+      "skill": "homophones",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-057",
+      "question": "Which spelling is correct?",
+      "options": [
+        "advize",
+        "advice",
+        "adivce",
+        "advise"
+      ],
+      "answer": "advice",
+      "explanation": "Advice is the noun; advise is the verb.",
+      "word": "advice",
+      "skill": "homophones",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-058",
+      "question": "Which spelling is correct?",
+      "options": [
+        "past",
+        "passed",
+        "passt",
+        "passsed"
+      ],
+      "answer": "passed",
+      "explanation": "Passed is the past tense of pass.",
+      "word": "passed",
+      "skill": "homophones",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-059",
+      "question": "Which spelling is correct?",
+      "options": [
+        "loze",
+        "lose",
+        "louse",
+        "loose"
+      ],
+      "answer": "lose",
+      "explanation": "Lose means misplace; loose means not tight.",
+      "word": "lose",
+      "skill": "homophones",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-060",
+      "question": "Which spelling is correct?",
+      "options": [
+        "complimented",
+        "complimentted",
+        "complamented",
+        "complemented"
+      ],
+      "answer": "complimented",
+      "explanation": "Complimented means praised.",
+      "word": "complimented",
+      "skill": "homophones",
+      "difficulty": 2,
+      "verified": true
+    }
+  ]
+}

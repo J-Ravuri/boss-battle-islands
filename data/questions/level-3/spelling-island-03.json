@@ -1,0 +1,170 @@
+{
+  "levelId": "level-3",
+  "subject": "Spelling",
+  "sectionId": "E3",
+  "round": 3,
+  "title": "Spelling Island 3",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L3-SP-021",
+      "question": "Which spelling is correct?",
+      "options": [
+        "echoe",
+        "ecko",
+        "echo",
+        "eco"
+      ],
+      "answer": "echo",
+      "explanation": "Echo uses ch for the k sound.",
+      "word": "echo",
+      "skill": "unusual-letter-patterns",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-022",
+      "question": "Which spelling is correct?",
+      "options": [
+        "leauge",
+        "leage",
+        "league",
+        "legue"
+      ],
+      "answer": "league",
+      "explanation": "League ends in gue.",
+      "word": "league",
+      "skill": "unusual-letter-patterns",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-023",
+      "question": "Which spelling is correct?",
+      "options": [
+        "shalet",
+        "chaley",
+        "chalet",
+        "challet"
+      ],
+      "answer": "chalet",
+      "explanation": "Chalet begins with ch even though it sounds like sh.",
+      "word": "chalet",
+      "skill": "unusual-letter-patterns",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-024",
+      "question": "Which spelling is correct?",
+      "options": [
+        "catologue",
+        "catalogue",
+        "cataloge",
+        "catalouge"
+      ],
+      "answer": "catalogue",
+      "explanation": "Catalogue ends in ogue in British English.",
+      "word": "catalogue",
+      "skill": "unusual-letter-patterns",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-025",
+      "question": "Which spelling is correct?",
+      "options": [
+        "chorus",
+        "choruss",
+        "corus",
+        "chorous"
+      ],
+      "answer": "chorus",
+      "explanation": "Chorus begins with ch for the k sound.",
+      "word": "chorus",
+      "skill": "unusual-letter-patterns",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-026",
+      "question": "Which spelling is correct?",
+      "options": [
+        "sycles",
+        "cycles",
+        "cycls",
+        "cicles"
+      ],
+      "answer": "cycles",
+      "explanation": "Cycles begins with a soft c and keeps the second c.",
+      "word": "cycles",
+      "skill": "soft-c-hard-c",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-027",
+      "question": "Which spelling is correct?",
+      "options": [
+        "antigue",
+        "anteque",
+        "antique",
+        "antik"
+      ],
+      "answer": "antique",
+      "explanation": "Antique ends in que.",
+      "word": "antique",
+      "skill": "unusual-letter-patterns",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-028",
+      "question": "Which spelling is correct?",
+      "options": [
+        "brochur",
+        "broshure",
+        "brocher",
+        "brochure"
+      ],
+      "answer": "brochure",
+      "explanation": "Brochure uses ch for the sh sound.",
+      "word": "brochure",
+      "skill": "unusual-letter-patterns",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-029",
+      "question": "Which spelling is correct?",
+      "options": [
+        "charecter",
+        "charactor",
+        "character",
+        "caracter"
+      ],
+      "answer": "character",
+      "explanation": "Character begins with char and keeps the h.",
+      "word": "character",
+      "skill": "unusual-letter-patterns",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-030",
+      "question": "Which spelling is correct?",
+      "options": [
+        "mosque",
+        "moskue",
+        "mosqe",
+        "mosk"
+      ],
+      "answer": "mosque",
+      "explanation": "Mosque ends in sque.",
+      "word": "mosque",
+      "skill": "unusual-letter-patterns",
+      "difficulty": 3,
+      "verified": true
+    }
+  ]
+}

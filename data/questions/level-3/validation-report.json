@@ -1,0 +1,977 @@
+{
+  "status": "valid",
+  "levelId": "level-3",
+  "continuity": {
+    "level2StoppedAfter": "Test 4 Q4",
+    "level3StartedAt": "Test 4 Q5",
+    "level3EndedAt": "Test 12 Q12"
+  },
+  "files": [
+    "spelling-island-01.json",
+    "spelling-island-02.json",
+    "spelling-island-03.json",
+    "spelling-island-04.json",
+    "spelling-island-05.json",
+    "spelling-island-06.json",
+    "spelling-island-07.json",
+    "spelling-island-08.json",
+    "spelling-island-09.json",
+    "spelling-island-10.json"
+  ],
+  "fileCount": 10,
+  "questionCount": 100,
+  "uniqueIdCount": 100,
+  "uniqueWordCount": 100,
+  "sourceBreakdown": {
+    "spellingPack3Verified": 100,
+    "fallback": 0,
+    "unverified": 0
+  },
+  "pdfRangeScanned": "Test 4 Q5 through Test 12 Q12",
+  "skippedDuplicates": [
+    {
+      "word": "heir",
+      "source": "Test 8 Q9",
+      "duplicatedWord": "heirs",
+      "duplicatedLevel": "level-2",
+      "reason": "same base word already used"
+    },
+    {
+      "word": "parliament",
+      "source": "Test 10 Q6",
+      "duplicatedWord": "parliament",
+      "duplicatedLevel": "level-2",
+      "reason": "exact word already used"
+    },
+    {
+      "word": "privileged",
+      "source": "Test 11 Q12",
+      "duplicatedWord": "privileged",
+      "duplicatedLevel": "level-2",
+      "reason": "exact word already used"
+    },
+    {
+      "word": "conscientious",
+      "source": "Test 12 Q2",
+      "duplicatedWord": "conscientious",
+      "duplicatedLevel": "level-2",
+      "reason": "exact word already used"
+    }
+  ],
+  "sourceMap": [
+    {
+      "id": "L3-SP-001",
+      "word": "delicious",
+      "source": "Test 4 Q5",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-002",
+      "word": "fictitious",
+      "source": "Test 4 Q6",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-003",
+      "word": "gracious",
+      "source": "Test 4 Q7",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-004",
+      "word": "substantial",
+      "source": "Test 4 Q8",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-005",
+      "word": "malicious",
+      "source": "Test 4 Q9",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-006",
+      "word": "ambitious",
+      "source": "Test 4 Q10",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-007",
+      "word": "beneficial",
+      "source": "Test 4 Q11",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-008",
+      "word": "artificial",
+      "source": "Test 4 Q12",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-009",
+      "word": "permission",
+      "source": "Test 5 Q1",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-010",
+      "word": "completion",
+      "source": "Test 5 Q2",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-011",
+      "word": "comprehension",
+      "source": "Test 5 Q3",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-012",
+      "word": "possession",
+      "source": "Test 5 Q4",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": true
+    },
+    {
+      "id": "L3-SP-013",
+      "word": "intention",
+      "source": "Test 5 Q5",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-014",
+      "word": "injection",
+      "source": "Test 5 Q6",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": true
+    },
+    {
+      "id": "L3-SP-015",
+      "word": "confession",
+      "source": "Test 5 Q7",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-016",
+      "word": "optician",
+      "source": "Test 5 Q8",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-017",
+      "word": "confusion",
+      "source": "Test 5 Q9",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-018",
+      "word": "discussion",
+      "source": "Test 5 Q10",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-019",
+      "word": "extension",
+      "source": "Test 5 Q11",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-020",
+      "word": "omission",
+      "source": "Test 5 Q12",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-021",
+      "word": "echo",
+      "source": "Test 6 Q1",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-022",
+      "word": "league",
+      "source": "Test 6 Q2",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-023",
+      "word": "chalet",
+      "source": "Test 6 Q3",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-024",
+      "word": "catalogue",
+      "source": "Test 6 Q4",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-025",
+      "word": "chorus",
+      "source": "Test 6 Q5",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-026",
+      "word": "cycles",
+      "source": "Test 6 Q6",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": true
+    },
+    {
+      "id": "L3-SP-027",
+      "word": "antique",
+      "source": "Test 6 Q7",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": true
+    },
+    {
+      "id": "L3-SP-028",
+      "word": "brochure",
+      "source": "Test 6 Q8",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-029",
+      "word": "character",
+      "source": "Test 6 Q9",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-030",
+      "word": "mosque",
+      "source": "Test 6 Q10",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-031",
+      "word": "scheme",
+      "source": "Test 6 Q11",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-032",
+      "word": "plague",
+      "source": "Test 6 Q12",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-033",
+      "word": "weighed",
+      "source": "Test 7 Q1",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-034",
+      "word": "receipt",
+      "source": "Test 7 Q2",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-035",
+      "word": "caffeine",
+      "source": "Test 7 Q3",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-036",
+      "word": "seized",
+      "source": "Test 7 Q4",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-037",
+      "word": "ceiling",
+      "source": "Test 7 Q5",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-038",
+      "word": "disobeys",
+      "source": "Test 7 Q6",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-039",
+      "word": "veil",
+      "source": "Test 7 Q7",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-040",
+      "word": "frieze",
+      "source": "Test 7 Q8",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": true
+    },
+    {
+      "id": "L3-SP-041",
+      "word": "survey",
+      "source": "Test 7 Q9",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-042",
+      "word": "vein",
+      "source": "Test 7 Q10",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-043",
+      "word": "beige",
+      "source": "Test 7 Q11",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-044",
+      "word": "achieving",
+      "source": "Test 7 Q12",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": true
+    },
+    {
+      "id": "L3-SP-045",
+      "word": "castle",
+      "source": "Test 8 Q1",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-046",
+      "word": "knuckles",
+      "source": "Test 8 Q2",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-047",
+      "word": "debris",
+      "source": "Test 8 Q3",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": true
+    },
+    {
+      "id": "L3-SP-048",
+      "word": "sword",
+      "source": "Test 8 Q4",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-049",
+      "word": "aghast",
+      "source": "Test 8 Q5",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-050",
+      "word": "pneumonia",
+      "source": "Test 8 Q6",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-051",
+      "word": "whistled",
+      "source": "Test 8 Q7",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-052",
+      "word": "species",
+      "source": "Test 8 Q8",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": true
+    },
+    {
+      "id": "L3-SP-053",
+      "word": "autumn",
+      "source": "Test 8 Q10",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-054",
+      "word": "government",
+      "source": "Test 8 Q11",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-055",
+      "word": "whales",
+      "source": "Test 8 Q12",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-056",
+      "word": "cereal",
+      "source": "Test 9 Q1",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-057",
+      "word": "advice",
+      "source": "Test 9 Q2",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-058",
+      "word": "passed",
+      "source": "Test 9 Q3",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-059",
+      "word": "lose",
+      "source": "Test 9 Q4",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-060",
+      "word": "complimented",
+      "source": "Test 9 Q5",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-061",
+      "word": "ascent",
+      "source": "Test 9 Q6",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-062",
+      "word": "exception",
+      "source": "Test 9 Q7",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": true
+    },
+    {
+      "id": "L3-SP-063",
+      "word": "stationery",
+      "source": "Test 9 Q8",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-064",
+      "word": "racket",
+      "source": "Test 9 Q9",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": true
+    },
+    {
+      "id": "L3-SP-065",
+      "word": "waste",
+      "source": "Test 9 Q10",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-066",
+      "word": "reins",
+      "source": "Test 9 Q11",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-067",
+      "word": "principal",
+      "source": "Test 9 Q12",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-068",
+      "word": "necessary",
+      "source": "Test 10 Q1",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-069",
+      "word": "lightning",
+      "source": "Test 10 Q2",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-070",
+      "word": "referee",
+      "source": "Test 10 Q3",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-071",
+      "word": "recipient",
+      "source": "Test 10 Q4",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": true
+    },
+    {
+      "id": "L3-SP-072",
+      "word": "desperately",
+      "source": "Test 10 Q5",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-073",
+      "word": "disastrous",
+      "source": "Test 10 Q7",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-074",
+      "word": "interrupted",
+      "source": "Test 10 Q8",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-075",
+      "word": "committee",
+      "source": "Test 10 Q9",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": true
+    },
+    {
+      "id": "L3-SP-076",
+      "word": "curiosity",
+      "source": "Test 10 Q10",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-077",
+      "word": "carriage",
+      "source": "Test 10 Q11",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-078",
+      "word": "accompanied",
+      "source": "Test 10 Q12",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-079",
+      "word": "disappointingly",
+      "source": "Test 11 Q1",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": true
+    },
+    {
+      "id": "L3-SP-080",
+      "word": "exaggeration",
+      "source": "Test 11 Q2",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-081",
+      "word": "forty",
+      "source": "Test 11 Q3",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-082",
+      "word": "marvellous",
+      "source": "Test 11 Q4",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-083",
+      "word": "definitely",
+      "source": "Test 11 Q5",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-084",
+      "word": "harassed",
+      "source": "Test 11 Q6",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-085",
+      "word": "separated",
+      "source": "Test 11 Q7",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-086",
+      "word": "twelfth",
+      "source": "Test 11 Q8",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-087",
+      "word": "apparently",
+      "source": "Test 11 Q9",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-088",
+      "word": "categorise",
+      "source": "Test 11 Q10",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-089",
+      "word": "sacrificial",
+      "source": "Test 11 Q11",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": true
+    },
+    {
+      "id": "L3-SP-090",
+      "word": "mischievous",
+      "source": "Test 12 Q1",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-091",
+      "word": "procedure",
+      "source": "Test 12 Q3",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-092",
+      "word": "exercise",
+      "source": "Test 12 Q4",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-093",
+      "word": "biscuits",
+      "source": "Test 12 Q5",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-094",
+      "word": "library",
+      "source": "Test 12 Q6",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-095",
+      "word": "embarrassed",
+      "source": "Test 12 Q7",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-096",
+      "word": "leisurely",
+      "source": "Test 12 Q8",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-097",
+      "word": "cooperate",
+      "source": "Test 12 Q9",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-098",
+      "word": "guarantee",
+      "source": "Test 12 Q10",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": true
+    },
+    {
+      "id": "L3-SP-099",
+      "word": "bargained",
+      "source": "Test 12 Q11",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": false
+    },
+    {
+      "id": "L3-SP-100",
+      "word": "inconvenient",
+      "source": "Test 12 Q12",
+      "answerKeyVerified": true,
+      "sourceWasNoMistake": true
+    }
+  ],
+  "islandSummaries": [
+    {
+      "island": 1,
+      "words": [
+        "delicious",
+        "fictitious",
+        "gracious",
+        "substantial",
+        "malicious",
+        "ambitious",
+        "beneficial",
+        "artificial",
+        "permission",
+        "completion"
+      ],
+      "skills": [
+        "shus-shul-endings",
+        "tion-sion-cian-endings"
+      ]
+    },
+    {
+      "island": 2,
+      "words": [
+        "comprehension",
+        "possession",
+        "intention",
+        "injection",
+        "confession",
+        "optician",
+        "confusion",
+        "discussion",
+        "extension",
+        "omission"
+      ],
+      "skills": [
+        "double-consonants",
+        "tion-sion-cian-endings"
+      ]
+    },
+    {
+      "island": 3,
+      "words": [
+        "echo",
+        "league",
+        "chalet",
+        "catalogue",
+        "chorus",
+        "cycles",
+        "antique",
+        "brochure",
+        "character",
+        "mosque"
+      ],
+      "skills": [
+        "soft-c-hard-c",
+        "unusual-letter-patterns"
+      ]
+    },
+    {
+      "island": 4,
+      "words": [
+        "scheme",
+        "plague",
+        "weighed",
+        "receipt",
+        "caffeine",
+        "seized",
+        "ceiling",
+        "disobeys",
+        "veil",
+        "frieze"
+      ],
+      "skills": [
+        "ie-ei-rule",
+        "silent-letters",
+        "unusual-letter-patterns",
+        "vowel-sound-patterns"
+      ]
+    },
+    {
+      "island": 5,
+      "words": [
+        "survey",
+        "vein",
+        "beige",
+        "achieving",
+        "castle",
+        "knuckles",
+        "debris",
+        "sword",
+        "aghast",
+        "pneumonia"
+      ],
+      "skills": [
+        "homophones",
+        "ie-ei-rule",
+        "silent-letters",
+        "vowel-sound-patterns"
+      ]
+    },
+    {
+      "island": 6,
+      "words": [
+        "whistled",
+        "species",
+        "autumn",
+        "government",
+        "whales",
+        "cereal",
+        "advice",
+        "passed",
+        "lose",
+        "complimented"
+      ],
+      "skills": [
+        "homophones",
+        "silent-letters",
+        "unusual-letter-patterns"
+      ]
+    },
+    {
+      "island": 7,
+      "words": [
+        "ascent",
+        "exception",
+        "stationery",
+        "racket",
+        "waste",
+        "reins",
+        "principal",
+        "necessary",
+        "lightning",
+        "referee"
+      ],
+      "skills": [
+        "double-consonants",
+        "frequently-misspelt",
+        "homophones",
+        "tion-sion-cian-endings"
+      ]
+    },
+    {
+      "island": 8,
+      "words": [
+        "recipient",
+        "desperately",
+        "disastrous",
+        "interrupted",
+        "committee",
+        "curiosity",
+        "carriage",
+        "accompanied",
+        "disappointingly",
+        "exaggeration"
+      ],
+      "skills": [
+        "double-consonants",
+        "frequently-misspelt",
+        "ie-ei-rule",
+        "suffix-ending"
+      ]
+    },
+    {
+      "island": 9,
+      "words": [
+        "forty",
+        "marvellous",
+        "definitely",
+        "harassed",
+        "separated",
+        "twelfth",
+        "apparently",
+        "categorise",
+        "sacrificial",
+        "mischievous"
+      ],
+      "skills": [
+        "british-spelling",
+        "double-consonants",
+        "frequently-misspelt",
+        "ie-ei-rule",
+        "shus-shul-endings",
+        "suffix-ance-ence"
+      ]
+    },
+    {
+      "island": 10,
+      "words": [
+        "procedure",
+        "exercise",
+        "biscuits",
+        "library",
+        "embarrassed",
+        "leisurely",
+        "cooperate",
+        "guarantee",
+        "bargained",
+        "inconvenient"
+      ],
+      "skills": [
+        "double-consonants",
+        "double-vowels",
+        "frequently-misspelt",
+        "ie-ei-rule",
+        "vowel-order",
+        "vowel-patterns"
+      ]
+    }
+  ],
+  "crossLevelValidation": {
+    "level2": "complete: checked against all 100 Level 2 words",
+    "level1": "partial: checked against the 20 Level 1 spelling words recoverable from Shauri's Personalised Revision Workbook; the full Level 1 JSON pack was not available in the active files",
+    "level3": "complete: all 100 words unique within Level 3"
+  }
+}

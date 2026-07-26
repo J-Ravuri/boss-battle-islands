@@ -1,0 +1,170 @@
+{
+  "levelId": "level-3",
+  "subject": "Spelling",
+  "sectionId": "E10",
+  "round": 10,
+  "title": "Spelling Island 10",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L3-SP-091",
+      "question": "Which spelling is correct?",
+      "options": [
+        "procedure",
+        "proceedure",
+        "prosedure",
+        "procedur"
+      ],
+      "answer": "procedure",
+      "explanation": "Procedure is spelt pro-ce-dure, without double e.",
+      "word": "procedure",
+      "skill": "frequently-misspelt",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-092",
+      "question": "Which spelling is correct?",
+      "options": [
+        "exerccise",
+        "exercise",
+        "exersise",
+        "excercise"
+      ],
+      "answer": "exercise",
+      "explanation": "Exercise has no c after ex.",
+      "word": "exercise",
+      "skill": "frequently-misspelt",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-093",
+      "question": "Which spelling is correct?",
+      "options": [
+        "biscuites",
+        "biskits",
+        "biscuits",
+        "bisciuts"
+      ],
+      "answer": "biscuits",
+      "explanation": "Biscuits has ui in the final syllable.",
+      "word": "biscuits",
+      "skill": "vowel-order",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-094",
+      "question": "Which spelling is correct?",
+      "options": [
+        "liberry",
+        "library",
+        "libary",
+        "librery"
+      ],
+      "answer": "library",
+      "explanation": "Library keeps the first r.",
+      "word": "library",
+      "skill": "frequently-misspelt",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-095",
+      "question": "Which spelling is correct?",
+      "options": [
+        "embarrassed",
+        "embarresed",
+        "embarrased",
+        "embarassed"
+      ],
+      "answer": "embarrassed",
+      "explanation": "Embarrassed has double r and double s.",
+      "word": "embarrassed",
+      "skill": "double-consonants",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-096",
+      "question": "Which spelling is correct?",
+      "options": [
+        "liesurely",
+        "leisurely",
+        "leasurely",
+        "lesurely"
+      ],
+      "answer": "leisurely",
+      "explanation": "Leisurely contains ei.",
+      "word": "leisurely",
+      "skill": "ie-ei-rule",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-097",
+      "question": "Which spelling is correct?",
+      "options": [
+        "coopperate",
+        "cooperate",
+        "cooparate",
+        "coperate"
+      ],
+      "answer": "cooperate",
+      "explanation": "Cooperate begins co-operate and has two o letters together.",
+      "word": "cooperate",
+      "skill": "double-vowels",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-098",
+      "question": "Which spelling is correct?",
+      "options": [
+        "guarrantee",
+        "garanttee",
+        "guarantee",
+        "guarentee"
+      ],
+      "answer": "guarantee",
+      "explanation": "Guarantee begins guar and ends antee.",
+      "word": "guarantee",
+      "skill": "frequently-misspelt",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-099",
+      "question": "Which spelling is correct?",
+      "options": [
+        "bargaind",
+        "bargained",
+        "barganed",
+        "barginned"
+      ],
+      "answer": "bargained",
+      "explanation": "Bargained keeps ai from bargain.",
+      "word": "bargained",
+      "skill": "vowel-patterns",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-100",
+      "question": "Which spelling is correct?",
+      "options": [
+        "inconveniant",
+        "inconvenient",
+        "inconvinient",
+        "inconveneint"
+      ],
+      "answer": "inconvenient",
+      "explanation": "Inconvenient ends in nient.",
+      "word": "inconvenient",
+      "skill": "ie-ei-rule",
+      "difficulty": 3,
+      "verified": true
+    }
+  ]
+}

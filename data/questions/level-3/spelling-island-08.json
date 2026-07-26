@@ -1,0 +1,170 @@
+{
+  "levelId": "level-3",
+  "subject": "Spelling",
+  "sectionId": "E8",
+  "round": 8,
+  "title": "Spelling Island 8",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L3-SP-071",
+      "question": "Which spelling is correct?",
+      "options": [
+        "recepient",
+        "recipiant",
+        "recipient",
+        "recipeint"
+      ],
+      "answer": "recipient",
+      "explanation": "Recipient begins reci and ends pient.",
+      "word": "recipient",
+      "skill": "ie-ei-rule",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-072",
+      "question": "Which spelling is correct?",
+      "options": [
+        "desparately",
+        "desperately",
+        "despritely",
+        "desperatly"
+      ],
+      "answer": "desperately",
+      "explanation": "Desperately keeps the e in desper.",
+      "word": "desperately",
+      "skill": "frequently-misspelt",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-073",
+      "question": "Which spelling is correct?",
+      "options": [
+        "disastorous",
+        "dissastrous",
+        "disastrous",
+        "disasterous"
+      ],
+      "answer": "disastrous",
+      "explanation": "Disastrous drops the e from disaster before ous.",
+      "word": "disastrous",
+      "skill": "suffix-ending",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-074",
+      "question": "Which spelling is correct?",
+      "options": [
+        "inturrupted",
+        "interrupted",
+        "interrrupted",
+        "interupted"
+      ],
+      "answer": "interrupted",
+      "explanation": "Interrupted has double r.",
+      "word": "interrupted",
+      "skill": "double-consonants",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-075",
+      "question": "Which spelling is correct?",
+      "options": [
+        "committee",
+        "comittee",
+        "committe",
+        "commitee"
+      ],
+      "answer": "committee",
+      "explanation": "Committee has double m, double t and double e.",
+      "word": "committee",
+      "skill": "double-consonants",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-076",
+      "question": "Which spelling is correct?",
+      "options": [
+        "curiosty",
+        "curiosity",
+        "curioscity",
+        "curiousity"
+      ],
+      "answer": "curiosity",
+      "explanation": "Curiosity drops the u from curious before ity.",
+      "word": "curiosity",
+      "skill": "suffix-ending",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-077",
+      "question": "Which spelling is correct?",
+      "options": [
+        "cariage",
+        "carrage",
+        "carryage",
+        "carriage"
+      ],
+      "answer": "carriage",
+      "explanation": "Carriage keeps the i before age.",
+      "word": "carriage",
+      "skill": "frequently-misspelt",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-078",
+      "question": "Which spelling is correct?",
+      "options": [
+        "accompanied",
+        "accompained",
+        "accompanyed",
+        "acompanied"
+      ],
+      "answer": "accompanied",
+      "explanation": "Accompanied begins with double c.",
+      "word": "accompanied",
+      "skill": "double-consonants",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-079",
+      "question": "Which spelling is correct?",
+      "options": [
+        "disapointingly",
+        "dissappointingly",
+        "disappointingly",
+        "disappointly"
+      ],
+      "answer": "disappointingly",
+      "explanation": "Disappointingly keeps double p and includes ingly.",
+      "word": "disappointingly",
+      "skill": "double-consonants",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-080",
+      "question": "Which spelling is correct?",
+      "options": [
+        "exaggerration",
+        "exaggeration",
+        "exageration",
+        "exaguration"
+      ],
+      "answer": "exaggeration",
+      "explanation": "Exaggeration has double g.",
+      "word": "exaggeration",
+      "skill": "double-consonants",
+      "difficulty": 3,
+      "verified": true
+    }
+  ]
+}

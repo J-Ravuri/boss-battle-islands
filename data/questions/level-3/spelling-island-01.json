@@ -1,0 +1,170 @@
+{
+  "levelId": "level-3",
+  "subject": "Spelling",
+  "sectionId": "E1",
+  "round": 1,
+  "title": "Spelling Island 1",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L3-SP-001",
+      "question": "Which spelling is correct?",
+      "options": [
+        "delicous",
+        "delicius",
+        "delitious",
+        "delicious"
+      ],
+      "answer": "delicious",
+      "explanation": "Delicious ends in cious.",
+      "word": "delicious",
+      "skill": "shus-shul-endings",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-002",
+      "question": "Which spelling is correct?",
+      "options": [
+        "fictitious",
+        "fictitiuos",
+        "ficticious",
+        "fictitous"
+      ],
+      "answer": "fictitious",
+      "explanation": "Fictitious ends in titious, not ticious.",
+      "word": "fictitious",
+      "skill": "shus-shul-endings",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-003",
+      "question": "Which spelling is correct?",
+      "options": [
+        "gracious",
+        "graciouse",
+        "gractious",
+        "gratious"
+      ],
+      "answer": "gracious",
+      "explanation": "Gracious is spelt with ci before ous.",
+      "word": "gracious",
+      "skill": "shus-shul-endings",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-004",
+      "question": "Which spelling is correct?",
+      "options": [
+        "substential",
+        "substantial",
+        "substancial",
+        "substantal"
+      ],
+      "answer": "substantial",
+      "explanation": "Substantial ends in tial.",
+      "word": "substantial",
+      "skill": "shus-shul-endings",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-005",
+      "question": "Which spelling is correct?",
+      "options": [
+        "malicous",
+        "malicius",
+        "malicious",
+        "malitious"
+      ],
+      "answer": "malicious",
+      "explanation": "Malicious ends in cious.",
+      "word": "malicious",
+      "skill": "shus-shul-endings",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-006",
+      "question": "Which spelling is correct?",
+      "options": [
+        "ambitous",
+        "ambicious",
+        "ambitious",
+        "ambitiuos"
+      ],
+      "answer": "ambitious",
+      "explanation": "Ambitious ends in tious.",
+      "word": "ambitious",
+      "skill": "shus-shul-endings",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-007",
+      "question": "Which spelling is correct?",
+      "options": [
+        "benificial",
+        "benefitial",
+        "benefecial",
+        "beneficial"
+      ],
+      "answer": "beneficial",
+      "explanation": "Beneficial ends in cial.",
+      "word": "beneficial",
+      "skill": "shus-shul-endings",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-008",
+      "question": "Which spelling is correct?",
+      "options": [
+        "artifitial",
+        "artificial",
+        "arteficial",
+        "artifficial"
+      ],
+      "answer": "artificial",
+      "explanation": "Artificial ends in cial.",
+      "word": "artificial",
+      "skill": "shus-shul-endings",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-009",
+      "question": "Which spelling is correct?",
+      "options": [
+        "permisson",
+        "permision",
+        "premission",
+        "permission"
+      ],
+      "answer": "permission",
+      "explanation": "Permission has double s and ends in sion.",
+      "word": "permission",
+      "skill": "tion-sion-cian-endings",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-010",
+      "question": "Which spelling is correct?",
+      "options": [
+        "complesion",
+        "complecion",
+        "compleation",
+        "completion"
+      ],
+      "answer": "completion",
+      "explanation": "Completion comes from complete and ends in tion.",
+      "word": "completion",
+      "skill": "tion-sion-cian-endings",
+      "difficulty": 2,
+      "verified": true
+    }
+  ]
+}

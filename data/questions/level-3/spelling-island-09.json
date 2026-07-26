@@ -1,0 +1,170 @@
+{
+  "levelId": "level-3",
+  "subject": "Spelling",
+  "sectionId": "E9",
+  "round": 9,
+  "title": "Spelling Island 9",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L3-SP-081",
+      "question": "Which spelling is correct?",
+      "options": [
+        "fourty",
+        "fortey",
+        "fortie",
+        "forty"
+      ],
+      "answer": "forty",
+      "explanation": "Forty has no u.",
+      "word": "forty",
+      "skill": "frequently-misspelt",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-082",
+      "question": "Which spelling is correct?",
+      "options": [
+        "marvellous",
+        "marvelous",
+        "marvallous",
+        "marvellus"
+      ],
+      "answer": "marvellous",
+      "explanation": "British English marvellous has double l.",
+      "word": "marvellous",
+      "skill": "double-consonants",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-083",
+      "question": "Which spelling is correct?",
+      "options": [
+        "definitely",
+        "definately",
+        "definitley",
+        "definitly"
+      ],
+      "answer": "definitely",
+      "explanation": "Definitely comes from definite and contains finite.",
+      "word": "definitely",
+      "skill": "frequently-misspelt",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-084",
+      "question": "Which spelling is correct?",
+      "options": [
+        "harassed",
+        "harased",
+        "harrassed",
+        "harrased"
+      ],
+      "answer": "harassed",
+      "explanation": "Harassed has one r and double s.",
+      "word": "harassed",
+      "skill": "double-consonants",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-085",
+      "question": "Which spelling is correct?",
+      "options": [
+        "separated",
+        "separeted",
+        "seperated",
+        "seperatted"
+      ],
+      "answer": "separated",
+      "explanation": "Separated has a in the middle: separate.",
+      "word": "separated",
+      "skill": "frequently-misspelt",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-086",
+      "question": "Which spelling is correct?",
+      "options": [
+        "twelveth",
+        "twelvth",
+        "twelfth",
+        "twelth"
+      ],
+      "answer": "twelfth",
+      "explanation": "Twelfth keeps the f.",
+      "word": "twelfth",
+      "skill": "frequently-misspelt",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-087",
+      "question": "Which spelling is correct?",
+      "options": [
+        "apparrently",
+        "aparentely",
+        "apparantly",
+        "apparently"
+      ],
+      "answer": "apparently",
+      "explanation": "Apparently comes from apparent and uses e.",
+      "word": "apparently",
+      "skill": "suffix-ance-ence",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-088",
+      "question": "Which spelling is correct?",
+      "options": [
+        "categorise",
+        "categarise",
+        "catagorise",
+        "categorice"
+      ],
+      "answer": "categorise",
+      "explanation": "Categorise keeps the o from category.",
+      "word": "categorise",
+      "skill": "british-spelling",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-089",
+      "question": "Which spelling is correct?",
+      "options": [
+        "sacrificiall",
+        "sacrificial",
+        "sacrifitial",
+        "sacrifical"
+      ],
+      "answer": "sacrificial",
+      "explanation": "Sacrificial ends in cial.",
+      "word": "sacrificial",
+      "skill": "shus-shul-endings",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L3-SP-090",
+      "question": "Which spelling is correct?",
+      "options": [
+        "mischievious",
+        "mischivous",
+        "mischievous",
+        "mischevious"
+      ],
+      "answer": "mischievous",
+      "explanation": "Mischievous has no extra i before ous.",
+      "word": "mischievous",
+      "skill": "ie-ei-rule",
+      "difficulty": 3,
+      "verified": true
+    }
+  ]
+}
