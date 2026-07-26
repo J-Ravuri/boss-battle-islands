@@ -513,6 +513,27 @@
     .hidden { display: none !important; }
     #ui-hub { background: transparent !important; }
 
+    /* Shauri speech-style toasts */
+    .toast-shauri {
+      background: linear-gradient(135deg, #FFF8E1, #FFFFFF) !important;
+      border-left: 5px solid #FFD700 !important;
+      color: #3E2723 !important;
+      font-weight: 600;
+    }
+
+    /* Island selection highlight */
+    .island-selected {
+      animation: islandPulse 1s infinite;
+    }
+    @keyframes islandPulse {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.3); }
+    }
+
+    /* Shauri name tag subtle shadow */
+    .shauri-tag {
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
   </style>
 </head>
 <body>
@@ -1207,69 +1228,284 @@
     const group = new THREE.Group();
     group.name = 'hero';
 
-    // Body
-    const bodyGeo = new THREE.BoxGeometry(0.6, 0.8, 0.4);
-    const bodyMat = new THREE.MeshLambertMaterial({ color: 0x2196F3 });
+    // === BODY ===
+    const bodyGeo = new THREE.BoxGeometry(0.55, 0.75, 0.35);
+    const bodyMat = new THREE.MeshLambertMaterial({ color: 0x1976D2 });
     const body = new THREE.Mesh(bodyGeo, bodyMat);
-    body.position.y = 0.8;
+    body.position.y = 0.85;
     body.castShadow = true;
     group.add(body);
 
-    // Head
-    const headGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-    const headMat = new THREE.MeshLambertMaterial({ color: 0xFFCC80 });
-    const head = new THREE.Mesh(headGeo, headMat);
-    head.position.y = 1.45;
+    // === WHITE COLLAR ===
+    const collarGeo = new THREE.BoxGeometry(0.56, 0.15, 0.36);
+    const collarMat = new THREE.MeshLambertMaterial({ color: 0xFFFFFF });
+    const collar = new THREE.Mesh(collarGeo, collarMat);
+    collar.position.y = 1.15;
+    group.add(collar);
+
+    // === HEAD ===
+    const headGeo = new THREE.BoxGeometry(0.48, 0.48, 0.48);
+    const skinMat = new THREE.MeshLambertMaterial({ color: 0xFFCC80 });
+    const head = new THREE.Mesh(headGeo, skinMat);
+    head.position.y = 1.48;
     head.castShadow = true;
     group.add(head);
 
-    // Eyes
-    const eyeGeo = new THREE.BoxGeometry(0.08, 0.08, 0.05);
-    const eyeMat = new THREE.MeshBasicMaterial({ color: 0x333333 });
+    // === HAIR ===
+    const hairGeo = new THREE.BoxGeometry(0.52, 0.2, 0.52);
+    const hairMat = new THREE.MeshLambertMaterial({ color: 0x3E2723 });
+    const hair = new THREE.Mesh(hairGeo, hairMat);
+    hair.position.y = 1.78;
+    group.add(hair);
+    const tuftGeo = new THREE.BoxGeometry(0.15, 0.15, 0.15);
+    const tuft = new THREE.Mesh(tuftGeo, hairMat);
+    tuft.position.set(0, 1.92, 0.15);
+    group.add(tuft);
+
+    // === EYES ===
+    const eyeGeo = new THREE.BoxGeometry(0.09, 0.09, 0.06);
+    const eyeMat = new THREE.MeshBasicMaterial({ color: 0x222222 });
     const eyeL = new THREE.Mesh(eyeGeo, eyeMat);
-    eyeL.position.set(-0.12, 1.5, 0.23);
+    eyeL.position.set(-0.11, 1.52, 0.24);
     const eyeR = new THREE.Mesh(eyeGeo, eyeMat);
-    eyeR.position.set(0.12, 1.5, 0.23);
+    eyeR.position.set(0.11, 1.52, 0.24);
     group.add(eyeL, eyeR);
 
-    // Backpack
-    const packGeo = new THREE.BoxGeometry(0.5, 0.5, 0.3);
-    const packMat = new THREE.MeshLambertMaterial({ color: 0x8D6E63 });
+    // === EXPRESSION TRACKER ===
+    group.userData.eyeL = eyeL;
+    group.userData.eyeR = eyeR;
+    group.userData.head = head;
+    group.userData.hair = hair;
+
+    // === BACKPACK ===
+    const packGeo = new THREE.BoxGeometry(0.45, 0.55, 0.25);
+    const packMat = new THREE.MeshLambertMaterial({ color: 0xD84315 });
     const pack = new THREE.Mesh(packGeo, packMat);
-    pack.position.set(0, 0.9, -0.35);
+    pack.position.set(0, 0.95, -0.32);
     pack.castShadow = true;
     group.add(pack);
+    const flapGeo = new THREE.BoxGeometry(0.46, 0.15, 0.05);
+    const flapMat = new THREE.MeshLambertMaterial({ color: 0xBF360C });
+    const flap = new THREE.Mesh(flapGeo, flapMat);
+    flap.position.set(0, 1.15, -0.42);
+    group.add(flap);
 
-    // Pencil Sword
-    const pencilGeo = new THREE.CylinderGeometry(0.04, 0.04, 1.2, 8);
+    // === PENCIL SWORD ===
+    const pencilGeo = new THREE.CylinderGeometry(0.04, 0.04, 1.3, 8);
     const pencilMat = new THREE.MeshLambertMaterial({ color: 0xFFEB3B });
     const pencil = new THREE.Mesh(pencilGeo, pencilMat);
-    pencil.rotation.z = -0.3;
-    pencil.position.set(0.45, 1.1, 0.2);
+    pencil.rotation.z = -0.35;
+    pencil.position.set(0.42, 1.15, 0.2);
     group.add(pencil);
-
-    // Tip
-    const tipGeo = new THREE.ConeGeometry(0.04, 0.15, 8);
+    const eraserGeo = new THREE.CylinderGeometry(0.045, 0.045, 0.12, 8);
+    const eraserMat = new THREE.MeshLambertMaterial({ color: 0xEF9A9A });
+    const eraser = new THREE.Mesh(eraserGeo, eraserMat);
+    eraser.rotation.z = -0.35;
+    eraser.position.set(0.35, 1.82, 0.2);
+    group.add(eraser);
+    const tipGeo = new THREE.ConeGeometry(0.04, 0.18, 8);
     const tipMat = new THREE.MeshLambertMaterial({ color: 0xFF9800 });
     const tip = new THREE.Mesh(tipGeo, tipMat);
-    tip.rotation.z = -0.3;
-    tip.position.set(0.52, 1.75, 0.2);
+    tip.rotation.z = -0.35;
+    tip.position.set(0.50, 0.55, 0.2);
     group.add(tip);
 
-    // Legs
-    const legGeo = new THREE.BoxGeometry(0.18, 0.5, 0.18);
-    const legMat = new THREE.MeshLambertMaterial({ color: 0x1565C0 });
+    // === LEGS ===
+    const legGeo = new THREE.BoxGeometry(0.16, 0.5, 0.16);
+    const legMat = new THREE.MeshLambertMaterial({ color: 0x0D47A1 });
     const legL = new THREE.Mesh(legGeo, legMat);
-    legL.position.set(-0.15, 0.25, 0);
+    legL.position.set(-0.14, 0.25, 0);
     const legR = new THREE.Mesh(legGeo, legMat);
-    legR.position.set(0.15, 0.25, 0);
+    legR.position.set(0.14, 0.25, 0);
     group.add(legL, legR);
 
+    // === ARMS ===
+    const armGeo = new THREE.BoxGeometry(0.13, 0.55, 0.13);
+    const armMat = new THREE.MeshLambertMaterial({ color: 0x1976D2 });
+    const armL = new THREE.Mesh(armGeo, armMat);
+    armL.position.set(-0.38, 0.9, 0);
+    const armR = new THREE.Mesh(armGeo, armMat);
+    armR.position.set(0.38, 0.9, 0.1);
+    group.add(armL, armR);
+
+    // === SCARF ===
+    const scarfGeo = new THREE.BoxGeometry(0.4, 0.08, 0.4);
+    const scarfMat = new THREE.MeshLambertMaterial({ color: 0xFFD700 });
+    const scarf = new THREE.Mesh(scarfGeo, scarfMat);
+    scarf.position.set(0, 1.28, 0);
+    group.add(scarf);
+    const tailGeo = new THREE.BoxGeometry(0.12, 0.5, 0.04);
+    const tail = new THREE.Mesh(tailGeo, scarfMat);
+    tail.position.set(0.15, 1.1, -0.25);
+    tail.rotation.x = 0.4;
+    group.add(tail);
+    group.userData.scarfTail = tail;
+
+    // === NAME BILLBOARD ===
+    const canvas = document.createElement('canvas');
+    canvas.width = 256; canvas.height = 64;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    ctx.beginPath(); ctx.roundRect(0,0,256,64,16); ctx.fill();
+    ctx.font = 'bold 32px Segoe UI';
+    ctx.fillStyle = '#1565C0';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('Shauri', 128, 32);
+    const nameTex = new THREE.CanvasTexture(canvas);
+    const nameGeo = new THREE.PlaneGeometry(1.2, 0.3);
+    const nameMat = new THREE.MeshBasicMaterial({ map: nameTex, transparent: true, side: THREE.DoubleSide });
+    const nameTag = new THREE.Mesh(nameGeo, nameMat);
+    nameTag.position.set(0, 2.3, 0);
+    group.add(nameTag);
+    group.userData.nameTag = nameTag;
+
+    // Animation references
     group.userData.legL = legL;
     group.userData.legR = legR;
     group.userData.body = body;
+    group.userData.armL = armL;
+    group.userData.armR = armR;
+    group.userData.pencil = pencil;
+    group.userData.eraser = eraser;
+    group.userData.tip = tip;
 
     return group;
+  }
+
+  function createCompanion() {
+    const group = new THREE.Group();
+    group.name = 'lumi';
+    const coreGeo = new THREE.SphereGeometry(0.15, 16, 16);
+    const coreMat = new THREE.MeshBasicMaterial({ color: 0xFFD700 });
+    const core = new THREE.Mesh(coreGeo, coreMat);
+    group.add(core);
+    const ringGeo = new THREE.TorusGeometry(0.22, 0.03, 8, 16);
+    const ringMat = new THREE.MeshBasicMaterial({ color: 0xFFEB3B, transparent: true, opacity: 0.7 });
+    const ring = new THREE.Mesh(ringGeo, ringMat);
+    ring.rotation.x = Math.PI / 2;
+    group.add(ring);
+    const light = new THREE.PointLight(0xFFD700, 0.6, 4);
+    group.add(light);
+    group.userData.ring = ring;
+    group.userData.core = core;
+    return group;
+  }
+
+  function setShauriMood(mood) {
+    if (!hero) return;
+    const { eyeL, eyeR, head, scarfTail, armR, lumi } = hero.userData;
+    head.rotation.set(0,0,0);
+    if (armR) armR.rotation.set(0,0,0);
+    if (lumi) lumi.userData.ring.material.color.setHex(0xFFEB3B);
+    switch(mood) {
+      case 'happy':
+        head.rotation.z = 0.1;
+        if (armR) armR.rotation.z = -0.8;
+        if (lumi) lumi.userData.ring.material.color.setHex(0x00E676);
+        break;
+      case 'sad':
+        head.rotation.x = 0.25;
+        eyeL.scale.y = 0.5; eyeR.scale.y = 0.5;
+        if (lumi) lumi.userData.ring.material.color.setHex(0xFF1744);
+        setTimeout(() => { eyeL.scale.y = 1; eyeR.scale.y = 1; }, 800);
+        break;
+      case 'determined':
+        if (armR) armR.rotation.x = -0.5;
+        head.rotation.y = 0.15;
+        break;
+      case 'victory':
+        if (armR) armR.rotation.z = -2.5;
+        head.rotation.z = -0.15;
+        if (lumi) {
+          lumi.userData.ring.material.color.setHex(0x00B0FF);
+          lumi.scale.setScalar(1.5);
+          setTimeout(() => lumi.scale.setScalar(1), 1000);
+        }
+        break;
+    }
+  }
+
+  const SHAURI_LINES = {
+    welcome: [
+      "Let's explore the islands! 🏝️",
+      "I'm ready to learn! ✏️",
+      "Which boss should we challenge?"
+    ],
+    battleStart: [
+      "Brain power, activate! 🧠",
+      "I've got my Mighty Pencil ready!",
+      "Let's solve this together!"
+    ],
+    correct: [
+      "Yes! Nailed it! 🎉",
+      "Another one down!",
+      "I'm on fire! 🔥",
+      "Knowledge is power!"
+    ],
+    wrong: [
+      "Oops... I'll remember that.",
+      "Mistakes help us grow!",
+      "Let's try again, smarter."
+    ],
+    victory: [
+      "We did it! High five! ✋",
+      "Boss defeated! Onward! 🏆",
+      "I'm getting stronger!"
+    ],
+    idle: [
+      "The sky is so pretty...",
+      "I wonder what's on the next island?",
+      "Study hard, play hard!"
+    ]
+  };
+  let shauriBubble = null;
+  function showShauriBubble(category, duration) {
+    duration = duration || 2000;
+    if (!hero || !scene) return;
+    const lines = SHAURI_LINES[category];
+    if (!lines) return;
+    const text = lines[Math.floor(Math.random() * lines.length)];
+    if (shauriBubble) scene.remove(shauriBubble);
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const fontSize = 28;
+    ctx.font = 'bold ' + fontSize + 'px Segoe UI';
+    const metrics = ctx.measureText(text);
+    const w = Math.min(512, metrics.width + 40);
+    const h = 80;
+    canvas.width = w; canvas.height = h;
+    ctx.fillStyle = 'rgba(255,255,255,0.95)';
+    ctx.beginPath();
+    ctx.roundRect(0,0,w,h,20);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(w/2 - 10, h);
+    ctx.lineTo(w/2, h + 15);
+    ctx.lineTo(w/2 + 10, h);
+    ctx.fill();
+    ctx.fillStyle = '#37474F';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(text, w/2, h/2 - 2);
+    const tex = new THREE.CanvasTexture(canvas);
+    const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, side: THREE.DoubleSide });
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(w/120, h/120), mat);
+    mesh.position.set(0, 2.8, 0);
+    hero.add(mesh);
+    shauriBubble = mesh;
+    let age = 0;
+    const floatInt = setInterval(function() {
+      age += 50;
+      mesh.position.y = 2.8 + Math.sin(age * 0.005) * 0.05;
+      if (age >= duration) {
+        clearInterval(floatInt);
+        if (shauriBubble === mesh) {
+          hero.remove(mesh);
+          shauriBubble = null;
+        }
+      }
+    }, 50);
   }
 
   // Create an island mesh with theme-appropriate decorations
@@ -1569,6 +1805,10 @@
     hero = createHero();
     hero.position.set(0, 0, 0);
     hubGroup.add(hero);
+      const lumi = createCompanion();
+      lumi.position.set(0.8, 2.2, 0.3);
+      hero.add(lumi);
+      hero.userData.lumi = lumi;
 
     // Build each section island
     GAME_DATA.sections.forEach((section, idx) => {
@@ -1652,6 +1892,7 @@
 
   function updateHub(dt) {
     if (!hero || state.screen !== 'hub') return;
+    if (!hero.userData.lastStepPos) hero.userData.lastStepPos = hero.position.clone();
 
     // WASD / Arrow movement
     const move = new THREE.Vector3();
@@ -1667,6 +1908,10 @@
       const camYaw = Math.atan2(camera.position.x - hero.position.x, camera.position.z - hero.position.z);
       move.applyAxisAngle(new THREE.Vector3(0, 1, 0), camYaw + Math.PI);
       hero.position.add(move);
+      if (hero.position.distanceTo(hero.userData.lastStepPos) > 1.5) {
+        spawnFootstep(hero.position);
+        hero.userData.lastStepPos.copy(hero.position);
+      }
       // Animate legs
       const walkCycle = Math.sin(Date.now() * 0.01) * 0.3;
       hero.userData.legL.rotation.x = walkCycle;
@@ -1684,6 +1929,10 @@
       if (dir.length() > 0.2) {
         dir.normalize().multiplyScalar(CONFIG.heroSpeed * 1.2);
         hero.position.add(dir);
+        if (hero.position.distanceTo(hero.userData.lastStepPos) > 1.5) {
+          spawnFootstep(hero.position);
+          hero.userData.lastStepPos.copy(hero.position);
+        }
         const walkCycle = Math.sin(Date.now() * 0.01) * 0.3;
         hero.userData.legL.rotation.x = walkCycle;
         hero.userData.legR.rotation.x = -walkCycle;
@@ -1720,6 +1969,14 @@
         shapes.userData.pyramid.scale.setScalar(0.8 + Math.sin(t * 2 + 4) * 0.2);
       }
     }
+
+    // Islands gently bounce when Shauri is near
+    Object.values(islands).forEach(function(island) {
+      const dist = hero.position.distanceTo(island.mesh.position);
+      if (dist < 5 && !state.completed[island.sectionId]) {
+        island.mesh.position.y += Math.sin(Date.now() * 0.008) * 0.003;
+      }
+    });
   }
 
   function onPointerMove(e) {
@@ -1852,6 +2109,8 @@
       boss.rotation.y = Math.PI; // face hero
     }
 
+    setShauriMood('determined');
+    showShauriBubble('battleStart', 2000);
     setTimeout(() => {
       isTransitioning = false;
       nextBattleQuestion();
@@ -1936,6 +2195,8 @@
       updateBossBar();
       updateComboMeter();
       animateBossHit();
+      setShauriMood('happy');
+      showShauriBubble('correct', 1500);
       const comboMilestone = state.streak > 0 && state.streak % 3 === 0;
       playSound(comboMilestone ? 'combo' : 'correct');
       if (comboMilestone) showToast(`🔥 ${state.streak} answer streak! XP multiplier up!`, 'combo');
@@ -1953,6 +2214,8 @@
         b.retryQueue.push(q);
       }
       animateBossCounter();
+      setShauriMood('sad');
+      showShauriBubble('wrong', 2000);
       playSound('wrong');
       showExplanation(q.explanation, false);
       // Wait for manual continue on wrong
@@ -2049,6 +2312,19 @@
     }
   }
 
+  function spawnFootstep(pos) {
+    const geo = new THREE.BoxGeometry(0.1, 0.05, 0.1);
+    const mat = new THREE.MeshBasicMaterial({ color: 0xFFFFFF, transparent: true, opacity: 0.6 });
+    for (let i = 0; i < 4; i++) {
+      const p = new THREE.Mesh(geo, mat);
+      p.position.copy(pos);
+      p.position.x += (Math.random() - 0.5) * 0.3;
+      p.position.z += (Math.random() - 0.5) * 0.3;
+      p.userData.life = 1.0;
+      scene.add(p);
+      particles.push(p);
+    }
+  }
   function updateParticles(dt) {
     for (let i = particles.length - 1; i >= 0; i--) {
       const p = particles[i];
@@ -2080,6 +2356,7 @@
     state.xp += earnedXP;
     const newLevel = Math.floor(state.xp / CONFIG.levelThreshold) + 1;
     const levelUp = newLevel > state.level;
+    if (levelUp) { shauriLevelUp(); }
     state.level = newLevel;
 
     // Record completion
@@ -2105,6 +2382,8 @@
     document.getElementById('victory-rank').textContent =
       '⭐'.repeat(stars) + '☆'.repeat(3 - stars) + (stars === 3 ? ' Perfect!' : stars === 2 ? ' Great run!' : ' Boss beaten!');
 
+    setShauriMood('victory');
+    showShauriBubble('victory', 3000);
     // Confetti
     startConfetti();
     playSound('victory');
@@ -2132,6 +2411,23 @@
     updateHUD();
   }
 
+  function shauriLevelUp() {
+    showShauriBubble('victory', 3000);
+    setShauriMood('victory');
+    spawnParticles(hero.position, 0xFFD700, 30);
+    const originalFov = camera.fov;
+    let zoomT = 0;
+    const zoomInt = setInterval(function() {
+      zoomT += 0.05;
+      camera.fov = originalFov - Math.sin(zoomT) * 5;
+      camera.updateProjectionMatrix();
+      if (zoomT >= Math.PI) {
+        clearInterval(zoomInt);
+        camera.fov = originalFov;
+        camera.updateProjectionMatrix();
+      }
+    }, 16);
+  }
   function onVictoryContinue() {
     stopConfetti();
     showScreen('hub');
@@ -2286,6 +2582,7 @@
       updateLoadingBar(80);
       showScreen('hub');
       if (hero) {
+        showShauriBubble('welcome', 2500);
         const targetPos = hero.position.clone().add(CONFIG.camOffsetHub);
         camera.position.copy(targetPos);
         camera.lookAt(hero.position.clone().add(new THREE.Vector3(0, 1, 0)));
@@ -2387,10 +2684,31 @@
     if (state.screen === 'hub') {
       updateHub(dt);
     } else if (state.screen === 'battle') {
-      // Gentle idle animations in battle
+      // Enhanced idle animations in battle
       if (hero) {
-        hero.userData.legL.rotation.x = Math.sin(Date.now() * 0.003) * 0.05;
-        hero.userData.legR.rotation.x = Math.sin(Date.now() * 0.003 + Math.PI) * 0.05;
+        const t = Date.now() * 0.003;
+        hero.userData.legL.rotation.x = Math.sin(t) * 0.05;
+        hero.userData.legR.rotation.x = Math.sin(t + Math.PI) * 0.05;
+        // Breathing
+        hero.userData.body.scale.y = 1 + Math.sin(t * 2) * 0.02;
+        hero.userData.head.position.y = 1.48 + Math.sin(t * 2) * 0.01;
+        // Scarf flutter
+        if (hero.userData.scarfTail) {
+          hero.userData.scarfTail.rotation.z = Math.sin(t * 3) * 0.15;
+          hero.userData.scarfTail.rotation.x = 0.4 + Math.sin(t * 2.5) * 0.1;
+        }
+        // Lumi orbit
+        if (hero.userData.lumi) {
+          const lumi = hero.userData.lumi;
+          lumi.position.x = 0.8 + Math.cos(t * 0.8) * 0.3;
+          lumi.position.y = 2.2 + Math.sin(t * 1.2) * 0.15;
+          lumi.userData.ring.rotation.x += 0.02;
+          lumi.userData.ring.rotation.y += 0.03;
+        }
+        // Name tag always face camera
+        if (hero.userData.nameTag) {
+          hero.userData.nameTag.lookAt(camera.position);
+        }
       }
       const boss = state.battle ? bosses[state.battle.sectionId] : null;
       if (boss && boss.visible) {
