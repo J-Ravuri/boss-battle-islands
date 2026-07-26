@@ -1,0 +1,170 @@
+{
+  "levelId": "level-2",
+  "subject": "Spelling",
+  "sectionId": "E4",
+  "round": 4,
+  "title": "Spelling Island 4",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L2-SP-031",
+      "question": "Which spelling is correct?",
+      "options": [
+        "absorped",
+        "absorbd",
+        "absorbed",
+        "abzorbed"
+      ],
+      "answer": "absorbed",
+      "explanation": "Absorbed comes from absorb, so the b remains before ed.",
+      "word": "absorbed",
+      "skill": "suffix-ed",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-032",
+      "question": "Which spelling is correct?",
+      "options": [
+        "miserible",
+        "misserable",
+        "mizerable",
+        "miserable"
+      ],
+      "answer": "miserable",
+      "explanation": "Miserable ends in able and has one s.",
+      "word": "miserable",
+      "skill": "suffix-able",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-033",
+      "question": "Which spelling means \"people who inherit property or a title\"?",
+      "options": [
+        "heirs",
+        "hairs",
+        "airs",
+        "hiers"
+      ],
+      "answer": "heirs",
+      "explanation": "Heirs are people who inherit property or a title; the h is silent.",
+      "word": "heirs",
+      "skill": "homophones",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-034",
+      "question": "Which spelling is correct?",
+      "options": [
+        "necter",
+        "nectar",
+        "nektar",
+        "nectur"
+      ],
+      "answer": "nectar",
+      "explanation": "Nectar ends in ar, not er.",
+      "word": "nectar",
+      "skill": "unstressed-vowels",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-035",
+      "question": "Which spelling is correct?",
+      "options": [
+        "enviromental",
+        "environemental",
+        "environmental",
+        "environmentle"
+      ],
+      "answer": "environmental",
+      "explanation": "Environmental keeps the n from environment before al.",
+      "word": "environmental",
+      "skill": "missing-letters",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-036",
+      "question": "Which spelling is correct?",
+      "options": [
+        "pianoist",
+        "pianest",
+        "pianisst",
+        "pianist"
+      ],
+      "answer": "pianist",
+      "explanation": "A person who plays the piano is a pianist, without an extra o.",
+      "word": "pianist",
+      "skill": "word-formation",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-037",
+      "question": "Which spelling is correct?",
+      "options": [
+        "literature",
+        "litrature",
+        "literiture",
+        "literachure"
+      ],
+      "answer": "literature",
+      "explanation": "Literature keeps the full liter and ends in ature.",
+      "word": "literature",
+      "skill": "tricky-vowels",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-038",
+      "question": "Which spelling is correct?",
+      "options": [
+        "rehabillitate",
+        "rehabilitate",
+        "rehabilatate",
+        "rehabiletate"
+      ],
+      "answer": "rehabilitate",
+      "explanation": "Rehabilitate has one l in the middle: re-ha-bi-li-tate.",
+      "word": "rehabilitate",
+      "skill": "double-consonants",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-039",
+      "question": "Which spelling is correct?",
+      "options": [
+        "polution",
+        "pollucion",
+        "pollution",
+        "polluttion"
+      ],
+      "answer": "pollution",
+      "explanation": "Pollution has double l and comes from pollute.",
+      "word": "pollution",
+      "skill": "double-consonants",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-040",
+      "question": "Which spelling is correct?",
+      "options": [
+        "entreprenuer",
+        "enterpreneur",
+        "entrepreneuer",
+        "entrepreneur"
+      ],
+      "answer": "entrepreneur",
+      "explanation": "Entrepreneur follows the tricky sequence entre-pre-neur.",
+      "word": "entrepreneur",
+      "skill": "french-origin",
+      "difficulty": 3,
+      "verified": true
+    }
+  ]
+}

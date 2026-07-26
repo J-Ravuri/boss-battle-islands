@@ -1,0 +1,170 @@
+{
+  "levelId": "level-2",
+  "subject": "Spelling",
+  "sectionId": "E10",
+  "round": 10,
+  "title": "Spelling Island 10",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L2-SP-091",
+      "question": "Which spelling is correct?",
+      "options": [
+        "happyly",
+        "happiley",
+        "happily",
+        "hapily"
+      ],
+      "answer": "happily",
+      "explanation": "Happy changes y to i before ly.",
+      "word": "happily",
+      "skill": "y-to-i-rule",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-092",
+      "question": "Which spelling is correct?",
+      "options": [
+        "pennyless",
+        "peniless",
+        "pennyles",
+        "penniless"
+      ],
+      "answer": "penniless",
+      "explanation": "Penny changes y to i before less, giving penniless.",
+      "word": "penniless",
+      "skill": "y-to-i-rule",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-093",
+      "question": "Which spelling is correct?",
+      "options": [
+        "plainness",
+        "plainess",
+        "playnness",
+        "plainnes"
+      ],
+      "answer": "plainness",
+      "explanation": "Plainness keeps both n letters where plain and ness join.",
+      "word": "plainness",
+      "skill": "suffix-ness",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-094",
+      "question": "Which spelling is correct?",
+      "options": [
+        "funnyest",
+        "funniest",
+        "funiest",
+        "funniestt"
+      ],
+      "answer": "funniest",
+      "explanation": "Funny changes y to i before est and doubles n.",
+      "word": "funniest",
+      "skill": "y-to-i-rule",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-095",
+      "question": "Which spelling is correct?",
+      "options": [
+        "witchs",
+        "witchies",
+        "witches",
+        "wiches"
+      ],
+      "answer": "witches",
+      "explanation": "Words ending in ch usually add es: witches.",
+      "word": "witches",
+      "skill": "plural-es",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-096",
+      "question": "Which spelling is correct?",
+      "options": [
+        "merryment",
+        "meriment",
+        "merrymant",
+        "merriment"
+      ],
+      "answer": "merriment",
+      "explanation": "Merry changes y to i before ment.",
+      "word": "merriment",
+      "skill": "y-to-i-rule",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-097",
+      "question": "Which spelling is correct?",
+      "options": [
+        "conscientious",
+        "consciencious",
+        "conscientous",
+        "consientious"
+      ],
+      "answer": "conscientious",
+      "explanation": "Conscientious contains scient and ends in tious.",
+      "word": "conscientious",
+      "skill": "shus-endings",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-098",
+      "question": "Which spelling is correct?",
+      "options": [
+        "essensial",
+        "essential",
+        "esential",
+        "essentiall"
+      ],
+      "answer": "essential",
+      "explanation": "Essential has double s and ends in tial.",
+      "word": "essential",
+      "skill": "shul-endings",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-099",
+      "question": "Which spelling is correct?",
+      "options": [
+        "suspitious",
+        "suspiscious",
+        "suspicious",
+        "suspicous"
+      ],
+      "answer": "suspicious",
+      "explanation": "Suspicious ends in cious.",
+      "word": "suspicious",
+      "skill": "shus-endings",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-100",
+      "question": "Which spelling is correct?",
+      "options": [
+        "comercial",
+        "commersial",
+        "commerciall",
+        "commercial"
+      ],
+      "answer": "commercial",
+      "explanation": "Commercial has double m and ends in cial.",
+      "word": "commercial",
+      "skill": "shul-endings",
+      "difficulty": 2,
+      "verified": true
+    }
+  ]
+}

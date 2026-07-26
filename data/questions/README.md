@@ -1,74 +1,33 @@
-# Drop-in question packs
+# Question levels
 
-All game questions live in this folder. The ten registered island packs contain
-the current 100 questions; `index.html` now contains only island metadata.
-Files are loaded in the order shown in `manifest.json` when the game runs over
-HTTP.
+Questions are now separated into content levels:
 
-## Current packs
+- `level-1/` — the backed-up original 100 English and Maths questions.
+- `level-2/` — the drop-in location and format for 100 spelling questions.
+- `templates/` — the original general-purpose island-pack example.
 
-- `e1-vocabulary.json`
-- `e2-retrieval-evidence.json`
-- `e3-inference.json`
-- `e4-character.json`
-- `e5-summary-purpose.json`
-- `m1-word-problems-data.json`
-- `m2-fractions-probability.json`
-- `m3-percentages.json`
-- `m4-time-timetables.json`
-- `m5-measurement.json`
+The root `manifest.json` selects the active content level. Level 1 stays active
+until the complete Level 2 spelling set is ready.
 
-## Add a pack
+## Folder structure
 
-1. Copy `example-pack.json` and give the copy a descriptive filename, such as
-   `english-vocabulary-02.json`.
-2. Set `sectionId` to one of the existing islands:
-   `E1`, `E2`, `E3`, `E4`, `E5`, `M1`, `M2`, `M3`, `M4`, or `M5`.
-3. Keep `"mode": "append"` to add questions to the registered island pack.
-   Use `"replace"` only when that file should become the complete question set
-   for its section. Manifest order matters when combining packs.
-4. Give every question a unique `id`.
-5. Add the filename to `manifest.json`.
-6. Refresh the game at `http://localhost:8765/`.
-
-Example manifest:
-
-```json
-{
-  "files": [
-    "english-vocabulary-02.json",
-    "maths-fractions-02.json"
-  ]
-}
+```text
+data/questions/
+├── manifest.json
+├── level-1/
+│   ├── manifest.json
+│   └── 10 JSON packs containing 100 existing questions
+├── level-2/
+│   ├── README.md
+│   ├── manifest.json
+│   └── spelling-island-template.json
+└── templates/
+    └── example-pack.json
 ```
 
-## Question format
+For the exact Level 2 filenames, section IDs, ID ranges, and JSON format, read
+`level-2/README.md`.
 
-```json
-{
-  "sectionId": "M2",
-  "mode": "append",
-  "questions": [
-    {
-      "id": "M2-CUSTOM-001",
-      "question": "What is one half of 18?",
-      "options": ["6", "8", "9", "12"],
-      "answer": "9",
-      "explanation": "One half means divide by two: 18 ÷ 2 = 9."
-    }
-  ]
-}
-```
-
-Each question must contain:
-
-- `id`: unique text identifier.
-- `question`: the prompt.
-- `options`: exactly four answer strings.
-- `answer`: must exactly match one item in `options`.
-- `explanation`: short teaching feedback.
-
-The loader skips missing/duplicate IDs and unknown section IDs without
-crashing the game. Check the browser console for `[QUESTIONS]` messages when
-validating a new pack. Question packs require `http://localhost` or another web
-server; browsers do not allow this loading workflow from `file://` pages.
+The loader validates unique IDs, four options, and matching answers. Question
+files must be served over HTTP, such as `http://localhost:8765/`; browsers
+cannot load JSON packs reliably from a `file://` page.

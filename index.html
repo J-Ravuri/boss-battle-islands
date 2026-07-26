@@ -862,14 +862,24 @@
   let musicStep = 0;
   let saveToastTimer = null;
   let helpReturnScreen = 'title';
+  // This is a curriculum/content level, separate from Shauri's XP level.
+  // It is set by data/questions/manifest.json before saved progress is read.
+  let activeContentLevel = 'level-1';
 
   // ================================================================
   //  SAVE SYSTEM
   // ================================================================
   const SAVE_KEY = 'bossBattleIslands_save_v1';
+  function getSaveKey() {
+    // Preserve existing Level 1 saves, while keeping future spelling
+    // progress independent from the original English/Maths adventure.
+    return activeContentLevel === 'level-1'
+      ? SAVE_KEY
+      : `${SAVE_KEY}_${activeContentLevel}`;
+  }
   function loadSave() {
     try {
-      const raw = localStorage.getItem(SAVE_KEY);
+      const raw = localStorage.getItem(getSaveKey());
       if (raw) {
         const data = JSON.parse(raw);
         state.xp = data.xp || 0;
@@ -881,7 +891,7 @@
   }
   function saveGame() {
     try {
-      localStorage.setItem(SAVE_KEY, JSON.stringify({
+      localStorage.setItem(getSaveKey(), JSON.stringify({
         xp: state.xp,
         level: state.level,
         bestStreak: state.bestStreak,
@@ -1140,7 +1150,7 @@
     showToast('✅ Progress saved', 'save');
   }
   function clearSave() {
-    localStorage.removeItem(SAVE_KEY);
+    localStorage.removeItem(getSaveKey());
     state.xp = 0; state.level = 1; state.streak = 0; state.bestStreak = 0; state.completed = {};
     updateHUD();
   }
@@ -3440,9 +3450,15 @@
   // ================================================================
   //  DROP-IN QUESTION PACK LOADER
   // ================================================================
+  function isSafeQuestionJsonPath(path) {
+    if (typeof path !== 'string' || !path.toLowerCase().endsWith('.json')) return false;
+    if (path.startsWith('/') || path.split('/').includes('..')) return false;
+    return /^[a-z0-9_./-]+$/i.test(path);
+  }
+
   async function loadExternalQuestionPacks() {
     // fetch() cannot reliably read sibling files from file:// pages. The
-    // built-in 100 questions remain available in that case.
+    // question-level folders require an HTTP server.
     if (window.location.protocol === 'file:') {
       console.warn('[QUESTIONS] External packs require localhost or another web server.');
       return 0;
@@ -3455,25 +3471,47 @@
         console.warn('[QUESTIONS] No manifest found; using built-in questions.');
         return 0;
       }
-      const manifest = await manifestResponse.json();
-      const files = Array.isArray(manifest.files) ? manifest.files : [];
+      const rootManifest = await manifestResponse.json();
+      let packManifest = rootManifest;
+      let packBasePath = '';
+
+      // New format: the root manifest selects a curriculum level and points
+      // at that level's own manifest. The old flat "files" format remains
+      // supported for backwards compatibility.
+      if (rootManifest.levels && rootManifest.activeLevel) {
+        const selectedLevel = rootManifest.levels[rootManifest.activeLevel];
+        if (!selectedLevel || !isSafeQuestionJsonPath(selectedLevel.manifest)) {
+          throw new Error(`Invalid active question level "${rootManifest.activeLevel}".`);
+        }
+        activeContentLevel = rootManifest.activeLevel;
+        const levelManifestPath = selectedLevel.manifest;
+        const levelResponse = await fetch('data/questions/' + levelManifestPath, { cache: 'no-store' });
+        if (!levelResponse.ok) throw new Error(`Could not load ${levelManifestPath}: HTTP ${levelResponse.status}`);
+        packManifest = await levelResponse.json();
+        const slash = levelManifestPath.lastIndexOf('/');
+        packBasePath = slash >= 0 ? levelManifestPath.slice(0, slash + 1) : '';
+        console.log(`[QUESTIONS] Active content: ${selectedLevel.title || activeContentLevel}.`);
+      }
+
+      const files = Array.isArray(packManifest.files) ? packManifest.files : [];
 
       for (const filename of files) {
-        if (typeof filename !== 'string' || !filename.toLowerCase().endsWith('.json')) {
+        if (!isSafeQuestionJsonPath(filename)) {
           console.warn('[QUESTIONS] Skipping invalid manifest entry:', filename);
           continue;
         }
+        const questionPath = packBasePath + filename;
         try {
-          const response = await fetch('data/questions/' + filename, { cache: 'no-store' });
+          const response = await fetch('data/questions/' + questionPath, { cache: 'no-store' });
           if (!response.ok) throw new Error('HTTP ' + response.status);
           const pack = await response.json();
           const target = GAME_DATA.sections.find(section => section.sectionId === pack.sectionId);
           if (!target) {
-            console.warn(`[QUESTIONS] ${filename}: unknown sectionId "${pack.sectionId}".`);
+            console.warn(`[QUESTIONS] ${questionPath}: unknown sectionId "${pack.sectionId}".`);
             continue;
           }
           if (!Array.isArray(pack.questions)) {
-            console.warn(`[QUESTIONS] ${filename}: questions must be an array.`);
+            console.warn(`[QUESTIONS] ${questionPath}: questions must be an array.`);
             continue;
           }
 
@@ -3481,20 +3519,26 @@
           const existingIds = new Set(target.questions.map(question => question.id));
           pack.questions.forEach(question => {
             if (!question || !question.id || existingIds.has(question.id)) {
-              console.warn(`[QUESTIONS] ${filename}: skipped missing or duplicate question id.`);
+              console.warn(`[QUESTIONS] ${questionPath}: skipped missing or duplicate question id.`);
               return;
             }
             target.questions.push(question);
             existingIds.add(question.id);
             loadedCount++;
           });
-          console.log(`[QUESTIONS] Loaded ${filename} into ${pack.sectionId}.`);
+          console.log(`[QUESTIONS] Loaded ${questionPath} into ${pack.sectionId}.`);
         } catch(e) {
-          console.warn(`[QUESTIONS] Could not load ${filename}:`, e);
+          console.warn(`[QUESTIONS] Could not load ${questionPath}:`, e);
         }
       }
+      if (Number.isInteger(packManifest.expectedQuestions) && loadedCount !== packManifest.expectedQuestions) {
+        console.warn(
+          `[QUESTIONS] ${activeContentLevel} expected ${packManifest.expectedQuestions} questions, ` +
+          `but loaded ${loadedCount}.`
+        );
+      }
     } catch(e) {
-      console.warn('[QUESTIONS] Manifest could not be read; using built-in questions.', e);
+      console.warn('[QUESTIONS] Manifest could not be read; no external questions were loaded.', e);
     }
     return loadedCount;
   }

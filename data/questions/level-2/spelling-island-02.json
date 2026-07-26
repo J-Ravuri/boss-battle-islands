@@ -1,0 +1,170 @@
+{
+  "levelId": "level-2",
+  "subject": "Spelling",
+  "sectionId": "E2",
+  "round": 2,
+  "title": "Spelling Island 2",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L2-SP-011",
+      "question": "Which spelling is correct?",
+      "options": [
+        "connatations",
+        "conotations",
+        "connotations",
+        "connotacions"
+      ],
+      "answer": "connotations",
+      "explanation": "Connotations has double n and ends in tions.",
+      "word": "connotations",
+      "skill": "double-consonants",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-012",
+      "question": "Which spelling is correct?",
+      "options": [
+        "implimentation",
+        "implementasion",
+        "implemantation",
+        "implementation"
+      ],
+      "answer": "implementation",
+      "explanation": "Implementation comes from implement, so it keeps implemen before tation.",
+      "word": "implementation",
+      "skill": "suffix-ation",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-013",
+      "question": "Which spelling is correct?",
+      "options": [
+        "inaugural",
+        "inaugral",
+        "inaugurel",
+        "inogural"
+      ],
+      "answer": "inaugural",
+      "explanation": "Inaugural keeps the full augur pattern.",
+      "word": "inaugural",
+      "skill": "tricky-vowels",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-014",
+      "question": "Which spelling is correct?",
+      "options": [
+        "hypocondria",
+        "hypochondria",
+        "hypochondrea",
+        "hipochondria"
+      ],
+      "answer": "hypochondria",
+      "explanation": "Hypochondria contains the Greek-root spelling hypo and chondr.",
+      "word": "hypochondria",
+      "skill": "greek-roots",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-015",
+      "question": "Which spelling is correct?",
+      "options": [
+        "orangatans",
+        "orangoutans",
+        "orangutans",
+        "orangutens"
+      ],
+      "answer": "orangutans",
+      "explanation": "Orangutans has no extra g after oran and keeps utan.",
+      "word": "orangutans",
+      "skill": "tricky-vowels",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-016",
+      "question": "Which spelling is correct?",
+      "options": [
+        "asperations",
+        "aspiracions",
+        "aspirashons",
+        "aspirations"
+      ],
+      "answer": "aspirations",
+      "explanation": "Aspirations comes from aspire, so the middle vowel is i.",
+      "word": "aspirations",
+      "skill": "suffix-ation",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-017",
+      "question": "Which spelling is correct?",
+      "options": [
+        "fortuitous",
+        "fortuitious",
+        "fortutous",
+        "fortuittous"
+      ],
+      "answer": "fortuitous",
+      "explanation": "Fortuitous ends in u-o-u-s without an extra i.",
+      "word": "fortuitous",
+      "skill": "suffix-ous",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-018",
+      "question": "Which spelling is correct?",
+      "options": [
+        "improprietry",
+        "impropriety",
+        "impropriaty",
+        "impropreity"
+      ],
+      "answer": "impropriety",
+      "explanation": "Impropriety keeps the sequence proprie before ty.",
+      "word": "impropriety",
+      "skill": "tricky-vowels",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-019",
+      "question": "Which spelling is correct?",
+      "options": [
+        "contary",
+        "contrery",
+        "contrary",
+        "contrairy"
+      ],
+      "answer": "contrary",
+      "explanation": "Contrary keeps the first r after cont.",
+      "word": "contrary",
+      "skill": "missing-letters",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-020",
+      "question": "Which British English spelling is correct for \"authorised\"?",
+      "options": [
+        "licenced",
+        "lisensed",
+        "licenssed",
+        "licensed"
+      ],
+      "answer": "licensed",
+      "explanation": "In British English, licensed is the verb or adjective form with s.",
+      "word": "licensed",
+      "skill": "british-english",
+      "difficulty": 2,
+      "verified": true
+    }
+  ]
+}

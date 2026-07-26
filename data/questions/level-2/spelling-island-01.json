@@ -1,0 +1,170 @@
+{
+  "levelId": "level-2",
+  "subject": "Spelling",
+  "sectionId": "E1",
+  "round": 1,
+  "title": "Spelling Island 1",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L2-SP-001",
+      "question": "Which spelling is correct?",
+      "options": [
+        "embroidered",
+        "embroidred",
+        "embroiderd",
+        "embroydered"
+      ],
+      "answer": "embroidered",
+      "explanation": "Embroidered keeps the full ending: embroider plus ed.",
+      "word": "embroidered",
+      "skill": "suffix-ending",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-002",
+      "question": "Which spelling is correct?",
+      "options": [
+        "peaked",
+        "piqued",
+        "piquied",
+        "piquedh"
+      ],
+      "answer": "piqued",
+      "explanation": "Piqued is the correct unusual spelling; the final e stays before d.",
+      "word": "piqued",
+      "skill": "unusual-spelling",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-003",
+      "question": "Which spelling is correct?",
+      "options": [
+        "celabration",
+        "celeberation",
+        "celebration",
+        "celebrasion"
+      ],
+      "answer": "celebration",
+      "explanation": "Celebration comes from celebrate and ends in tion.",
+      "word": "celebration",
+      "skill": "suffix-tion",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-004",
+      "question": "Which spelling is correct?",
+      "options": [
+        "acomplice",
+        "accomplicee",
+        "accomplise",
+        "accomplice"
+      ],
+      "answer": "accomplice",
+      "explanation": "Accomplice begins with double c: ac-com-plice.",
+      "word": "accomplice",
+      "skill": "double-consonants",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-005",
+      "question": "Which spelling is correct?",
+      "options": [
+        "paraphernalia",
+        "paraphenalia",
+        "paraphernallia",
+        "paraphernalea"
+      ],
+      "answer": "paraphernalia",
+      "explanation": "Paraphernalia contains phern and ends in alia.",
+      "word": "paraphernalia",
+      "skill": "tricky-vowels",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-006",
+      "question": "Which spelling is correct?",
+      "options": [
+        "pseudonymn",
+        "pseudonym",
+        "seudonym",
+        "pseudonim"
+      ],
+      "answer": "pseudonym",
+      "explanation": "Pseudonym begins with silent p and has no extra n at the end.",
+      "word": "pseudonym",
+      "skill": "silent-letters",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-007",
+      "question": "Which spelling is correct?",
+      "options": [
+        "contemperary",
+        "contemporery",
+        "contemporary",
+        "contempory"
+      ],
+      "answer": "contemporary",
+      "explanation": "Contemporary keeps the middle pattern temporar.",
+      "word": "contemporary",
+      "skill": "tricky-vowels",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-008",
+      "question": "Which spelling is correct?",
+      "options": [
+        "priveleged",
+        "priviledged",
+        "priviliged",
+        "privileged"
+      ],
+      "answer": "privileged",
+      "explanation": "Privileged contains privilege plus d; there is no extra d before the ending.",
+      "word": "privileged",
+      "skill": "tricky-vowels",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-009",
+      "question": "Which spelling correctly completes: \"The punishment was ___ out\"?",
+      "options": [
+        "meted",
+        "meeted",
+        "meated",
+        "metted"
+      ],
+      "answer": "meted",
+      "explanation": "The fixed phrase is meted out, meaning handed out.",
+      "word": "meted",
+      "skill": "homophones",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-010",
+      "question": "Which spelling is correct?",
+      "options": [
+        "seqwayed",
+        "segued",
+        "segwayed",
+        "segueed"
+      ],
+      "answer": "segued",
+      "explanation": "The past tense of segue is segued; Segway is a different word.",
+      "word": "segued",
+      "skill": "unusual-spelling",
+      "difficulty": 3,
+      "verified": true
+    }
+  ]
+}

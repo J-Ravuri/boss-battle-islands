@@ -1,0 +1,174 @@
+{
+  "levelId": "level-2",
+  "subject": "Spelling",
+  "sectionId": "E6",
+  "round": 6,
+  "title": "Spelling Island 6",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L2-SP-051",
+      "question": "Which spelling is correct?",
+      "options": [
+        "thoughfully",
+        "thoughtfuly",
+        "thoughtfully",
+        "thortfully"
+      ],
+      "answer": "thoughtfully",
+      "explanation": "Thoughtfully comes from thought plus ful plus ly.",
+      "word": "thoughtfully",
+      "skill": "suffix-ly",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-052",
+      "question": "Which spelling is correct?",
+      "options": [
+        "frightning",
+        "frightenning",
+        "frigtening",
+        "frightening"
+      ],
+      "answer": "frightening",
+      "explanation": "Frightening keeps en from frighten before ing.",
+      "word": "frightening",
+      "skill": "suffix-ing",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-053",
+      "question": "Which spelling is correct?",
+      "options": [
+        "seamlessly",
+        "seemlessly",
+        "seamlessley",
+        "seamlesly"
+      ],
+      "answer": "seamlessly",
+      "explanation": "Seamlessly comes from seamless plus ly.",
+      "word": "seamlessly",
+      "skill": "suffix-ly",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-054",
+      "question": "Which spelling is correct for the national law-making body?",
+      "options": [
+        "parlament",
+        "parliament",
+        "parliement",
+        "parliment"
+      ],
+      "answer": "parliament",
+      "explanation": "Parliament contains the middle sequence lia.",
+      "word": "parliament",
+      "skill": "tricky-vowels",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-055",
+      "question": "Which spelling is correct?",
+      "options": [
+        "libarian",
+        "librarien",
+        "librarian",
+        "librarianne"
+      ],
+      "answer": "librarian",
+      "explanation": "Librarian keeps library without y and adds arian.",
+      "word": "librarian",
+      "skill": "suffix-arian",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-056",
+      "question": "Which spelling is correct?",
+      "options": [
+        "recomended",
+        "reccommended",
+        "recommendded",
+        "recommended"
+      ],
+      "answer": "recommended",
+      "explanation": "Recommended has one c and double m.",
+      "word": "recommended",
+      "skill": "double-consonants",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-057",
+      "question": "Which British English spelling is correct?",
+      "options": [
+        "centre",
+        "center",
+        "centar",
+        "centere"
+      ],
+      "answer": "centre",
+      "explanation": "Centre is the standard British English spelling.",
+      "word": "centre",
+      "skill": "british-english",
+      "difficulty": 1,
+      "verified": false,
+      "verificationNote": "Correction taken from the earlier paper review, but the original answer-key page was unavailable for direct verification."
+    },
+    {
+      "id": "L2-SP-058",
+      "question": "Which spelling is correct?",
+      "options": [
+        "nonchalence",
+        "nonchalance",
+        "nonchallance",
+        "nonchalants"
+      ],
+      "answer": "nonchalance",
+      "explanation": "Nonchalance ends in ance.",
+      "word": "nonchalance",
+      "skill": "suffix-ance",
+      "difficulty": 3,
+      "verified": false,
+      "verificationNote": "Correction taken from the earlier paper review, but the original answer-key page was unavailable for direct verification."
+    },
+    {
+      "id": "L2-SP-059",
+      "question": "Which British English spelling is correct for planned events or schemes?",
+      "options": [
+        "programs",
+        "programes",
+        "programmes",
+        "programmnes"
+      ],
+      "answer": "programmes",
+      "explanation": "In standard British English, programmes is used for planned events or schemes.",
+      "word": "programmes",
+      "skill": "british-english",
+      "difficulty": 2,
+      "verified": false,
+      "verificationNote": "Correction taken from the earlier paper review, but the original answer-key page was unavailable for direct verification."
+    },
+    {
+      "id": "L2-SP-060",
+      "question": "Which spelling is correct?",
+      "options": [
+        "restle",
+        "wresle",
+        "wrestel",
+        "wrestle"
+      ],
+      "answer": "wrestle",
+      "explanation": "Wrestle begins with a silent w.",
+      "word": "wrestle",
+      "skill": "silent-letters",
+      "difficulty": 2,
+      "verified": false,
+      "verificationNote": "Correction taken from the earlier paper review, but the original answer-key page was unavailable for direct verification."
+    }
+  ]
+}

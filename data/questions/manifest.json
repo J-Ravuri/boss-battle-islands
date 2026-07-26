@@ -1,14 +1,13 @@
 {
-  "files": [
-    "e1-vocabulary.json",
-    "e2-retrieval-evidence.json",
-    "e3-inference.json",
-    "e4-character.json",
-    "e5-summary-purpose.json",
-    "m1-word-problems-data.json",
-    "m2-fractions-probability.json",
-    "m3-percentages.json",
-    "m4-time-timetables.json",
-    "m5-measurement.json"
-  ]
+  "activeLevel": "level-1",
+  "levels": {
+    "level-1": {
+      "title": "Level 1 — English and Maths",
+      "manifest": "level-1/manifest.json"
+    },
+    "level-2": {
+      "title": "Level 2 — Spelling",
+      "manifest": "level-2/manifest.json"
+    }
+  }
 }

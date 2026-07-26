@@ -1,0 +1,170 @@
+{
+  "levelId": "level-2",
+  "subject": "Spelling",
+  "sectionId": "E9",
+  "round": 9,
+  "title": "Spelling Island 9",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L2-SP-081",
+      "question": "Which spelling is correct?",
+      "options": [
+        "audible",
+        "audable",
+        "audiable",
+        "audibble"
+      ],
+      "answer": "audible",
+      "explanation": "Audible ends in ible.",
+      "word": "audible",
+      "skill": "suffix-ible",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-082",
+      "question": "Which spelling is correct?",
+      "options": [
+        "incomprehensably",
+        "incomprehensibly",
+        "incomprehensibally",
+        "incomprehenzibly"
+      ],
+      "answer": "incomprehensibly",
+      "explanation": "Incomprehensibly comes from incomprehensible and ends in ibly.",
+      "word": "incomprehensibly",
+      "skill": "suffix-ibly",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-083",
+      "question": "Which spelling is correct?",
+      "options": [
+        "unaffordible",
+        "unafordable",
+        "unaffordable",
+        "unaffordabble"
+      ],
+      "answer": "unaffordable",
+      "explanation": "Unaffordable comes from afford and ends in able.",
+      "word": "unaffordable",
+      "skill": "suffix-able",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-084",
+      "question": "Which spelling is correct?",
+      "options": [
+        "eligable",
+        "elligible",
+        "eligeble",
+        "eligible"
+      ],
+      "answer": "eligible",
+      "explanation": "Eligible ends in ible and begins with one l.",
+      "word": "eligible",
+      "skill": "suffix-ible",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-085",
+      "question": "Which spelling is correct?",
+      "options": [
+        "preferred",
+        "prefered",
+        "preffered",
+        "preferredd"
+      ],
+      "answer": "preferred",
+      "explanation": "Preferred doubles the r before ed.",
+      "word": "preferred",
+      "skill": "double-consonants",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-086",
+      "question": "Which spelling is correct?",
+      "options": [
+        "hopeing",
+        "hoping",
+        "hopping",
+        "hopinng"
+      ],
+      "answer": "hoping",
+      "explanation": "Hoping drops the final e of hope before ing.",
+      "word": "hoping",
+      "skill": "suffix-ing",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-087",
+      "question": "Which spelling is correct?",
+      "options": [
+        "refered",
+        "reffered",
+        "referred",
+        "referreded"
+      ],
+      "answer": "referred",
+      "explanation": "Referred doubles the r before ed.",
+      "word": "referred",
+      "skill": "double-consonants",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-088",
+      "question": "Which spelling is correct?",
+      "options": [
+        "situacion",
+        "sittuation",
+        "situashun",
+        "situation"
+      ],
+      "answer": "situation",
+      "explanation": "Situation ends in tion.",
+      "word": "situation",
+      "skill": "suffix-tion",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-089",
+      "question": "Which spelling is correct?",
+      "options": [
+        "beautifully",
+        "beautifuly",
+        "beautiffuly",
+        "beutifully"
+      ],
+      "answer": "beautifully",
+      "explanation": "Beautiful plus ly gives beautifully, with double l at the join.",
+      "word": "beautifully",
+      "skill": "suffix-ly",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-090",
+      "question": "Which spelling is correct?",
+      "options": [
+        "couragous",
+        "courageous",
+        "courageus",
+        "corageous"
+      ],
+      "answer": "courageous",
+      "explanation": "Courageous keeps the e of courage before ous.",
+      "word": "courageous",
+      "skill": "suffix-ous",
+      "difficulty": 2,
+      "verified": true
+    }
+  ]
+}

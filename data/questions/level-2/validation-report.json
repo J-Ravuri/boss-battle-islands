@@ -1,0 +1,27 @@
+{
+  "status": "valid",
+  "files": [
+    "spelling-island-01.json",
+    "spelling-island-02.json",
+    "spelling-island-03.json",
+    "spelling-island-04.json",
+    "spelling-island-05.json",
+    "spelling-island-06.json",
+    "spelling-island-07.json",
+    "spelling-island-08.json",
+    "spelling-island-09.json",
+    "spelling-island-10.json"
+  ],
+  "fileCount": 10,
+  "questionCount": 100,
+  "uniqueIdCount": 100,
+  "uniqueWordCount": 100,
+  "sourceBreakdown": {
+    "originalVerified": 56,
+    "practiceTest15Flagged": 4,
+    "spellingPack3Verified": 40
+  },
+  "pdfRangeUsed": "Test 1 Q1-Q12; Test 2 Q1-Q12; Test 3 Q1-Q12; Test 4 Q1-Q4",
+  "pdfUnverifiedCount": 0,
+  "skippedDuplicates": []
+}

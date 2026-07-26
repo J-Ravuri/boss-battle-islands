@@ -1,0 +1,170 @@
+{
+  "levelId": "level-2",
+  "subject": "Spelling",
+  "sectionId": "E7",
+  "round": 7,
+  "title": "Spelling Island 7",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L2-SP-061",
+      "question": "Which spelling is correct?",
+      "options": [
+        "substance",
+        "substence",
+        "substanse",
+        "substancee"
+      ],
+      "answer": "substance",
+      "explanation": "Substance ends in ance.",
+      "word": "substance",
+      "skill": "suffix-ance",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-062",
+      "question": "Which spelling is correct?",
+      "options": [
+        "hesitency",
+        "hesitancy",
+        "hesitansy",
+        "hesitancey"
+      ],
+      "answer": "hesitancy",
+      "explanation": "Hesitancy ends in ancy.",
+      "word": "hesitancy",
+      "skill": "suffix-ancy",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-063",
+      "question": "Which spelling is correct?",
+      "options": [
+        "remembrence",
+        "rememberance",
+        "remembrance",
+        "remembranse"
+      ],
+      "answer": "remembrance",
+      "explanation": "Remembrance keeps remember and ends in ance.",
+      "word": "remembrance",
+      "skill": "suffix-ance",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-064",
+      "question": "Which spelling is correct?",
+      "options": [
+        "confidant",
+        "confedent",
+        "confidentt",
+        "confident"
+      ],
+      "answer": "confident",
+      "explanation": "Confident ends in ent; confidant is a different noun.",
+      "word": "confident",
+      "skill": "suffix-ent",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-065",
+      "question": "Which spelling is correct?",
+      "options": [
+        "innocence",
+        "innocance",
+        "inocence",
+        "innosence"
+      ],
+      "answer": "innocence",
+      "explanation": "Innocence has double n and ends in ence.",
+      "word": "innocence",
+      "skill": "suffix-ence",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-066",
+      "question": "Which spelling is correct?",
+      "options": [
+        "intolerent",
+        "intolerant",
+        "intollerant",
+        "intolarant"
+      ],
+      "answer": "intolerant",
+      "explanation": "Intolerant ends in ant.",
+      "word": "intolerant",
+      "skill": "suffix-ant",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-067",
+      "question": "Which spelling is correct?",
+      "options": [
+        "tendancy",
+        "tendensy",
+        "tendency",
+        "tendencey"
+      ],
+      "answer": "tendency",
+      "explanation": "Tendency ends in ency.",
+      "word": "tendency",
+      "skill": "suffix-ency",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-068",
+      "question": "Which spelling is correct?",
+      "options": [
+        "assistent",
+        "asistant",
+        "assisttant",
+        "assistant"
+      ],
+      "answer": "assistant",
+      "explanation": "Assistant has double s at the start and ends in ant.",
+      "word": "assistant",
+      "skill": "double-consonants",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-069",
+      "question": "Which spelling is correct?",
+      "options": [
+        "observant",
+        "observent",
+        "obzervant",
+        "observantt"
+      ],
+      "answer": "observant",
+      "explanation": "Observant ends in ant.",
+      "word": "observant",
+      "skill": "suffix-ant",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-070",
+      "question": "Which spelling is correct?",
+      "options": [
+        "fluancy",
+        "fluency",
+        "fluensy",
+        "fluencey"
+      ],
+      "answer": "fluency",
+      "explanation": "Fluency ends in ency.",
+      "word": "fluency",
+      "skill": "suffix-ency",
+      "difficulty": 2,
+      "verified": true
+    }
+  ]
+}

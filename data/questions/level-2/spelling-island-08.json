@@ -1,0 +1,170 @@
+{
+  "levelId": "level-2",
+  "subject": "Spelling",
+  "sectionId": "E8",
+  "round": 8,
+  "title": "Spelling Island 8",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L2-SP-071",
+      "question": "Which spelling is correct?",
+      "options": [
+        "disobedent",
+        "disobediant",
+        "disobedient",
+        "dissobedient"
+      ],
+      "answer": "disobedient",
+      "explanation": "Disobedient contains di before ent.",
+      "word": "disobedient",
+      "skill": "suffix-ent",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-072",
+      "question": "Which spelling is correct?",
+      "options": [
+        "transperent",
+        "transparant",
+        "transparentt",
+        "transparent"
+      ],
+      "answer": "transparent",
+      "explanation": "Transparent ends in ent and contains par.",
+      "word": "transparent",
+      "skill": "suffix-ent",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-073",
+      "question": "Which spelling is correct?",
+      "options": [
+        "convertible",
+        "convertable",
+        "convertibble",
+        "convertibel"
+      ],
+      "answer": "convertible",
+      "explanation": "Convertible ends in ible.",
+      "word": "convertible",
+      "skill": "suffix-ible",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-074",
+      "question": "Which spelling is correct?",
+      "options": [
+        "unacceptibly",
+        "unacceptably",
+        "unacceptabely",
+        "unaceptably"
+      ],
+      "answer": "unacceptably",
+      "explanation": "Unacceptably comes from unacceptable and ends in ably.",
+      "word": "unacceptably",
+      "skill": "suffix-ably",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-075",
+      "question": "Which spelling is correct?",
+      "options": [
+        "incredebly",
+        "incredably",
+        "incredibly",
+        "incredibally"
+      ],
+      "answer": "incredibly",
+      "explanation": "Incredibly comes from incredible and ends in ibly.",
+      "word": "incredibly",
+      "skill": "suffix-ibly",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-076",
+      "question": "Which spelling is correct?",
+      "options": [
+        "unmistakibly",
+        "unmistakeably",
+        "unmistakabely",
+        "unmistakably"
+      ],
+      "answer": "unmistakably",
+      "explanation": "Unmistakably comes from unmistakable and ends in ably.",
+      "word": "unmistakably",
+      "skill": "suffix-ably",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-077",
+      "question": "Which spelling is correct?",
+      "options": [
+        "adorable",
+        "adorible",
+        "adoreable",
+        "adorabble"
+      ],
+      "answer": "adorable",
+      "explanation": "Adorable ends in able.",
+      "word": "adorable",
+      "skill": "suffix-able",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-078",
+      "question": "Which spelling is correct?",
+      "options": [
+        "irresponsably",
+        "irresponsibly",
+        "irresponsibally",
+        "iresponsibly"
+      ],
+      "answer": "irresponsibly",
+      "explanation": "Irresponsibly comes from irresponsible and ends in ibly.",
+      "word": "irresponsibly",
+      "skill": "suffix-ibly",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-079",
+      "question": "Which spelling is correct?",
+      "options": [
+        "admiribly",
+        "admireably",
+        "admirably",
+        "admirabely"
+      ],
+      "answer": "admirably",
+      "explanation": "Admirably comes from admirable and ends in ably.",
+      "word": "admirably",
+      "skill": "suffix-ably",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-080",
+      "question": "Which spelling is correct?",
+      "options": [
+        "capible",
+        "capeable",
+        "cappable",
+        "capable"
+      ],
+      "answer": "capable",
+      "explanation": "Capable ends in able.",
+      "word": "capable",
+      "skill": "suffix-able",
+      "difficulty": 1,
+      "verified": true
+    }
+  ]
+}

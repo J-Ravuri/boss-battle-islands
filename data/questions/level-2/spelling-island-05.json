@@ -1,0 +1,170 @@
+{
+  "levelId": "level-2",
+  "subject": "Spelling",
+  "sectionId": "E5",
+  "round": 5,
+  "title": "Spelling Island 5",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L2-SP-041",
+      "question": "Which spelling is correct?",
+      "options": [
+        "civilisation",
+        "civilazation",
+        "civillisation",
+        "civilisasion"
+      ],
+      "answer": "civilisation",
+      "explanation": "Civilisation is the standard British spelling with s and ends in sation.",
+      "word": "civilisation",
+      "skill": "british-english",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-042",
+      "question": "Which spelling is correct?",
+      "options": [
+        "fethers",
+        "feathers",
+        "feathars",
+        "feathres"
+      ],
+      "answer": "feathers",
+      "explanation": "Feathers uses the vowel pair ea.",
+      "word": "feathers",
+      "skill": "vowel-digraphs",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-043",
+      "question": "Which spelling is correct?",
+      "options": [
+        "delightfuly",
+        "delitefully",
+        "delightfully",
+        "delightfulley"
+      ],
+      "answer": "delightfully",
+      "explanation": "Delightful plus ly creates double l at the join.",
+      "word": "delightfully",
+      "skill": "suffix-ly",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-044",
+      "question": "Which spelling is correct?",
+      "options": [
+        "ocasional",
+        "occassional",
+        "occasianal",
+        "occasional"
+      ],
+      "answer": "occasional",
+      "explanation": "Occasional has double c and one s.",
+      "word": "occasional",
+      "skill": "double-consonants",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-045",
+      "question": "Which spelling is correct?",
+      "options": [
+        "direction",
+        "direcktion",
+        "direcsion",
+        "dirrection"
+      ],
+      "answer": "direction",
+      "explanation": "Direction ends in ction and does not contain k.",
+      "word": "direction",
+      "skill": "suffix-tion",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-046",
+      "question": "Which spelling is correct?",
+      "options": [
+        "shimered",
+        "shimmered",
+        "shimmerd",
+        "shimmerred"
+      ],
+      "answer": "shimmered",
+      "explanation": "Shimmered keeps double m before ed.",
+      "word": "shimmered",
+      "skill": "double-consonants",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-047",
+      "question": "Which spelling means \"flowing heavily\"?",
+      "options": [
+        "poring",
+        "pooring",
+        "pouring",
+        "poureing"
+      ],
+      "answer": "pouring",
+      "explanation": "Pouring means flowing heavily and contains ou.",
+      "word": "pouring",
+      "skill": "homophones",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-048",
+      "question": "Which spelling is correct?",
+      "options": [
+        "partched",
+        "parcht",
+        "parshd",
+        "parched"
+      ],
+      "answer": "parched",
+      "explanation": "Parched has the consonant pattern rch, with no t.",
+      "word": "parched",
+      "skill": "consonant-clusters",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-049",
+      "question": "Which spelling is correct?",
+      "options": [
+        "squeezed",
+        "squiezed",
+        "squezed",
+        "squeesed"
+      ],
+      "answer": "squeezed",
+      "explanation": "Squeezed contains ee and keeps the final e sound pattern before d.",
+      "word": "squeezed",
+      "skill": "vowel-digraphs",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-050",
+      "question": "Which spelling is correct?",
+      "options": [
+        "hartbeat",
+        "heartbeat",
+        "heartbeet",
+        "heart-beet"
+      ],
+      "answer": "heartbeat",
+      "explanation": "Heartbeat is the compound word heart plus beat.",
+      "word": "heartbeat",
+      "skill": "compound-words",
+      "difficulty": 1,
+      "verified": true
+    }
+  ]
+}

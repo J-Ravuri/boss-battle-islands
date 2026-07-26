@@ -1,0 +1,170 @@
+{
+  "levelId": "level-2",
+  "subject": "Spelling",
+  "sectionId": "E3",
+  "round": 3,
+  "title": "Spelling Island 3",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L2-SP-021",
+      "question": "Which spelling is correct?",
+      "options": [
+        "philanthropist",
+        "filanthropist",
+        "philanthrapist",
+        "philanthropest"
+      ],
+      "answer": "philanthropist",
+      "explanation": "Philanthropist begins with ph and contains anthrop.",
+      "word": "philanthropist",
+      "skill": "greek-roots",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-022",
+      "question": "Which spelling is correct?",
+      "options": [
+        "hackneed",
+        "hackneyed",
+        "hackneyyed",
+        "hacknied"
+      ],
+      "answer": "hackneyed",
+      "explanation": "Hackneyed keeps neyed at the end.",
+      "word": "hackneyed",
+      "skill": "suffix-ending",
+      "difficulty": 3,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-023",
+      "question": "Which spelling is correct?",
+      "options": [
+        "exciteable",
+        "exsitable",
+        "excitable",
+        "excitible"
+      ],
+      "answer": "excitable",
+      "explanation": "Excitable drops the final e of excite before able.",
+      "word": "excitable",
+      "skill": "suffix-able",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-024",
+      "question": "Which spelling is correct?",
+      "options": [
+        "fadd",
+        "fadde",
+        "phad",
+        "fad"
+      ],
+      "answer": "fad",
+      "explanation": "Fad has only one d.",
+      "word": "fad",
+      "skill": "single-consonant",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-025",
+      "question": "Which spelling is correct?",
+      "options": [
+        "meddling",
+        "medalling",
+        "medling",
+        "meddleing"
+      ],
+      "answer": "meddling",
+      "explanation": "Meddling comes from meddle and has double d.",
+      "word": "meddling",
+      "skill": "double-consonants",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-026",
+      "question": "Which spelling is correct?",
+      "options": [
+        "strongley",
+        "strongly",
+        "strongally",
+        "stronly"
+      ],
+      "answer": "strongly",
+      "explanation": "Add ly directly to strong: strongly.",
+      "word": "strongly",
+      "skill": "suffix-ly",
+      "difficulty": 1,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-027",
+      "question": "Which spelling is correct?",
+      "options": [
+        "asociations",
+        "assosiations",
+        "associations",
+        "associationes"
+      ],
+      "answer": "associations",
+      "explanation": "Associations begins with ass and ends in ciations.",
+      "word": "associations",
+      "skill": "double-consonants",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-028",
+      "question": "Which spelling is correct?",
+      "options": [
+        "rangling",
+        "wrangleing",
+        "wrangeling",
+        "wrangling"
+      ],
+      "answer": "wrangling",
+      "explanation": "Wrangling begins with silent w and drops the final e of wrangle.",
+      "word": "wrangling",
+      "skill": "silent-letters",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-029",
+      "question": "Which spelling correctly completes: \"His principles ___ him up\"?",
+      "options": [
+        "bore",
+        "boar",
+        "borre",
+        "boor"
+      ],
+      "answer": "bore",
+      "explanation": "Bore is the past tense of bear in the phrase \"bore him up\".",
+      "word": "bore",
+      "skill": "homophones",
+      "difficulty": 2,
+      "verified": true
+    },
+    {
+      "id": "L2-SP-030",
+      "question": "Which spelling means \"a male parent\"?",
+      "options": [
+        "farther",
+        "father",
+        "fathar",
+        "futher"
+      ],
+      "answer": "father",
+      "explanation": "Father means a male parent; farther refers to distance.",
+      "word": "father",
+      "skill": "homophones",
+      "difficulty": 1,
+      "verified": true
+    }
+  ]
+}
