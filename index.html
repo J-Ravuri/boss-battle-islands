@@ -400,7 +400,7 @@
       gap: 4px;
       grid-template-columns: 60px 60px 60px;
       grid-template-rows: 60px 60px;
-      touch-action: manipulation;
+      touch-action: none;
       pointer-events: auto;
     }
     .touch-btn {
@@ -788,7 +788,7 @@
   //  CONFIG & STATE
   // ================================================================
   const CONFIG = {
-    heroSpeed: 0.15,
+    heroSpeed: 5.2, // world units per second
     // Assigned in initThree so a failed CDN load can reach the fallback UI.
     camOffsetHub: null,
     camOffsetBattle: null,
@@ -834,17 +834,24 @@
 
   // Three.js globals
   let scene, camera, renderer, clock;
-  let hubScene, battleScene;
   let hero, hubGroup, battleGroup;
-  let islands = {}; // sectionId -> {mesh, theme, bossMesh, status}
+  let islands = {}; // sectionId -> THREE.Group with metadata in userData
   let bosses = {};  // sectionId -> boss group
+  let homeIsland = null;
+  let navigationIslands = [];
+  let navigationBridges = [];
+  let walkSurfaces = [];
+  let worldClouds = [];
   let particles = [];
   let confettiCtx = null, confettiPieces = [], confettiAnim = null;
   let raycaster = null;
   let mouse = null;
   let keys = {};
   let clickTarget = null;
+  let pendingIsland = null;
   let isTransitioning = false;
+  let battleFeedbackTimer = null;
+  let runtimeErrorScopes = new Set();
   let audioCtx = null;
   let soundEnabled = true;
   let selectedMusic = 'aayasher';
@@ -1143,31 +1150,35 @@
   // ================================================================
   function initThree() {
     const container = document.getElementById('canvas-container');
-    CONFIG.camOffsetHub = new THREE.Vector3(0, 12, 18);
-    CONFIG.camOffsetBattle = new THREE.Vector3(0, 4, 10);
+    CONFIG.camOffsetHub = new THREE.Vector3(0, 7.5, 11.5);
+    CONFIG.camOffsetBattle = new THREE.Vector3(0, 5.2, 10.5);
     raycaster = new THREE.Raycaster();
     mouse = new THREE.Vector2();
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x87CEEB);
-    scene.fog = new THREE.Fog(0x87CEEB, 30, 90);
+    scene.background = new THREE.Color(0x80D8FF);
+    scene.fog = new THREE.FogExp2(0xB3E5FC, 0.012);
 
-    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 200);
-    camera.position.set(0, 12, 18);
+    camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 260);
+    camera.position.set(0, 9, 14);
 
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.05;
     container.appendChild(renderer.domElement);
 
     clock = new THREE.Clock();
 
-    // Lights
-    const ambient = new THREE.AmbientLight(0xffffff, 0.6);
-    scene.add(ambient);
+    // A soft sky/ground light keeps low-poly forms readable from every angle.
+    const skyLight = new THREE.HemisphereLight(0xDFF6FF, 0x42505F, 1.35);
+    scene.add(skyLight);
 
-    const sun = new THREE.DirectionalLight(0xffffff, 0.9);
-    sun.position.set(20, 40, 20);
+    const sun = new THREE.DirectionalLight(0xFFF4D6, 2.15);
+    sun.position.set(24, 42, 18);
     sun.castShadow = true;
     sun.shadow.mapSize.width = 2048;
     sun.shadow.mapSize.height = 2048;
@@ -1177,15 +1188,10 @@
     sun.shadow.camera.right = 40;
     sun.shadow.camera.top = 40;
     sun.shadow.camera.bottom = -40;
+    sun.shadow.bias = -0.00025;
     scene.add(sun);
 
-    // Ground plane for raycasting click-to-move
-    const groundGeo = new THREE.PlaneGeometry(200, 200);
-    const groundMat = new THREE.MeshBasicMaterial({ visible: false });
-    const ground = new THREE.Mesh(groundGeo, groundMat);
-    ground.rotation.x = -Math.PI / 2;
-    ground.name = 'ground';
-    scene.add(ground);
+    createSkyEnvironment();
 
     window.addEventListener('resize', onWindowResize);
     window.addEventListener('keydown', onKeyDown);
@@ -1197,7 +1203,77 @@
   function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+
+  function createSkyEnvironment() {
+    // Inverted gradient dome: no image assets and no horizon seam.
+    const sky = new THREE.Mesh(
+      new THREE.SphereGeometry(150, 32, 18),
+      new THREE.ShaderMaterial({
+        side: THREE.BackSide,
+        depthWrite: false,
+        uniforms: {
+          topColor: { value: new THREE.Color(0x4FC3F7) },
+          horizonColor: { value: new THREE.Color(0xE8F8FF) },
+          bottomColor: { value: new THREE.Color(0xB39DDB) }
+        },
+        vertexShader: 'varying vec3 vWorld; void main(){ vWorld=(modelMatrix*vec4(position,1.0)).xyz; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }',
+        fragmentShader: 'varying vec3 vWorld; uniform vec3 topColor; uniform vec3 horizonColor; uniform vec3 bottomColor; void main(){ float h=normalize(vWorld).y; vec3 c=h>0.0?mix(horizonColor,topColor,smoothstep(0.0,0.8,h)):mix(horizonColor,bottomColor,smoothstep(0.0,0.65,-h)); gl_FragColor=vec4(c,1.0); }'
+      })
+    );
+    sky.name = 'sky-dome';
+    scene.add(sky);
+
+    const cloudSea = new THREE.Mesh(
+      new THREE.PlaneGeometry(260, 260),
+      new THREE.MeshPhongMaterial({
+        color: 0xDCEEFF,
+        transparent: true,
+        opacity: 0.72,
+        shininess: 80,
+        depthWrite: false
+      })
+    );
+    cloudSea.rotation.x = -Math.PI / 2;
+    cloudSea.position.y = -9;
+    cloudSea.receiveShadow = true;
+    scene.add(cloudSea);
+
+    worldClouds = [];
+    for (let i = 0; i < 22; i++) {
+      const cloud = createCloudCluster(2.2 + Math.random() * 2.5);
+      const angle = (i / 22) * Math.PI * 2;
+      const radius = 24 + (i % 5) * 10;
+      cloud.position.set(
+        Math.cos(angle) * radius,
+        -2 + (i % 4) * 3.5,
+        Math.sin(angle) * radius - 14
+      );
+      cloud.userData.drift = 0.12 + (i % 3) * 0.035;
+      scene.add(cloud);
+      worldClouds.push(cloud);
+    }
+  }
+
+  function createCloudCluster(scale) {
+    const group = new THREE.Group();
+    const material = new THREE.MeshLambertMaterial({
+      color: 0xFFFFFF,
+      transparent: true,
+      opacity: 0.72,
+      depthWrite: false
+    });
+    const offsets = [[0,0,0],[-0.7,-0.05,0.1],[0.7,-0.12,0.1],[-0.2,0.35,0],[0.35,0.28,-0.12]];
+    offsets.forEach((offset, index) => {
+      const puff = new THREE.Mesh(new THREE.SphereGeometry(index < 3 ? 0.65 : 0.55, 10, 7), material);
+      puff.position.set(...offset);
+      puff.scale.y = 0.68;
+      group.add(puff);
+    });
+    group.scale.setScalar(scale);
+    return group;
   }
 
   function onKeyDown(e) {
@@ -1223,8 +1299,8 @@
   //  ASSET BUILDERS — Low-poly, colourful, kid-friendly
   // ================================================================
 
-  // Create the hero character: Quiz, the Pencil Knight
-  function createHero() {
+  // Original prototype kept as a compact reference for future character skins.
+  function createLegacyHero() {
     const group = new THREE.Group();
     group.name = 'hero';
 
@@ -1373,6 +1449,207 @@
     return group;
   }
 
+  // Personalised low-poly Shauri: dark textured hair, black glasses, navy
+  // hoodie and light patterned trousers inspired by the supplied photograph.
+  // The photograph itself is deliberately not shipped with the public game.
+  function createHero() {
+    const group = new THREE.Group();
+    group.name = 'shauri-hero';
+
+    const skinMat = new THREE.MeshStandardMaterial({ color: 0xB97850, roughness: 0.78 });
+    const hoodieMat = new THREE.MeshStandardMaterial({ color: 0x174F78, roughness: 0.82 });
+    const hoodieDarkMat = new THREE.MeshStandardMaterial({ color: 0x103A5A, roughness: 0.88 });
+    const hairMat = new THREE.MeshStandardMaterial({ color: 0x171719, roughness: 0.96 });
+    const glassesMat = new THREE.MeshStandardMaterial({ color: 0x111317, roughness: 0.5, metalness: 0.12 });
+    const lensMat = new THREE.MeshPhysicalMaterial({
+      color: 0xD9F3FF,
+      transparent: true,
+      opacity: 0.22,
+      roughness: 0.05,
+      transmission: 0.25,
+      depthWrite: false
+    });
+    const trouserLight = new THREE.MeshStandardMaterial({ color: 0xE8E0C8, roughness: 0.9 });
+    const trouserShade = new THREE.MeshStandardMaterial({ color: 0xC9C0A6, roughness: 0.9 });
+    const shoeMat = new THREE.MeshStandardMaterial({ color: 0x152438, roughness: 0.74 });
+
+    // Hoodie torso and front pocket.
+    const body = new THREE.Mesh(new THREE.CylinderGeometry(0.37, 0.45, 0.82, 8), hoodieMat);
+    body.position.y = 1.02;
+    body.castShadow = true;
+    group.add(body);
+    const pocket = new THREE.Mesh(new THREE.BoxGeometry(0.48, 0.22, 0.055), hoodieDarkMat);
+    pocket.position.set(0, 0.88, 0.405);
+    pocket.castShadow = true;
+    group.add(pocket);
+    const hood = new THREE.Mesh(new THREE.TorusGeometry(0.29, 0.1, 8, 18, Math.PI * 1.45), hoodieDarkMat);
+    hood.position.set(0, 1.42, -0.13);
+    hood.rotation.set(Math.PI / 2, 0, -Math.PI * 0.22);
+    hood.castShadow = true;
+    group.add(hood);
+    [-0.09, 0.09].forEach(x => {
+      const cord = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.34, 6), new THREE.MeshStandardMaterial({ color: 0xE9F3F7 }));
+      cord.position.set(x, 1.22, 0.39);
+      group.add(cord);
+    });
+
+    // Head, ears and a small friendly smile.
+    const head = new THREE.Mesh(new THREE.SphereGeometry(0.32, 16, 12), skinMat);
+    head.position.y = 1.72;
+    head.scale.set(0.92, 1.03, 0.9);
+    head.castShadow = true;
+    group.add(head);
+    [-0.3, 0.3].forEach(x => {
+      const ear = new THREE.Mesh(new THREE.SphereGeometry(0.07, 10, 8), skinMat);
+      ear.position.set(x, 1.71, 0);
+      group.add(ear);
+    });
+    const smile = new THREE.Mesh(
+      new THREE.TorusGeometry(0.09, 0.012, 6, 16, Math.PI),
+      new THREE.MeshBasicMaterial({ color: 0x612D2A })
+    );
+    smile.position.set(0, 1.61, 0.278);
+    smile.rotation.z = Math.PI;
+    group.add(smile);
+
+    // Layered wavy hair clumps create a recognisable silhouette without using
+    // the photograph as a texture.
+    const hairCap = new THREE.Mesh(new THREE.SphereGeometry(0.33, 12, 8, 0, Math.PI * 2, 0, Math.PI * 0.62), hairMat);
+    hairCap.position.set(0, 1.92, -0.01);
+    hairCap.scale.set(1.02, 0.82, 1.02);
+    hairCap.castShadow = true;
+    group.add(hairCap);
+    const hairClumps = [
+      [-0.23,1.91,0.18],[-0.11,1.99,0.22],[0.02,1.98,0.23],[0.15,1.96,0.2],[0.25,1.89,0.13],
+      [-0.29,1.85,0.02],[-0.18,2.04,-0.03],[0.08,2.06,-0.06],[0.27,1.96,-0.02]
+    ];
+    hairClumps.forEach((position, index) => {
+      const clump = new THREE.Mesh(new THREE.DodecahedronGeometry(index % 3 === 0 ? 0.115 : 0.1, 0), hairMat);
+      clump.position.set(...position);
+      clump.scale.y = 0.8;
+      clump.castShadow = true;
+      group.add(clump);
+    });
+
+    // Eyes and characteristic black rectangular glasses.
+    const eyeMat = new THREE.MeshBasicMaterial({ color: 0x1B1411 });
+    const eyeL = new THREE.Mesh(new THREE.SphereGeometry(0.032, 8, 6), eyeMat);
+    const eyeR = eyeL.clone();
+    eyeL.position.set(-0.105, 1.75, 0.286);
+    eyeR.position.set(0.105, 1.75, 0.286);
+    group.add(eyeL, eyeR);
+    [-0.12, 0.12].forEach(x => {
+      const frame = new THREE.Mesh(new THREE.BoxGeometry(0.19, 0.12, 0.025), glassesMat);
+      frame.position.set(x, 1.75, 0.305);
+      group.add(frame);
+      const lens = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.085, 0.012), lensMat);
+      lens.position.set(x, 1.75, 0.321);
+      group.add(lens);
+    });
+    const bridge = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.025, 0.03), glassesMat);
+    bridge.position.set(0, 1.75, 0.31);
+    group.add(bridge);
+    [-1, 1].forEach(side => {
+      const arm = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.022, 0.022), glassesMat);
+      arm.position.set(side * 0.265, 1.75, 0.22);
+      arm.rotation.y = side * 0.72;
+      group.add(arm);
+    });
+
+    // Pivoted arms and legs produce a genuine walk cycle.
+    function makeArm(side) {
+      const pivot = new THREE.Group();
+      pivot.position.set(side * 0.42, 1.28, 0);
+      const sleeve = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.105, 0.58, 8), hoodieMat);
+      sleeve.position.y = -0.27;
+      sleeve.castShadow = true;
+      pivot.add(sleeve);
+      const hand = new THREE.Mesh(new THREE.SphereGeometry(0.1, 10, 8), skinMat);
+      hand.position.y = -0.58;
+      hand.castShadow = true;
+      pivot.add(hand);
+      group.add(pivot);
+      return pivot;
+    }
+    const armL = makeArm(-1);
+    const armR = makeArm(1);
+
+    function makeLeg(side) {
+      const pivot = new THREE.Group();
+      pivot.position.set(side * 0.2, 0.72, 0);
+      const upper = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.48, 0.27), side < 0 ? trouserLight : trouserShade);
+      upper.position.y = -0.24;
+      upper.castShadow = true;
+      pivot.add(upper);
+      // Alternating squares echo the light checked trousers in a subtle way.
+      const patch = new THREE.Mesh(new THREE.BoxGeometry(0.115, 0.15, 0.018), side < 0 ? trouserShade : trouserLight);
+      patch.position.set(side * 0.052, -0.17, 0.145);
+      pivot.add(patch);
+      const shoe = new THREE.Mesh(new THREE.BoxGeometry(0.27, 0.16, 0.42), shoeMat);
+      shoe.position.set(0, -0.54, 0.08);
+      shoe.castShadow = true;
+      pivot.add(shoe);
+      group.add(pivot);
+      return pivot;
+    }
+    const legL = makeLeg(-1);
+    const legR = makeLeg(1);
+
+    // The Pencil Blade remains the playful learning-game weapon.
+    const pencil = new THREE.Group();
+    pencil.position.set(0.08, -0.5, 0.08);
+    pencil.rotation.z = -0.22;
+    const shaft = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.035, 0.035, 1.05, 8),
+      new THREE.MeshStandardMaterial({ color: 0xFFD740, roughness: 0.55 })
+    );
+    const tip = new THREE.Mesh(
+      new THREE.ConeGeometry(0.055, 0.18, 8),
+      new THREE.MeshStandardMaterial({ color: 0x5D4037 })
+    );
+    tip.position.y = 0.61;
+    const eraser = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.04, 0.04, 0.13, 8),
+      new THREE.MeshStandardMaterial({ color: 0xF48FB1 })
+    );
+    eraser.position.y = -0.58;
+    pencil.add(shaft, tip, eraser);
+    armR.add(pencil);
+
+    // Compact always-facing name plate.
+    const canvas = document.createElement('canvas');
+    canvas.width = 320;
+    canvas.height = 80;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = 'rgba(10,42,68,0.9)';
+    ctx.beginPath();
+    ctx.roundRect(4, 4, 312, 68, 22);
+    ctx.fill();
+    ctx.font = '800 34px Segoe UI';
+    ctx.fillStyle = '#FFFFFF';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('SHAURI', 160, 39);
+    const nameTag = new THREE.Mesh(
+      new THREE.PlaneGeometry(1.35, 0.34),
+      new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(canvas), transparent: true, depthWrite: false })
+    );
+    nameTag.position.set(0, 2.38, 0);
+    group.add(nameTag);
+
+    group.userData = {
+      ...group.userData,
+      eyeL, eyeR, head, hair: hairCap,
+      legL, legR, body, armL, armR,
+      pencil, eraser, tip,
+      nameTag,
+      baseBodyY: body.position.y,
+      baseHeadY: head.position.y
+    };
+    group.scale.setScalar(1.08);
+    return group;
+  }
+
   function createCompanion() {
     const group = new THREE.Group();
     group.name = 'lumi';
@@ -1460,13 +1737,27 @@
     ]
   };
   let shauriBubble = null;
+  let shauriBubbleInterval = null;
+  function clearShauriBubble() {
+    if (shauriBubbleInterval) {
+      clearInterval(shauriBubbleInterval);
+      shauriBubbleInterval = null;
+    }
+    if (shauriBubble) {
+      if (shauriBubble.parent) shauriBubble.parent.remove(shauriBubble);
+      if (shauriBubble.material?.map) shauriBubble.material.map.dispose();
+      if (shauriBubble.material) shauriBubble.material.dispose();
+      if (shauriBubble.geometry) shauriBubble.geometry.dispose();
+      shauriBubble = null;
+    }
+  }
   function showShauriBubble(category, duration) {
     duration = duration || 2000;
     if (!hero || !scene) return;
     const lines = SHAURI_LINES[category];
     if (!lines) return;
     const text = lines[Math.floor(Math.random() * lines.length)];
-    if (shauriBubble) scene.remove(shauriBubble);
+    clearShauriBubble();
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     const fontSize = 28;
@@ -1495,14 +1786,12 @@
     hero.add(mesh);
     shauriBubble = mesh;
     let age = 0;
-    const floatInt = setInterval(function() {
+    shauriBubbleInterval = setInterval(function() {
       age += 50;
       mesh.position.y = 2.8 + Math.sin(age * 0.005) * 0.05;
       if (age >= duration) {
-        clearInterval(floatInt);
         if (shauriBubble === mesh) {
-          hero.remove(mesh);
-          shauriBubble = null;
+          clearShauriBubble();
         }
       }
     }, 50);
@@ -1512,73 +1801,186 @@
   function createIsland(sectionId, pos, theme) {
     const group = new THREE.Group();
     group.position.set(pos[0], pos[1], pos[2]);
+    group.name = 'island-' + sectionId;
 
-    // Main terrain
-    const radius = 3.2;
-    const height = 1.2;
-    const islandGeo = new THREE.CylinderGeometry(radius, radius * 0.85, height, 10);
-    const islandMat = new THREE.MeshLambertMaterial({ color: theme.islandColor });
+    // Layered low-poly terrain: grassy crown, rocky body and tapered roots.
+    const radius = sectionId === 'HOME' ? 3.7 : 4.1;
+    const height = 1.35;
+    const islandGeo = new THREE.CylinderGeometry(radius, radius * 0.78, height, 12);
+    const islandMat = new THREE.MeshStandardMaterial({
+      color: theme.islandColor,
+      roughness: 0.88,
+      metalness: theme.type === 'maths' ? 0.08 : 0
+    });
     const island = new THREE.Mesh(islandGeo, islandMat);
     island.position.y = height / 2;
     island.castShadow = true;
     island.receiveShadow = true;
+    island.userData.walkable = true;
     group.add(island);
 
-    // Grass top
-    const topGeo = new THREE.CylinderGeometry(radius * 0.95, radius * 0.95, 0.15, 10);
-    const topMat = new THREE.MeshLambertMaterial({ color: 0x81C784 });
+    const topGeo = new THREE.CylinderGeometry(radius * 0.96, radius * 0.93, 0.22, 12);
+    const topMat = new THREE.MeshStandardMaterial({
+      color: sectionId === 'HOME' ? 0x8BC34A : (theme.type === 'english' ? 0x63B66A : 0x78B86A),
+      roughness: 0.95
+    });
     const top = new THREE.Mesh(topGeo, topMat);
-    top.position.y = height + 0.05;
+    top.position.y = height + 0.08;
+    top.castShadow = true;
     top.receiveShadow = true;
+    top.userData.walkable = true;
     group.add(top);
 
-    // Decorations based on theme
-    addIslandDecorations(group, theme, radius);
+    const rootMaterial = new THREE.MeshStandardMaterial({ color: 0x45515B, roughness: 1 });
+    for (let i = 0; i < 7; i++) {
+      const root = new THREE.Mesh(
+        new THREE.ConeGeometry(0.62 + (i % 3) * 0.13, 2.8 + (i % 2) * 0.8, 6),
+        rootMaterial
+      );
+      const angle = i / 7 * Math.PI * 2;
+      root.position.set(Math.cos(angle) * radius * 0.5, -1.45, Math.sin(angle) * radius * 0.5);
+      root.rotation.z = Math.cos(angle) * 0.12;
+      root.rotation.x = Math.sin(angle) * 0.12;
+      root.castShadow = true;
+      group.add(root);
+    }
+
+    addIslandDecorations(group, theme, radius, sectionId);
 
     // Status indicator (crystal pillar)
     const pillarGeo = new THREE.CylinderGeometry(0.15, 0.15, 1.5, 6);
-    const pillarMat = new THREE.MeshLambertMaterial({ color: 0xB0BEC5 });
+    const pillarMat = new THREE.MeshStandardMaterial({ color: 0xB0BEC5, roughness: 0.4, metalness: 0.3 });
     const pillar = new THREE.Mesh(pillarGeo, pillarMat);
     pillar.position.set(0, height + 1, 0);
     group.add(pillar);
 
     // Glow orb on top
     const orbGeo = new THREE.SphereGeometry(0.25, 8, 8);
-    const orbMat = new THREE.MeshBasicMaterial({ color: 0xB0BEC5 });
+    const orbMat = new THREE.MeshStandardMaterial({
+      color: 0xB0BEC5,
+      emissive: 0x263238,
+      emissiveIntensity: 0.35,
+      roughness: 0.18
+    });
     const orb = new THREE.Mesh(orbGeo, orbMat);
     orb.position.set(0, height + 1.9, 0);
     group.add(orb);
 
-    group.userData = { sectionId, theme, pillar, orb, radius, height };
+    const portalRing = new THREE.Mesh(
+      new THREE.TorusGeometry(0.48, 0.065, 8, 28),
+      new THREE.MeshStandardMaterial({
+        color: theme.accent || 0x90CAF9,
+        emissive: theme.accent || 0x90CAF9,
+        emissiveIntensity: 0.5,
+        roughness: 0.25
+      })
+    );
+    portalRing.position.set(0, height + 1.9, 0);
+    portalRing.rotation.x = Math.PI / 2;
+    group.add(portalRing);
+
+    const label = createWorldLabel(sectionId === 'HOME' ? 'HOME BASE' : theme.name, theme.emoji || '🏠');
+    label.position.set(0, height + 3.05, 0);
+    group.add(label);
+
+    group.userData = {
+      sectionId, theme, pillar, orb, portalRing, label,
+      radius, height, surfaceY: height + 0.2, topMesh: top
+    };
     return group;
   }
 
-  function addIslandDecorations(group, theme, radius) {
+  function createWorldLabel(text, emoji) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 640;
+    canvas.height = 128;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = 'rgba(16,43,61,0.88)';
+    ctx.beginPath();
+    ctx.roundRect(10, 10, 620, 100, 34);
+    ctx.fill();
+    ctx.font = '800 38px Segoe UI';
+    ctx.fillStyle = '#FFFFFF';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText((emoji ? emoji + '  ' : '') + text, 320, 60);
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    return new THREE.Mesh(
+      new THREE.PlaneGeometry(3.6, 0.72),
+      new THREE.MeshBasicMaterial({ map: texture, transparent: true, depthWrite: false, side: THREE.DoubleSide })
+    );
+  }
+
+  function addIslandDecorations(group, theme, radius, sectionId) {
     const h = group.userData ? group.userData.height : 1.2;
     if (theme.type === 'english') {
-      // Book rocks for English islands
-      for (let i = 0; i < 3; i++) {
-        const book = new THREE.Mesh(
-          new THREE.BoxGeometry(0.4, 0.5, 0.15),
-          new THREE.MeshLambertMaterial({ color: 0x5D4037 })
-        );
-        const angle = (i / 3) * Math.PI * 2;
-        book.position.set(Math.cos(angle) * radius * 0.6, h + 0.25, Math.sin(angle) * radius * 0.6);
-        book.rotation.y = angle;
-        group.add(book);
+      // Book stacks and enchanted trees make each English island feel lived in.
+      for (let i = 0; i < 4; i++) {
+        const angle = (i / 4) * Math.PI * 2 + 0.4;
+        const stack = new THREE.Group();
+        for (let j = 0; j < 3; j++) {
+          const book = new THREE.Mesh(
+            new THREE.BoxGeometry(0.58 - j * 0.05, 0.13, 0.38),
+            new THREE.MeshStandardMaterial({
+              color: [0x5C6BC0, 0xEF5350, 0xFFCA28, 0x26A69A][(i + j) % 4],
+              roughness: 0.75
+            })
+          );
+          book.position.y = j * 0.14;
+          book.rotation.y = (j - 1) * 0.12;
+          book.castShadow = true;
+          stack.add(book);
+        }
+        stack.position.set(Math.cos(angle) * radius * 0.68, h + 0.2, Math.sin(angle) * radius * 0.68);
+        stack.rotation.y = -angle;
+        group.add(stack);
       }
-    } else {
-      // Number blocks / gear shapes for Maths islands
-      for (let i = 0; i < 3; i++) {
+      if (sectionId === 'E1' || sectionId === 'E5') {
+        [-1, 1].forEach(side => {
+          const trunk = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.13, 0.2, 1.25, 7),
+            new THREE.MeshStandardMaterial({ color: 0x6D4C41, roughness: 1 })
+          );
+          trunk.position.set(side * 2.45, h + 0.72, -0.55);
+          trunk.castShadow = true;
+          group.add(trunk);
+          const crown = new THREE.Mesh(
+            new THREE.IcosahedronGeometry(0.72, 1),
+            new THREE.MeshStandardMaterial({ color: 0x43A047, roughness: 0.95 })
+          );
+          crown.position.set(side * 2.45, h + 1.65, -0.55);
+          crown.castShadow = true;
+          group.add(crown);
+        });
+      }
+    } else if (theme.type === 'maths') {
+      // Glowing number blocks and gear rings for Maths islands.
+      for (let i = 0; i < 4; i++) {
         const block = new THREE.Mesh(
-          new THREE.BoxGeometry(0.35, 0.35, 0.35),
-          new THREE.MeshLambertMaterial({ color: theme.accent })
+          new THREE.BoxGeometry(0.48, 0.48, 0.48),
+          new THREE.MeshStandardMaterial({
+            color: theme.accent,
+            emissive: theme.accent,
+            emissiveIntensity: 0.12,
+            roughness: 0.45,
+            metalness: 0.25
+          })
         );
-        const angle = (i / 3) * Math.PI * 2;
-        block.position.set(Math.cos(angle) * radius * 0.6, h + 0.2, Math.sin(angle) * radius * 0.6);
+        const angle = (i / 4) * Math.PI * 2 + 0.35;
+        block.position.set(Math.cos(angle) * radius * 0.68, h + 0.42, Math.sin(angle) * radius * 0.68);
         block.rotation.set(0.2, angle, 0.1);
+        block.castShadow = true;
         group.add(block);
       }
+      const gear = new THREE.Mesh(
+        new THREE.TorusGeometry(1.05, 0.13, 8, 18),
+        new THREE.MeshStandardMaterial({ color: 0xFFD54F, metalness: 0.55, roughness: 0.35 })
+      );
+      gear.position.set(0, h + 0.55, -2.25);
+      gear.rotation.x = Math.PI / 2;
+      gear.castShadow = true;
+      group.add(gear);
     }
   }
 
@@ -1588,13 +1990,37 @@
     const end = p2 instanceof THREE.Vector3 ? p2.clone() : new THREE.Vector3(...p2);
     const mid = new THREE.Vector3().addVectors(start, end).multiplyScalar(0.5);
     const dist = start.distanceTo(end);
-    const bridge = new THREE.Mesh(
-      new THREE.BoxGeometry(0.8, 0.15, dist),
-      new THREE.MeshLambertMaterial({ color: color || 0x8D6E63 })
-    );
+    const bridge = new THREE.Group();
     bridge.position.copy(mid);
     bridge.lookAt(end);
-    bridge.receiveShadow = true;
+    bridge.name = 'sky-bridge';
+    const deck = new THREE.Mesh(
+      new THREE.BoxGeometry(1.65, 0.22, dist),
+      new THREE.MeshStandardMaterial({ color: color || 0x8D6E63, roughness: 0.86 })
+    );
+    deck.castShadow = true;
+    deck.receiveShadow = true;
+    deck.userData.walkable = true;
+    bridge.add(deck);
+    const railMat = new THREE.MeshStandardMaterial({ color: 0xE0B878, roughness: 0.72 });
+    [-0.92, 0.92].forEach(x => {
+      const rail = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, dist, 6), railMat);
+      rail.position.set(x, 0.58, 0);
+      rail.rotation.x = Math.PI / 2;
+      rail.castShadow = true;
+      bridge.add(rail);
+      const postCount = Math.max(2, Math.floor(dist / 2.5));
+      for (let i = 0; i <= postCount; i++) {
+        const post = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.055, 0.72, 6), railMat);
+        post.position.set(x, 0.3, -dist / 2 + i / postCount * dist);
+        post.castShadow = true;
+        bridge.add(post);
+      }
+    });
+    // Keep the navigation corridor slightly wider than the visible deck.
+    // This prevents a character spawning just off the bridge centre-line
+    // from catching on the rail at an island/bridge join.
+    bridge.userData = { start, end, width: 1.15, deck };
     return bridge;
   }
 
@@ -1791,24 +2217,39 @@
   // ================================================================
   function buildHub() {
     hubGroup = new THREE.Group();
+    hubGroup.name = 'hub-world';
     scene.add(hubGroup);
+    islands = {};
+    bosses = {};
+    navigationIslands = [];
+    navigationBridges = [];
+    walkSurfaces = [];
 
     // Central home island
-    const homeIsland = createIsland('HOME', [0, 0, 0], { islandColor: 0xFFD700, type: 'home' });
+    homeIsland = createIsland('HOME', [0, 0, 0], {
+      name: 'Home Base',
+      emoji: '🏠',
+      islandColor: 0xD6A928,
+      accent: 0xFFF59D,
+      type: 'home'
+    });
     homeIsland.userData.isHome = true;
-    // Make home island smaller
-    homeIsland.children[0].scale.set(0.6, 0.6, 0.6);
-    homeIsland.children[1].scale.set(0.6, 1, 0.6);
     hubGroup.add(homeIsland);
+    navigationIslands.push({
+      sectionId: 'HOME',
+      center: new THREE.Vector3(0, homeIsland.userData.surfaceY, 0),
+      radius: homeIsland.userData.radius * 0.82
+    });
+    walkSurfaces.push(homeIsland.userData.topMesh);
 
     // Spawn hero
     hero = createHero();
-    hero.position.set(0, 0, 0);
+    hero.position.set(0, homeIsland.userData.surfaceY, 0.8);
     hubGroup.add(hero);
-      const lumi = createCompanion();
-      lumi.position.set(0.8, 2.2, 0.3);
-      hero.add(lumi);
-      hero.userData.lumi = lumi;
+    const lumi = createCompanion();
+    lumi.position.set(0.8, 2.2, 0.3);
+    hero.add(lumi);
+    hero.userData.lumi = lumi;
 
     // Build each section island
     GAME_DATA.sections.forEach((section, idx) => {
@@ -1818,18 +2259,33 @@
       const island = createIsland(sid, pos, theme);
       hubGroup.add(island);
       islands[sid] = island;
+      const islandSurface = new THREE.Vector3(pos[0], pos[1] + island.userData.surfaceY, pos[2]);
+      navigationIslands.push({
+        sectionId: sid,
+        center: islandSurface.clone(),
+        radius: island.userData.radius * 0.8
+      });
+      walkSurfaces.push(island.userData.topMesh);
 
       // Bridge from previous island (or home for first of each branch)
-      let prevPos;
+      let previousIsland;
       if (sid === 'E1' || sid === 'M1') {
-        prevPos = new THREE.Vector3(0, 0, 0);
+        previousIsland = homeIsland;
       } else {
         const prevId = GAME_DATA.sections[idx - 1].sectionId;
-        prevPos = new THREE.Vector3(...ISLAND_LAYOUT[prevId]);
+        previousIsland = islands[prevId];
       }
-      const currPos = new THREE.Vector3(...pos);
-      const bridge = createBridge(prevPos, currPos, 0xA1887F);
+      const previousSurface = previousIsland.position.clone();
+      previousSurface.y += previousIsland.userData.surfaceY;
+      const bridge = createBridge(previousSurface, islandSurface, 0x8D6E63);
       hubGroup.add(bridge);
+      navigationBridges.push({
+        start: previousSurface.clone(),
+        end: islandSurface.clone(),
+        width: bridge.userData.width,
+        sectionId: sid
+      });
+      walkSurfaces.push(bridge.userData.deck);
 
       // Boss floating above island (hidden until battle)
       const boss = createBoss(sid);
@@ -1839,7 +2295,63 @@
       bosses[sid] = boss;
     });
 
+    battleGroup = createBattleArena();
+    battleGroup.visible = false;
+    scene.add(battleGroup);
     updateIslandVisuals();
+  }
+
+  function createBattleArena() {
+    const arena = new THREE.Group();
+    arena.name = 'battle-arena';
+    const rock = new THREE.Mesh(
+      new THREE.CylinderGeometry(7.2, 6.2, 1.2, 18),
+      new THREE.MeshStandardMaterial({ color: 0x394A59, roughness: 0.92 })
+    );
+    rock.position.y = -0.62;
+    rock.castShadow = true;
+    rock.receiveShadow = true;
+    arena.add(rock);
+    const floor = new THREE.Mesh(
+      new THREE.CylinderGeometry(6.9, 6.9, 0.18, 24),
+      new THREE.MeshStandardMaterial({ color: 0x477A68, roughness: 0.76, metalness: 0.08 })
+    );
+    floor.position.y = 0.02;
+    floor.receiveShadow = true;
+    arena.add(floor);
+    const runeMaterial = new THREE.MeshStandardMaterial({
+      color: 0x80DEEA,
+      emissive: 0x00BCD4,
+      emissiveIntensity: 0.7,
+      roughness: 0.25
+    });
+    [2.4, 4.5, 6.1].forEach((radius, index) => {
+      const ring = new THREE.Mesh(new THREE.TorusGeometry(radius, 0.045 + index * 0.012, 8, 64), runeMaterial);
+      ring.rotation.x = Math.PI / 2;
+      ring.position.y = 0.14;
+      arena.add(ring);
+    });
+    for (let i = 0; i < 8; i++) {
+      const crystal = new THREE.Mesh(
+        new THREE.OctahedronGeometry(0.32 + (i % 2) * 0.12, 0),
+        new THREE.MeshStandardMaterial({
+          color: i % 2 ? 0x80D8FF : 0xB388FF,
+          emissive: i % 2 ? 0x0288D1 : 0x7E57C2,
+          emissiveIntensity: 0.5,
+          roughness: 0.22
+        })
+      );
+      const angle = i / 8 * Math.PI * 2;
+      crystal.position.set(Math.cos(angle) * 6.1, 0.65, Math.sin(angle) * 6.1);
+      crystal.rotation.y = angle;
+      crystal.castShadow = true;
+      arena.add(crystal);
+    }
+    const arenaLight = new THREE.PointLight(0x80DEEA, 2.2, 24);
+    arenaLight.position.set(0, 6, 1);
+    arena.add(arenaLight);
+    arena.userData.floor = floor;
+    return arena;
   }
 
   function updateIslandVisuals() {
@@ -1890,92 +2402,166 @@
     });
   }
 
+  function getNavigationSurface(position) {
+    let best = null;
+    navigationIslands.forEach(surface => {
+      const dx = position.x - surface.center.x;
+      const dz = position.z - surface.center.z;
+      const distance = Math.hypot(dx, dz);
+      if (distance <= surface.radius && (!best || distance < best.distance)) {
+        best = { y: surface.center.y, distance, kind: 'island', sectionId: surface.sectionId };
+      }
+    });
+    navigationBridges.forEach(surface => {
+      const dx = surface.end.x - surface.start.x;
+      const dz = surface.end.z - surface.start.z;
+      const lengthSq = dx * dx + dz * dz;
+      if (!lengthSq) return;
+      const t = Math.max(0, Math.min(1,
+        ((position.x - surface.start.x) * dx + (position.z - surface.start.z) * dz) / lengthSq
+      ));
+      const closestX = surface.start.x + dx * t;
+      const closestZ = surface.start.z + dz * t;
+      const distance = Math.hypot(position.x - closestX, position.z - closestZ);
+      if (distance <= surface.width && (!best || distance < best.distance)) {
+        best = {
+          y: THREE.MathUtils.lerp(surface.start.y, surface.end.y, t),
+          distance,
+          kind: 'bridge',
+          sectionId: surface.sectionId
+        };
+      }
+    });
+    return best;
+  }
+
+  function moveHeroOnWorld(delta) {
+    const candidate = hero.position.clone().add(delta);
+    const surface = getNavigationSurface(candidate);
+    if (!surface) return false;
+    hero.position.x = candidate.x;
+    hero.position.z = candidate.z;
+    hero.position.y = THREE.MathUtils.lerp(hero.position.y, surface.y, 0.38);
+    return true;
+  }
+
+  function animateHeroWalk(isWalking, dt, direction) {
+    hero.userData.walkTime = (hero.userData.walkTime || 0) + (isWalking ? dt * 10 : dt * 4);
+    const cycle = isWalking ? Math.sin(hero.userData.walkTime) : 0;
+    const targetLeg = cycle * 0.52;
+    hero.userData.legL.rotation.x = THREE.MathUtils.lerp(hero.userData.legL.rotation.x, targetLeg, 0.24);
+    hero.userData.legR.rotation.x = THREE.MathUtils.lerp(hero.userData.legR.rotation.x, -targetLeg, 0.24);
+    hero.userData.armL.rotation.x = THREE.MathUtils.lerp(hero.userData.armL.rotation.x, -targetLeg * 0.65, 0.2);
+    hero.userData.armR.rotation.x = THREE.MathUtils.lerp(hero.userData.armR.rotation.x, targetLeg * 0.45, 0.2);
+    hero.userData.body.position.y = hero.userData.baseBodyY + (isWalking ? Math.abs(cycle) * 0.035 : Math.sin(hero.userData.walkTime * 0.45) * 0.012);
+    if (isWalking && direction.lengthSq() > 0.0001) {
+      const desiredHeading = Math.atan2(direction.x, direction.z);
+      let turn = desiredHeading - hero.rotation.y;
+      turn = Math.atan2(Math.sin(turn), Math.cos(turn));
+      hero.rotation.y += turn * Math.min(1, dt * 10);
+    }
+  }
+
+  function checkIslandArrival() {
+    let entered = null;
+    navigationIslands.forEach(surface => {
+      if (surface.sectionId === 'HOME') return;
+      const distance = Math.hypot(
+        hero.position.x - surface.center.x,
+        hero.position.z - surface.center.z
+      );
+      if (distance < surface.radius * 0.64) entered = surface.sectionId;
+    });
+    const previous = hero.userData.nearIsland || null;
+    hero.userData.nearIsland = entered;
+    if (!entered || entered === previous || document.getElementById('island-popup').classList.contains('active')) return;
+    clickTarget = null;
+    pendingIsland = null;
+    selectIsland(entered);
+  }
+
   function updateHub(dt) {
     if (!hero || state.screen !== 'hub') return;
+    dt = Math.min(dt || 0, 0.05);
     if (!hero.userData.lastStepPos) hero.userData.lastStepPos = hero.position.clone();
 
-    // WASD / Arrow movement
-    const move = new THREE.Vector3();
-    if (keys['w'] || keys['arrowup']) move.z -= 1;
-    if (keys['s'] || keys['arrowdown']) move.z += 1;
-    if (keys['a'] || keys['arrowleft']) move.x -= 1;
-    if (keys['d'] || keys['arrowright']) move.x += 1;
-
-    // Normalize and apply speed relative to camera
-    if (move.length() > 0) {
-      move.normalize().multiplyScalar(CONFIG.heroSpeed);
-      // Rotate to camera yaw
-      const camYaw = Math.atan2(camera.position.x - hero.position.x, camera.position.z - hero.position.z);
-      move.applyAxisAngle(new THREE.Vector3(0, 1, 0), camYaw + Math.PI);
-      hero.position.add(move);
-      if (hero.position.distanceTo(hero.userData.lastStepPos) > 1.5) {
-        spawnFootstep(hero.position);
-        hero.userData.lastStepPos.copy(hero.position);
-      }
-      // Animate legs
-      const walkCycle = Math.sin(Date.now() * 0.01) * 0.3;
-      hero.userData.legL.rotation.x = walkCycle;
-      hero.userData.legR.rotation.x = -walkCycle;
-      hero.userData.body.rotation.y = Math.sin(Date.now() * 0.005) * 0.05;
-    } else {
-      hero.userData.legL.rotation.x = 0;
-      hero.userData.legR.rotation.x = 0;
-    }
-
-    // Click-to-move
-    if (clickTarget) {
-      const dir = new THREE.Vector3().subVectors(clickTarget, hero.position);
-      dir.y = 0;
-      if (dir.length() > 0.2) {
-        dir.normalize().multiplyScalar(CONFIG.heroSpeed * 1.2);
-        hero.position.add(dir);
-        if (hero.position.distanceTo(hero.userData.lastStepPos) > 1.5) {
-          spawnFootstep(hero.position);
-          hero.userData.lastStepPos.copy(hero.position);
-        }
-        const walkCycle = Math.sin(Date.now() * 0.01) * 0.3;
-        hero.userData.legL.rotation.x = walkCycle;
-        hero.userData.legR.rotation.x = -walkCycle;
-      } else {
+    const input = new THREE.Vector3(
+      (keys['d'] || keys['arrowright'] ? 1 : 0) - (keys['a'] || keys['arrowleft'] ? 1 : 0),
+      0,
+      (keys['s'] || keys['arrowdown'] ? 1 : 0) - (keys['w'] || keys['arrowup'] ? 1 : 0)
+    );
+    let movement = new THREE.Vector3();
+    if (input.lengthSq() > 0) {
+      clickTarget = null;
+      pendingIsland = null;
+      input.normalize();
+      const cameraForward = new THREE.Vector3();
+      camera.getWorldDirection(cameraForward);
+      cameraForward.y = 0;
+      cameraForward.normalize();
+      const cameraRight = new THREE.Vector3(cameraForward.z, 0, -cameraForward.x);
+      movement.addScaledVector(cameraRight, input.x);
+      movement.addScaledVector(cameraForward, -input.z);
+      movement.normalize().multiplyScalar(CONFIG.heroSpeed * dt);
+    } else if (clickTarget) {
+      const toTarget = new THREE.Vector3().subVectors(clickTarget, hero.position);
+      toTarget.y = 0;
+      const distance = toTarget.length();
+      if (distance < 0.2) {
         clickTarget = null;
+      } else {
+        movement.copy(toTarget.normalize().multiplyScalar(Math.min(CONFIG.heroSpeed * dt, distance)));
       }
     }
 
-    // Camera follow
-    const targetPos = hero.position.clone().add(CONFIG.camOffsetHub);
-    camera.position.lerp(targetPos, 0.05);
-    camera.lookAt(hero.position.clone().add(new THREE.Vector3(0, 1, 0)));
+    const moved = movement.lengthSq() > 0 && moveHeroOnWorld(movement);
+    animateHeroWalk(moved, dt, movement);
+    if (moved && hero.position.distanceTo(hero.userData.lastStepPos) > 1.15) {
+      spawnFootstep(hero.position);
+      hero.userData.lastStepPos.copy(hero.position);
+    }
+    if (!moved && movement.lengthSq() > 0 && clickTarget) {
+      clickTarget = null;
+      pendingIsland = null;
+    }
 
-    // Animate bosses floating above completed islands
-    Object.keys(bosses).forEach(sid => {
+    checkIslandArrival();
+
+    const desiredCamera = hero.position.clone().add(CONFIG.camOffsetHub);
+    const cameraEase = 1 - Math.pow(0.001, dt);
+    camera.position.lerp(desiredCamera, cameraEase);
+    const lookTarget = hero.position.clone().add(new THREE.Vector3(0, 1.15, -1.2));
+    camera.lookAt(lookTarget);
+
+    Object.entries(islands).forEach(([sid, island]) => {
+      island.userData.portalRing.rotation.z += dt * (island.userData.status === 'unlocked' ? 1.4 : 0.35);
+      island.userData.orb.position.y = island.userData.height + 1.9 + Math.sin(performance.now() * 0.002 + sid.charCodeAt(1)) * 0.09;
+      island.userData.label.lookAt(camera.position);
       const boss = bosses[sid];
-      if (state.completed[sid]) {
+      if (boss && state.completed[sid]) {
         boss.visible = true;
         boss.rotation.y += dt * 0.5;
-        boss.position.y = islands[sid].position.y + 5 + Math.sin(Date.now() * 0.002) * 0.3;
-      } else {
+        boss.position.set(
+          island.position.x,
+          island.position.y + 5 + Math.sin(performance.now() * 0.002) * 0.25,
+          island.position.z
+        );
+      } else if (boss) {
         boss.visible = false;
       }
     });
-
-    // Animate Shape Shifter if visible
-    if (bosses['M5'] && bosses['M5'].visible) {
-      const shapes = bosses['M5'].userData.shapes;
-      if (shapes) {
-        shapes.userData.morphTime += dt;
-        const t = shapes.userData.morphTime;
-        shapes.userData.cube.scale.setScalar(0.8 + Math.sin(t * 2) * 0.2);
-        shapes.userData.sphere.scale.setScalar(0.8 + Math.sin(t * 2 + 2) * 0.2);
-        shapes.userData.pyramid.scale.setScalar(0.8 + Math.sin(t * 2 + 4) * 0.2);
-      }
+    if (homeIsland?.userData.label) homeIsland.userData.label.lookAt(camera.position);
+    if (hero.userData.nameTag) hero.userData.nameTag.lookAt(camera.position);
+    if (hero.userData.lumi) {
+      const lumi = hero.userData.lumi;
+      const time = performance.now() * 0.001;
+      lumi.position.set(0.82 + Math.cos(time * 1.4) * 0.22, 2.08 + Math.sin(time * 1.8) * 0.14, 0.25);
+      lumi.userData.ring.rotation.x += dt * 1.8;
+      lumi.userData.ring.rotation.y += dt * 2.4;
     }
-
-    // Islands gently bounce when Shauri is near
-    Object.values(islands).forEach(function(island) {
-      const dist = hero.position.distanceTo(island.mesh.position);
-      if (dist < 5 && !state.completed[island.sectionId]) {
-        island.mesh.position.y += Math.sin(Date.now() * 0.008) * 0.003;
-      }
+    worldClouds.forEach(cloud => {
+      cloud.position.x += cloud.userData.drift * dt;
+      if (cloud.position.x > 72) cloud.position.x = -72;
     });
   }
 
@@ -1986,6 +2572,7 @@
 
   function onPointerDown(e) {
     if (state.screen !== 'hub' || isTransitioning) return;
+    if (e.target.closest && e.target.closest('button, select, input, .ui-panel, #island-popup, #quest-card')) return;
     mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
     mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
 
@@ -1999,12 +2586,29 @@
         obj = obj.parent;
       }
       if (obj.userData && obj.userData.sectionId && obj.userData.sectionId !== 'HOME') {
-        selectIsland(obj.userData.sectionId);
+        const sid = obj.userData.sectionId;
+        const island = islands[sid];
+        if (!island) return;
+        if (island.userData.status === 'locked') {
+          showIslandPopup(sid, true);
+          return;
+        }
+        const surface = navigationIslands.find(item => item.sectionId === sid);
+        if (surface) {
+          clickTarget = surface.center.clone();
+          pendingIsland = sid;
+          closeIslandPopup();
+        }
         return;
       }
-      // Click ground to move
-      if (obj.name === 'ground' || (hit.object.name === 'ground')) {
-        clickTarget = new THREE.Vector3(hit.point.x, 0, hit.point.z);
+      if (hit.object.userData.walkable) {
+        const target = hit.point.clone();
+        const surface = getNavigationSurface(target);
+        if (surface) {
+          target.y = surface.y;
+          clickTarget = target;
+          pendingIsland = null;
+        }
         return;
       }
     }
@@ -2049,8 +2653,37 @@
   // ================================================================
   //  BATTLE SYSTEM
   // ================================================================
+  function clearBattleFeedbackTimer() {
+    if (battleFeedbackTimer) clearTimeout(battleFeedbackTimer);
+    battleFeedbackTimer = null;
+  }
+
+  function stageBattleActors(sid) {
+    const boss = bosses[sid];
+    if (!battleGroup || !hero || !boss) throw new Error('Battle actors are unavailable for ' + sid);
+    hubGroup.visible = false;
+    battleGroup.visible = true;
+    battleGroup.add(hero);
+    battleGroup.add(boss);
+    hero.position.set(-2.65, 0.18, 3.25);
+    hero.rotation.set(0, 0.35, 0);
+    animateHeroWalk(false, 0.016, new THREE.Vector3());
+    boss.position.set(1.15, 0.15, -1.7);
+    boss.userData.battleBaseY = boss.position.y;
+    boss.rotation.set(0, Math.PI, 0);
+    boss.scale.setScalar(1.12);
+    boss.visible = true;
+    camera.position.copy(CONFIG.camOffsetBattle);
+    camera.lookAt(new THREE.Vector3(0, 1.75, -0.6));
+  }
+
   function enterBattle(sid) {
     if (isTransitioning) return;
+    const section = GAME_DATA.sections.find(s => s.sectionId === sid);
+    if (!section || !Array.isArray(section.questions) || section.questions.length === 0) {
+      showErrorFallback('This island has no valid questions yet.');
+      return;
+    }
     isTransitioning = true;
     state.selectedIsland = sid;
     showScreen('battle');
@@ -2061,7 +2694,6 @@
     document.getElementById('battle-ui').classList.add('active');
 
     // Build battle state with retry queue logic
-    const section = GAME_DATA.sections.find(s => s.sectionId === sid);
     const pool = section.questions.map(q => ({...q}));
     // Shuffle pool for variety
     for (let i = pool.length - 1; i > 0; i--) {
@@ -2080,34 +2712,17 @@
       bossHP: section.questions.length,
       maxBossHP: section.questions.length,
       waitingForContinue: false,
-      isRetry: false
+      isRetry: false,
+      questionToken: 0,
+      answeredCorrect: new Set()
     };
 
     // Update boss bar
     document.getElementById('boss-name').textContent = ISLAND_THEMES[sid].boss;
     updateBossBar();
 
-    // Move hero to battle position
-    const islandPos = islands[sid].position.clone();
-    const battleOffset = new THREE.Vector3(0, 0, 5);
-    const heroTarget = islandPos.clone().add(battleOffset);
-    const bossTarget = islandPos.clone().add(new THREE.Vector3(0, 0, -5));
-
-    // Simple transition: move hero to island, then snap to battle view
-    hero.position.copy(heroTarget);
-
-    // Position camera behind hero
-    const camPos = hero.position.clone().add(CONFIG.camOffsetBattle);
-    camera.position.copy(camPos);
-    camera.lookAt(bossTarget);
-
-    // Show boss in battle
-    const boss = bosses[sid];
-    if (boss) {
-      boss.visible = true;
-      boss.position.copy(bossTarget);
-      boss.rotation.y = Math.PI; // face hero
-    }
+    clearBattleFeedbackTimer();
+    stageBattleActors(sid);
 
     setShauriMood('determined');
     showShauriBubble('battleStart', 2000);
@@ -2139,6 +2754,7 @@
 
   function nextBattleQuestion() {
     const b = state.battle;
+    if (!b || state.screen !== 'battle') return;
     if (b.bossHP <= 0) {
       endBattle(true);
       return;
@@ -2152,14 +2768,27 @@
       b.currentQuestion = b.retryQueue.shift();
       b.isRetry = true;
     } else {
-      endBattle(true);
-      return;
+      // Defensive recovery: victory is never granted while HP remains.
+      const section = GAME_DATA.sections.find(item => item.sectionId === b.sectionId);
+      const missing = section.questions.filter(question => !b.answeredCorrect.has(question.id));
+      if (missing.length === 0) {
+        b.bossHP = 0;
+        endBattle(true);
+        return;
+      }
+      b.retryQueue.push(...missing.map(question => ({...question})));
+      b.currentQuestion = b.retryQueue.shift();
+      b.isRetry = true;
     }
 
     renderQuestion(b.currentQuestion);
   }
 
   function renderQuestion(q) {
+    const b = state.battle;
+    if (!b || !q) return;
+    clearBattleFeedbackTimer();
+    b.questionToken++;
     document.getElementById('question-text').textContent = q.question;
     const grid = document.getElementById('answer-buttons');
     grid.innerHTML = '';
@@ -2170,13 +2799,13 @@
       btn.onclick = () => handleAnswer(idx);
       grid.appendChild(btn);
     });
-    state.battle.waitingForContinue = false;
+    b.waitingForContinue = false;
     updateComboMeter();
   }
 
   function handleAnswer(idx) {
     const b = state.battle;
-    if (b.waitingForContinue) return;
+    if (!b || b.waitingForContinue || !b.currentQuestion) return;
     const q = b.currentQuestion;
     const selected = q.options[idx];
     const isCorrect = selected === q.answer;
@@ -2188,8 +2817,9 @@
     });
 
     if (isCorrect) {
-      b.correctCount++;
-      b.bossHP--;
+      b.answeredCorrect.add(q.id);
+      b.correctCount = b.answeredCorrect.size;
+      b.bossHP = Math.max(0, b.maxBossHP - b.answeredCorrect.size);
       state.streak++;
       if (state.streak > state.bestStreak) state.bestStreak = state.streak;
       updateBossBar();
@@ -2201,9 +2831,11 @@
       playSound(comboMilestone ? 'combo' : 'correct');
       if (comboMilestone) showToast(`🔥 ${state.streak} answer streak! XP multiplier up!`, 'combo');
       showExplanation(q.explanation, true);
-      // Auto-continue after 2.5s on correct
-      setTimeout(() => {
-        if (state.screen === 'battle') onExplanationContinue();
+      // The token prevents an old timer from skipping the next question when
+      // the player presses Continue manually.
+      const token = b.questionToken;
+      battleFeedbackTimer = setTimeout(() => {
+        if (state.screen === 'battle') onExplanationContinue(token);
       }, 2500);
     } else {
       b.wrongCount++;
@@ -2244,7 +2876,15 @@
     state.battle.waitingForContinue = true;
   }
 
-  function onExplanationContinue() {
+  function onExplanationContinue(expectedToken = null) {
+    // DOM event handlers receive a MouseEvent as their first argument. Only
+    // the automatic-advance timer supplies a numeric question token.
+    if (typeof expectedToken !== 'number') expectedToken = null;
+    const b = state.battle;
+    if (!b || !b.waitingForContinue) return;
+    if (expectedToken !== null && expectedToken !== b.questionToken) return;
+    clearBattleFeedbackTimer();
+    b.waitingForContinue = false;
     const popup = document.getElementById('explanation-popup');
     popup.classList.remove('active');
     if (state.screen !== 'battle') return;
@@ -2320,6 +2960,11 @@
       p.position.copy(pos);
       p.position.x += (Math.random() - 0.5) * 0.3;
       p.position.z += (Math.random() - 0.5) * 0.3;
+      p.userData.velocity = new THREE.Vector3(
+        (Math.random() - 0.5) * 0.018,
+        0.018 + Math.random() * 0.018,
+        (Math.random() - 0.5) * 0.018
+      );
       p.userData.life = 1.0;
       scene.add(p);
       particles.push(p);
@@ -2345,6 +2990,7 @@
   // ================================================================
   function endBattle(victory) {
     if (!victory) return; // We only have victory states
+    clearBattleFeedbackTimer();
     const sid = state.battle.sectionId;
     const section = GAME_DATA.sections.find(s => s.sectionId === sid);
 
@@ -2448,6 +3094,23 @@
   }
 
   function returnToHub(keepTitle) {
+    clearBattleFeedbackTimer();
+    const returningSid = state.battle?.sectionId || state.selectedIsland;
+    const returningBoss = returningSid ? bosses[returningSid] : null;
+    if (hero && hubGroup && hero.parent !== hubGroup) hubGroup.add(hero);
+    if (returningBoss && hubGroup && returningBoss.parent !== hubGroup) hubGroup.add(returningBoss);
+    if (battleGroup) battleGroup.visible = false;
+    if (hubGroup) hubGroup.visible = true;
+    if (returningBoss && returningSid && islands[returningSid]) {
+      returningBoss.scale.setScalar(1);
+      returningBoss.rotation.set(0, 0, 0);
+      returningBoss.position.set(
+        islands[returningSid].position.x,
+        islands[returningSid].position.y + 5,
+        islands[returningSid].position.z
+      );
+      returningBoss.visible = !!state.completed[returningSid];
+    }
     if (!keepTitle) {
       showScreen('hub');
     }
@@ -2456,9 +3119,17 @@
     if (battleUi) battleUi.classList.remove('active');
     const expl = document.getElementById('explanation-popup');
     if (expl) expl.classList.remove('active');
-    if (state.selectedIsland && islands[state.selectedIsland]) {
-      hero.position.copy(islands[state.selectedIsland].position).add(new THREE.Vector3(0, 0, 5));
+    if (returningSid) {
+      const surface = navigationIslands.find(item => item.sectionId === returningSid);
+      if (surface) {
+        hero.position.copy(surface.center).add(new THREE.Vector3(0, 0, 2.3));
+        hero.userData.nearIsland = returningSid;
+      }
     }
+    hero.rotation.set(0, Math.PI, 0);
+    const cameraTarget = hero.position.clone().add(CONFIG.camOffsetHub);
+    camera.position.copy(cameraTarget);
+    camera.lookAt(hero.position.clone().add(new THREE.Vector3(0, 1.1, -1)));
     updateIslandVisuals();
     updateHUD();
   }
@@ -2677,48 +3348,57 @@
   // ================================================================
   //  MAIN LOOP
   // ================================================================
+  function reportRuntimeError(scope, error) {
+    if (runtimeErrorScopes.has(scope)) return;
+    runtimeErrorScopes.add(scope);
+    console.error(`[RUNTIME] ${scope} failed; the remaining game loop will continue.`, error);
+    showToast('⚠️ A visual effect was safely skipped.', 'save');
+  }
+
   function animate() {
     requestAnimationFrame(animate);
-    const dt = clock.getDelta();
+    const dt = Math.min(clock.getDelta(), 0.05);
 
-    if (state.screen === 'hub') {
-      updateHub(dt);
-    } else if (state.screen === 'battle') {
-      // Enhanced idle animations in battle
-      if (hero) {
-        const t = Date.now() * 0.003;
-        hero.userData.legL.rotation.x = Math.sin(t) * 0.05;
-        hero.userData.legR.rotation.x = Math.sin(t + Math.PI) * 0.05;
-        // Breathing
-        hero.userData.body.scale.y = 1 + Math.sin(t * 2) * 0.02;
-        hero.userData.head.position.y = 1.48 + Math.sin(t * 2) * 0.01;
-        // Scarf flutter
-        if (hero.userData.scarfTail) {
-          hero.userData.scarfTail.rotation.z = Math.sin(t * 3) * 0.15;
-          hero.userData.scarfTail.rotation.x = 0.4 + Math.sin(t * 2.5) * 0.1;
+    try {
+      if (state.screen === 'hub') {
+        updateHub(dt);
+      } else if (state.screen === 'battle') {
+        const t = performance.now() * 0.003;
+        if (hero) {
+          hero.userData.legL.rotation.x = THREE.MathUtils.lerp(hero.userData.legL.rotation.x, Math.sin(t) * 0.045, 0.08);
+          hero.userData.legR.rotation.x = THREE.MathUtils.lerp(hero.userData.legR.rotation.x, Math.sin(t + Math.PI) * 0.045, 0.08);
+          hero.userData.body.position.y = hero.userData.baseBodyY + Math.sin(t * 1.25) * 0.012;
+          hero.userData.head.position.y = hero.userData.baseHeadY + Math.sin(t * 1.25) * 0.008;
+          if (hero.userData.lumi) {
+            const lumi = hero.userData.lumi;
+            lumi.position.x = 0.82 + Math.cos(t * 0.8) * 0.28;
+            lumi.position.y = 2.15 + Math.sin(t * 1.2) * 0.14;
+            lumi.userData.ring.rotation.x += dt * 1.8;
+            lumi.userData.ring.rotation.y += dt * 2.5;
+          }
+          if (hero.userData.nameTag) hero.userData.nameTag.lookAt(camera.position);
         }
-        // Lumi orbit
-        if (hero.userData.lumi) {
-          const lumi = hero.userData.lumi;
-          lumi.position.x = 0.8 + Math.cos(t * 0.8) * 0.3;
-          lumi.position.y = 2.2 + Math.sin(t * 1.2) * 0.15;
-          lumi.userData.ring.rotation.x += 0.02;
-          lumi.userData.ring.rotation.y += 0.03;
+        const boss = state.battle ? bosses[state.battle.sectionId] : null;
+        if (boss && boss.visible) {
+          const baseY = boss.userData.battleBaseY ?? 0.15;
+          boss.position.y = baseY + Math.sin(performance.now() * 0.002) * 0.12;
+          boss.rotation.y = Math.PI + Math.sin(performance.now() * 0.001) * 0.1;
         }
-        // Name tag always face camera
-        if (hero.userData.nameTag) {
-          hero.userData.nameTag.lookAt(camera.position);
+        if (battleGroup) {
+          battleGroup.children.forEach(child => {
+            if (child.geometry?.type === 'TorusGeometry') child.rotation.z += dt * 0.08;
+          });
         }
       }
-      const boss = state.battle ? bosses[state.battle.sectionId] : null;
-      if (boss && boss.visible) {
-        boss.position.y += Math.sin(Date.now() * 0.002) * 0.002;
-        boss.rotation.y = Math.PI + Math.sin(Date.now() * 0.001) * 0.1;
-      }
+    } catch (error) {
+      reportRuntimeError(state.screen === 'battle' ? 'battle-update' : 'hub-update', error);
     }
 
-    updateParticles(dt);
-    renderer.render(scene, camera);
+    try { updateParticles(dt); }
+    catch (error) { reportRuntimeError('particles', error); }
+
+    try { renderer.render(scene, camera); }
+    catch (error) { reportRuntimeError('renderer', error); }
   }
 
 
@@ -2895,6 +3575,26 @@
       const buttons = container.querySelectorAll('.touch-btn');
       buttons.forEach(btn => {
         const key = btn.dataset.key;
+        btn.addEventListener('pointerdown', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          try { btn.setPointerCapture(e.pointerId); } catch(err) {}
+          keys[key] = true;
+          clickTarget = null;
+          btn.style.background = 'var(--ui-border)';
+        });
+        const releasePointer = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          keys[key] = false;
+          btn.style.background = '';
+        };
+        btn.addEventListener('pointerup', releasePointer);
+        btn.addEventListener('pointercancel', releasePointer);
+        btn.addEventListener('lostpointercapture', () => {
+          keys[key] = false;
+          btn.style.background = '';
+        });
         btn.addEventListener('touchstart', (e) => {
           e.preventDefault();
           e.stopPropagation();
