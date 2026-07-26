@@ -1,0 +1,218 @@
+{
+  "levelId": "level-3",
+  "title": "Level 3 — Advanced Spelling",
+  "description": "Master tricky patterns across ten magical word worlds",
+  "subject": "Advanced Spelling",
+  "expectedQuestions": 100,
+  "questionsPerFile": 10,
+  "hub": {
+    "name": "The Spellbound Skyway",
+    "emoji": "✨",
+    "homeColor": "#3A0CA3",
+    "homeAccent": "#FFD166"
+  },
+  "sections": [
+    {
+      "sectionId": "E1",
+      "subject": "Spelling",
+      "title": "Spelling Island 1",
+      "position": [-11, 3, -5],
+      "bridgeFrom": "HOME",
+      "unlockAfter": [],
+      "theme": {
+        "name": "Shimmering Suffix Shores",
+        "boss": "The Cious Comet Cub",
+        "emoji": "☄️",
+        "islandColor": "#00B4D8",
+        "bossColor": "#FFD166",
+        "accent": "#90E0EF",
+        "type": "spelling",
+        "bossArchetype": "E5"
+      },
+      "badge": "☄️ Suffix Stargazer"
+    },
+    {
+      "sectionId": "E2",
+      "subject": "Spelling",
+      "title": "Spelling Island 2",
+      "position": [-17, 5, -11],
+      "bridgeFrom": "E1",
+      "unlockAfter": ["E1"],
+      "theme": {
+        "name": "Sion Soundworks",
+        "boss": "The Ending Echo Otter",
+        "emoji": "🦦",
+        "islandColor": "#4361EE",
+        "bossColor": "#FF9F1C",
+        "accent": "#4CC9F0",
+        "type": "spelling",
+        "bossArchetype": "E2"
+      },
+      "badge": "🦦 Ending Echo Expert"
+    },
+    {
+      "sectionId": "E3",
+      "subject": "Spelling",
+      "title": "Spelling Island 3",
+      "position": [-19, 8, -20],
+      "bridgeFrom": "E2",
+      "unlockAfter": ["E2"],
+      "theme": {
+        "name": "Curious Character Canyon",
+        "boss": "The Pattern Parrot",
+        "emoji": "🦜",
+        "islandColor": "#2A9D8F",
+        "bossColor": "#F4A261",
+        "accent": "#80ED99",
+        "type": "spelling",
+        "bossArchetype": "E3"
+      },
+      "badge": "🦜 Pattern Pathfinder"
+    },
+    {
+      "sectionId": "E4",
+      "subject": "Spelling",
+      "title": "Spelling Island 4",
+      "position": [-14, 11, -28],
+      "bridgeFrom": "E3",
+      "unlockAfter": ["E3"],
+      "theme": {
+        "name": "I-Before-E Icefield",
+        "boss": "The Vowel-Veil Fox",
+        "emoji": "🦊",
+        "islandColor": "#577590",
+        "bossColor": "#F72585",
+        "accent": "#BDE0FE",
+        "type": "spelling",
+        "bossArchetype": "M2"
+      },
+      "badge": "🦊 Vowel-Veil Voyager"
+    },
+    {
+      "sectionId": "E5",
+      "subject": "Spelling",
+      "title": "Spelling Island 5",
+      "position": [-5, 14, -34],
+      "bridgeFrom": "E4",
+      "unlockAfter": ["E4"],
+      "theme": {
+        "name": "Silent Castle Coast",
+        "boss": "The Knuckle-Knight Koala",
+        "emoji": "🐨",
+        "islandColor": "#6A4C93",
+        "bossColor": "#FFCA3A",
+        "accent": "#C77DFF",
+        "type": "spelling",
+        "bossArchetype": "M4"
+      },
+      "badge": "🐨 Silent-Letter Scout"
+    },
+    {
+      "sectionId": "E6",
+      "subject": "Spelling",
+      "title": "Spelling Island 6",
+      "position": [5, 14, -34],
+      "bridgeFrom": "E5",
+      "unlockAfter": ["E5"],
+      "theme": {
+        "name": "Homophone Harbour",
+        "boss": "The Meaning-Mirror Manta",
+        "emoji": "🌊",
+        "islandColor": "#0077B6",
+        "bossColor": "#FF70A6",
+        "accent": "#48CAE4",
+        "type": "spelling",
+        "bossArchetype": "E1"
+      },
+      "badge": "🌊 Homophone Harbourmaster"
+    },
+    {
+      "sectionId": "E7",
+      "subject": "Spelling",
+      "title": "Spelling Island 7",
+      "position": [14, 11, -28],
+      "bridgeFrom": "E6",
+      "unlockAfter": ["E6"],
+      "theme": {
+        "name": "Exception Express",
+        "boss": "The Rule-Breaker Rabbit",
+        "emoji": "🚂",
+        "islandColor": "#F77F00",
+        "bossColor": "#90BE6D",
+        "accent": "#FCBF49",
+        "type": "spelling",
+        "bossArchetype": "M1"
+      },
+      "badge": "🚂 Exception Engineer"
+    },
+    {
+      "sectionId": "E8",
+      "subject": "Spelling",
+      "title": "Spelling Island 8",
+      "position": [19, 8, -20],
+      "bridgeFrom": "E7",
+      "unlockAfter": ["E7"],
+      "theme": {
+        "name": "Double-Letter Dreamworks",
+        "boss": "The Gemini Gecko",
+        "emoji": "🦎",
+        "islandColor": "#9D4EDD",
+        "bossColor": "#06D6A0",
+        "accent": "#E0AAFF",
+        "type": "spelling",
+        "bossArchetype": "M3"
+      },
+      "badge": "🦎 Double-Letter Dreamer"
+    },
+    {
+      "sectionId": "E9",
+      "subject": "Spelling",
+      "title": "Spelling Island 9",
+      "position": [17, 5, -11],
+      "bridgeFrom": "E8",
+      "unlockAfter": ["E8"],
+      "theme": {
+        "name": "Mischief Meadow",
+        "boss": "The Mischievous Marmot",
+        "emoji": "🌼",
+        "islandColor": "#588157",
+        "bossColor": "#FF595E",
+        "accent": "#A3B18A",
+        "type": "spelling",
+        "bossArchetype": "E4"
+      },
+      "badge": "🌼 Mischief Meadow Master"
+    },
+    {
+      "sectionId": "E10",
+      "subject": "Spelling",
+      "title": "Spelling Island 10",
+      "position": [11, 3, -5],
+      "bridgeFrom": "E9",
+      "unlockAfter": ["E9"],
+      "theme": {
+        "name": "Grand Word Workshop",
+        "boss": "The Grapheme Griffin",
+        "emoji": "🛠️",
+        "islandColor": "#E76F51",
+        "bossColor": "#FFD166",
+        "accent": "#F4A261",
+        "type": "spelling",
+        "bossArchetype": "M5"
+      },
+      "badge": "🛠️ Grand Grapheme Guardian"
+    }
+  ],
+  "files": [
+    "spelling-island-01.json",
+    "spelling-island-02.json",
+    "spelling-island-03.json",
+    "spelling-island-04.json",
+    "spelling-island-05.json",
+    "spelling-island-06.json",
+    "spelling-island-07.json",
+    "spelling-island-08.json",
+    "spelling-island-09.json",
+    "spelling-island-10.json"
+  ]
+}

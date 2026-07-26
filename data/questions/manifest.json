@@ -8,6 +8,10 @@
     "level-2": {
       "title": "Level 2 — Spelling",
       "manifest": "level-2/manifest.json"
+    },
+    "level-3": {
+      "title": "Level 3 — Advanced Spelling",
+      "manifest": "level-3/manifest.json"
     }
   }
 }

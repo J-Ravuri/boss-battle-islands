@@ -364,7 +364,7 @@
     .trophy-slot .trophy-label { font-weight: 700; color: var(--text-main); font-size: 0.7rem; }
     .level-card-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       gap: 18px;
       margin: 20px 0;
       text-align: left;
@@ -385,12 +385,21 @@
     }
     .level-card h2 { margin: 6px 0; }
     .level-card-progress { font-weight: 800; color: var(--ui-green); margin-top: 12px; }
+    .level-card-error { color: #C62828; font-weight: 800; margin-top: 12px; line-height: 1.35; }
     .level-card.unavailable { opacity: 0.55; cursor: not-allowed; }
-    .trophy-tabs { display: flex; justify-content: center; gap: 10px; margin-top: 12px; }
+    .trophy-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 12px; }
     .trophy-tab.active { background: var(--ui-accent); color: white; }
     @media (max-width: 600px) {
       .trophy-grid { grid-template-columns: repeat(3, 1fr); }
       .level-card-grid { grid-template-columns: 1fr; }
+      #ui-level-select .ui-panel, #ui-trophy .ui-panel {
+        max-height: calc(100vh - 20px);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+      }
+      .level-card { padding: 14px 16px; }
+      .level-card-grid { gap: 10px; margin: 12px 0; }
+      .trophy-tabs .btn { padding: 10px 12px; margin: 3px; font-size: 0.85rem; }
     }
     #ui-hub.active { pointer-events: none; }
   #island-popup {
@@ -1154,6 +1163,8 @@
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.05;
+    renderer.domElement.tabIndex = 0;
+    renderer.domElement.setAttribute('aria-label', 'Boss Battle Islands 3D game world');
     container.appendChild(renderer.domElement);
 
     clock = new THREE.Clock();
@@ -2604,6 +2615,12 @@
     camera.position.lerp(desiredCamera, cameraEase);
     const lookTarget = hero.position.clone().add(new THREE.Vector3(0, 1.15, -1.2));
     camera.lookAt(lookTarget);
+    // Lightweight runtime diagnostics make keyboard/touch movement and clean
+    // world rebuilds verifiable without exposing internal game objects.
+    if (renderer?.domElement) {
+      renderer.domElement.dataset.heroX = hero.position.x.toFixed(3);
+      renderer.domElement.dataset.heroZ = hero.position.z.toFixed(3);
+    }
 
     Object.entries(islands).forEach(([sid, island]) => {
       island.userData.portalRing.rotation.z += dt * (island.userData.status === 'unlocked' ? 1.4 : 0.35);
@@ -3284,11 +3301,16 @@
       card.type = 'button';
       card.className = 'level-card' + (level.ready ? '' : ' unavailable');
       card.disabled = !level.ready;
+      card.setAttribute('aria-label', level.ready
+        ? `Play ${level.title}`
+        : `${level.title} is unavailable because its question files did not pass validation`);
       card.innerHTML =
         `<div style="font-size:2.4rem;">${level.hub.emoji || '🏝️'}</div>` +
         `<h2>${level.title}</h2>` +
         `<p>${level.description}</p>` +
-        `<div class="level-card-progress">${completed}/${level.sections.length} islands • ${progress.xp || 0} XP</div>`;
+        (level.ready
+          ? `<div class="level-card-progress">${completed}/${level.sections.length} islands • ${progress.xp || 0} XP</div>`
+          : '<div class="level-card-error">⚠️ Content unavailable — check this level’s question files.</div>');
       card.onclick = () => selectLevel(level.id);
       grid.appendChild(card);
     });
@@ -3930,6 +3952,9 @@
       const externalQuestionCount = await loadExternalQuestionPacks();
       if (externalQuestionCount > 0) {
         console.log(`[BOOT] Added ${externalQuestionCount} external questions.`);
+      }
+      if (!activeLevelRegistry) {
+        throw new Error('No playable question levels could be loaded. Please check the question manifests and refresh.');
       }
       updateLoadingBar(20);
       console.log('[BOOT] Step 3: Validating game data...');

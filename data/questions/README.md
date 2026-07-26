@@ -5,6 +5,7 @@ the same manifest-driven registry:
 
 - `level-1/` — the backed-up original 100 English and Maths questions.
 - `level-2/` — 100 spelling questions across ten spelling islands.
+- `level-3/` — 100 advanced spelling questions across ten new islands.
 - `templates/` — the original general-purpose island-pack example.
 
 The root `manifest.json` registers the available levels. Its `activeLevel` is
@@ -24,6 +25,10 @@ data/questions/
 │   ├── README.md
 │   ├── manifest.json
 │   └── spelling-island-01.json … spelling-island-10.json
+├── level-3/
+│   ├── README.md
+│   ├── manifest.json
+│   └── spelling-island-01.json … spelling-island-10.json
 └── templates/
     └── example-pack.json
 ```
@@ -37,5 +42,5 @@ the game. Files must be served over HTTP, such as
 `http://localhost:8765/`; browsers cannot load JSON packs reliably from a
 `file://` page.
 
-To add Level 3, add its folder and manifest, then register that manifest in the
+To add another level, add its folder and manifest, then register that manifest in the
 root `levels` object. No core engine changes are required.
