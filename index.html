@@ -891,8 +891,8 @@
     </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
-  <script src="audio-manager.js"></script>
-  <script src="boss-effect-manager.js"></script>
+  <script src="audio-manager.js?v=2"></script>
+  <script src="boss-effect-manager.js?v=2"></script>
   <script src="enhanced-movement.js"></script>
   <script src="sound-manager.js"></script>
   <script>
@@ -3575,11 +3575,9 @@
         boss.rotation.z = 0;
       }
     }, 16);
-    if (window.bossEffectManager) {
-      window.bossEffectManager.screenShake(0.08, 0.18);
-      window.bossEffectManager.damageFlash();
-      window.bossEffectManager.createHitParticles(window.innerWidth * 0.5, window.innerHeight * 0.5, '#FFD700');
-    }
+    runBossEffect('screenShake', 0.08, 0.18);
+    runBossEffect('damageFlash');
+    runBossEffect('createHitParticles', window.innerWidth * 0.5, window.innerHeight * 0.5, '#FFD700');
     // Spawn sparkle particles
     spawnParticles(boss.position, 0xFFD700, 12);
   }
@@ -3598,10 +3596,8 @@
         boss.position.y = baseY;
       }
     }, 16);
-    if (window.bossEffectManager) {
-      window.bossEffectManager.screenShake(0.05, 0.12);
-      window.bossEffectManager.createHitParticles(window.innerWidth * 0.5, window.innerHeight * 0.5, '#B0BEC5');
-    }
+    runBossEffect('screenShake', 0.05, 0.12);
+    runBossEffect('createHitParticles', window.innerWidth * 0.5, window.innerHeight * 0.5, '#B0BEC5');
     // Harmless puff
     spawnParticles(boss.position, 0xB0BEC5, 6);
   }
@@ -3623,6 +3619,16 @@
       p.userData.life = 1.0;
       scene.add(p);
       particles.push(p);
+    }
+  }
+
+  function runBossEffect(methodName, ...args) {
+    const manager = window.bossEffectManager;
+    if (!manager || typeof manager[methodName] !== 'function') return;
+    try {
+      manager[methodName](...args);
+    } catch (error) {
+      reportRuntimeError(`boss-effect-${methodName}`, error);
     }
   }
 

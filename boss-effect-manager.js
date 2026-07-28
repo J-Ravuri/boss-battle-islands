@@ -3,7 +3,8 @@
     constructor() {
       this.screenShakeIntensity = 0;
       this.shakeDuration = 0;
-      this.damageFlash = null;
+      this.damageFlashElement = null;
+      this.flashTimer = null;
       this.particleSystems = [];
       this.shaking = false;
     }
@@ -35,24 +36,24 @@
     }
 
     damageFlash() {
-      if (!this.damageFlash) {
-        this.damageFlash = document.createElement('div');
-        this.damageFlash.style.position = 'fixed';
-        this.damageFlash.style.top = '0';
-        this.damageFlash.style.left = '0';
-        this.damageFlash.style.width = '100%';
-        this.damageFlash.style.height = '100%';
-        this.damageFlash.style.backgroundColor = 'rgba(255, 0, 0, 0.3)';
-        this.damageFlash.style.pointerEvents = 'none';
-        this.damageFlash.style.opacity = '0';
-        this.damageFlash.style.zIndex = '999';
-        document.body.appendChild(this.damageFlash);
+      if (!this.damageFlashElement) {
+        this.damageFlashElement = document.createElement('div');
+        this.damageFlashElement.style.position = 'fixed';
+        this.damageFlashElement.style.top = '0';
+        this.damageFlashElement.style.left = '0';
+        this.damageFlashElement.style.width = '100%';
+        this.damageFlashElement.style.height = '100%';
+        this.damageFlashElement.style.backgroundColor = 'rgba(255, 0, 0, 0.3)';
+        this.damageFlashElement.style.pointerEvents = 'none';
+        this.damageFlashElement.style.opacity = '0';
+        this.damageFlashElement.style.zIndex = '999';
+        document.body.appendChild(this.damageFlashElement);
       }
 
-      this.damageFlash.style.opacity = '0.7';
+      this.damageFlashElement.style.opacity = '0.7';
       clearTimeout(this.flashTimer);
       this.flashTimer = setTimeout(() => {
-        this.damageFlash.style.opacity = '0';
+        if (this.damageFlashElement) this.damageFlashElement.style.opacity = '0';
       }, 120);
     }
 

@@ -8,6 +8,9 @@
     }
 
     createAudioSettings() {
+      // The main game already provides a sound button in its HUD. Do not add
+      // the legacy floating control on top of the HUD's main-menu button.
+      if (document.getElementById('hud-sound-btn')) return;
       if (document.getElementById('audio-toggle')) return;
 
       const audioToggle = document.createElement('div');
