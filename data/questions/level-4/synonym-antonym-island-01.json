@@ -1,0 +1,170 @@
+{
+  "levelId": "level-4",
+  "subject": "Synonyms and Antonyms",
+  "sectionId": "E1",
+  "round": 1,
+  "title": "Synonym & Antonym Island 1",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L4-SA-001",
+      "question": "Select the word that has the same or similar meaning to the word on the left: quantity",
+      "options": [
+        "value",
+        "amount",
+        "worth",
+        "price"
+      ],
+      "answer": "amount",
+      "explanation": "Quantity means the amount of something.",
+      "word": "quantity",
+      "type": "synonym",
+      "skill": "exact-meaning-match",
+      "difficulty": 1
+    },
+    {
+      "id": "L4-SA-002",
+      "question": "Select the word that has the same or similar meaning to the word on the left: journal",
+      "options": [
+        "note",
+        "diary",
+        "letter",
+        "register"
+      ],
+      "answer": "diary",
+      "explanation": "A journal is a diary in which someone records thoughts or events.",
+      "word": "journal",
+      "type": "synonym",
+      "skill": "exact-meaning-match",
+      "difficulty": 1
+    },
+    {
+      "id": "L4-SA-003",
+      "question": "Select the word that has the same or similar meaning to the word on the left: bellow",
+      "options": [
+        "jeer",
+        "chant",
+        "roar",
+        "whisper"
+      ],
+      "answer": "roar",
+      "explanation": "To bellow means to shout or roar very loudly.",
+      "word": "bellow",
+      "type": "synonym",
+      "skill": "exact-meaning-match",
+      "difficulty": 1
+    },
+    {
+      "id": "L4-SA-004",
+      "question": "Select the word that has the same or similar meaning to the word on the left: peak",
+      "options": [
+        "roof",
+        "look",
+        "glance",
+        "summit"
+      ],
+      "answer": "summit",
+      "explanation": "A peak is the summit or highest point of a mountain.",
+      "word": "peak",
+      "type": "synonym",
+      "skill": "exact-meaning-match",
+      "difficulty": 1
+    },
+    {
+      "id": "L4-SA-005",
+      "question": "Select the word that has the same or similar meaning to the word on the left: below",
+      "options": [
+        "buried",
+        "rear",
+        "beneath",
+        "sunk"
+      ],
+      "answer": "beneath",
+      "explanation": "Below and beneath both mean in a lower position.",
+      "word": "below",
+      "type": "synonym",
+      "skill": "exact-meaning-match",
+      "difficulty": 1
+    },
+    {
+      "id": "L4-SA-006",
+      "question": "Select the word that has the same or similar meaning to the word on the left: study",
+      "options": [
+        "library",
+        "teach",
+        "notice",
+        "learn"
+      ],
+      "answer": "learn",
+      "explanation": "To study means to learn about a subject.",
+      "word": "study",
+      "type": "synonym",
+      "skill": "exact-meaning-match",
+      "difficulty": 1
+    },
+    {
+      "id": "L4-SA-007",
+      "question": "Select the word that has the same or similar meaning to the word on the left: honest",
+      "options": [
+        "proper",
+        "loyal",
+        "reliable",
+        "truthful"
+      ],
+      "answer": "truthful",
+      "explanation": "An honest person is truthful and does not deliberately deceive others.",
+      "word": "honest",
+      "type": "synonym",
+      "skill": "exact-meaning-match",
+      "difficulty": 1
+    },
+    {
+      "id": "L4-SA-008",
+      "question": "Select the word that has the same or similar meaning to the word on the left: hire",
+      "options": [
+        "rent",
+        "reach",
+        "taller",
+        "ladder"
+      ],
+      "answer": "rent",
+      "explanation": "To hire something means to rent it for a period of time.",
+      "word": "hire",
+      "type": "synonym",
+      "skill": "exact-meaning-match",
+      "difficulty": 1
+    },
+    {
+      "id": "L4-SA-009",
+      "question": "Select the word that has the same or similar meaning to the word on the left: remedy",
+      "options": [
+        "medicine",
+        "amend",
+        "cure",
+        "tablet"
+      ],
+      "answer": "cure",
+      "explanation": "A remedy is a cure or treatment for a problem or illness.",
+      "word": "remedy",
+      "type": "synonym",
+      "skill": "exact-meaning-match",
+      "difficulty": 1
+    },
+    {
+      "id": "L4-SA-010",
+      "question": "What is another word for 'fetid' (line 15)?",
+      "options": [
+        "dark",
+        "smelly",
+        "wet",
+        "hidden"
+      ],
+      "answer": "smelly",
+      "explanation": "Fetid means having a very unpleasant smell.",
+      "word": "fetid",
+      "type": "synonym",
+      "skill": "vocabulary-in-context",
+      "difficulty": 2
+    }
+  ]
+}

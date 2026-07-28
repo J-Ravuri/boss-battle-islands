@@ -1,0 +1,170 @@
+{
+  "levelId": "level-4",
+  "subject": "Synonyms and Antonyms",
+  "sectionId": "E4",
+  "round": 4,
+  "title": "Synonym & Antonym Island 4",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L4-SA-031",
+      "question": "What is another word for 'precipitate' (line 6)?",
+      "options": [
+        "emerge",
+        "hide",
+        "swim",
+        "throw"
+      ],
+      "answer": "throw",
+      "explanation": "In this context, precipitate means to throw or hurl something suddenly.",
+      "word": "precipitate",
+      "type": "synonym",
+      "skill": "context-dependent-meaning",
+      "difficulty": 3
+    },
+    {
+      "id": "L4-SA-032",
+      "question": "Which of the following words is a synonym of 'proclivities' (line 19)?",
+      "options": [
+        "swimming",
+        "tendencies",
+        "wildlife",
+        "abilities"
+      ],
+      "answer": "tendencies",
+      "explanation": "Proclivities are natural tendencies or inclinations.",
+      "word": "proclivities",
+      "type": "synonym",
+      "skill": "advanced-vocabulary",
+      "difficulty": 3
+    },
+    {
+      "id": "L4-SA-033",
+      "question": "Which of the following is an antonym of ‘profusion’ (line5)?",
+      "options": [
+        "abundance",
+        "flair",
+        "moderation",
+        "inability"
+      ],
+      "answer": "moderation",
+      "explanation": "Profusion means a very large amount. Moderation means a limited or reasonable amount, so it is the opposite.",
+      "word": "profusion",
+      "type": "antonym",
+      "skill": "exact-opposite-match",
+      "difficulty": 3
+    },
+    {
+      "id": "L4-SA-034",
+      "question": "'took cognisance of fellow passengers' (line 10)\nWhat is another way of saying ‘cognisance’?",
+      "options": [
+        "notice",
+        "photographs",
+        "complaints",
+        "compliments"
+      ],
+      "answer": "notice",
+      "explanation": "To take cognisance of something means to notice or pay attention to it.",
+      "word": "cognisance",
+      "type": "synonym",
+      "skill": "advanced-vocabulary",
+      "difficulty": 3
+    },
+    {
+      "id": "L4-SA-035",
+      "question": "'justifiable political aspirations' (line 1)\nWhat is another way of saying 'justifiable'?",
+      "options": [
+        "simple",
+        "recognisable",
+        "legitimate",
+        "moderate"
+      ],
+      "answer": "legitimate",
+      "explanation": "Justifiable means reasonable, defensible or legitimate.",
+      "word": "justifiable",
+      "type": "synonym",
+      "skill": "precise-synonym-choice",
+      "difficulty": 3
+    },
+    {
+      "id": "L4-SA-036",
+      "question": "What would be another word for 'eradicated' in line 27?",
+      "options": [
+        "removed",
+        "loved",
+        "cleaned",
+        "grown"
+      ],
+      "answer": "removed",
+      "explanation": "Eradicated means completely removed or destroyed.",
+      "word": "eradicated",
+      "type": "synonym",
+      "skill": "vocabulary-in-context",
+      "difficulty": 2
+    },
+    {
+      "id": "L4-SA-037",
+      "question": "What would be another word for 'piquant' in line 33?",
+      "options": [
+        "hilarious",
+        "informative",
+        "silly",
+        "interesting"
+      ],
+      "answer": "interesting",
+      "explanation": "In this context, piquant means pleasantly interesting or stimulating.",
+      "word": "piquant",
+      "type": "synonym",
+      "skill": "context-dependent-meaning",
+      "difficulty": 3
+    },
+    {
+      "id": "L4-SA-038",
+      "question": "Which is the closest in meaning to 'wistful'? (line 9)",
+      "options": [
+        "dreamy",
+        "whistling",
+        "loud",
+        "happy"
+      ],
+      "answer": "dreamy",
+      "explanation": "Wistful means quietly thoughtful or longing, so dreamy is the closest choice.",
+      "word": "wistful",
+      "type": "synonym",
+      "skill": "tone-and-emotion-vocabulary",
+      "difficulty": 3
+    },
+    {
+      "id": "L4-SA-039",
+      "question": "Which is closest in meaning to 'discreetly'? (line 44)",
+      "options": [
+        "suspiciously",
+        "hilariously",
+        "definitely",
+        "secretively"
+      ],
+      "answer": "secretively",
+      "explanation": "Discreetly means carefully and without attracting attention; secretively is the closest option.",
+      "word": "discreetly",
+      "type": "synonym",
+      "skill": "precise-synonym-choice",
+      "difficulty": 3
+    },
+    {
+      "id": "L4-SA-040",
+      "question": "Which of the words below means the same as ‘Providence’ (line 10)?",
+      "options": [
+        "skill",
+        "fate",
+        "miraculous",
+        "obvious"
+      ],
+      "answer": "fate",
+      "explanation": "Providence can mean a guiding power or fate.",
+      "word": "Providence",
+      "type": "synonym",
+      "skill": "advanced-vocabulary",
+      "difficulty": 3
+    }
+  ]
+}

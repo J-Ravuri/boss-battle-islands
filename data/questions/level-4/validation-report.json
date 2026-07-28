@@ -1,0 +1,22 @@
+{
+  "levelId": "level-4",
+  "files": [
+    "synonym-antonym-island-01.json",
+    "synonym-antonym-island-02.json",
+    "synonym-antonym-island-03.json",
+    "synonym-antonym-island-04.json"
+  ],
+  "questionCount": 40,
+  "islandCount": 4,
+  "synonymCount": 39,
+  "antonymCount": 1,
+  "validation": {
+    "validJson": true,
+    "exactlyTenQuestionsPerFile": true,
+    "exactlyFourOptionsPerQuestion": true,
+    "answersMatchOptions": true,
+    "uniqueIds": true,
+    "uniqueWords": true
+  },
+  "note": "Six additional questions with unavailable answer-key verification were excluded from the downloadable pack."
+}

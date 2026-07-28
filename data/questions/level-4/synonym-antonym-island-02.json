@@ -1,0 +1,170 @@
+{
+  "levelId": "level-4",
+  "subject": "Synonyms and Antonyms",
+  "sectionId": "E2",
+  "round": 2,
+  "title": "Synonym & Antonym Island 2",
+  "mode": "replace",
+  "questions": [
+    {
+      "id": "L4-SA-011",
+      "question": "Select the word that has the same or similar meaning to the word on the left: hazardous",
+      "options": [
+        "risk",
+        "unsafe",
+        "foolhardy",
+        "enterprising"
+      ],
+      "answer": "unsafe",
+      "explanation": "Hazardous means dangerous or unsafe.",
+      "word": "hazardous",
+      "type": "synonym",
+      "skill": "exact-meaning-match",
+      "difficulty": 1
+    },
+    {
+      "id": "L4-SA-012",
+      "question": "Select the word that has the same or similar meaning to the word on the left: supple",
+      "options": [
+        "flexible",
+        "rigid",
+        "bent",
+        "stretched"
+      ],
+      "answer": "flexible",
+      "explanation": "Supple means flexible and able to bend easily.",
+      "word": "supple",
+      "type": "synonym",
+      "skill": "exact-meaning-match",
+      "difficulty": 2
+    },
+    {
+      "id": "L4-SA-013",
+      "question": "Select the word that has the same or similar meaning to the word on the left: bubbly",
+      "options": [
+        "shiny",
+        "effervescent",
+        "sparkly",
+        "merry"
+      ],
+      "answer": "effervescent",
+      "explanation": "Bubbly can mean lively and enthusiastic; effervescent has the same meaning.",
+      "word": "bubbly",
+      "type": "synonym",
+      "skill": "precise-synonym-choice",
+      "difficulty": 2
+    },
+    {
+      "id": "L4-SA-014",
+      "question": "Select the word that has the same or similar meaning to the word on the left: emblem",
+      "options": [
+        "fable",
+        "trophy",
+        "award",
+        "badge"
+      ],
+      "answer": "badge",
+      "explanation": "An emblem is a badge or symbol that represents something.",
+      "word": "emblem",
+      "type": "synonym",
+      "skill": "exact-meaning-match",
+      "difficulty": 2
+    },
+    {
+      "id": "L4-SA-015",
+      "question": "Select the word that has the same or similar meaning to the word on the left: elongate",
+      "options": [
+        "strengthen",
+        "lengthen",
+        "broaden",
+        "shorten"
+      ],
+      "answer": "lengthen",
+      "explanation": "To elongate something means to make it longer.",
+      "word": "elongate",
+      "type": "synonym",
+      "skill": "word-root-meaning",
+      "difficulty": 2
+    },
+    {
+      "id": "L4-SA-016",
+      "question": "Select the word that has the same or similar meaning to the word on the left: venomous",
+      "options": [
+        "poisonous",
+        "colourful",
+        "jealous",
+        "woeful"
+      ],
+      "answer": "poisonous",
+      "explanation": "Venomous means able to inject venom, so poisonous is the closest option.",
+      "word": "venomous",
+      "type": "synonym",
+      "skill": "precise-synonym-choice",
+      "difficulty": 2
+    },
+    {
+      "id": "L4-SA-017",
+      "question": "Select the word that has the same or similar meaning to the word on the left: renovate",
+      "options": [
+        "repaper",
+        "repair",
+        "remove",
+        "reform"
+      ],
+      "answer": "repair",
+      "explanation": "To renovate means to repair and improve a building or object.",
+      "word": "renovate",
+      "type": "synonym",
+      "skill": "exact-meaning-match",
+      "difficulty": 2
+    },
+    {
+      "id": "L4-SA-018",
+      "question": "Select the word that has the same or similar meaning to the word on the left: initiate",
+      "options": [
+        "mimic",
+        "initial",
+        "start",
+        "first"
+      ],
+      "answer": "start",
+      "explanation": "To initiate something means to start it.",
+      "word": "initiate",
+      "type": "synonym",
+      "skill": "word-class-awareness",
+      "difficulty": 2
+    },
+    {
+      "id": "L4-SA-019",
+      "question": "What is another word for ‘garish’ (line 23)?",
+      "options": [
+        "lurid",
+        "intricate",
+        "convoluted",
+        "outlandish"
+      ],
+      "answer": "lurid",
+      "explanation": "Garish means unpleasantly bright or showy; lurid is the closest match.",
+      "word": "garish",
+      "type": "synonym",
+      "skill": "vocabulary-in-context",
+      "difficulty": 2
+    },
+    {
+      "id": "L4-SA-020",
+      "question": "‘…to commemorate the fabled run…’ (line 2)\nWhich of the following is closest in meaning to ‘commemorate’?",
+      "options": [
+        "remember",
+        "provide",
+        "satisfy",
+        "commiserate"
+      ],
+      "answer": "remember",
+      "explanation": "To commemorate something means to remember and honour it.",
+      "word": "commemorate",
+      "type": "synonym",
+      "skill": "vocabulary-in-context",
+      "difficulty": 2
+    }
+  ]
+}
