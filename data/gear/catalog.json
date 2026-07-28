@@ -135,6 +135,23 @@
       {"id":"l3-e10-grapheme-galaxy-sword","name":"Grapheme Galaxy Sword","slot":"weapon","rarity":"legendary","form":"lightblade","color":"#3A0CA3","accent":"#FFD166","description":"Every grapheme shines like a tiny galaxy."},
       {"id":"l3-e10-grand-guardian-crown","name":"Grand Guardian Crown","slot":"head","rarity":"legendary","form":"crown","color":"#E76F51","accent":"#FFF176","description":"The crown of Shauri's greatest spelling victory."},
       {"id":"l3-e10-mastery-star-cape","name":"Mastery Star Cape","slot":"back","rarity":"legendary","form":"cape","color":"#240046","accent":"#FFD166","description":"A starfield cape for mastering all three levels."}
+    ]},
+
+    {"levelId":"level-4","sectionId":"E1","items":[
+      {"id":"l4-e1-echo-pair-wand","name":"Echo-Pair Wand","slot":"weapon","rarity":"epic","form":"wand","color":"#43AA8B","accent":"#90E0EF","description":"Creates two matching sparks for every precise meaning."},
+      {"id":"l4-e1-mirror-meadow-cape","name":"Mirror Meadow Cape","slot":"back","rarity":"epic","form":"cape","color":"#2A9D8F","accent":"#FDE68A","description":"A soft green cape patterned with paired words."}
+    ]},
+    {"levelId":"level-4","sectionId":"E2","items":[
+      {"id":"l4-e2-contrary-colour-bow","name":"Contrary Colour Bow","slot":"weapon","rarity":"epic","form":"bow","color":"#90BE6D","accent":"#F94144","description":"Its two colours point towards opposite meanings."},
+      {"id":"l4-e2-chameleon-crest-hood","name":"Chameleon Crest Hood","slot":"head","rarity":"epic","form":"hood","color":"#F9C74F","accent":"#43AA8B","description":"Changes colour whenever an exact opposite is found."}
+    ]},
+    {"levelId":"level-4","sectionId":"E3","items":[
+      {"id":"l4-e3-synonym-scout-staff","name":"Synonym Scout Staff","slot":"weapon","rarity":"legendary","form":"staff","color":"#F9844A","accent":"#FDE68A","description":"Stores precise word matches in a glowing acorn."},
+      {"id":"l4-e3-twin-word-backpack","name":"Twin-Word Backpack","slot":"back","rarity":"legendary","form":"backpack","color":"#B5651D","accent":"#90BE6D","description":"Carries paired vocabulary for every expedition."}
+    ]},
+    {"levelId":"level-4","sectionId":"E4","items":[
+      {"id":"l4-e4-flip-side-lightblade","name":"Flip-Side Lightblade","slot":"weapon","rarity":"legendary","form":"lightblade","color":"#F3722C","accent":"#9B5DE5","description":"Flips between matching and opposing word power."},
+      {"id":"l4-e4-polarity-peak-crown","name":"Polarity Peak Crown","slot":"head","rarity":"legendary","form":"crown","color":"#577590","accent":"#FDE68A","description":"The crown of a champion who sees both sides of meaning."}
     ]}
   ]
 }

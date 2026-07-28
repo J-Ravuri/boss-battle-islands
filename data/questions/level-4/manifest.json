@@ -1,0 +1,99 @@
+{
+  "levelId": "level-4",
+  "title": "Level 4 — Synonyms and Antonyms",
+  "description": "Four vocabulary realms for matching precise meanings and opposites",
+  "subject": "Synonyms and Antonyms",
+  "expectedQuestions": 40,
+  "expectedSections": 4,
+  "questionsPerFile": 10,
+  "hub": {
+    "name": "The Meaning Wilds",
+    "emoji": "🔄",
+    "homeColor": "#5E548E",
+    "homeAccent": "#FDE68A"
+  },
+  "sections": [
+    {
+      "sectionId": "E1",
+      "subject": "Synonyms and Antonyms",
+      "title": "Exact Meaning Matches",
+      "position": [-10, 3, -6],
+      "bridgeFrom": "HOME",
+      "unlockAfter": [],
+      "theme": {
+        "name": "Mirror-Meaning Meadow",
+        "boss": "The Echo Otter",
+        "emoji": "🦦",
+        "islandColor": "#43AA8B",
+        "bossColor": "#8D6E63",
+        "accent": "#90E0EF",
+        "type": "vocabulary",
+        "bossArchetype": "SA1"
+      },
+      "badge": "🪞 Meaning Matcher"
+    },
+    {
+      "sectionId": "E2",
+      "subject": "Synonyms and Antonyms",
+      "title": "Precise Synonym Choices",
+      "position": [-14, 6, -16],
+      "bridgeFrom": "E1",
+      "unlockAfter": ["E1"],
+      "theme": {
+        "name": "Opposite Orchard",
+        "boss": "The Contrary Chameleon",
+        "emoji": "🦎",
+        "islandColor": "#F9C74F",
+        "bossColor": "#90BE6D",
+        "accent": "#F94144",
+        "type": "vocabulary",
+        "bossArchetype": "SA2"
+      },
+      "badge": "↔️ Opposite Explorer"
+    },
+    {
+      "sectionId": "E3",
+      "subject": "Synonyms and Antonyms",
+      "title": "Advanced Meaning Connections",
+      "position": [0, 9, -24],
+      "bridgeFrom": "E2",
+      "unlockAfter": ["E2"],
+      "theme": {
+        "name": "Twin-Word Treetops",
+        "boss": "The Synonym Squirrel",
+        "emoji": "🐿️",
+        "islandColor": "#F9844A",
+        "bossColor": "#B5651D",
+        "accent": "#FDE68A",
+        "type": "vocabulary",
+        "bossArchetype": "SA3"
+      },
+      "badge": "🌰 Synonym Scout"
+    },
+    {
+      "sectionId": "E4",
+      "subject": "Synonyms and Antonyms",
+      "title": "Context, Tone and Opposites",
+      "position": [14, 12, -16],
+      "bridgeFrom": "E3",
+      "unlockAfter": ["E3"],
+      "theme": {
+        "name": "Polarity Peaks",
+        "boss": "The Flip-Side Fox",
+        "emoji": "🦊",
+        "islandColor": "#577590",
+        "bossColor": "#F3722C",
+        "accent": "#9B5DE5",
+        "type": "vocabulary",
+        "bossArchetype": "SA4"
+      },
+      "badge": "⛰️ Polarity Pathfinder"
+    }
+  ],
+  "files": [
+    "synonym-antonym-island-01.json",
+    "synonym-antonym-island-02.json",
+    "synonym-antonym-island-03.json",
+    "synonym-antonym-island-04.json"
+  ]
+}

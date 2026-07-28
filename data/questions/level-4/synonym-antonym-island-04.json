@@ -16,11 +16,13 @@
         "throw"
       ],
       "answer": "throw",
-      "explanation": "In this context, precipitate means to throw or hurl something suddenly.",
+      "explanation": "Correct: throw. In this context, precipitate means to throw or hurl something suddenly. emerge may be related or plausible, but it does not match precipitate as precisely as throw. Transfer: Use the surrounding action and tone to choose the meaning intended here, not merely the word’s most familiar meaning.",
       "word": "precipitate",
       "type": "synonym",
       "skill": "context-dependent-meaning",
-      "difficulty": 3
+      "difficulty": 3,
+      "domain": "english",
+      "skillId": "eng.vocabulary.context-dependent"
     },
     {
       "id": "L4-SA-032",
@@ -32,11 +34,13 @@
         "abilities"
       ],
       "answer": "tendencies",
-      "explanation": "Proclivities are natural tendencies or inclinations.",
+      "explanation": "Correct: tendencies. Proclivities are natural tendencies or inclinations. swimming may be related or plausible, but it does not match proclivities as precisely as tendencies. Transfer: Build a brief definition from context or word parts, then eliminate options that match only loosely.",
       "word": "proclivities",
       "type": "synonym",
       "skill": "advanced-vocabulary",
-      "difficulty": 3
+      "difficulty": 3,
+      "domain": "english",
+      "skillId": "eng.vocabulary.advanced"
     },
     {
       "id": "L4-SA-033",
@@ -48,11 +52,13 @@
         "inability"
       ],
       "answer": "moderation",
-      "explanation": "Profusion means a very large amount. Moderation means a limited or reasonable amount, so it is the opposite.",
+      "explanation": "Correct: moderation. Profusion means a very large amount. Moderation means a limited or reasonable amount, so it is the opposite. abundance does not express the direct opposite of profusion. Transfer: State the target meaning first, reverse it, and choose the option that expresses that direct opposite.",
       "word": "profusion",
       "type": "antonym",
       "skill": "exact-opposite-match",
-      "difficulty": 3
+      "difficulty": 3,
+      "domain": "english",
+      "skillId": "eng.vocabulary.exact-opposite"
     },
     {
       "id": "L4-SA-034",
@@ -64,11 +70,13 @@
         "compliments"
       ],
       "answer": "notice",
-      "explanation": "To take cognisance of something means to notice or pay attention to it.",
+      "explanation": "Correct: notice. To take cognisance of something means to notice or pay attention to it. photographs may be related or plausible, but it does not match cognisance as precisely as notice. Transfer: Build a brief definition from context or word parts, then eliminate options that match only loosely.",
       "word": "cognisance",
       "type": "synonym",
       "skill": "advanced-vocabulary",
-      "difficulty": 3
+      "difficulty": 3,
+      "domain": "english",
+      "skillId": "eng.vocabulary.advanced"
     },
     {
       "id": "L4-SA-035",
@@ -80,11 +88,13 @@
         "moderate"
       ],
       "answer": "legitimate",
-      "explanation": "Justifiable means reasonable, defensible or legitimate.",
+      "explanation": "Correct: legitimate. Justifiable means reasonable, defensible or legitimate. simple may be related or plausible, but it does not match justifiable as precisely as legitimate. Transfer: Compare shade, strength and word class—not just whether two words concern the same topic.",
       "word": "justifiable",
       "type": "synonym",
       "skill": "precise-synonym-choice",
-      "difficulty": 3
+      "difficulty": 3,
+      "domain": "english",
+      "skillId": "eng.vocabulary.precise-synonym"
     },
     {
       "id": "L4-SA-036",
@@ -96,11 +106,13 @@
         "grown"
       ],
       "answer": "removed",
-      "explanation": "Eradicated means completely removed or destroyed.",
+      "explanation": "Correct: removed. Eradicated means completely removed or destroyed. loved may be related or plausible, but it does not match eradicated as precisely as removed. Transfer: Read the whole sentence, substitute each option, and keep the one that preserves both meaning and grammar.",
       "word": "eradicated",
       "type": "synonym",
       "skill": "vocabulary-in-context",
-      "difficulty": 2
+      "difficulty": 2,
+      "domain": "english",
+      "skillId": "eng.vocabulary.context"
     },
     {
       "id": "L4-SA-037",
@@ -112,11 +124,13 @@
         "interesting"
       ],
       "answer": "interesting",
-      "explanation": "In this context, piquant means pleasantly interesting or stimulating.",
+      "explanation": "Correct: interesting. In this context, piquant means pleasantly interesting or stimulating. hilarious may be related or plausible, but it does not match piquant as precisely as interesting. Transfer: Use the surrounding action and tone to choose the meaning intended here, not merely the word’s most familiar meaning.",
       "word": "piquant",
       "type": "synonym",
       "skill": "context-dependent-meaning",
-      "difficulty": 3
+      "difficulty": 3,
+      "domain": "english",
+      "skillId": "eng.vocabulary.context-dependent"
     },
     {
       "id": "L4-SA-038",
@@ -128,11 +142,13 @@
         "happy"
       ],
       "answer": "dreamy",
-      "explanation": "Wistful means quietly thoughtful or longing, so dreamy is the closest choice.",
+      "explanation": "Correct: dreamy. Wistful means quietly thoughtful or longing, so dreamy is the closest choice. whistling may be related or plausible, but it does not match wistful as precisely as dreamy. Transfer: Identify the feeling and its intensity before choosing the word with the closest emotional tone.",
       "word": "wistful",
       "type": "synonym",
       "skill": "tone-and-emotion-vocabulary",
-      "difficulty": 3
+      "difficulty": 3,
+      "domain": "english",
+      "skillId": "eng.vocabulary.tone-emotion"
     },
     {
       "id": "L4-SA-039",
@@ -144,11 +160,13 @@
         "secretively"
       ],
       "answer": "secretively",
-      "explanation": "Discreetly means carefully and without attracting attention; secretively is the closest option.",
+      "explanation": "Correct: secretively. Discreetly means carefully and without attracting attention; secretively is the closest option. suspiciously may be related or plausible, but it does not match discreetly as precisely as secretively. Transfer: Compare shade, strength and word class—not just whether two words concern the same topic.",
       "word": "discreetly",
       "type": "synonym",
       "skill": "precise-synonym-choice",
-      "difficulty": 3
+      "difficulty": 3,
+      "domain": "english",
+      "skillId": "eng.vocabulary.precise-synonym"
     },
     {
       "id": "L4-SA-040",
@@ -160,11 +178,13 @@
         "obvious"
       ],
       "answer": "fate",
-      "explanation": "Providence can mean a guiding power or fate.",
+      "explanation": "Correct: fate. Providence can mean a guiding power or fate. skill may be related or plausible, but it does not match Providence as precisely as fate. Transfer: Build a brief definition from context or word parts, then eliminate options that match only loosely.",
       "word": "Providence",
       "type": "synonym",
       "skill": "advanced-vocabulary",
-      "difficulty": 3
+      "difficulty": 3,
+      "domain": "english",
+      "skillId": "eng.vocabulary.advanced"
     }
   ]
 }

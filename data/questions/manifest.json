@@ -12,6 +12,10 @@
     "level-3": {
       "title": "Level 3 — Advanced Spelling",
       "manifest": "level-3/manifest.json"
+    },
+    "level-4": {
+      "title": "Level 4 — Synonyms and Antonyms",
+      "manifest": "level-4/manifest.json"
     }
   }
 }

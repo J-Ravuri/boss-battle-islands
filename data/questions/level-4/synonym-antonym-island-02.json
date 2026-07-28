@@ -16,11 +16,13 @@
         "enterprising"
       ],
       "answer": "unsafe",
-      "explanation": "Hazardous means dangerous or unsafe.",
+      "explanation": "Correct: unsafe. Hazardous means dangerous or unsafe. risk may be related or plausible, but it does not match hazardous as precisely as unsafe. Transfer: Say a short definition of the target word, then choose the option that can replace it without changing that definition.",
       "word": "hazardous",
       "type": "synonym",
       "skill": "exact-meaning-match",
-      "difficulty": 1
+      "difficulty": 1,
+      "domain": "english",
+      "skillId": "eng.vocabulary.exact-meaning"
     },
     {
       "id": "L4-SA-012",
@@ -32,11 +34,13 @@
         "stretched"
       ],
       "answer": "flexible",
-      "explanation": "Supple means flexible and able to bend easily.",
+      "explanation": "Correct: flexible. Supple means flexible and able to bend easily. rigid may be related or plausible, but it does not match supple as precisely as flexible. Transfer: Say a short definition of the target word, then choose the option that can replace it without changing that definition.",
       "word": "supple",
       "type": "synonym",
       "skill": "exact-meaning-match",
-      "difficulty": 2
+      "difficulty": 2,
+      "domain": "english",
+      "skillId": "eng.vocabulary.exact-meaning"
     },
     {
       "id": "L4-SA-013",
@@ -48,11 +52,13 @@
         "merry"
       ],
       "answer": "effervescent",
-      "explanation": "Bubbly can mean lively and enthusiastic; effervescent has the same meaning.",
+      "explanation": "Correct: effervescent. Bubbly can mean lively and enthusiastic; effervescent has the same meaning. shiny may be related or plausible, but it does not match bubbly as precisely as effervescent. Transfer: Compare shade, strength and word class—not just whether two words concern the same topic.",
       "word": "bubbly",
       "type": "synonym",
       "skill": "precise-synonym-choice",
-      "difficulty": 2
+      "difficulty": 2,
+      "domain": "english",
+      "skillId": "eng.vocabulary.precise-synonym"
     },
     {
       "id": "L4-SA-014",
@@ -64,11 +70,13 @@
         "badge"
       ],
       "answer": "badge",
-      "explanation": "An emblem is a badge or symbol that represents something.",
+      "explanation": "Correct: badge. An emblem is a badge or symbol that represents something. fable may be related or plausible, but it does not match emblem as precisely as badge. Transfer: Say a short definition of the target word, then choose the option that can replace it without changing that definition.",
       "word": "emblem",
       "type": "synonym",
       "skill": "exact-meaning-match",
-      "difficulty": 2
+      "difficulty": 2,
+      "domain": "english",
+      "skillId": "eng.vocabulary.exact-meaning"
     },
     {
       "id": "L4-SA-015",
@@ -80,11 +88,13 @@
         "shorten"
       ],
       "answer": "lengthen",
-      "explanation": "To elongate something means to make it longer.",
+      "explanation": "Correct: lengthen. To elongate something means to make it longer. strengthen may be related or plausible, but it does not match elongate as precisely as lengthen. Transfer: Look for a familiar root or related word, then test that meaning against every option.",
       "word": "elongate",
       "type": "synonym",
       "skill": "word-root-meaning",
-      "difficulty": 2
+      "difficulty": 2,
+      "domain": "english",
+      "skillId": "eng.vocabulary.word-roots"
     },
     {
       "id": "L4-SA-016",
@@ -96,11 +106,13 @@
         "woeful"
       ],
       "answer": "poisonous",
-      "explanation": "Venomous means able to inject venom, so poisonous is the closest option.",
+      "explanation": "Correct: poisonous. Venomous means able to inject venom, so poisonous is the closest option. colourful may be related or plausible, but it does not match venomous as precisely as poisonous. Transfer: Compare shade, strength and word class—not just whether two words concern the same topic.",
       "word": "venomous",
       "type": "synonym",
       "skill": "precise-synonym-choice",
-      "difficulty": 2
+      "difficulty": 2,
+      "domain": "english",
+      "skillId": "eng.vocabulary.precise-synonym"
     },
     {
       "id": "L4-SA-017",
@@ -112,11 +124,13 @@
         "reform"
       ],
       "answer": "repair",
-      "explanation": "To renovate means to repair and improve a building or object.",
+      "explanation": "Correct: repair. To renovate means to repair and improve a building or object. repaper may be related or plausible, but it does not match renovate as precisely as repair. Transfer: Say a short definition of the target word, then choose the option that can replace it without changing that definition.",
       "word": "renovate",
       "type": "synonym",
       "skill": "exact-meaning-match",
-      "difficulty": 2
+      "difficulty": 2,
+      "domain": "english",
+      "skillId": "eng.vocabulary.exact-meaning"
     },
     {
       "id": "L4-SA-018",
@@ -128,11 +142,13 @@
         "first"
       ],
       "answer": "start",
-      "explanation": "To initiate something means to start it.",
+      "explanation": "Correct: start. To initiate something means to start it. mimic may be related or plausible, but it does not match initiate as precisely as start. Transfer: Check whether the target is acting as a noun, verb, adjective or adverb before selecting a replacement.",
       "word": "initiate",
       "type": "synonym",
       "skill": "word-class-awareness",
-      "difficulty": 2
+      "difficulty": 2,
+      "domain": "english",
+      "skillId": "eng.vocabulary.word-class"
     },
     {
       "id": "L4-SA-019",
@@ -144,11 +160,13 @@
         "outlandish"
       ],
       "answer": "lurid",
-      "explanation": "Garish means unpleasantly bright or showy; lurid is the closest match.",
+      "explanation": "Correct: lurid. Garish means unpleasantly bright or showy; lurid is the closest match. intricate may be related or plausible, but it does not match garish as precisely as lurid. Transfer: Read the whole sentence, substitute each option, and keep the one that preserves both meaning and grammar.",
       "word": "garish",
       "type": "synonym",
       "skill": "vocabulary-in-context",
-      "difficulty": 2
+      "difficulty": 2,
+      "domain": "english",
+      "skillId": "eng.vocabulary.context"
     },
     {
       "id": "L4-SA-020",
@@ -160,11 +178,13 @@
         "commiserate"
       ],
       "answer": "remember",
-      "explanation": "To commemorate something means to remember and honour it.",
+      "explanation": "Correct: remember. To commemorate something means to remember and honour it. provide may be related or plausible, but it does not match commemorate as precisely as remember. Transfer: Read the whole sentence, substitute each option, and keep the one that preserves both meaning and grammar.",
       "word": "commemorate",
       "type": "synonym",
       "skill": "vocabulary-in-context",
-      "difficulty": 2
+      "difficulty": 2,
+      "domain": "english",
+      "skillId": "eng.vocabulary.context"
     }
   ]
 }

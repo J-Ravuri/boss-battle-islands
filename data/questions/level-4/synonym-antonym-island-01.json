@@ -16,11 +16,13 @@
         "price"
       ],
       "answer": "amount",
-      "explanation": "Quantity means the amount of something.",
+      "explanation": "Correct: amount. Quantity means the amount of something. value may be related or plausible, but it does not match quantity as precisely as amount. Transfer: Say a short definition of the target word, then choose the option that can replace it without changing that definition.",
       "word": "quantity",
       "type": "synonym",
       "skill": "exact-meaning-match",
-      "difficulty": 1
+      "difficulty": 1,
+      "domain": "english",
+      "skillId": "eng.vocabulary.exact-meaning"
     },
     {
       "id": "L4-SA-002",
@@ -32,11 +34,13 @@
         "register"
       ],
       "answer": "diary",
-      "explanation": "A journal is a diary in which someone records thoughts or events.",
+      "explanation": "Correct: diary. A journal is a diary in which someone records thoughts or events. note may be related or plausible, but it does not match journal as precisely as diary. Transfer: Say a short definition of the target word, then choose the option that can replace it without changing that definition.",
       "word": "journal",
       "type": "synonym",
       "skill": "exact-meaning-match",
-      "difficulty": 1
+      "difficulty": 1,
+      "domain": "english",
+      "skillId": "eng.vocabulary.exact-meaning"
     },
     {
       "id": "L4-SA-003",
@@ -48,11 +52,13 @@
         "whisper"
       ],
       "answer": "roar",
-      "explanation": "To bellow means to shout or roar very loudly.",
+      "explanation": "Correct: roar. To bellow means to shout or roar very loudly. jeer may be related or plausible, but it does not match bellow as precisely as roar. Transfer: Say a short definition of the target word, then choose the option that can replace it without changing that definition.",
       "word": "bellow",
       "type": "synonym",
       "skill": "exact-meaning-match",
-      "difficulty": 1
+      "difficulty": 1,
+      "domain": "english",
+      "skillId": "eng.vocabulary.exact-meaning"
     },
     {
       "id": "L4-SA-004",
@@ -64,11 +70,13 @@
         "summit"
       ],
       "answer": "summit",
-      "explanation": "A peak is the summit or highest point of a mountain.",
+      "explanation": "Correct: summit. A peak is the summit or highest point of a mountain. roof may be related or plausible, but it does not match peak as precisely as summit. Transfer: Say a short definition of the target word, then choose the option that can replace it without changing that definition.",
       "word": "peak",
       "type": "synonym",
       "skill": "exact-meaning-match",
-      "difficulty": 1
+      "difficulty": 1,
+      "domain": "english",
+      "skillId": "eng.vocabulary.exact-meaning"
     },
     {
       "id": "L4-SA-005",
@@ -80,11 +88,13 @@
         "sunk"
       ],
       "answer": "beneath",
-      "explanation": "Below and beneath both mean in a lower position.",
+      "explanation": "Correct: beneath. Below and beneath both mean in a lower position. buried may be related or plausible, but it does not match below as precisely as beneath. Transfer: Say a short definition of the target word, then choose the option that can replace it without changing that definition.",
       "word": "below",
       "type": "synonym",
       "skill": "exact-meaning-match",
-      "difficulty": 1
+      "difficulty": 1,
+      "domain": "english",
+      "skillId": "eng.vocabulary.exact-meaning"
     },
     {
       "id": "L4-SA-006",
@@ -96,11 +106,13 @@
         "learn"
       ],
       "answer": "learn",
-      "explanation": "To study means to learn about a subject.",
+      "explanation": "Correct: learn. To study means to learn about a subject. library may be related or plausible, but it does not match study as precisely as learn. Transfer: Say a short definition of the target word, then choose the option that can replace it without changing that definition.",
       "word": "study",
       "type": "synonym",
       "skill": "exact-meaning-match",
-      "difficulty": 1
+      "difficulty": 1,
+      "domain": "english",
+      "skillId": "eng.vocabulary.exact-meaning"
     },
     {
       "id": "L4-SA-007",
@@ -112,11 +124,13 @@
         "truthful"
       ],
       "answer": "truthful",
-      "explanation": "An honest person is truthful and does not deliberately deceive others.",
+      "explanation": "Correct: truthful. An honest person is truthful and does not deliberately deceive others. proper may be related or plausible, but it does not match honest as precisely as truthful. Transfer: Say a short definition of the target word, then choose the option that can replace it without changing that definition.",
       "word": "honest",
       "type": "synonym",
       "skill": "exact-meaning-match",
-      "difficulty": 1
+      "difficulty": 1,
+      "domain": "english",
+      "skillId": "eng.vocabulary.exact-meaning"
     },
     {
       "id": "L4-SA-008",
@@ -128,11 +142,13 @@
         "ladder"
       ],
       "answer": "rent",
-      "explanation": "To hire something means to rent it for a period of time.",
+      "explanation": "Correct: rent. To hire something means to rent it for a period of time. reach may be related or plausible, but it does not match hire as precisely as rent. Transfer: Say a short definition of the target word, then choose the option that can replace it without changing that definition.",
       "word": "hire",
       "type": "synonym",
       "skill": "exact-meaning-match",
-      "difficulty": 1
+      "difficulty": 1,
+      "domain": "english",
+      "skillId": "eng.vocabulary.exact-meaning"
     },
     {
       "id": "L4-SA-009",
@@ -144,11 +160,13 @@
         "tablet"
       ],
       "answer": "cure",
-      "explanation": "A remedy is a cure or treatment for a problem or illness.",
+      "explanation": "Correct: cure. A remedy is a cure or treatment for a problem or illness. medicine may be related or plausible, but it does not match remedy as precisely as cure. Transfer: Say a short definition of the target word, then choose the option that can replace it without changing that definition.",
       "word": "remedy",
       "type": "synonym",
       "skill": "exact-meaning-match",
-      "difficulty": 1
+      "difficulty": 1,
+      "domain": "english",
+      "skillId": "eng.vocabulary.exact-meaning"
     },
     {
       "id": "L4-SA-010",
@@ -160,11 +178,13 @@
         "hidden"
       ],
       "answer": "smelly",
-      "explanation": "Fetid means having a very unpleasant smell.",
+      "explanation": "Correct: smelly. Fetid means having a very unpleasant smell. dark may be related or plausible, but it does not match fetid as precisely as smelly. Transfer: Read the whole sentence, substitute each option, and keep the one that preserves both meaning and grammar.",
       "word": "fetid",
       "type": "synonym",
       "skill": "vocabulary-in-context",
-      "difficulty": 2
+      "difficulty": 2,
+      "domain": "english",
+      "skillId": "eng.vocabulary.context"
     }
   ]
 }

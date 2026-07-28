@@ -43,6 +43,17 @@ const expectedLevelOneSkills = new Set([
   'math.multiplication-division',
   'math.statistics.interpretation'
 ]);
+const expectedLevelFourSkills = new Set([
+  'eng.vocabulary.exact-meaning',
+  'eng.vocabulary.context',
+  'eng.vocabulary.precise-synonym',
+  'eng.vocabulary.word-roots',
+  'eng.vocabulary.word-class',
+  'eng.vocabulary.exact-opposite',
+  'eng.vocabulary.context-dependent',
+  'eng.vocabulary.advanced',
+  'eng.vocabulary.tone-emotion'
+]);
 
 function questionFiles(levelId) {
   const directory = path.join(questionRoot, levelId);
@@ -61,12 +72,22 @@ function readQuestions(levelId) {
 const levelOne = readQuestions('level-1');
 const levelTwo = readQuestions('level-2');
 const levelThree = readQuestions('level-3');
-const allQuestions = [...levelOne, ...levelTwo, ...levelThree];
+const levelFour = readQuestions('level-4');
+const allQuestions = [...levelOne, ...levelTwo, ...levelThree, ...levelFour];
 const errors = [];
 
 if (levelOne.length !== 120) errors.push(`Expected 120 Level 1 questions, found ${levelOne.length}.`);
 if (levelTwo.length !== 100) errors.push(`Expected 100 Level 2 questions, found ${levelTwo.length}.`);
 if (levelThree.length !== 100) errors.push(`Expected 100 Level 3 questions, found ${levelThree.length}.`);
+if (levelFour.length !== 40) errors.push(`Expected 40 Level 4 questions, found ${levelFour.length}.`);
+
+for (const filepath of questionFiles('level-4')) {
+  const pack = JSON.parse(fs.readFileSync(filepath, 'utf8'));
+  if (pack.levelId !== 'level-4') errors.push(`${path.basename(filepath)}: levelId must be level-4.`);
+  if (!Array.isArray(pack.questions) || pack.questions.length !== 10) {
+    errors.push(`${path.basename(filepath)}: expected exactly 10 questions.`);
+  }
+}
 
 for (const question of levelOne) {
   const expectedDomain = question.id.startsWith('E') ? 'english' : 'mathematics';
@@ -78,9 +99,38 @@ for (const question of levelOne) {
   }
 }
 
+for (const question of levelFour) {
+  if (question.domain !== 'english') {
+    errors.push(`${question.id}: expected domain english, found ${question.domain}.`);
+  }
+  if (!expectedLevelFourSkills.has(question.skillId)) {
+    errors.push(`${question.id}: missing or unknown Level 4 skillId ${question.skillId}.`);
+  }
+  if (!question.explanation.startsWith('Correct:') || !question.explanation.includes('Transfer:')) {
+    errors.push(`${question.id}: Level 4 explanation does not use the approved teaching template.`);
+  }
+}
+
+const seenIds = new Map();
+const seenWords = new Map();
 for (const question of allQuestions) {
-  if (!Array.isArray(question.options) || !question.options.includes(question.answer)) {
+  if (!Array.isArray(question.options) || question.options.length !== 4) {
+    errors.push(`${question.id}: expected exactly four options.`);
+  } else if (!question.options.includes(question.answer)) {
     errors.push(`${question.id}: answer is not present in options.`);
+  }
+  if (seenIds.has(question.id)) {
+    errors.push(`${question.id}: duplicate question ID.`);
+  } else {
+    seenIds.set(question.id, true);
+  }
+  if (question.word) {
+    const normalisedWord = question.word.trim().toLocaleLowerCase('en-GB');
+    if (seenWords.has(normalisedWord)) {
+      errors.push(`${question.id}: duplicate target word "${question.word}" (also ${seenWords.get(normalisedWord)}).`);
+    } else {
+      seenWords.set(normalisedWord, question.id);
+    }
   }
 }
 
@@ -109,6 +159,7 @@ if (errors.length) {
   console.log(
     `Phase 1 learning content valid: ${allQuestions.length} questions, ` +
     `${levelOne.length} Level 1 tags, ${retrieval.length} retrieval explanations, ` +
-    `${upgradedSpelling.length} spelling explanations upgraded.`
+    `${upgradedSpelling.length} spelling explanations upgraded, ` +
+    `${levelFour.length} Level 4 questions with unique IDs and target words.`
   );
 }
