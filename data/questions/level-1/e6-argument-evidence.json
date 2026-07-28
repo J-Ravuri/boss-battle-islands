@@ -1,0 +1,127 @@
+{
+  "sectionId": "E6",
+  "mode": "replace",
+  "title": "Argument and Evidence",
+  "questions": [
+    {
+      "id": "E6-Q1",
+      "question": "A student writes, 'School uniforms should be compulsory because they reduce peer pressure and save time in the morning.' Which sentence best identifies the main argument?",
+      "options": [
+        "Uniforms are fashionable.",
+        "Uniforms reduce peer pressure and save time.",
+        "Uniforms are expensive.",
+        "Students prefer to choose their own clothes."
+      ],
+      "answer": "Uniforms reduce peer pressure and save time.",
+      "explanation": "The main argument is the claim being defended, and this sentence gives the reasons."
+    },
+    {
+      "id": "E6-Q2",
+      "question": "Which piece of evidence best supports the claim that reading every day improves vocabulary?",
+      "options": [
+        "Books can be borrowed from the library.",
+        "A study found that regular readers learn new words faster.",
+        "Some people prefer films to books.",
+        "Reading can take a long time."
+      ],
+      "answer": "A study found that regular readers learn new words faster.",
+      "explanation": "This gives factual support for the claim."
+    },
+    {
+      "id": "E6-Q3",
+      "question": "A writer says, 'We should plant more trees in our town because they cool the air and provide shade.' What is the writer trying to persuade the reader to do?",
+      "options": [
+        "Move to the countryside",
+        "Plant more trees",
+        "Stop using parks",
+        "Buy more furniture"
+      ],
+      "answer": "Plant more trees",
+      "explanation": "The writer is arguing for a course of action."
+    },
+    {
+      "id": "E6-Q4",
+      "question": "Which statement is a reason rather than a fact?",
+      "options": [
+        "The school has 600 pupils.",
+        "The school playground is large.",
+        "A longer lunch break would help pupils concentrate.",
+        "The school opens at 8:30 a.m."
+      ],
+      "answer": "A longer lunch break would help pupils concentrate.",
+      "explanation": "This gives an opinion-based reason that supports an argument."
+    },
+    {
+      "id": "E6-Q5",
+      "question": "If a writer includes a statistic in an argument, what is the main purpose?",
+      "options": [
+        "To entertain the reader",
+        "To make the argument sound longer",
+        "To strengthen the evidence",
+        "To change the topic"
+      ],
+      "answer": "To strengthen the evidence",
+      "explanation": "Statistics are often used to support claims with concrete evidence."
+    },
+    {
+      "id": "E6-Q6",
+      "question": "Which sentence is the best example of a clear counter-argument?",
+      "options": [
+        "Some people think homework is unnecessary, but it can help pupils revise and practise skills.",
+        "Homework is always fun.",
+        "Homework should be banned immediately.",
+        "Pupils hate homework because it is late."
+      ],
+      "answer": "Some people think homework is unnecessary, but it can help pupils revise and practise skills.",
+      "explanation": "It acknowledges an opposing view and then gives a reasoned response."
+    },
+    {
+      "id": "E6-Q7",
+      "question": "A paragraph says, 'Many students feel tired after lunch because the lessons are too long.' Which word best describes the claim?",
+      "options": [
+        "Conclusion",
+        "Evidence",
+        "Opinion",
+        "Heading"
+      ],
+      "answer": "Opinion",
+      "explanation": "The sentence expresses a viewpoint rather than a verified fact."
+    },
+    {
+      "id": "E6-Q8",
+      "question": "Which example would be the best evidence for the claim that music can help people focus?",
+      "options": [
+        "A friend says music is nice.",
+        "A class survey found that many pupils concentrate better with calm music.",
+        "Music is played in many shops.",
+        "Some people dislike music."
+      ],
+      "answer": "A class survey found that many pupils concentrate better with calm music.",
+      "explanation": "A survey gives evidence from experience that supports the argument."
+    },
+    {
+      "id": "E6-Q9",
+      "question": "What should a strong persuasive paragraph include besides a clear opinion?",
+      "options": [
+        "A joke",
+        "A list of unrelated facts",
+        "Reasons and evidence",
+        "A second title"
+      ],
+      "answer": "Reasons and evidence",
+      "explanation": "Good persuasion explains why the opinion is believable."
+    },
+    {
+      "id": "E6-Q10",
+      "question": "A writer says, 'Walking to school is better than travelling by car because it helps children stay active.' Which part is the reason?",
+      "options": [
+        "Walking to school",
+        "Is better than travelling by car",
+        "Because it helps children stay active",
+        "Children"
+      ],
+      "answer": "Because it helps children stay active",
+      "explanation": "The reason explains the writer's claim."
+    }
+  ]
+}

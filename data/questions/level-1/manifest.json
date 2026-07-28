@@ -3,7 +3,7 @@
   "title": "Level 1 — English and Maths",
   "description": "The original English and Maths adventure",
   "subject": "Mixed English and Maths",
-  "expectedQuestions": 100,
+  "expectedQuestions": 120,
   "questionsPerFile": 10,
   "hub": {
     "name": "Scholar's Sky",
@@ -111,6 +111,26 @@
       "unlockAfter": ["M4"],
       "theme": {"name":"The Geometry Gardens","boss":"The Shape Shifter","emoji":"📐","islandColor":"#66BB6A","bossColor":"#9C27B0","accent":"#A5D6A7","type":"maths","bossArchetype":"M5"},
       "badge": "📏 Measurement Master"
+    },
+    {
+      "sectionId": "E6",
+      "subject": "English",
+      "title": "Argument and Evidence",
+      "position": [0, 18, -40],
+      "bridgeFrom": "E5",
+      "unlockAfter": ["E5"],
+      "theme": {"name":"The Lantern Forum","boss":"The Persuasion Phoenix","emoji":"🗣️","islandColor":"#5E35B1","bossColor":"#F48FB1","accent":"#9575CD","type":"english","bossArchetype":"E6"},
+      "badge": "🗣️ Argument Ace"
+    },
+    {
+      "sectionId": "M6",
+      "subject": "Maths",
+      "title": "Ratio, Patterns and Data",
+      "position": [8, 18, -40],
+      "bridgeFrom": "M5",
+      "unlockAfter": ["M5"],
+      "theme": {"name":"The Pattern Observatory","boss":"The Data Dragon","emoji":"📈","islandColor":"#00897B","bossColor":"#F9A826","accent":"#4DB6AC","type":"maths","bossArchetype":"M6"},
+      "badge": "📈 Pattern Pro"
     }
   ],
   "files": [
@@ -123,6 +143,8 @@
     "m2-fractions-probability.json",
     "m3-percentages.json",
     "m4-time-timetables.json",
-    "m5-measurement.json"
+    "m5-measurement.json",
+    "e6-argument-evidence.json",
+    "m6-data-patterns.json"
   ]
 }

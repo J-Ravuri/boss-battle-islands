@@ -1,0 +1,127 @@
+{
+  "sectionId": "M6",
+  "mode": "replace",
+  "title": "Ratio, Patterns and Data",
+  "questions": [
+    {
+      "id": "M6-Q1",
+      "question": "A recipe uses 2 cups of flour for every 3 cups of sugar. If you use 6 cups of sugar, how many cups of flour are needed?",
+      "options": [
+        "2",
+        "4",
+        "6",
+        "8"
+      ],
+      "answer": "4",
+      "explanation": "The ratio is 2:3, so 6 cups of sugar needs 4 cups of flour."
+    },
+    {
+      "id": "M6-Q2",
+      "question": "The number pattern 3, 6, 9, 12, ... continues. What is the 8th term?",
+      "options": [
+        "18",
+        "21",
+        "24",
+        "27"
+      ],
+      "answer": "24",
+      "explanation": "Each term increases by 3, so the 8th term is 24."
+    },
+    {
+      "id": "M6-Q3",
+      "question": "A bar chart shows 15 pupils like football, 10 like rugby and 5 like tennis. What is the total number of pupils?",
+      "options": [
+        "20",
+        "25",
+        "30",
+        "35"
+      ],
+      "answer": "30",
+      "explanation": "Add the numbers: 15 + 10 + 5 = 30."
+    },
+    {
+      "id": "M6-Q4",
+      "question": "If 1 box holds 8 pencils, how many pencils are in 5 boxes?",
+      "options": [
+        "35",
+        "40",
+        "45",
+        "50"
+      ],
+      "answer": "40",
+      "explanation": "Multiply 8 by 5."
+    },
+    {
+      "id": "M6-Q5",
+      "question": "A class collected 48 stickers. They shared them equally among 6 pupils. How many stickers did each pupil get?",
+      "options": [
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "answer": "8",
+      "explanation": "Divide 48 by 6."
+    },
+    {
+      "id": "M6-Q6",
+      "question": "What is the next term in the pattern 2, 4, 8, 16, ...?",
+      "options": [
+        "18",
+        "24",
+        "32",
+        "40"
+      ],
+      "answer": "32",
+      "explanation": "Each term doubles, so the next term is 32."
+    },
+    {
+      "id": "M6-Q7",
+      "question": "A line graph shows temperature rising from 10°C to 22°C over 4 hours. What is the increase per hour?",
+      "options": [
+        "2°C",
+        "3°C",
+        "4°C",
+        "5°C"
+      ],
+      "answer": "3°C",
+      "explanation": "The increase is 12°C over 4 hours, which is 3°C per hour."
+    },
+    {
+      "id": "M6-Q8",
+      "question": "If a map uses a scale of 1 cm to 5 km, how many kilometres does 3 cm represent?",
+      "options": [
+        "10 km",
+        "12 km",
+        "15 km",
+        "18 km"
+      ],
+      "answer": "15 km",
+      "explanation": "Multiply 5 by 3."
+    },
+    {
+      "id": "M6-Q9",
+      "question": "Which statement is true about the data set 4, 4, 5, 6, 6?",
+      "options": [
+        "The mode is 5",
+        "The median is 4",
+        "The mode is 4 and 6",
+        "The mean is 7"
+      ],
+      "answer": "The mode is 4 and 6",
+      "explanation": "Both 4 and 6 appear twice, so they are the modes."
+    },
+    {
+      "id": "M6-Q10",
+      "question": "A bag contains 3 red counters and 2 blue counters. What fraction of the counters are blue?",
+      "options": [
+        "1/5",
+        "2/5",
+        "3/5",
+        "4/5"
+      ],
+      "answer": "2/5",
+      "explanation": "There are 2 blue counters out of 5 altogether."
+    }
+  ]
+}

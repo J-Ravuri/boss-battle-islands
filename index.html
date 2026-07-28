@@ -891,6 +891,10 @@
     </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+  <script src="audio-manager.js"></script>
+  <script src="boss-effect-manager.js"></script>
+  <script src="enhanced-movement.js"></script>
+  <script src="sound-manager.js"></script>
   <script>
 
 
@@ -3571,6 +3575,11 @@
         boss.rotation.z = 0;
       }
     }, 16);
+    if (window.bossEffectManager) {
+      window.bossEffectManager.screenShake(0.08, 0.18);
+      window.bossEffectManager.damageFlash();
+      window.bossEffectManager.createHitParticles(window.innerWidth * 0.5, window.innerHeight * 0.5, '#FFD700');
+    }
     // Spawn sparkle particles
     spawnParticles(boss.position, 0xFFD700, 12);
   }
@@ -3589,6 +3598,10 @@
         boss.position.y = baseY;
       }
     }, 16);
+    if (window.bossEffectManager) {
+      window.bossEffectManager.screenShake(0.05, 0.12);
+      window.bossEffectManager.createHitParticles(window.innerWidth * 0.5, window.innerHeight * 0.5, '#B0BEC5');
+    }
     // Harmless puff
     spawnParticles(boss.position, 0xB0BEC5, 6);
   }
@@ -4341,6 +4354,10 @@
     const dt = Math.min(clock.getDelta(), 0.05);
 
     try {
+      if (window.movementController && typeof window.movementController.update === 'function') {
+        window.movementController.update(dt);
+      }
+
       if (state.screen === 'hub') {
         updateHub(dt);
       } else if (state.screen === 'battle') {
@@ -4766,6 +4783,9 @@
     }
     runResetEpochMigration();
     loadPreferences();
+    if (typeof window.initSounds === 'function') {
+      window.initSounds();
+    }
     console.log('[BOOT] Starting Boss Battle Islands...');
     // Safety timeout: force hide loader after 10 seconds no matter what
     const safetyTimeout = setTimeout(function() {
