@@ -72,10 +72,10 @@
       this.jumpCooldown = 0.6;
       this.baseGroundY = avatar.position.y;
 
-      if (typeof window.audioManager?.playSound === 'function') {
-        window.audioManager.playSound('jump');
-      } else if (typeof window.playSound === 'function') {
+      if (typeof window.playSound === 'function') {
         window.playSound('start');
+      } else if (typeof window.audioManager?.playSound === 'function') {
+        window.audioManager.playSound('jump');
       }
 
       this.addJumpEffect();
