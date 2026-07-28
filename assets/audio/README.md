@@ -4,7 +4,7 @@ The **Study Focus** option uses `study_meditation_bgm.wav`, an original
 royalty-free meditation loop created for this game. If that file is missing,
 the game generates a calm fallback track in code.
 
-The **AyaSher** option uses `aayasher_bgm.mp3` from this folder. To replace
+The **Hanuman** option uses `../hanuman.mp3`. To replace
 other generated effects with your own files:
 
 1. Drop MP3 files in this folder using these exact names:
@@ -15,8 +15,8 @@ other generated effects with your own files:
    - `wrong.mp3`
    - `combo.mp3`
    - `victory.mp3`
-   - `aayasher_bgm.mp3` — licensed AyaSher background track used in both
-     the hub and battles
+   - `../hanuman.mp3` — Hanuman background track used in both the hub and
+     battles
    - `study_meditation_bgm.wav` — original royalty-free Study Focus loop
 
 2. Open the repository-root `index.html`.
@@ -30,7 +30,7 @@ Recommended audio:
 - MP3 at 128–192 kbps is sufficient for a browser game.
 - Keep effects punchy but comfortable; normalize files to similar loudness.
 
-Players can choose AyaSher or Study Focus from the start screen and the in-game
+Players can choose Hanuman or Study Focus from the start screen and the in-game
 HUD. Their selection is remembered by the browser.
 
 If a custom file is unavailable, the game continues using generated audio.
