@@ -13,7 +13,9 @@
         "Students prefer to choose their own clothes."
       ],
       "answer": "Uniforms reduce peer pressure and save time.",
-      "explanation": "The main argument is the claim being defended, and this sentence gives the reasons."
+      "explanation": "The main argument is the claim being defended, and this sentence gives the reasons.",
+      "domain": "english",
+      "skillId": "eng.argument.claim-reason"
     },
     {
       "id": "E6-Q2",
@@ -25,7 +27,9 @@
         "Reading can take a long time."
       ],
       "answer": "A study found that regular readers learn new words faster.",
-      "explanation": "This gives factual support for the claim."
+      "explanation": "This gives factual support for the claim.",
+      "domain": "english",
+      "skillId": "eng.argument.evidence-quality"
     },
     {
       "id": "E6-Q3",
@@ -37,7 +41,9 @@
         "Buy more furniture"
       ],
       "answer": "Plant more trees",
-      "explanation": "The writer is arguing for a course of action."
+      "explanation": "The writer is arguing for a course of action.",
+      "domain": "english",
+      "skillId": "eng.argument.claim-reason"
     },
     {
       "id": "E6-Q4",
@@ -49,7 +55,9 @@
         "The school opens at 8:30 a.m."
       ],
       "answer": "A longer lunch break would help pupils concentrate.",
-      "explanation": "This gives an opinion-based reason that supports an argument."
+      "explanation": "This gives an opinion-based reason that supports an argument.",
+      "domain": "english",
+      "skillId": "eng.argument.fact-opinion"
     },
     {
       "id": "E6-Q5",
@@ -61,7 +69,9 @@
         "To change the topic"
       ],
       "answer": "To strengthen the evidence",
-      "explanation": "Statistics are often used to support claims with concrete evidence."
+      "explanation": "Statistics are often used to support claims with concrete evidence.",
+      "domain": "english",
+      "skillId": "eng.argument.evidence-quality"
     },
     {
       "id": "E6-Q6",
@@ -73,7 +83,9 @@
         "Pupils hate homework because it is late."
       ],
       "answer": "Some people think homework is unnecessary, but it can help pupils revise and practise skills.",
-      "explanation": "It acknowledges an opposing view and then gives a reasoned response."
+      "explanation": "It acknowledges an opposing view and then gives a reasoned response.",
+      "domain": "english",
+      "skillId": "eng.argument.counterargument"
     },
     {
       "id": "E6-Q7",
@@ -85,7 +97,9 @@
         "Heading"
       ],
       "answer": "Opinion",
-      "explanation": "The sentence expresses a viewpoint rather than a verified fact."
+      "explanation": "The sentence expresses a viewpoint rather than a verified fact.",
+      "domain": "english",
+      "skillId": "eng.argument.fact-opinion"
     },
     {
       "id": "E6-Q8",
@@ -97,7 +111,9 @@
         "Some people dislike music."
       ],
       "answer": "A class survey found that many pupils concentrate better with calm music.",
-      "explanation": "A survey gives evidence from experience that supports the argument."
+      "explanation": "A survey gives evidence from experience that supports the argument.",
+      "domain": "english",
+      "skillId": "eng.argument.evidence-quality"
     },
     {
       "id": "E6-Q9",
@@ -109,7 +125,9 @@
         "A second title"
       ],
       "answer": "Reasons and evidence",
-      "explanation": "Good persuasion explains why the opinion is believable."
+      "explanation": "Good persuasion explains why the opinion is believable.",
+      "domain": "english",
+      "skillId": "eng.argument.evidence-quality"
     },
     {
       "id": "E6-Q10",
@@ -121,7 +139,9 @@
         "Children"
       ],
       "answer": "Because it helps children stay active",
-      "explanation": "The reason explains the writer's claim."
+      "explanation": "The reason explains the writer's claim.",
+      "domain": "english",
+      "skillId": "eng.argument.claim-reason"
     }
   ]
 }

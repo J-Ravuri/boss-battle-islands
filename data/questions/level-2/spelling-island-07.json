@@ -16,7 +16,7 @@
         "substancee"
       ],
       "answer": "substance",
-      "explanation": "Substance ends in ance.",
+      "explanation": "Correct: substance. The word ends in ance and keeps the base subst before it. Substence incorrectly swaps a for e in the unstressed ending. Transfer: link substance with substantial to preserve the a.",
       "word": "substance",
       "skill": "suffix-ance",
       "difficulty": 1,
@@ -32,7 +32,7 @@
         "hesitancey"
       ],
       "answer": "hesitancy",
-      "explanation": "Hesitancy ends in ancy.",
+      "explanation": "Correct: hesitancy. The noun is formed from hesitant: replace the final t with cy, keeping an to make ancy. Hesitency incorrectly changes that a to e. Transfer: use the related adjective to decide between ancy and ency.",
       "word": "hesitancy",
       "skill": "suffix-ancy",
       "difficulty": 2,
@@ -96,7 +96,7 @@
         "intolarant"
       ],
       "answer": "intolerant",
-      "explanation": "Intolerant ends in ant.",
+      "explanation": "Correct: intolerant. The ending is ant, matching the related noun intolerance. Intolerent uses the wrong unstressed vowel. Transfer: check a related word such as tolerance when ant and ent sound alike.",
       "word": "intolerant",
       "skill": "suffix-ant",
       "difficulty": 2,
@@ -144,7 +144,7 @@
         "observantt"
       ],
       "answer": "observant",
-      "explanation": "Observant ends in ant.",
+      "explanation": "Correct: observant. It comes from observe and ends in ant, as in observation. Observent chooses e only because the ending is unstressed. Transfer: use a related word to uncover a vowel you cannot hear clearly.",
       "word": "observant",
       "skill": "suffix-ant",
       "difficulty": 2,
@@ -160,7 +160,7 @@
         "fluencey"
       ],
       "answer": "fluency",
-      "explanation": "Fluency ends in ency.",
+      "explanation": "Correct: fluency. It comes from fluent: the t changes to cy, giving ency. Fluancy uses an a that is not present in fluent. Transfer: compare an ency noun with its ent adjective.",
       "word": "fluency",
       "skill": "suffix-ency",
       "difficulty": 2,

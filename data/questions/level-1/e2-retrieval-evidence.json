@@ -13,7 +13,9 @@
         "It eats only plants."
       ],
       "answer": "It makes an extremely long yearly journey.",
-      "explanation": "The passage directly says that the tern travels between the Arctic and Antarctic each year."
+      "explanation": "Correct: It makes an extremely long yearly journey. The key evidence is the full route from the Arctic to the Antarctic and back each year. The other choices add details the passage never gives. Transfer: underline the fact that makes the subject unusual, then choose the option that restates only that fact.",
+      "domain": "english",
+      "skillId": "eng.retrieval.explicit-detail"
     },
     {
       "id": "E2-Q2",
@@ -25,7 +27,9 @@
         "It returns to its nest."
       ],
       "answer": "It hovers above the water.",
-      "explanation": "The order is clear: the bird hovers first and then dives."
+      "explanation": "Correct: It hovers above the water. The sequence word before tells us hovering happens immediately ahead of diving. Options about resting, swimming or returning change the stated order. Transfer: find the action words and place them on a quick before-and-after timeline.",
+      "domain": "english",
+      "skillId": "eng.retrieval.sequence"
     },
     {
       "id": "E2-Q3",
@@ -37,7 +41,9 @@
         "Rocky caves beside the sea"
       ],
       "answer": "Shallow dips in the ground",
-      "explanation": "A hollow is a dip or lowered area, and simple suggests it is not a complicated nest."
+      "explanation": "Correct: Shallow dips in the ground. A hollow is a lowered place, while simple shows that it is not an elaborate nest. Tunnels, trees and caves introduce features not supported by the wording. Transfer: replace each important word with a close synonym and check that the whole meaning stays the same.",
+      "domain": "english",
+      "skillId": "eng.retrieval.paraphrase"
     },
     {
       "id": "E2-Q4",
@@ -49,7 +55,9 @@
         "They catch fish by walking through shallow water."
       ],
       "answer": "They spend parts of the year near both polar regions.",
-      "explanation": "Their yearly journey takes them between the Arctic and Antarctic, so they spend time near both poles."
+      "explanation": "Correct: They spend parts of the year near both polar regions. Travelling between the Arctic and Antarctic supports time near both poles. The other options contradict the route, nesting or hunting details. Transfer: accept an answer only when you can point to evidence for every part of it.",
+      "domain": "english",
+      "skillId": "eng.retrieval.evidence-check"
     },
     {
       "id": "E2-Q5",
@@ -61,7 +69,9 @@
         "A pupil aged five"
       ],
       "answer": "A pupil aged nine",
-      "explanation": "Nine is above the minimum age of eight."
+      "explanation": "Correct: A pupil aged nine. At least eight means eight or older, so nine meets the rule. The younger ages fail the minimum-age condition. Transfer: turn phrases such as at least and no more than into a number boundary before checking the options.",
+      "domain": "english",
+      "skillId": "eng.retrieval.evidence-check"
     },
     {
       "id": "E2-Q6",
@@ -73,7 +83,9 @@
         "Waterproof coats"
       ],
       "answer": "Helmets",
-      "explanation": "The passage directly states that helmets are supplied."
+      "explanation": "Correct: Helmets. The sentence contrasts what the centre supplies with what visitors must bring themselves. Lunch is tempting because it appears in the sentence, but it is not provided by the centre. Transfer: identify who performs each action before selecting a stated detail.",
+      "domain": "english",
+      "skillId": "eng.retrieval.explicit-detail"
     },
     {
       "id": "E2-Q7",
@@ -85,7 +97,9 @@
         "Everyone goes home immediately."
       ],
       "answer": "The activities continue indoors.",
-      "explanation": "The session is moved to the indoor hall rather than cancelled."
+      "explanation": "Correct: The activities continue indoors. The passage says sessions are moved to the indoor hall when rain prevents outdoor use. Closing, refunds and going home are unsupported additions. Transfer: match the condition in the question to the consequence stated after it.",
+      "domain": "english",
+      "skillId": "eng.retrieval.paraphrase"
     },
     {
       "id": "E2-Q8",
@@ -97,7 +111,9 @@
         "To his house"
       ],
       "answer": "To the library reception desk",
-      "explanation": "The passage says he gave it to the library receptionist."
+      "explanation": "Correct: To the library reception desk. Handing the wallet to the library receptionist tells us where Noah took it. The bus stop is where he found it, not where he delivered it. Transfer: separate the starting location from the destination before answering a where question.",
+      "domain": "english",
+      "skillId": "eng.retrieval.explicit-detail"
     },
     {
       "id": "E2-Q9",
@@ -109,7 +125,9 @@
         "A bus ticket"
       ],
       "answer": "A card inside the wallet",
-      "explanation": "The card contained the information needed to identify and contact the owner."
+      "explanation": "Correct: A card inside the wallet. The sentence identifies both the object used and its location. Receipts, notes and tickets are plausible objects, but the passage does not name them. Transfer: copy the exact evidence in your mind, then choose its closest paraphrase.",
+      "domain": "english",
+      "skillId": "eng.retrieval.explicit-detail"
     },
     {
       "id": "E2-Q10",
@@ -121,7 +139,9 @@
         "The owner found it before Noah did."
       ],
       "answer": "The wallet was returned to its owner.",
-      "explanation": "The passage directly says the owner collected the wallet."
+      "explanation": "Correct: The wallet was returned to its owner. The owner collected it, which proves the return happened. The other options contradict the passage or invent events. Transfer: for definitely true questions, reject any option containing even one unsupported detail.",
+      "domain": "english",
+      "skillId": "eng.retrieval.evidence-check"
     }
   ]
 }

@@ -13,7 +13,9 @@
         "40"
       ],
       "answer": "20",
-      "explanation": "25% is one quarter, and 80 ÷ 4 = 20."
+      "explanation": "25% is one quarter, and 80 ÷ 4 = 20.",
+      "domain": "mathematics",
+      "skillId": "math.percentages.amount"
     },
     {
       "id": "M3-Q2",
@@ -25,7 +27,9 @@
         "£370"
       ],
       "answer": "£37",
-      "explanation": "To find 10%, divide by 10: £370 ÷ 10 = £37."
+      "explanation": "To find 10%, divide by 10: £370 ÷ 10 = £37.",
+      "domain": "mathematics",
+      "skillId": "math.percentages.amount"
     },
     {
       "id": "M3-Q3",
@@ -37,7 +41,9 @@
         "35"
       ],
       "answer": "30",
-      "explanation": "10% of 200 is 20 and 5% is 10, so 15% is 30."
+      "explanation": "10% of 200 is 20 and 5% is 10, so 15% is 30.",
+      "domain": "mathematics",
+      "skillId": "math.percentages.amount"
     },
     {
       "id": "M3-Q4",
@@ -49,7 +55,9 @@
         "£52"
       ],
       "answer": "£48",
-      "explanation": "20% of £60 is £12. Subtract the discount: £60 - £12 = £48."
+      "explanation": "20% of £60 is £12. Subtract the discount: £60 - £12 = £48.",
+      "domain": "mathematics",
+      "skillId": "math.percentages.change"
     },
     {
       "id": "M3-Q5",
@@ -61,7 +69,9 @@
         "£65"
       ],
       "answer": "£50",
-      "explanation": "25% of £40 is £10. Add the increase: £40 + £10 = £50."
+      "explanation": "25% of £40 is £10. Add the increase: £40 + £10 = £50.",
+      "domain": "mathematics",
+      "skillId": "math.percentages.change"
     },
     {
       "id": "M3-Q6",
@@ -73,7 +83,9 @@
         "95%"
       ],
       "answer": "90%",
-      "explanation": "36/40 is the same as 9/10, which is 90%."
+      "explanation": "36/40 is the same as 9/10, which is 90%.",
+      "domain": "mathematics",
+      "skillId": "math.percentages.reverse-convert"
     },
     {
       "id": "M3-Q7",
@@ -85,7 +97,9 @@
         "84"
       ],
       "answer": "70",
-      "explanation": "20% is one fifth. If one fifth is 14, the whole is 14 × 5 = 70."
+      "explanation": "20% is one fifth. If one fifth is 14, the whole is 14 × 5 = 70.",
+      "domain": "mathematics",
+      "skillId": "math.percentages.reverse-convert"
     },
     {
       "id": "M3-Q8",
@@ -97,7 +111,9 @@
         "£40"
       ],
       "answer": "£36",
-      "explanation": "10% of £240 is £24 and 5% is £12. Therefore 15% is £36."
+      "explanation": "10% of £240 is £24 and 5% is £12. Therefore 15% is £36.",
+      "domain": "mathematics",
+      "skillId": "math.percentages.change"
     },
     {
       "id": "M3-Q9",
@@ -109,7 +125,9 @@
         "725 litres"
       ],
       "answer": "200 litres",
-      "explanation": "The tank needs 25% more. One quarter of 800 is 200 litres."
+      "explanation": "The tank needs 25% more. One quarter of 800 is 200 litres.",
+      "domain": "mathematics",
+      "skillId": "math.percentages.amount"
     },
     {
       "id": "M3-Q10",
@@ -121,7 +139,9 @@
         "350"
       ],
       "answer": "270",
-      "explanation": "30% of 500 is 150. After the morning 350 remain, and 350 - 80 = 270."
+      "explanation": "30% of 500 is 150. After the morning 350 remain, and 350 - 80 = 270.",
+      "domain": "mathematics",
+      "skillId": "math.percentages.change"
     }
   ]
 }

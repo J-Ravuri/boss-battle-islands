@@ -760,6 +760,7 @@
       <button class="btn btn-primary" id="title-play-btn" onclick="window.Game.showLevelSelect()">▶️ Choose Level</button>
       <button class="btn btn-gold" id="title-trophy-btn" onclick="window.Game.showTrophies()">🏆 Trophy Shelf</button>
       <button class="btn btn-success" id="title-locker-btn" onclick="window.Game.showLocker()">🎒 Hero Locker</button>
+      <button class="btn btn-info" id="title-learning-btn">📊 Parent Progress</button>
       <button class="btn btn-info" id="title-settings-btn" onclick="window.Game.showSettings()">⚙️ Settings</button>
       <button class="btn btn-info" id="title-help-btn" onclick="window.Game.showHelp()">❓ How to Play</button>
     </div>
@@ -804,7 +805,18 @@
       <h2 id="victory-boss-name">Boss Name</h2>
       <div id="victory-rank" style="font-size:2rem; margin:6px 0 10px;">⭐⭐⭐</div>
       <p id="victory-stats" style="font-size:1.1rem; color: var(--text-light); margin-bottom:18px;">Score: 10/10 | +50 XP</p>
+      <div id="victory-learning-summary" style="text-align:left; background:rgba(255,255,255,0.1); border-radius:14px; padding:14px; margin:0 auto 18px; max-width:620px;"></div>
       <button class="btn btn-primary" id="victory-continue-btn" onclick="window.Game.onVictoryContinue()">🏠 Back to Hub</button>
+    </div>
+  </div>
+  <div id="ui-learning" class="ui-screen">
+    <div class="ui-panel" style="max-width:960px;">
+      <h1>📊 Parent Progress</h1>
+      <p style="color:var(--text-light);">First-attempt performance across every level. Retry corrections are tracked separately.</p>
+      <div id="learning-overview" style="margin:14px 0;"></div>
+      <div id="learning-weak-spots" style="display:grid; gap:10px; text-align:left;"></div>
+      <p id="learning-storage-note" style="color:var(--text-light); font-size:0.85rem; margin-top:16px;"></p>
+      <button class="btn btn-info" id="learning-close-btn">← Main Menu</button>
     </div>
   </div>
   <div id="ui-trophy" class="ui-screen">
@@ -1157,6 +1169,374 @@
   // ================================================================
   const LEGACY_SAVE_KEY = 'bossBattleIslands_save_v1';
   const SAVE_KEY_PREFIX = 'bossBattleIslands_progress_';
+  const LEARNING_STORE_KEY = 'bbi.learning.v1';
+  const LEARNING_SCHEMA_VERSION = 1;
+  const LEARNING_EVENT_LIMIT = 3000;
+  const LEARNING_EVENT_MAX_AGE_MS = 180 * 24 * 60 * 60 * 1000;
+  const LEARNING_SESSION_LIMIT = 100;
+  const LEVEL_ONE_SKILLS = {
+    'eng.vocabulary.context': 'Meaning from context',
+    'eng.vocabulary.synonym-antonym': 'Synonyms and antonyms',
+    'eng.vocabulary.phrase': 'Phrases and expressions',
+    'eng.retrieval.explicit-detail': 'Retrieving stated information',
+    'eng.retrieval.sequence': 'Sequence and order',
+    'eng.retrieval.paraphrase': 'Recognising paraphrase',
+    'eng.retrieval.evidence-check': 'Checking textual evidence',
+    'eng.inference.cause-purpose': 'Inferring cause or purpose',
+    'eng.inference.setting-consequence': 'Inferring conditions or consequences',
+    'eng.character.feelings-motives': 'Feelings and motives',
+    'eng.character.traits-relationships': 'Character and relationships',
+    'eng.summary.main-idea': 'Main idea',
+    'eng.summary.concise-summary': 'Concise summary',
+    'eng.summary.text-purpose': 'Title and paragraph purpose',
+    'eng.argument.claim-reason': 'Claims and reasons',
+    'eng.argument.evidence-quality': 'Choosing strong evidence',
+    'eng.argument.fact-opinion': 'Fact, opinion and assertion',
+    'eng.argument.counterargument': 'Counterarguments',
+    'math.word-problems.multistep': 'Multi-step word problems',
+    'math.money.decimals': 'Money and decimal calculations',
+    'math.data.read-compare': 'Reading and comparing data',
+    'math.fractions.equivalence-comparison': 'Equivalent and ordered fractions',
+    'math.fractions.calculation': 'Adding and subtracting fractions',
+    'math.fractions.quantity': 'Fractions of quantities',
+    'math.probability.basic': 'Basic probability',
+    'math.percentages.amount': 'Percentages of amounts',
+    'math.percentages.change': 'Percentage increase and decrease',
+    'math.percentages.reverse-convert': 'Reverse and converted percentages',
+    'math.time.elapsed': 'Elapsed time',
+    'math.time.timetables': 'Timetable reasoning',
+    'math.time.calendar': 'Dates and calendars',
+    'math.measurement.perimeter-area': 'Perimeter and area',
+    'math.measurement.volume': 'Volume',
+    'math.measurement.units-capacity': 'Units and capacity',
+    'math.ratio.scale': 'Ratio and scale',
+    'math.sequences.patterns': 'Number patterns',
+    'math.multiplication-division': 'Multiplicative relationships',
+    'math.statistics.interpretation': 'Statistical interpretation'
+  };
+
+  function learningId(prefix = 'id') {
+    if (window.crypto?.randomUUID) return window.crypto.randomUUID();
+    return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  }
+
+  function emptyLearningStore() {
+    const now = new Date().toISOString();
+    return {
+      schemaVersion: LEARNING_SCHEMA_VERSION,
+      createdAt: now,
+      updatedAt: now,
+      installationId: learningId('installation'),
+      events: [],
+      questionStats: {},
+      skillStats: {},
+      sessionHistory: [],
+      maintenance: { lastPrunedAt: null }
+    };
+  }
+
+  function readLearningStore() {
+    try {
+      const raw = localStorage.getItem(LEARNING_STORE_KEY);
+      if (!raw) return emptyLearningStore();
+      const parsed = JSON.parse(raw);
+      if (!parsed || parsed.schemaVersion !== LEARNING_SCHEMA_VERSION) {
+        console.warn('[LEARNING] Unsupported learning-store version; analytics disabled for this write.');
+        return null;
+      }
+      return {
+        ...emptyLearningStore(),
+        ...parsed,
+        events: Array.isArray(parsed.events) ? parsed.events : [],
+        questionStats: parsed.questionStats && typeof parsed.questionStats === 'object' ? parsed.questionStats : {},
+        skillStats: parsed.skillStats && typeof parsed.skillStats === 'object' ? parsed.skillStats : {},
+        sessionHistory: Array.isArray(parsed.sessionHistory) ? parsed.sessionHistory : [],
+        maintenance: parsed.maintenance && typeof parsed.maintenance === 'object'
+          ? parsed.maintenance
+          : { lastPrunedAt: null }
+      };
+    } catch (error) {
+      console.warn('[LEARNING] Could not read learning data; gameplay will continue.', error);
+      return null;
+    }
+  }
+
+  function writeLearningStore(store, prune = false) {
+    if (!store) return false;
+    try {
+      if (prune) {
+        const cutoff = Date.now() - LEARNING_EVENT_MAX_AGE_MS;
+        store.events = store.events
+          .filter(event => Date.parse(event.timestamp) >= cutoff)
+          .slice(-LEARNING_EVENT_LIMIT);
+        store.sessionHistory = store.sessionHistory.slice(-LEARNING_SESSION_LIMIT);
+        store.maintenance.lastPrunedAt = new Date().toISOString();
+      }
+      store.updatedAt = new Date().toISOString();
+      localStorage.setItem(LEARNING_STORE_KEY, JSON.stringify(store));
+      return true;
+    } catch (error) {
+      console.warn('[LEARNING] Could not save learning data; gameplay will continue.', error);
+      return false;
+    }
+  }
+
+  function humaniseSkill(value = '') {
+    return value
+      .replace(/^spelling\./, '')
+      .replace(/[.-]+/g, ' ')
+      .replace(/\b\w/g, letter => letter.toUpperCase());
+  }
+
+  function getLearningMeta(question) {
+    if (question?.domain && question?.skillId) {
+      return {
+        domain: question.domain,
+        skillId: question.skillId,
+        skillLabel: LEVEL_ONE_SKILLS[question.skillId] || humaniseSkill(question.skillId)
+      };
+    }
+    if (question?.skill) {
+      const skillId = `spelling.${question.skill}`;
+      return { domain: 'spelling', skillId, skillLabel: humaniseSkill(skillId) };
+    }
+    return { domain: 'unknown', skillId: 'unknown.unclassified', skillLabel: 'Unclassified skill' };
+  }
+
+  function incrementLearningCounter(target, key, amount = 1) {
+    target[key] = (Number(target[key]) || 0) + amount;
+  }
+
+  function recordLearningAttempt(details) {
+    const store = readLearningStore();
+    if (!store) return false;
+    const questionKey = `${details.levelId}:${details.sectionId}:${details.questionId}`;
+    const timestamp = new Date().toISOString();
+    const questionStats = store.questionStats[questionKey] || {
+      levelId: details.levelId,
+      sectionId: details.sectionId,
+      questionId: details.questionId,
+      domain: details.domain,
+      skillId: details.skillId,
+      attempts: 0,
+      firstPassAttempts: 0,
+      firstPassCorrect: 0,
+      retryAttempts: 0,
+      retryCorrect: 0,
+      wrongCount: 0,
+      totalResponseTimeMs: 0,
+      lastSeenAt: null,
+      lastWrongAt: null
+    };
+    const skillStats = store.skillStats[details.skillId] || {
+      domain: details.domain,
+      skillId: details.skillId,
+      skillLabel: details.skillLabel,
+      attempts: 0,
+      firstPassAttempts: 0,
+      firstPassCorrect: 0,
+      retryAttempts: 0,
+      retryCorrect: 0,
+      wrongCount: 0,
+      totalResponseTimeMs: 0,
+      lastSeenAt: null,
+      lastWrongAt: null,
+      sessionIds: [],
+      recentFirstPass: []
+    };
+
+    [questionStats, skillStats].forEach(stats => {
+      incrementLearningCounter(stats, 'attempts');
+      incrementLearningCounter(stats, 'totalResponseTimeMs', details.responseTimeMs);
+      stats.lastSeenAt = timestamp;
+      if (!details.correct) {
+        incrementLearningCounter(stats, 'wrongCount');
+        stats.lastWrongAt = timestamp;
+      }
+      if (details.firstAttemptInRun) {
+        incrementLearningCounter(stats, 'firstPassAttempts');
+        if (details.correct) incrementLearningCounter(stats, 'firstPassCorrect');
+      } else {
+        incrementLearningCounter(stats, 'retryAttempts');
+        if (details.correct) incrementLearningCounter(stats, 'retryCorrect');
+      }
+    });
+
+    skillStats.skillLabel = details.skillLabel;
+    skillStats.sessionIds = Array.from(new Set([...(skillStats.sessionIds || []), details.sessionId])).slice(-20);
+    if (details.firstAttemptInRun) {
+      skillStats.recentFirstPass = [
+        ...(skillStats.recentFirstPass || []),
+        { correct: details.correct, timestamp, sessionId: details.sessionId, responseTimeMs: details.responseTimeMs }
+      ].slice(-20);
+    }
+    store.questionStats[questionKey] = questionStats;
+    store.skillStats[details.skillId] = skillStats;
+    store.events.push({
+      eventId: learningId('attempt'),
+      timestamp,
+      sessionId: details.sessionId,
+      runId: details.runId,
+      levelId: details.levelId,
+      sectionId: details.sectionId,
+      questionId: details.questionId,
+      domain: details.domain,
+      skillId: details.skillId,
+      correct: details.correct,
+      attemptNumberInRun: details.attemptNumberInRun,
+      firstAttemptInRun: details.firstAttemptInRun,
+      previouslyShownInRun: details.previouslyShownInRun,
+      previouslyShownEver: details.previouslyShownEver,
+      responseTimeMs: details.responseTimeMs
+    });
+    return writeLearningStore(store);
+  }
+
+  function learningStatus(stats) {
+    const attempts = Number(stats?.firstPassAttempts) || 0;
+    if (attempts < 4) return { key: 'insufficient', label: 'Not enough evidence', color: '#78909C' };
+    const correct = Number(stats.firstPassCorrect) || 0;
+    const accuracy = correct / attempts;
+    const latest = (stats.recentFirstPass || []).slice(-5);
+    const recentMisses = latest.filter(item => !item.correct).length;
+    const sessions = new Set(stats.sessionIds || []).size;
+    if (accuracy < 0.7 || recentMisses >= 2) {
+      return { key: 'needs-practice', label: 'Needs practice', color: '#EF5350' };
+    }
+    if (attempts >= 5 && sessions >= 2 && accuracy >= 0.85 && recentMisses <= 1) {
+      return { key: 'secure', label: 'Secure', color: '#43A047' };
+    }
+    return { key: 'developing', label: 'Developing', color: '#F9A825' };
+  }
+
+  function renderParentProgress() {
+    const overview = document.getElementById('learning-overview');
+    const list = document.getElementById('learning-weak-spots');
+    const note = document.getElementById('learning-storage-note');
+    const store = readLearningStore();
+    if (!overview || !list || !note) return;
+    if (!store || Object.keys(store.skillStats).length === 0) {
+      overview.innerHTML = '<b>No learning evidence yet.</b> Complete an island to begin the report.';
+      list.innerHTML = '';
+      note.textContent = 'Learning data stays on this device and is separate from game progress.';
+      return;
+    }
+    const rows = Object.values(store.skillStats).map(stats => {
+      const attempts = Number(stats.firstPassAttempts) || 0;
+      const accuracy = attempts ? Math.round((Number(stats.firstPassCorrect) || 0) * 100 / attempts) : 0;
+      return { stats, attempts, accuracy, status: learningStatus(stats) };
+    }).sort((a, b) => {
+      const order = { 'needs-practice': 0, developing: 1, secure: 2, insufficient: 3 };
+      return order[a.status.key] - order[b.status.key] || a.accuracy - b.accuracy;
+    });
+    const firstPassTotal = rows.reduce((sum, row) => sum + row.attempts, 0);
+    const firstPassCorrect = rows.reduce((sum, row) => sum + (Number(row.stats.firstPassCorrect) || 0), 0);
+    const overall = firstPassTotal ? Math.round(firstPassCorrect * 100 / firstPassTotal) : 0;
+    overview.innerHTML = `<b>${overall}% first-try accuracy</b> across ${firstPassTotal} first attempts • ` +
+      `${rows.filter(row => row.status.key === 'needs-practice').length} skill(s) need practice`;
+    list.innerHTML = rows.map(row => {
+      const attemptsText = row.attempts
+        ? `${row.accuracy}% first try (${Number(row.stats.firstPassCorrect) || 0}/${row.attempts})`
+        : 'No first attempts yet';
+      const retryText = row.stats.retryAttempts
+        ? ` • corrected ${Number(row.stats.retryCorrect) || 0}/${row.stats.retryAttempts} retries`
+        : '';
+      return `<div style="border-left:6px solid ${row.status.color}; background:rgba(255,255,255,0.08); border-radius:10px; padding:12px;">` +
+        `<div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;">` +
+        `<b>${row.stats.skillLabel || humaniseSkill(row.stats.skillId)}</b>` +
+        `<b style="color:${row.status.color}">${row.status.label}</b></div>` +
+        `<div style="color:var(--text-light); margin-top:4px;">${attemptsText}${retryText}</div></div>`;
+    }).join('');
+    note.textContent = `Local-only learning record • ${store.events.length} recent attempts retained • lifetime totals remain after pruning`;
+  }
+
+  function showParentProgress() {
+    renderParentProgress();
+    showScreen('learning');
+  }
+
+  const learningSessionId = learningId('session');
+
+  function learningStrategyMessage(skillId, label, correctedCount) {
+    if (!correctedCount) return `You practised ${label.toLowerCase()} and kept your first-try answers accurate.`;
+    if (skillId.startsWith('eng.retrieval.')) {
+      return `You went back to the evidence and corrected ${correctedCount} ${correctedCount === 1 ? 'answer' : 'answers'}.`;
+    }
+    if (skillId === 'math.fractions.calculation') {
+      return `You used the feedback to correct ${correctedCount} fraction ${correctedCount === 1 ? 'calculation' : 'calculations'}—remember to find a common denominator first.`;
+    }
+    if (skillId.startsWith('math.time.')) {
+      return `You checked the time information again and corrected ${correctedCount} ${correctedCount === 1 ? 'answer' : 'answers'}.`;
+    }
+    if (skillId.startsWith('spelling.')) {
+      return `You used the spelling pattern to correct ${correctedCount} ${correctedCount === 1 ? 'word' : 'words'}.`;
+    }
+    return `You used feedback and a second look to correct ${correctedCount} ${correctedCount === 1 ? 'answer' : 'answers'}.`;
+  }
+
+  function buildIslandLearningSummary(battle) {
+    const skills = Object.values(battle.learningSkillStats || {});
+    const corrected = skills
+      .filter(skill => skill.correctedCount > 0)
+      .sort((a, b) => b.correctedCount - a.correctedCount);
+    const focus = [...skills]
+      .filter(skill => skill.firstPassAttempts > 0)
+      .sort((a, b) => {
+        const accuracyA = a.firstPassCorrect / a.firstPassAttempts;
+        const accuracyB = b.firstPassCorrect / b.firstPassAttempts;
+        return accuracyA - accuracyB || b.wrongCount - a.wrongCount;
+      })[0];
+    const strongest = [...skills]
+      .filter(skill => skill.firstPassAttempts > 0)
+      .sort((a, b) => {
+        const accuracyA = a.firstPassCorrect / a.firstPassAttempts;
+        const accuracyB = b.firstPassCorrect / b.firstPassAttempts;
+        return accuracyB - accuracyA || b.firstPassAttempts - a.firstPassAttempts;
+      })[0];
+
+    let childMessage;
+    if (battle.firstPassCorrect === battle.firstPassTotal) {
+      childMessage = `Every answer was correct first time. You showed strong ${strongest?.label?.toLowerCase() || 'question-solving'} skills today.`;
+    } else if (corrected.length) {
+      childMessage = learningStrategyMessage(
+        corrected[0].skillId,
+        corrected[0].label,
+        corrected[0].correctedCount
+      );
+    } else {
+      childMessage = `You completed the island and practised ${strongest?.label?.toLowerCase() || 'important exam skills'}.`;
+    }
+
+    let parentMessage;
+    if (!focus || focus.wrongCount === 0) {
+      parentMessage = 'No immediate reinforcement point from this island; revisit these skills on another day to check retention.';
+    } else {
+      parentMessage = `Reinforce next: ${focus.label}. ${focus.wrongCount} first-attempt ${focus.wrongCount === 1 ? 'mistake' : 'mistakes'} in this island run.`;
+    }
+    return { childMessage, parentMessage, focusSkillId: focus?.skillId || null };
+  }
+
+  function saveIslandLearningSummary(battle, summary) {
+    const store = readLearningStore();
+    if (!store) return false;
+    store.sessionHistory.push({
+      sessionId: battle.sessionId,
+      runId: battle.runId,
+      levelId: activeContentLevel,
+      sectionId: battle.sectionId,
+      startedAt: battle.startedAt,
+      endedAt: new Date().toISOString(),
+      firstPassCorrect: battle.firstPassCorrect,
+      firstPassTotal: battle.firstPassTotal,
+      correctedTotal: battle.correctCount,
+      wrongAttempts: battle.wrongCount,
+      strengthenedSkillIds: Object.values(battle.learningSkillStats || {})
+        .filter(skill => skill.correctedCount > 0)
+        .map(skill => skill.skillId),
+      reinforcementSkillId: summary.focusSkillId
+    });
+    return writeLearningStore(store, true);
+  }
   function getSaveKey(levelId = activeContentLevel) {
     return SAVE_KEY_PREFIX + levelId;
   }
@@ -3368,6 +3748,9 @@
 
     state.battle = {
       sectionId: sid,
+      runId: learningId('run'),
+      sessionId: learningSessionId,
+      startedAt: new Date().toISOString(),
       pool: pool,
       retryQueue: [],
       currentQuestion: null,
@@ -3379,7 +3762,12 @@
       waitingForContinue: false,
       isRetry: false,
       questionToken: 0,
-      answeredCorrect: new Set()
+      answeredCorrect: new Set(),
+      questionAttempts: new Map(),
+      answerPositions: new Map(),
+      firstPassCorrect: 0,
+      firstPassTotal: 0,
+      learningSkillStats: {}
     };
 
     // Update boss bar
@@ -3457,7 +3845,23 @@
     document.getElementById('question-text').textContent = q.question;
     const grid = document.getElementById('answer-buttons');
     grid.innerHTML = '';
-    q.options.forEach((opt, idx) => {
+    const displayOptions = [...q.options];
+    if (b.isRetry && displayOptions.length > 1) {
+      const previousAnswerIndex = b.answerPositions.get(q.id);
+      for (let i = displayOptions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [displayOptions[i], displayOptions[j]] = [displayOptions[j], displayOptions[i]];
+      }
+      if (displayOptions.indexOf(q.answer) === previousAnswerIndex) {
+        const swapIndex = (previousAnswerIndex + 1) % displayOptions.length;
+        [displayOptions[previousAnswerIndex], displayOptions[swapIndex]] =
+          [displayOptions[swapIndex], displayOptions[previousAnswerIndex]];
+      }
+    }
+    b.displayOptions = displayOptions;
+    b.answerPositions.set(q.id, displayOptions.indexOf(q.answer));
+    b.questionShownAt = performance.now();
+    displayOptions.forEach((opt, idx) => {
       const btn = document.createElement('button');
       btn.className = 'answer-btn';
       btn.textContent = opt;
@@ -3472,12 +3876,61 @@
     const b = state.battle;
     if (!b || b.waitingForContinue || !b.currentQuestion) return;
     const q = b.currentQuestion;
-    const selected = q.options[idx];
+    const displayOptions = b.displayOptions || q.options;
+    const selected = displayOptions[idx];
     const isCorrect = selected === q.answer;
+    const priorAttempts = b.questionAttempts.get(q.id) || 0;
+    const attemptNumberInRun = priorAttempts + 1;
+    const firstAttemptInRun = attemptNumberInRun === 1;
+    const responseTimeMs = Math.max(0, Math.round(performance.now() - (b.questionShownAt || performance.now())));
+    const meta = getLearningMeta(q);
+    const existingLearning = readLearningStore();
+    const questionKey = `${activeContentLevel}:${b.sectionId}:${q.id}`;
+    const previouslyShownEver = Boolean(existingLearning?.questionStats?.[questionKey]?.attempts);
+    b.questionAttempts.set(q.id, attemptNumberInRun);
+    if (firstAttemptInRun) {
+      b.firstPassTotal++;
+      if (isCorrect) b.firstPassCorrect++;
+    }
+    const runSkill = b.learningSkillStats[meta.skillId] || {
+      skillId: meta.skillId,
+      label: meta.skillLabel,
+      firstPassAttempts: 0,
+      firstPassCorrect: 0,
+      wrongCount: 0,
+      correctedCount: 0
+    };
+    if (firstAttemptInRun) {
+      runSkill.firstPassAttempts++;
+      if (isCorrect) runSkill.firstPassCorrect++;
+    }
+    if (!isCorrect) runSkill.wrongCount++;
+    if (!firstAttemptInRun && isCorrect) runSkill.correctedCount++;
+    b.learningSkillStats[meta.skillId] = runSkill;
+    try {
+      recordLearningAttempt({
+        sessionId: b.sessionId,
+        runId: b.runId,
+        levelId: activeContentLevel,
+        sectionId: b.sectionId,
+        questionId: q.id,
+        domain: meta.domain,
+        skillId: meta.skillId,
+        skillLabel: meta.skillLabel,
+        correct: isCorrect,
+        attemptNumberInRun,
+        firstAttemptInRun,
+        previouslyShownInRun: !firstAttemptInRun,
+        previouslyShownEver,
+        responseTimeMs
+      });
+    } catch (error) {
+      console.warn('[LEARNING] Attempt tracking failed; gameplay will continue.', error);
+    }
     const buttons = document.querySelectorAll('.answer-btn');
     buttons.forEach((btn, i) => {
       btn.disabled = true;
-      if (q.options[i] === q.answer) btn.classList.add('correct');
+      if (displayOptions[i] === q.answer) btn.classList.add('correct');
       else if (i === idx) btn.classList.add('wrong');
     });
 
@@ -3779,6 +4232,17 @@
       date: new Date().toISOString(),
       xp: earnedXP
     };
+    let learningSummary = {
+      childMessage: 'You completed the island and practised important exam skills.',
+      parentMessage: 'Learning details were unavailable for this run.',
+      focusSkillId: null
+    };
+    try {
+      learningSummary = buildIslandLearningSummary(state.battle);
+      saveIslandLearningSummary(state.battle, learningSummary);
+    } catch (error) {
+      console.warn('[LEARNING] Island summary failed; rewards and progression will continue.', error);
+    }
     pendingReward = prepareReward(activeContentLevel, sid, firstClear, state.battle.wrongCount === 0);
     saveGame();
     showSaveToast();
@@ -3789,7 +4253,15 @@
     showScreen('victory');
     document.getElementById('victory-boss-name').textContent = section.theme.boss;
     document.getElementById('victory-stats').innerHTML =
-      `Score: ${correct}/${total} | +${earnedXP} XP` + (levelUp ? '<br><b>🎉 Level Up! You are now Level ' + state.level + '!</b>' : '');
+      `<b>First try: ${state.battle.firstPassCorrect}/${state.battle.firstPassTotal}</b> • ` +
+      `Corrected: ${correct}/${total} • +${earnedXP} XP` +
+      (levelUp ? '<br><b>🎉 Level Up! You are now Level ' + state.level + '!</b>' : '');
+    const victoryLearning = document.getElementById('victory-learning-summary');
+    if (victoryLearning) {
+      victoryLearning.innerHTML =
+        `<b>What you strengthened</b><br>${learningSummary.childMessage}` +
+        `<br><br><b>For a parent</b><br>${learningSummary.parentMessage}`;
+    }
     document.getElementById('victory-badge').textContent = section.theme.emoji;
     const stars = state.battle.wrongCount === 0 ? 3 : state.battle.wrongCount <= 2 ? 2 : 1;
     document.getElementById('victory-rank').textContent =
@@ -3951,7 +4423,7 @@
   function showScreen(name) {
     const allScreens = [
       'ui-title','ui-level-select','ui-hub','ui-victory','ui-trophy','ui-break','ui-help',
-      'ui-locker','ui-reward','ui-settings'
+      'ui-locker','ui-reward','ui-settings','ui-learning'
     ];
     allScreens.forEach(id => {
       const el = document.getElementById(id);
@@ -4645,6 +5117,7 @@
       'title-play-btn': showLevelSelect,
       'title-trophy-btn': () => showTrophies(),
       'title-locker-btn': showLocker,
+      'title-learning-btn': showParentProgress,
       'title-settings-btn': showSettings,
       'title-help-btn': showHelp,
       'level-select-back-btn': showTitle,
@@ -4655,6 +5128,7 @@
       'reward-continue-btn': finishVictoryReturn,
       'trophy-main-menu-btn': showTitle,
       'locker-close-btn': closeLocker,
+      'learning-close-btn': showTitle,
       'settings-reset-btn': showResetConfirmation,
       'settings-close-btn': closeSettings,
       'reset-confirm-btn': confirmResetAll,

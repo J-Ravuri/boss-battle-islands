@@ -13,7 +13,9 @@
         "8"
       ],
       "answer": "4",
-      "explanation": "The ratio is 2:3, so 6 cups of sugar needs 4 cups of flour."
+      "explanation": "The ratio is 2:3, so 6 cups of sugar needs 4 cups of flour.",
+      "domain": "mathematics",
+      "skillId": "math.ratio.scale"
     },
     {
       "id": "M6-Q2",
@@ -25,7 +27,9 @@
         "27"
       ],
       "answer": "24",
-      "explanation": "Each term increases by 3, so the 8th term is 24."
+      "explanation": "Each term increases by 3, so the 8th term is 24.",
+      "domain": "mathematics",
+      "skillId": "math.sequences.patterns"
     },
     {
       "id": "M6-Q3",
@@ -37,7 +41,9 @@
         "35"
       ],
       "answer": "30",
-      "explanation": "Add the numbers: 15 + 10 + 5 = 30."
+      "explanation": "Add the numbers: 15 + 10 + 5 = 30.",
+      "domain": "mathematics",
+      "skillId": "math.data.read-compare"
     },
     {
       "id": "M6-Q4",
@@ -49,7 +55,9 @@
         "50"
       ],
       "answer": "40",
-      "explanation": "Multiply 8 by 5."
+      "explanation": "Multiply 8 by 5.",
+      "domain": "mathematics",
+      "skillId": "math.multiplication-division"
     },
     {
       "id": "M6-Q5",
@@ -61,7 +69,9 @@
         "9"
       ],
       "answer": "8",
-      "explanation": "Divide 48 by 6."
+      "explanation": "Divide 48 by 6.",
+      "domain": "mathematics",
+      "skillId": "math.multiplication-division"
     },
     {
       "id": "M6-Q6",
@@ -73,7 +83,9 @@
         "40"
       ],
       "answer": "32",
-      "explanation": "Each term doubles, so the next term is 32."
+      "explanation": "Each term doubles, so the next term is 32.",
+      "domain": "mathematics",
+      "skillId": "math.sequences.patterns"
     },
     {
       "id": "M6-Q7",
@@ -85,7 +97,9 @@
         "5°C"
       ],
       "answer": "3°C",
-      "explanation": "The increase is 12°C over 4 hours, which is 3°C per hour."
+      "explanation": "The increase is 12°C over 4 hours, which is 3°C per hour.",
+      "domain": "mathematics",
+      "skillId": "math.data.read-compare"
     },
     {
       "id": "M6-Q8",
@@ -97,7 +111,9 @@
         "18 km"
       ],
       "answer": "15 km",
-      "explanation": "Multiply 5 by 3."
+      "explanation": "Multiply 5 by 3.",
+      "domain": "mathematics",
+      "skillId": "math.ratio.scale"
     },
     {
       "id": "M6-Q9",
@@ -109,7 +125,9 @@
         "The mean is 7"
       ],
       "answer": "The mode is 4 and 6",
-      "explanation": "Both 4 and 6 appear twice, so they are the modes."
+      "explanation": "Both 4 and 6 appear twice, so they are the modes.",
+      "domain": "mathematics",
+      "skillId": "math.statistics.interpretation"
     },
     {
       "id": "M6-Q10",
@@ -121,7 +139,9 @@
         "4/5"
       ],
       "answer": "2/5",
-      "explanation": "There are 2 blue counters out of 5 altogether."
+      "explanation": "There are 2 blue counters out of 5 altogether.",
+      "domain": "mathematics",
+      "skillId": "math.fractions.quantity"
     }
   ]
 }

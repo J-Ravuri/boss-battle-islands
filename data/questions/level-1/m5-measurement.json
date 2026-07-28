@@ -13,7 +13,9 @@
         "126 cm"
       ],
       "answer": "46 cm",
-      "explanation": "Perimeter is 2 × (14 + 9) = 46 cm."
+      "explanation": "Perimeter is 2 × (14 + 9) = 46 cm.",
+      "domain": "mathematics",
+      "skillId": "math.measurement.perimeter-area"
     },
     {
       "id": "M5-Q2",
@@ -25,7 +27,9 @@
         "252 m²"
       ],
       "answer": "126 m²",
-      "explanation": "Area is length × width: 18 × 7 = 126 m²."
+      "explanation": "Area is length × width: 18 × 7 = 126 m².",
+      "domain": "mathematics",
+      "skillId": "math.measurement.perimeter-area"
     },
     {
       "id": "M5-Q3",
@@ -37,7 +41,9 @@
         "88 cm"
       ],
       "answer": "12 cm",
-      "explanation": "Length = area ÷ width, so 96 ÷ 8 = 12 cm."
+      "explanation": "Length = area ÷ width, so 96 ÷ 8 = 12 cm.",
+      "domain": "mathematics",
+      "skillId": "math.measurement.perimeter-area"
     },
     {
       "id": "M5-Q4",
@@ -49,7 +55,9 @@
         "1296 cm²"
       ],
       "answer": "81 cm²",
-      "explanation": "Each side is 36 ÷ 4 = 9 cm. The area is 9 × 9 = 81 cm²."
+      "explanation": "Each side is 36 ÷ 4 = 9 cm. The area is 9 × 9 = 81 cm².",
+      "domain": "mathematics",
+      "skillId": "math.measurement.perimeter-area"
     },
     {
       "id": "M5-Q5",
@@ -61,7 +69,9 @@
         "96 cm²"
       ],
       "answer": "42 cm²",
-      "explanation": "Triangle area is base × height ÷ 2: 12 × 7 ÷ 2 = 42 cm²."
+      "explanation": "Triangle area is base × height ÷ 2: 12 × 7 ÷ 2 = 42 cm².",
+      "domain": "mathematics",
+      "skillId": "math.measurement.perimeter-area"
     },
     {
       "id": "M5-Q6",
@@ -73,7 +83,9 @@
         "166 m²"
       ],
       "answer": "134 m²",
-      "explanation": "The garden area is 150 m² and the pond area is 16 m². The remaining area is 150 - 16 = 134 m²."
+      "explanation": "The garden area is 150 m² and the pond area is 16 m². The remaining area is 150 - 16 = 134 m².",
+      "domain": "mathematics",
+      "skillId": "math.measurement.perimeter-area"
     },
     {
       "id": "M5-Q7",
@@ -85,7 +97,9 @@
         "360 cm³"
       ],
       "answer": "180 cm³",
-      "explanation": "Volume is length × width × height: 9 × 5 × 4 = 180 cm³."
+      "explanation": "Volume is length × width × height: 9 × 5 × 4 = 180 cm³.",
+      "domain": "mathematics",
+      "skillId": "math.measurement.volume"
     },
     {
       "id": "M5-Q8",
@@ -97,7 +111,9 @@
         "40 cm"
       ],
       "answer": "4 cm",
-      "explanation": "The base area is 10 × 6 = 60 cm². Height = 240 ÷ 60 = 4 cm."
+      "explanation": "The base area is 10 × 6 = 60 cm². Height = 240 ÷ 60 = 4 cm.",
+      "domain": "mathematics",
+      "skillId": "math.measurement.volume"
     },
     {
       "id": "M5-Q9",
@@ -109,7 +125,9 @@
         "3,500 ml"
       ],
       "answer": "3,500 ml",
-      "explanation": "One litre is 1,000 millilitres, so 3.5 × 1,000 = 3,500 ml."
+      "explanation": "One litre is 1,000 millilitres, so 3.5 × 1,000 = 3,500 ml.",
+      "domain": "mathematics",
+      "skillId": "math.measurement.units-capacity"
     },
     {
       "id": "M5-Q10",
@@ -121,7 +139,9 @@
         "144"
       ],
       "answer": "72",
-      "explanation": "The box's volume is 6 × 4 × 3 = 72 cm³, so it holds 72 one-centimetre cubes."
+      "explanation": "The box's volume is 6 × 4 × 3 = 72 cm³, so it holds 72 one-centimetre cubes.",
+      "domain": "mathematics",
+      "skillId": "math.measurement.volume"
     }
   ]
 }

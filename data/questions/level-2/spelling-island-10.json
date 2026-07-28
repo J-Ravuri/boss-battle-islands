@@ -144,7 +144,7 @@
         "suspicous"
       ],
       "answer": "suspicious",
-      "explanation": "Suspicious ends in cious.",
+      "explanation": "Correct: suspicious. The word ends in cious after suspici. Suspitious swaps c for t because both endings can sound like “shus.” Transfer: connect suspicious with suspicion to preserve the c.",
       "word": "suspicious",
       "skill": "shus-endings",
       "difficulty": 2,

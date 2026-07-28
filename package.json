@@ -4,7 +4,8 @@
   "description": "Shauri's 11+ educational adventure game",
   "scripts": {
     "start": "npx serve .",
-    "dev": "npx live-server --port=8080"
+    "dev": "npx live-server --port=8080",
+    "test": "node tools/validate-phase1-learning.js"
   },
   "keywords": ["education", "game", "threejs", "11-plus"],
   "license": "MIT"

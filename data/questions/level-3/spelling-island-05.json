@@ -80,7 +80,7 @@
         "castle"
       ],
       "answer": "castle",
-      "explanation": "Castle contains a silent t.",
+      "explanation": "Correct: castle. The t is written but silent in normal pronunciation. Casle follows the sound and removes a required historical letter. Transfer: group castle with listen and whistle as words containing silent t.",
       "word": "castle",
       "skill": "silent-letters",
       "difficulty": 1,
@@ -96,7 +96,7 @@
         "knukles"
       ],
       "answer": "knuckles",
-      "explanation": "Knuckles begins with a silent k.",
+      "explanation": "Correct: knuckles. It begins with silent k before n and keeps ck in the middle. Nuckles follows the pronunciation but omits the initial letter. Transfer: group it with knee, knife and knock.",
       "word": "knuckles",
       "skill": "silent-letters",
       "difficulty": 1,
@@ -128,7 +128,7 @@
         "swoord"
       ],
       "answer": "sword",
-      "explanation": "Sword contains a silent w.",
+      "explanation": "Correct: sword. The w is written even though it is silent. Sord copies the sound rather than the established spelling. Transfer: learn sword as a special silent-w word and contrast it with spoken sw in swim.",
       "word": "sword",
       "skill": "silent-letters",
       "difficulty": 1,
@@ -160,7 +160,7 @@
         "pnumonia"
       ],
       "answer": "pneumonia",
-      "explanation": "Pneumonia begins with silent p.",
+      "explanation": "Correct: pneumonia. It begins with silent p before n. Neumonia follows the pronunciation but loses the Greek-origin initial letter. Transfer: group pneumonia with pneumatic as pn words.",
       "word": "pneumonia",
       "skill": "silent-letters",
       "difficulty": 3,

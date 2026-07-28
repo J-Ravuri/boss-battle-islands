@@ -48,7 +48,7 @@
         "convertibel"
       ],
       "answer": "convertible",
-      "explanation": "Convertible ends in ible.",
+      "explanation": "Correct: convertible. The accepted ending is ible, not able, after convert. Convertable uses the more common sound-based ending but is not the established spelling. Transfer: connect convertible with conversion and learn it as an ible word.",
       "word": "convertible",
       "skill": "suffix-ible",
       "difficulty": 2,
@@ -112,7 +112,7 @@
         "adorabble"
       ],
       "answer": "adorable",
-      "explanation": "Adorable ends in able.",
+      "explanation": "Correct: adorable. Add able to adore while dropping the final silent e. Adorible selects ible even though this word belongs to the able family. Transfer: if a complete base word is easy to recognise, test whether able has been added.",
       "word": "adorable",
       "skill": "suffix-able",
       "difficulty": 1,
@@ -160,7 +160,7 @@
         "capable"
       ],
       "answer": "capable",
-      "explanation": "Capable ends in able.",
+      "explanation": "Correct: capable. The word ends in able, with cap before the ending. Capible confuses the two common endings because they sound similar. Transfer: learn capable alongside capability and remember its a.",
       "word": "capable",
       "skill": "suffix-able",
       "difficulty": 1,

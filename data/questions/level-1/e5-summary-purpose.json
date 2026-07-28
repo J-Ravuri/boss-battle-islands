@@ -13,7 +13,9 @@
         "Conservationists want to move otters away from rivers."
       ],
       "answer": "Otter numbers have recovered, but they still need protection.",
-      "explanation": "The passage explains both the otters' recovery and the threats that remain."
+      "explanation": "The passage explains both the otters' recovery and the threats that remain.",
+      "domain": "english",
+      "skillId": "eng.summary.main-idea"
     },
     {
       "id": "E5-Q2",
@@ -25,7 +27,9 @@
         "Conservationists built roads beside rivers."
       ],
       "answer": "Otters became rare, but cleaner rivers helped them return.",
-      "explanation": "This includes the paragraph's two main points: decline and recovery."
+      "explanation": "This includes the paragraph's two main points: decline and recovery.",
+      "domain": "english",
+      "skillId": "eng.summary.concise-summary"
     },
     {
       "id": "E5-Q3",
@@ -37,7 +41,9 @@
         "To prove that otters no longer face any danger"
       ],
       "answer": "To show that the recovery is encouraging but not complete",
-      "explanation": "The paragraph says otters have returned but still face threats."
+      "explanation": "The paragraph says otters have returned but still face threats.",
+      "domain": "english",
+      "skillId": "eng.summary.text-purpose"
     },
     {
       "id": "E5-Q4",
@@ -49,7 +55,9 @@
         "A Guide to Building a Large Pond"
       ],
       "answer": "From Wasteland to Wildlife Garden",
-      "explanation": "The title captures the change from an untidy area into a useful garden that supports wildlife."
+      "explanation": "The title captures the change from an untidy area into a useful garden that supports wildlife.",
+      "domain": "english",
+      "skillId": "eng.summary.main-idea"
     },
     {
       "id": "E5-Q5",
@@ -61,7 +69,9 @@
         "The garden is used only by the gardening club."
       ],
       "answer": "Pupils and adults worked together to transform unused land into a useful school garden.",
-      "explanation": "This sentence includes the main people, action and result."
+      "explanation": "This sentence includes the main people, action and result.",
+      "domain": "english",
+      "skillId": "eng.summary.concise-summary"
     },
     {
       "id": "E5-Q6",
@@ -73,7 +83,9 @@
         "To suggest that the pond should be removed"
       ],
       "answer": "To show that the garden has also benefited wildlife",
-      "explanation": "The animals are evidence that the garden has created a better habitat."
+      "explanation": "The animals are evidence that the garden has created a better habitat.",
+      "domain": "english",
+      "skillId": "eng.summary.text-purpose"
     },
     {
       "id": "E5-Q7",
@@ -85,7 +97,9 @@
         "How to build a new workshop"
       ],
       "answer": "A careful and highly skilled clock repairer",
-      "explanation": "The passage focuses on Mr Iqbal's skill, patience and careful work."
+      "explanation": "The passage focuses on Mr Iqbal's skill, patience and careful work.",
+      "domain": "english",
+      "skillId": "eng.summary.main-idea"
     },
     {
       "id": "E5-Q8",
@@ -97,7 +111,9 @@
         "To show that Mr Iqbal repairs watches quickly"
       ],
       "answer": "To show Mr Iqbal's patience and thoroughness",
-      "explanation": "The paragraph describes how carefully he examines, cleans and tests every watch."
+      "explanation": "The paragraph describes how carefully he examines, cleans and tests every watch.",
+      "domain": "english",
+      "skillId": "eng.summary.text-purpose"
     },
     {
       "id": "E5-Q9",
@@ -109,7 +125,9 @@
         "Emergency workers built a stone wall on a mountain."
       ],
       "answer": "A rescue team found and safely guided walkers lost in fog.",
-      "explanation": "This includes the problem, the rescue and the safe outcome."
+      "explanation": "This includes the problem, the rescue and the safe outcome.",
+      "domain": "english",
+      "skillId": "eng.summary.concise-summary"
     },
     {
       "id": "E5-Q10",
@@ -121,7 +139,9 @@
         "The walkers waited beside a stone wall."
       ],
       "answer": "The walkers waited beside a stone wall.",
-      "explanation": "The stone wall is a small detail and is not needed to explain the main event."
+      "explanation": "The stone wall is a small detail and is not needed to explain the main event.",
+      "domain": "english",
+      "skillId": "eng.summary.concise-summary"
     }
   ]
 }

@@ -13,7 +13,9 @@
         "Noisy"
       ],
       "answer": "Unwilling",
-      "explanation": "Reluctant means you do not really want to do something."
+      "explanation": "Reluctant means you do not really want to do something.",
+      "domain": "english",
+      "skillId": "eng.vocabulary.context"
     },
     {
       "id": "E1-Q2",
@@ -25,7 +27,9 @@
         "Dirty"
       ],
       "answer": "Abundant",
-      "explanation": "Scarce means there is very little of something. Abundant means there is plenty."
+      "explanation": "Scarce means there is very little of something. Abundant means there is plenty.",
+      "domain": "english",
+      "skillId": "eng.vocabulary.synonym-antonym"
     },
     {
       "id": "E1-Q3",
@@ -37,7 +41,9 @@
         "Newly built"
       ],
       "answer": "Dangerous and unstable",
-      "explanation": "Precarious describes something unsafe or likely to go wrong."
+      "explanation": "Precarious describes something unsafe or likely to go wrong.",
+      "domain": "english",
+      "skillId": "eng.vocabulary.context"
     },
     {
       "id": "E1-Q4",
@@ -49,7 +55,9 @@
         "Slightly confused"
       ],
       "answer": "Completely absorbed",
-      "explanation": "Engrossed means giving something all your attention."
+      "explanation": "Engrossed means giving something all your attention.",
+      "domain": "english",
+      "skillId": "eng.vocabulary.context"
     },
     {
       "id": "E1-Q5",
@@ -61,7 +69,9 @@
         "Brief"
       ],
       "answer": "Genuine",
-      "explanation": "Sincere means honest and truly meant, so genuine is the closest match."
+      "explanation": "Sincere means honest and truly meant, so genuine is the closest match.",
+      "domain": "english",
+      "skillId": "eng.vocabulary.synonym-antonym"
     },
     {
       "id": "E1-Q6",
@@ -73,7 +83,9 @@
         "Certain of the route"
       ],
       "answer": "Unsure what to do",
-      "explanation": "To be at a loss means to feel puzzled and not know what to do next."
+      "explanation": "To be at a loss means to feel puzzled and not know what to do next.",
+      "domain": "english",
+      "skillId": "eng.vocabulary.phrase"
     },
     {
       "id": "E1-Q7",
@@ -85,7 +97,9 @@
         "Temporary"
       ],
       "answer": "Possible",
-      "explanation": "Feasible means something can realistically be done."
+      "explanation": "Feasible means something can realistically be done.",
+      "domain": "english",
+      "skillId": "eng.vocabulary.context"
     },
     {
       "id": "E1-Q8",
@@ -97,7 +111,9 @@
         "Became silent"
       ],
       "answer": "Moved apart and left",
-      "explanation": "Dispersed means spread out or moved away in different directions."
+      "explanation": "Dispersed means spread out or moved away in different directions.",
+      "domain": "english",
+      "skillId": "eng.vocabulary.context"
     },
     {
       "id": "E1-Q9",
@@ -109,7 +125,9 @@
         "Hungry"
       ],
       "answer": "Unfriendly and aggressive",
-      "explanation": "Hostile means unfriendly and possibly ready to attack."
+      "explanation": "Hostile means unfriendly and possibly ready to attack.",
+      "domain": "english",
+      "skillId": "eng.vocabulary.context"
     },
     {
       "id": "E1-Q10",
@@ -121,7 +139,9 @@
         "Easy to remember"
       ],
       "answer": "Unclear or open to more than one meaning",
-      "explanation": "Ambiguous language is unclear because it can be understood in more than one way."
+      "explanation": "Ambiguous language is unclear because it can be understood in more than one way.",
+      "domain": "english",
+      "skillId": "eng.vocabulary.context"
     }
   ]
 }

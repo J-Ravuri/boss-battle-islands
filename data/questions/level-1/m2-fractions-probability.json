@@ -13,7 +13,9 @@
         "15/30"
       ],
       "answer": "9/15",
-      "explanation": "Multiply both the numerator and denominator of 3/5 by 3 to get 9/15."
+      "explanation": "Multiply both the numerator and denominator of 3/5 by 3 to get 9/15.",
+      "domain": "mathematics",
+      "skillId": "math.fractions.equivalence-comparison"
     },
     {
       "id": "M2-Q2",
@@ -25,7 +27,9 @@
         "7/12"
       ],
       "answer": "2/3",
-      "explanation": "As decimals, 2/3 is about 0.67, which is greater than 0.60, 0.625 and about 0.58."
+      "explanation": "As decimals, 2/3 is about 0.67, which is greater than 0.60, 0.625 and about 0.58.",
+      "domain": "mathematics",
+      "skillId": "math.fractions.equivalence-comparison"
     },
     {
       "id": "M2-Q3",
@@ -37,7 +41,9 @@
         "7/8"
       ],
       "answer": "5/8",
-      "explanation": "Change 1/4 to 2/8. Then 3/8 + 2/8 = 5/8."
+      "explanation": "Change 1/4 to 2/8. Then 3/8 + 2/8 = 5/8.",
+      "domain": "mathematics",
+      "skillId": "math.fractions.calculation"
     },
     {
       "id": "M2-Q4",
@@ -49,7 +55,9 @@
         "2/3"
       ],
       "answer": "7/12",
-      "explanation": "Use twelfths: 5/6 = 10/12 and 1/4 = 3/12. Then 10/12 - 3/12 = 7/12."
+      "explanation": "Use twelfths: 5/6 = 10/12 and 1/4 = 3/12. Then 10/12 - 3/12 = 7/12.",
+      "domain": "mathematics",
+      "skillId": "math.fractions.calculation"
     },
     {
       "id": "M2-Q5",
@@ -61,7 +69,9 @@
         "24"
       ],
       "answer": "18",
-      "explanation": "48 ÷ 8 = 6, and 6 × 3 = 18."
+      "explanation": "48 ÷ 8 = 6, and 6 × 3 = 18.",
+      "domain": "mathematics",
+      "skillId": "math.fractions.quantity"
     },
     {
       "id": "M2-Q6",
@@ -73,7 +83,9 @@
         "13/20"
       ],
       "answer": "7/20",
-      "explanation": "She drinks 8/20 + 5/20 = 13/20. The amount left is 20/20 - 13/20 = 7/20."
+      "explanation": "She drinks 8/20 + 5/20 = 13/20. The amount left is 20/20 - 13/20 = 7/20.",
+      "domain": "mathematics",
+      "skillId": "math.fractions.calculation"
     },
     {
       "id": "M2-Q7",
@@ -85,7 +97,9 @@
         "5/10"
       ],
       "answer": "3/10",
-      "explanation": "There are 10 counters altogether and 3 are blue, so the probability is 3/10."
+      "explanation": "There are 10 counters altogether and 3 are blue, so the probability is 3/10.",
+      "domain": "mathematics",
+      "skillId": "math.probability.basic"
     },
     {
       "id": "M2-Q8",
@@ -97,7 +111,9 @@
         "2/3"
       ],
       "answer": "1/2",
-      "explanation": "The even cards are 2, 4 and 6, so 3 out of 6 cards work. 3/6 simplifies to 1/2."
+      "explanation": "The even cards are 2, 4 and 6, so 3 out of 6 cards work. 3/6 simplifies to 1/2.",
+      "domain": "mathematics",
+      "skillId": "math.probability.basic"
     },
     {
       "id": "M2-Q9",
@@ -109,7 +125,9 @@
         "5/8"
       ],
       "answer": "1/2",
-      "explanation": "There are 2 red and 2 blue sections, making 4 successful sections out of 8. 4/8 = 1/2."
+      "explanation": "There are 2 red and 2 blue sections, making 4 successful sections out of 8. 4/8 = 1/2.",
+      "domain": "mathematics",
+      "skillId": "math.probability.basic"
     },
     {
       "id": "M2-Q10",
@@ -121,7 +139,9 @@
         "4/6"
       ],
       "answer": "3/5",
-      "explanation": "There are 10 - 4 = 6 black balls. The probability is 6/10, which simplifies to 3/5."
+      "explanation": "There are 10 - 4 = 6 black balls. The probability is 6/10, which simplifies to 3/5.",
+      "domain": "mathematics",
+      "skillId": "math.probability.basic"
     }
   ]
 }

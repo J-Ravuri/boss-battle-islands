@@ -16,7 +16,7 @@
         "forty"
       ],
       "answer": "forty",
-      "explanation": "Forty has no u.",
+      "explanation": "Correct: forty. The standard spelling drops the u found in four. Fourty keeps the full number word but is not the accepted form. Transfer: learn four → forty as an irregular word-family change.",
       "word": "forty",
       "skill": "frequently-misspelt",
       "difficulty": 1,
@@ -96,7 +96,7 @@
         "twelth"
       ],
       "answer": "twelfth",
-      "explanation": "Twelfth keeps the f.",
+      "explanation": "Correct: twelfth. It keeps the f from twelve before th, although the pronunciation compresses the consonants. Twelth follows the sound and drops the f. Transfer: build it visibly as twelve → twelf → twelfth.",
       "word": "twelfth",
       "skill": "frequently-misspelt",
       "difficulty": 2,

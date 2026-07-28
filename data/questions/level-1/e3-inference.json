@@ -13,7 +13,9 @@
         "It allows the fox to breathe underground."
       ],
       "answer": "It reflects sunlight and helps the fox blend into the sand.",
-      "explanation": "Pale fur can reflect some sunlight and also camouflage the fox against sandy ground."
+      "explanation": "Pale fur can reflect some sunlight and also camouflage the fox against sandy ground.",
+      "domain": "english",
+      "skillId": "eng.inference.cause-purpose"
     },
     {
       "id": "E3-Q2",
@@ -25,7 +27,9 @@
         "Climb rocks"
       ],
       "answer": "Release body heat",
-      "explanation": "Blood flowing through the large ears can lose heat to the surrounding air."
+      "explanation": "Blood flowing through the large ears can lose heat to the surrounding air.",
+      "domain": "english",
+      "skillId": "eng.inference.cause-purpose"
     },
     {
       "id": "E3-Q3",
@@ -37,7 +41,9 @@
         "To keep its tracks visible"
       ],
       "answer": "To protect its feet from hot sand",
-      "explanation": "The thick fur acts like a protective layer between the fox's feet and the hot ground."
+      "explanation": "The thick fur acts like a protective layer between the fox's feet and the hot ground.",
+      "domain": "english",
+      "skillId": "eng.inference.cause-purpose"
     },
     {
       "id": "E3-Q4",
@@ -49,7 +55,9 @@
         "The windows were never opened because of insects."
       ],
       "answer": "The glass needed to withstand strong wind and sea spray.",
-      "explanation": "A lighthouse in an exposed coastal place needs strong windows to survive rough weather."
+      "explanation": "A lighthouse in an exposed coastal place needs strong windows to survive rough weather.",
+      "domain": "english",
+      "skillId": "eng.inference.setting-consequence"
     },
     {
       "id": "E3-Q5",
@@ -61,7 +69,9 @@
         "He wanted to welcome visitors."
       ],
       "answer": "He expected dangerous weather and was preparing carefully.",
-      "explanation": "Checking equipment and securing doors are sensible preparations for a storm."
+      "explanation": "Checking equipment and securing doors are sensible preparations for a storm.",
+      "domain": "english",
+      "skillId": "eng.inference.cause-purpose"
     },
     {
       "id": "E3-Q6",
@@ -73,7 +83,9 @@
         "It was surrounded by farmland."
       ],
       "answer": "It was in a very exposed coastal location.",
-      "explanation": "Strong waves and wind show that the lighthouse stood in an exposed place by the sea."
+      "explanation": "Strong waves and wind show that the lighthouse stood in an exposed place by the sea.",
+      "domain": "english",
+      "skillId": "eng.inference.setting-consequence"
     },
     {
       "id": "E3-Q7",
@@ -85,7 +97,9 @@
         "They were kept indoors."
       ],
       "answer": "They had been exposed to salty, wet air.",
-      "explanation": "Metal rusts when it is exposed to moisture, and salty sea air speeds up the process."
+      "explanation": "Metal rusts when it is exposed to moisture, and salty sea air speeds up the process.",
+      "domain": "english",
+      "skillId": "eng.inference.setting-consequence"
     },
     {
       "id": "E3-Q8",
@@ -97,7 +111,9 @@
         "The bridge had been moved upstream."
       ],
       "answer": "The current had carried debris downstream.",
-      "explanation": "Flowing floodwater can carry branches and rubbish until they become trapped against a bridge."
+      "explanation": "Flowing floodwater can carry branches and rubbish until they become trapped against a bridge.",
+      "domain": "english",
+      "skillId": "eng.inference.setting-consequence"
     },
     {
       "id": "E3-Q9",
@@ -109,7 +125,9 @@
         "The lower fields were being planted with trees."
       ],
       "answer": "They were protecting the animals from floodwater.",
-      "explanation": "Higher ground is safer when a river is rising and may overflow."
+      "explanation": "Higher ground is safer when a river is rising and may overflow.",
+      "domain": "english",
+      "skillId": "eng.inference.cause-purpose"
     },
     {
       "id": "E3-Q10",
@@ -121,7 +139,9 @@
         "Workers had painted a line there."
       ],
       "answer": "The river had previously overflowed across the road.",
-      "explanation": "The mud line shows where floodwater had reached before it went down."
+      "explanation": "The mud line shows where floodwater had reached before it went down.",
+      "domain": "english",
+      "skillId": "eng.inference.setting-consequence"
     }
   ]
 }

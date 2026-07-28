@@ -13,7 +13,9 @@
         "55 minutes"
       ],
       "answer": "45 minutes",
-      "explanation": "From 9:35 to 10:00 is 25 minutes, and from 10:00 to 10:20 is 20 minutes. Total: 45 minutes."
+      "explanation": "From 9:35 to 10:00 is 25 minutes, and from 10:00 to 10:20 is 20 minutes. Total: 45 minutes.",
+      "domain": "mathematics",
+      "skillId": "math.time.elapsed"
     },
     {
       "id": "M4-Q2",
@@ -25,7 +27,9 @@
         "4:40 pm"
       ],
       "answer": "4:20 pm",
-      "explanation": "Add one hour to get 3:45 pm, then add 35 minutes to get 4:20 pm."
+      "explanation": "Add one hour to get 3:45 pm, then add 35 minutes to get 4:20 pm.",
+      "domain": "mathematics",
+      "skillId": "math.time.elapsed"
     },
     {
       "id": "M4-Q3",
@@ -37,7 +41,9 @@
         "155 minutes"
       ],
       "answer": "145 minutes",
-      "explanation": "Two hours is 120 minutes. Add 25 minutes to get 145 minutes."
+      "explanation": "Two hours is 120 minutes. Add 25 minutes to get 145 minutes.",
+      "domain": "mathematics",
+      "skillId": "math.time.elapsed"
     },
     {
       "id": "M4-Q4",
@@ -49,7 +55,9 @@
         "2 hours 25 minutes"
       ],
       "answer": "1 hour 25 minutes",
-      "explanation": "From 08:47 to 09:47 is one hour, then to 10:12 is another 25 minutes."
+      "explanation": "From 08:47 to 09:47 is one hour, then to 10:12 is another 25 minutes.",
+      "domain": "mathematics",
+      "skillId": "math.time.elapsed"
     },
     {
       "id": "M4-Q5",
@@ -61,7 +69,9 @@
         "Bus D"
       ],
       "answer": "Bus D",
-      "explanation": "The journey times are 38, 33, 36 and 32 minutes. Bus D is the shortest."
+      "explanation": "The journey times are 38, 33, 36 and 32 minutes. Bus D is the shortest.",
+      "domain": "mathematics",
+      "skillId": "math.time.timetables"
     },
     {
       "id": "M4-Q6",
@@ -73,7 +83,9 @@
         "41 minutes"
       ],
       "answer": "36 minutes",
-      "explanation": "From 10:05 to 10:41 is 36 minutes."
+      "explanation": "From 10:05 to 10:41 is 36 minutes.",
+      "domain": "mathematics",
+      "skillId": "math.time.timetables"
     },
     {
       "id": "M4-Q7",
@@ -85,7 +97,9 @@
         "Bus D"
       ],
       "answer": "Bus B",
-      "explanation": "Bus B arrives at 10:08, before 10:15. Bus C arrives too late."
+      "explanation": "Bus B arrives at 10:08, before 10:15. Bus C arrives too late.",
+      "domain": "mathematics",
+      "skillId": "math.time.timetables"
     },
     {
       "id": "M4-Q8",
@@ -97,7 +111,9 @@
         "Saturday"
       ],
       "answer": "Thursday",
-      "explanation": "The 18th is 17 days after the 1st. Fourteen days return to Monday, then three more days gives Thursday."
+      "explanation": "The 18th is 17 days after the 1st. Fourteen days return to Monday, then three more days gives Thursday.",
+      "domain": "mathematics",
+      "skillId": "math.time.calendar"
     },
     {
       "id": "M4-Q9",
@@ -109,7 +125,9 @@
         "17 days"
       ],
       "answer": "15 days",
-      "explanation": "Find the difference: 27 - 12 = 15 days."
+      "explanation": "Find the difference: 27 - 12 = 15 days.",
+      "domain": "mathematics",
+      "skillId": "math.time.calendar"
     },
     {
       "id": "M4-Q10",
@@ -121,7 +139,9 @@
         "2:00 pm"
       ],
       "answer": "1:50 pm",
-      "explanation": "11:50 + 55 minutes = 12:45. Add 20 minutes to get 1:05, then add 45 minutes to get 1:50."
+      "explanation": "11:50 + 55 minutes = 12:45. Add 20 minutes to get 1:05, then add 45 minutes to get 1:50.",
+      "domain": "mathematics",
+      "skillId": "math.time.elapsed"
     }
   ]
 }

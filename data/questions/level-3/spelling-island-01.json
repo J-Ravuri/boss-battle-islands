@@ -16,7 +16,7 @@
         "delicious"
       ],
       "answer": "delicious",
-      "explanation": "Delicious ends in cious.",
+      "explanation": "Correct: delicious. The word ends in cious, producing the “shus” sound. Delitious chooses tious by sound alone. Transfer: connect delicious with delicacy to remember the c.",
       "word": "delicious",
       "skill": "shus-shul-endings",
       "difficulty": 2,
@@ -64,7 +64,7 @@
         "substantal"
       ],
       "answer": "substantial",
-      "explanation": "Substantial ends in tial.",
+      "explanation": "Correct: substantial. It is formed from substance and ends in tial. Substancial uses cial because the endings sound alike. Transfer: use the related form substantial to remember the t after substan.",
       "word": "substantial",
       "skill": "shus-shul-endings",
       "difficulty": 2,
@@ -80,7 +80,7 @@
         "malitious"
       ],
       "answer": "malicious",
-      "explanation": "Malicious ends in cious.",
+      "explanation": "Correct: malicious. It ends in cious and belongs to the same family as malice. Malitious substitutes t because cious and tious sound similar. Transfer: use the c in malice to preserve the c in malicious.",
       "word": "malicious",
       "skill": "shus-shul-endings",
       "difficulty": 2,
@@ -96,7 +96,7 @@
         "ambitiuos"
       ],
       "answer": "ambitious",
-      "explanation": "Ambitious ends in tious.",
+      "explanation": "Correct: ambitious. It ends in tious and is related to ambition. Ambicious uses cious despite the t in ambition. Transfer: let the related tion noun guide the consonant in tious.",
       "word": "ambitious",
       "skill": "shus-shul-endings",
       "difficulty": 2,
@@ -112,7 +112,7 @@
         "beneficial"
       ],
       "answer": "beneficial",
-      "explanation": "Beneficial ends in cial.",
+      "explanation": "Correct: beneficial. It ends in cial and is related to benefit. Benefitial follows the t in benefit too literally and uses the wrong ending. Transfer: learn benefit → beneficial as a word-family change.",
       "word": "beneficial",
       "skill": "shus-shul-endings",
       "difficulty": 2,
@@ -128,7 +128,7 @@
         "artifficial"
       ],
       "answer": "artificial",
-      "explanation": "Artificial ends in cial.",
+      "explanation": "Correct: artificial. It ends in cial after artifi. Artifitial selects tial because both endings sound alike. Transfer: connect artificial with artifice to remember the c.",
       "word": "artificial",
       "skill": "shus-shul-endings",
       "difficulty": 2,
@@ -144,7 +144,7 @@
         "permission"
       ],
       "answer": "permission",
-      "explanation": "Permission has double s and ends in sion.",
+      "explanation": "Correct: permission. Permit changes to permission, with double s before ion. Permition keeps the single t sound pattern instead of the established noun form. Transfer: learn permit → permission and submit → submission as matching word-family changes.",
       "word": "permission",
       "skill": "tion-sion-cian-endings",
       "difficulty": 2,

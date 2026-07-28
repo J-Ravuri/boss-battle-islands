@@ -13,7 +13,9 @@
         "Careless"
       ],
       "answer": "Nervous",
-      "explanation": "Clutching her folder, taking a deep breath and checking her notes repeatedly all show nervousness."
+      "explanation": "Clutching her folder, taking a deep breath and checking her notes repeatedly all show nervousness.",
+      "domain": "english",
+      "skillId": "eng.character.feelings-motives"
     },
     {
       "id": "E4-Q2",
@@ -25,7 +27,9 @@
         "She plans to change the piece completely."
       ],
       "answer": "She is worried about making a mistake.",
-      "explanation": "Checking the notes again and again shows that Maya wants to feel prepared and avoid an error."
+      "explanation": "Checking the notes again and again shows that Maya wants to feel prepared and avoid an error.",
+      "domain": "english",
+      "skillId": "eng.character.feelings-motives"
     },
     {
       "id": "E4-Q3",
@@ -37,7 +41,9 @@
         "Leena wants Maya to withdraw."
       ],
       "answer": "Leena is trying to encourage Maya.",
-      "explanation": "Leena's words are meant to give Maya confidence before the audition."
+      "explanation": "Leena's words are meant to give Maya confidence before the audition.",
+      "domain": "english",
+      "skillId": "eng.character.traits-relationships"
     },
     {
       "id": "E4-Q4",
@@ -49,7 +55,9 @@
         "She is disappointed with Leena."
       ],
       "answer": "She probably feels pleased with how it went.",
-      "explanation": "Bright eyes and a wide smile are clues that Maya feels happy and relieved."
+      "explanation": "Bright eyes and a wide smile are clues that Maya feels happy and relieved.",
+      "domain": "english",
+      "skillId": "eng.character.feelings-motives"
     },
     {
       "id": "E4-Q5",
@@ -61,7 +69,9 @@
         "He is angry with Mr Evans."
       ],
       "answer": "He feels guilty or embarrassed.",
-      "explanation": "Theo avoids eye contact because he knows he dropped the bridge."
+      "explanation": "Theo avoids eye contact because he knows he dropped the bridge.",
+      "domain": "english",
+      "skillId": "eng.character.feelings-motives"
     },
     {
       "id": "E4-Q6",
@@ -73,7 +83,9 @@
         "He believes Theo broke it deliberately."
       ],
       "answer": "He wants to share the blame and protect Theo.",
-      "explanation": "Sam knows Theo dropped it, but he does not want Theo to face the problem alone."
+      "explanation": "Sam knows Theo dropped it, but he does not want Theo to face the problem alone.",
+      "domain": "english",
+      "skillId": "eng.character.feelings-motives"
     },
     {
       "id": "E4-Q7",
@@ -85,7 +97,9 @@
         "Suspicious"
       ],
       "answer": "Surprised",
-      "explanation": "The passage directly says that Theo looked up in surprise."
+      "explanation": "The passage directly says that Theo looked up in surprise.",
+      "domain": "english",
+      "skillId": "eng.character.feelings-motives"
     },
     {
       "id": "E4-Q8",
@@ -97,7 +111,9 @@
         "Careless"
       ],
       "answer": "Supportive",
-      "explanation": "Sam protects Theo and offers to help rebuild the bridge."
+      "explanation": "Sam protects Theo and offers to help rebuild the bridge.",
+      "domain": "english",
+      "skillId": "eng.character.traits-relationships"
     },
     {
       "id": "E4-Q9",
@@ -109,7 +125,9 @@
         "He has forgotten where the finish line is."
       ],
       "answer": "He cares more about helping his brother than winning.",
-      "explanation": "Amir gives up his chance to win so that he can help his brother."
+      "explanation": "Amir gives up his chance to win so that he can help his brother.",
+      "domain": "english",
+      "skillId": "eng.character.feelings-motives"
     },
     {
       "id": "E4-Q10",
@@ -121,7 +139,9 @@
         "He expects Zain to repay him."
       ],
       "answer": "He believes winning is less important than supporting his brother.",
-      "explanation": "Amir knows he can race again, but helping Zain mattered more at that moment."
+      "explanation": "Amir knows he can race again, but helping Zain mattered more at that moment.",
+      "domain": "english",
+      "skillId": "eng.character.traits-relationships"
     }
   ]
 }

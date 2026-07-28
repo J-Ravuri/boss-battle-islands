@@ -16,7 +16,7 @@
         "audibble"
       ],
       "answer": "audible",
-      "explanation": "Audible ends in ible.",
+      "explanation": "Correct: audible. This word ends in ible and begins with audi, meaning hearing or sound. Audable uses the more common able ending but breaks the established word family. Transfer: connect audible with audio to secure the first part, then remember the ible ending.",
       "word": "audible",
       "skill": "suffix-ible",
       "difficulty": 2,
@@ -64,7 +64,7 @@
         "eligible"
       ],
       "answer": "eligible",
-      "explanation": "Eligible ends in ible and begins with one l.",
+      "explanation": "Correct: eligible. It begins with a single l sound after e and ends in ible. Elligible adds an unsupported extra l, while eligable uses the wrong ending. Transfer: split it into four beats—el-i-gi-ble—and check each one.",
       "word": "eligible",
       "skill": "suffix-ible",
       "difficulty": 2,
@@ -128,7 +128,7 @@
         "situation"
       ],
       "answer": "situation",
-      "explanation": "Situation ends in tion.",
+      "explanation": "Correct: situation. The noun ends in ation, following situate. Situasion substitutes sion even though the base points to ation. Transfer: find the base verb before choosing among tion and sion endings.",
       "word": "situation",
       "skill": "suffix-tion",
       "difficulty": 1,

@@ -16,7 +16,7 @@
         "sceme"
       ],
       "answer": "scheme",
-      "explanation": "Scheme includes the silent h after sc.",
+      "explanation": "Correct: scheme. The written ch follows s even though the h is not separately heard. Sceem follows the sound but loses the established Greek-origin pattern. Transfer: group scheme with school and scholar as sch words.",
       "word": "scheme",
       "skill": "silent-letters",
       "difficulty": 2,
@@ -64,7 +64,7 @@
         "receit"
       ],
       "answer": "receipt",
-      "explanation": "Receipt has ei after c and a silent p.",
+      "explanation": "Correct: receipt. It uses ei after c and includes a silent p. Receit follows the pronunciation but drops a required letter. Transfer: remember receipt with reception—the p becomes easier to hear in the related word.",
       "word": "receipt",
       "skill": "ie-ei-rule",
       "difficulty": 3,
@@ -96,7 +96,7 @@
         "seizd"
       ],
       "answer": "seized",
-      "explanation": "Seized uses ei.",
+      "explanation": "Correct: seized. The base word seize uses ei, and the final e is dropped before ed. Siezed applies the familiar ie pattern in the wrong word. Transfer: learn seize as an exception alongside either and neither.",
       "word": "seized",
       "skill": "ie-ei-rule",
       "difficulty": 2,
@@ -112,7 +112,7 @@
         "seiling"
       ],
       "answer": "ceiling",
-      "explanation": "Ceiling uses ei after c.",
+      "explanation": "Correct: ceiling. It uses ei immediately after c. Cieling reverses the vowels despite the common “i before e, except after c” reminder. Transfer: compare ceiling with receive and receipt.",
       "word": "ceiling",
       "skill": "ie-ei-rule",
       "difficulty": 2,

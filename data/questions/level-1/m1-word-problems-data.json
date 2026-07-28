@@ -13,7 +13,9 @@
         "229"
       ],
       "answer": "181",
-      "explanation": "Three full coaches carry 48 × 3 = 144 passengers. Then 144 + 37 = 181."
+      "explanation": "Three full coaches carry 48 × 3 = 144 passengers. Then 144 + 37 = 181.",
+      "domain": "mathematics",
+      "skillId": "math.word-problems.multistep"
     },
     {
       "id": "M1-Q2",
@@ -25,7 +27,9 @@
         "£34.25"
       ],
       "answer": "£32.75",
-      "explanation": "Two adults cost £17.00 and three children cost £15.75. The total is £32.75."
+      "explanation": "Two adults cost £17.00 and three children cost £15.75. The total is £32.75.",
+      "domain": "mathematics",
+      "skillId": "math.money.decimals"
     },
     {
       "id": "M1-Q3",
@@ -37,7 +41,9 @@
         "99"
       ],
       "answer": "99",
-      "explanation": "Monday to Thursday is four days, so 18 × 4 = 72. Then 72 + 27 = 99."
+      "explanation": "Monday to Thursday is four days, so 18 × 4 = 72. Then 72 + 27 = 99.",
+      "domain": "mathematics",
+      "skillId": "math.word-problems.multistep"
     },
     {
       "id": "M1-Q4",
@@ -49,7 +55,9 @@
         "108"
       ],
       "answer": "88",
-      "explanation": "The shop sells 85 + 67 = 152 apples. Then 240 - 152 = 88."
+      "explanation": "The shop sells 85 + 67 = 152 apples. Then 240 - 152 = 88.",
+      "domain": "mathematics",
+      "skillId": "math.word-problems.multistep"
     },
     {
       "id": "M1-Q5",
@@ -61,7 +69,9 @@
         "59"
       ],
       "answer": "54",
-      "explanation": "Add the five amounts: 7 + 12 + 9 + 15 + 11 = 54."
+      "explanation": "Add the five amounts: 7 + 12 + 9 + 15 + 11 = 54.",
+      "domain": "mathematics",
+      "skillId": "math.data.read-compare"
     },
     {
       "id": "M1-Q6",
@@ -73,7 +83,9 @@
         "9"
       ],
       "answer": "8",
-      "explanation": "Find the difference: 15 - 7 = 8."
+      "explanation": "Find the difference: 15 - 7 = 8.",
+      "domain": "mathematics",
+      "skillId": "math.data.read-compare"
     },
     {
       "id": "M1-Q7",
@@ -85,7 +97,9 @@
         "23"
       ],
       "answer": "11.5",
-      "explanation": "Together they read 12 + 11 = 23 books. Then 23 ÷ 2 = 11.5."
+      "explanation": "Together they read 12 + 11 = 23 books. Then 23 ÷ 2 = 11.5.",
+      "domain": "mathematics",
+      "skillId": "math.word-problems.multistep"
     },
     {
       "id": "M1-Q8",
@@ -97,7 +111,9 @@
         "1,955 litres"
       ],
       "answer": "1,405 litres",
-      "explanation": "First 1,500 - 275 = 1,225. Then 1,225 + 180 = 1,405 litres."
+      "explanation": "First 1,500 - 275 = 1,225. Then 1,225 + 180 = 1,405 litres.",
+      "domain": "mathematics",
+      "skillId": "math.word-problems.multistep"
     },
     {
       "id": "M1-Q9",
@@ -109,7 +125,9 @@
         "9.25 km"
       ],
       "answer": "8.25 km",
-      "explanation": "They have walked 7.5 + 8.25 = 15.75 km. Then 24 - 15.75 = 8.25 km."
+      "explanation": "They have walked 7.5 + 8.25 = 15.75 km. Then 24 - 15.75 = 8.25 km.",
+      "domain": "mathematics",
+      "skillId": "math.word-problems.multistep"
     },
     {
       "id": "M1-Q10",
@@ -121,7 +139,9 @@
         "305"
       ],
       "answer": "271",
-      "explanation": "The factory packs 36 × 8 = 288 bottles. Then 288 - 17 = 271."
+      "explanation": "The factory packs 36 × 8 = 288 bottles. Then 288 - 17 = 271.",
+      "domain": "mathematics",
+      "skillId": "math.word-problems.multistep"
     }
   ]
 }

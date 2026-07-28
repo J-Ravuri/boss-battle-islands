@@ -16,7 +16,7 @@
         "comprahension"
       ],
       "answer": "comprehension",
-      "explanation": "Comprehension ends in sion.",
+      "explanation": "Correct: comprehension. It ends in sion and keeps comprehens before the ending. Comprehention swaps s for t because tion and sion can sound alike. Transfer: connect it with comprehensive to preserve the s.",
       "word": "comprehension",
       "skill": "tion-sion-cian-endings",
       "difficulty": 3,
@@ -48,7 +48,7 @@
         "intension"
       ],
       "answer": "intention",
-      "explanation": "Intention ends in tion.",
+      "explanation": "Correct: intention. It ends in tion and comes from intend. Intension is a different, rare word and is not the usual noun meaning a plan. Transfer: connect intend with intention when you mean a plan or aim.",
       "word": "intention",
       "skill": "tion-sion-cian-endings",
       "difficulty": 2,
@@ -80,7 +80,7 @@
         "confession"
       ],
       "answer": "confession",
-      "explanation": "Confession has double s and ends in sion.",
+      "explanation": "Correct: confession. Confess plus ion keeps the double s. Confesion drops one of the consonants from the base word. Transfer: preserve doubled consonants when the full base word is still visible.",
       "word": "confession",
       "skill": "tion-sion-cian-endings",
       "difficulty": 2,
@@ -112,7 +112,7 @@
         "confusion"
       ],
       "answer": "confusion",
-      "explanation": "Confusion ends in sion.",
+      "explanation": "Correct: confusion. Confuse drops its final e before adding ion, producing sion. Confution chooses tion by sound alone. Transfer: use the base verb confuse to remember the s.",
       "word": "confusion",
       "skill": "tion-sion-cian-endings",
       "difficulty": 2,
@@ -128,7 +128,7 @@
         "discussion"
       ],
       "answer": "discussion",
-      "explanation": "Discussion has double s and ends in sion.",
+      "explanation": "Correct: discussion. Discuss plus ion keeps the double s. Discusion loses one s from the base word. Transfer: identify the complete base word before adding a suffix.",
       "word": "discussion",
       "skill": "tion-sion-cian-endings",
       "difficulty": 2,
@@ -144,7 +144,7 @@
         "extansion"
       ],
       "answer": "extension",
-      "explanation": "Extension ends in sion.",
+      "explanation": "Correct: extension. It ends in sion and is related to extend. Extention uses the more common tion spelling but is not the established noun form. Transfer: learn extend → extension alongside expand → expansion.",
       "word": "extension",
       "skill": "tion-sion-cian-endings",
       "difficulty": 2,
@@ -160,7 +160,7 @@
         "omission"
       ],
       "answer": "omission",
-      "explanation": "Omission has double s and ends in sion.",
+      "explanation": "Correct: omission. Omit changes to omission, with double s before ion. Omition follows the verb’s t too literally. Transfer: learn omit → omission and permit → permission as a pair.",
       "word": "omission",
       "skill": "tion-sion-cian-endings",
       "difficulty": 2,
