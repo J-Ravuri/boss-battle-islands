@@ -75,6 +75,10 @@
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-8px); }
     }
+    @keyframes practicePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.025); }
+    }
     h1 { font-size: 2.4rem; color: var(--ui-accent); margin-bottom: 8px; text-shadow: 2px 2px 0px rgba(0,0,0,0.1); }
     h2 { font-size: 1.6rem; color: var(--text-main); margin-bottom: 12px; }
     h3 { font-size: 1.2rem; color: var(--text-light); margin-bottom: 16px; }
@@ -394,6 +398,32 @@
     .level-card-progress { font-weight: 800; color: var(--ui-green); margin-top: 12px; }
     .level-card-error { color: #C62828; font-weight: 800; margin-top: 12px; line-height: 1.35; }
     .level-card.unavailable { opacity: 0.55; cursor: not-allowed; }
+    .practice-card {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 18px;
+      border-color: #26A69A;
+      background: linear-gradient(135deg, rgba(224,247,250,0.98), rgba(255,248,225,0.98));
+      box-shadow: 0 12px 30px rgba(0,121,107,0.18);
+    }
+    .practice-card-copy { min-width: 0; }
+    .practice-card-badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #00796B;
+      color: white;
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+    }
+    .practice-card .level-card-progress { color: #00796B; }
+    #title-practice-btn.ready {
+      box-shadow: 0 0 0 3px rgba(38,166,154,0.25), var(--shadow);
+      animation: practicePulse 2.2s ease-in-out infinite;
+    }
     .trophy-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 12px; }
     .trophy-tab.active { background: var(--ui-accent); color: white; }
     .locker-panel {
@@ -519,6 +549,7 @@
       .level-card { padding: 14px 16px; }
       .level-card-grid { gap: 10px; margin: 12px 0; }
       .trophy-tabs .btn { padding: 10px 12px; margin: 3px; font-size: 0.85rem; }
+      .practice-card { grid-template-columns: 1fr; text-align: center; }
       .locker-panel {
         width: calc(100vw - 12px);
         height: calc(100vh - 12px);
@@ -765,6 +796,7 @@
         <small>Hanuman is cinematic. Study Focus is a calm original instrumental.</small>
       </div>
       <button class="btn btn-primary" id="title-play-btn" onclick="window.Game.showLevelSelect()">▶️ Choose Level</button>
+      <button class="btn btn-success" id="title-practice-btn" disabled>🎯 Practice Camp Loading…</button>
       <button class="btn btn-gold" id="title-trophy-btn" onclick="window.Game.showTrophies()">🏆 Trophy Shelf</button>
       <button class="btn btn-success" id="title-locker-btn" onclick="window.Game.showLocker()">🎒 Hero Locker</button>
       <button class="btn btn-info" id="title-learning-btn">📊 Parent Progress</button>
@@ -776,7 +808,7 @@
     <div class="ui-panel" style="max-width:860px;">
       <div style="font-size:3.2rem;">🗺️</div>
       <h1>Choose an Adventure</h1>
-      <p style="color:var(--text-light);">Each level has its own world, XP, streaks, and trophies.</p>
+      <p style="color:var(--text-light);">Choose a numbered adventure or enter your separate personalised Practice Camp.</p>
       <div class="level-card-grid" id="level-card-grid"></div>
       <button class="btn btn-info" id="level-select-back-btn">← Main Menu</button>
     </div>
@@ -890,7 +922,8 @@
         <p><b>Explore:</b> Move with WASD/arrow keys, the mobile D-pad, or click/tap the ground.</p>
         <p><b>Battle:</b> Select a glowing island, then answer four-choice questions to lower the boss's HP.</p>
         <p><b>Learn:</b> Wrong answers return later. Read the explanation, then try again.</p>
-        <p><b>Rewards:</b> Defeat bosses to choose collectible gear. Perfect replays unlock the alternative.</p>
+        <p><b>Practice Camp:</b> Play the parent-reviewed focus pack made from your learning report. Its results stay separate from numbered-level progress.</p>
+        <p><b>Rewards:</b> Defeat numbered-level bosses to choose collectible gear. Perfect replays unlock the alternative.</p>
         <p><b>Hero Locker:</b> Use 🎒 to switch weapons, headgear, capes, backpacks, and outfits.</p>
         <p><b>Progress:</b> Earn XP, gold islands, trophies, gear, and new paths. ⚙️ contains the reset option.</p>
         <p><b>Shortcuts:</b> H = help, M = mute, Esc = close a popup.</p>
@@ -903,7 +936,7 @@
       <div style="font-size:3rem;">⚠️</div>
       <h1 id="reset-confirm-title" style="color:var(--ui-red);">Reset everything?</h1>
       <p style="line-height:1.55;margin:12px 0 18px;">
-        This clears all three levels, XP, streaks, scores, trophies and Hero Locker rewards.
+        This clears all four levels, Practice Camp results, XP, streaks, scores, trophies and Hero Locker rewards.
         <b>This can't be undone!</b>
       </p>
       <button class="btn btn-danger" id="reset-confirm-btn">Yes, Reset Everything</button>
@@ -935,6 +968,19 @@
 
   function currentSections() {
     return currentLevel().sections;
+  }
+
+  function isPracticeLevel(level = activeLevelRegistry) {
+    return level?.kind === 'practice';
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? '')
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
   }
 
   function getSection(sectionId) {
@@ -1069,7 +1115,7 @@
   }
 
   function removeAllProgressKeys() {
-    ['level-1', 'level-2', 'level-3', 'level-4'].forEach(levelId => {
+    ['level-1', 'level-2', 'level-3', 'level-4', 'practice-camp'].forEach(levelId => {
       localStorage.removeItem('bossBattleIslands_progress_' + levelId);
     });
     localStorage.removeItem('bossBattleIslands_save_v1');
@@ -3478,6 +3524,63 @@
         group.add(foxTail);
         break;
 
+      case 'PRACTICE': { // Coach Comet — friendly floating training robot
+        const pcBody = new THREE.Mesh(
+          new THREE.IcosahedronGeometry(0.72, 1),
+          new THREE.MeshStandardMaterial({
+            color: c,
+            emissive: 0xFFB300,
+            emissiveIntensity: 0.24,
+            roughness: 0.45,
+            metalness: 0.2
+          })
+        );
+        pcBody.position.y = 1.45;
+        group.add(pcBody);
+        const pcVisor = new THREE.Mesh(
+          new THREE.BoxGeometry(0.78, 0.28, 0.16),
+          new THREE.MeshStandardMaterial({ color: 0x263238, emissive: 0x00695C, emissiveIntensity: 0.8 })
+        );
+        pcVisor.position.set(0, 1.58, 0.63);
+        group.add(pcVisor);
+        [-1, 1].forEach(side => {
+          const pcEye = new THREE.Mesh(
+            new THREE.SphereGeometry(0.075, 8, 8),
+            new THREE.MeshBasicMaterial({ color: 0x80CBC4 })
+          );
+          pcEye.position.set(side * 0.2, 1.59, 0.73);
+          group.add(pcEye);
+          const pcArm = new THREE.Mesh(
+            new THREE.CapsuleGeometry(0.11, 0.62, 4, 8),
+            new THREE.MeshStandardMaterial({ color: 0x26A69A, roughness: 0.5 })
+          );
+          pcArm.position.set(side * 0.9, 1.28, 0);
+          pcArm.rotation.z = side * -0.55;
+          group.add(pcArm);
+        });
+        const pcRing = new THREE.Mesh(
+          new THREE.TorusGeometry(0.95, 0.075, 8, 32),
+          new THREE.MeshBasicMaterial({ color: 0x80CBC4, transparent: true, opacity: 0.85 })
+        );
+        pcRing.position.y = 1.15;
+        pcRing.rotation.x = Math.PI / 2;
+        group.add(pcRing);
+        const pcTrail = new THREE.Mesh(
+          new THREE.ConeGeometry(0.34, 1.05, 8),
+          new THREE.MeshStandardMaterial({
+            color: 0xFFB300,
+            emissive: 0xFF6F00,
+            emissiveIntensity: 0.65,
+            transparent: true,
+            opacity: 0.78
+          })
+        );
+        pcTrail.position.y = 0.34;
+        pcTrail.rotation.z = Math.PI;
+        group.add(pcTrail);
+        break;
+      }
+
       case 'M1': // Gear Golem — box robot
         const ggBody = new THREE.Mesh(new THREE.BoxGeometry(1.1, 1.3, 0.7), new THREE.MeshLambertMaterial({color: 0x607D8B}));
         ggBody.position.y = 1.35; group.add(ggBody);
@@ -4035,8 +4138,9 @@
   }
 
   function showIslandPopup(sid, locked) {
+    const section = getSection(sid);
     const theme = getIslandTheme(sid);
-    if (!theme) return;
+    if (!theme || !section) return;
     playSound(locked ? 'wrong' : 'select');
     document.getElementById('island-popup-title').textContent = theme.emoji + ' ' + theme.name;
     document.getElementById('island-popup-boss').textContent = 'Guarded by ' + theme.boss;
@@ -4047,12 +4151,16 @@
       statusEl.style.color = '#EF5350';
       btn.style.display = 'none';
     } else if (state.completed[sid]) {
-      statusEl.textContent = '✅ Completed — replay to improve your score!';
+      statusEl.textContent = isPracticeLevel()
+        ? `✅ Focus pack completed — replay ${section.packMeta?.title || 'your personalised practice'}!`
+        : '✅ Completed — replay to improve your score!';
       statusEl.style.color = '#66BB6A';
       btn.style.display = 'inline-block';
       btn.textContent = '⚔️ Replay Battle';
     } else {
-      statusEl.textContent = '⚔️ Ready to battle!';
+      statusEl.textContent = isPracticeLevel()
+        ? `✨ Made just for you: ${section.packMeta?.title || 'Personalised Practice'}`
+        : '⚔️ Ready to battle!';
       statusEl.style.color = '#FF9800';
       btn.style.display = 'inline-block';
       btn.textContent = '⚔️ Start Battle!';
@@ -4577,15 +4685,18 @@
     const sid = state.battle.sectionId;
     const section = getSection(sid);
     const firstClear = !state.completed[sid];
+    const practiceRun = isPracticeLevel();
 
     // Calculate rewards
     const correct = state.battle.correctCount;
     const total = state.battle.totalQuestions;
     const streakBonus = Math.floor(state.streak / 3) * CONFIG.xpPerStreakBonus;
-    const earnedXP = (correct * CONFIG.xpPerCorrect) + CONFIG.xpPerBoss + streakBonus;
+    const earnedXP = practiceRun
+      ? 0
+      : (correct * CONFIG.xpPerCorrect) + CONFIG.xpPerBoss + streakBonus;
     state.xp += earnedXP;
     const newLevel = Math.floor(state.xp / CONFIG.levelThreshold) + 1;
-    const levelUp = newLevel > state.level;
+    const levelUp = !practiceRun && newLevel > state.level;
     if (levelUp) { shauriLevelUp(); }
     state.level = newLevel;
 
@@ -4608,7 +4719,9 @@
     } catch (error) {
       console.warn('[LEARNING] Island summary failed; rewards and progression will continue.', error);
     }
-    pendingReward = prepareReward(activeContentLevel, sid, firstClear, state.battle.wrongCount === 0);
+    pendingReward = practiceRun
+      ? null
+      : prepareReward(activeContentLevel, sid, firstClear, state.battle.wrongCount === 0);
     saveGame();
     showSaveToast();
 
@@ -4616,11 +4729,16 @@
     document.getElementById('battle-ui').classList.remove('active');
     document.getElementById('explanation-popup').classList.remove('active');
     showScreen('victory');
+    document.getElementById('victory-title').textContent = practiceRun
+      ? 'Personalised Practice Complete!'
+      : 'Boss Defeated!';
     document.getElementById('victory-boss-name').textContent = section.theme.boss;
-    document.getElementById('victory-stats').innerHTML =
-      `<b>First try: ${state.battle.firstPassCorrect}/${state.battle.firstPassTotal}</b> • ` +
-      `Corrected: ${correct}/${total} • +${earnedXP} XP` +
-      (levelUp ? '<br><b>🎉 Level Up! You are now Level ' + state.level + '!</b>' : '');
+    document.getElementById('victory-stats').innerHTML = practiceRun
+      ? `<b>First try: ${state.battle.firstPassCorrect}/${state.battle.firstPassTotal}</b> • ` +
+        `Corrected: ${correct}/${total}<br><b>🎯 Focus result saved separately from level progress</b>`
+      : `<b>First try: ${state.battle.firstPassCorrect}/${state.battle.firstPassTotal}</b> • ` +
+        `Corrected: ${correct}/${total} • +${earnedXP} XP` +
+        (levelUp ? '<br><b>🎉 Level Up! You are now Level ' + state.level + '!</b>' : '');
     const victoryLearning = document.getElementById('victory-learning-summary');
     if (victoryLearning) {
       victoryLearning.innerHTML =
@@ -4758,9 +4876,11 @@
       const levelEl = document.getElementById('hud-level');
       const streakEl = document.getElementById('hud-streak');
       const xpEl = document.getElementById('hud-xp');
-      if (levelEl) levelEl.textContent = state.level;
+      if (levelEl) levelEl.textContent = isPracticeLevel() ? 'Camp' : state.level;
       if (streakEl) streakEl.textContent = state.streak;
       if (xpEl) xpEl.textContent = state.xp;
+      const xpPill = xpEl?.closest('.hud-pill');
+      if (xpPill) xpPill.style.display = isPracticeLevel() ? 'none' : '';
       updateQuestCard();
     } catch(e) {
       console.warn('HUD update failed:', e);
@@ -4774,6 +4894,14 @@
     const level = currentLevel();
     if (title) title.textContent = `${level.hub.emoji || '🧭'} ${level.title}`;
     const completedCount = Object.keys(state.completed).length;
+    if (isPracticeLevel(level)) {
+      const section = level.sections[0];
+      const completion = state.completed[section?.sectionId];
+      text.textContent = completion
+        ? `Best ${completion.score}/${completion.total} • Replay ${section?.packMeta?.title || 'your focus pack'} whenever you like.`
+        : `Personalised practice • ${section?.packMeta?.title || 'Your Current Focus Pack'}`;
+      return;
+    }
     const missions = level.sections
       .filter(section => !state.completed[section.sectionId] && isSectionUnlocked(section))
       .slice(0, 2)
@@ -4974,26 +5102,74 @@
     const grid = document.getElementById('level-card-grid');
     if (!grid) return;
     grid.innerHTML = '';
-    LEVEL_REGISTRY.forEach(level => {
+    const levels = Array.from(LEVEL_REGISTRY.values()).sort((a, b) => {
+      if (isPracticeLevel(a)) return -1;
+      if (isPracticeLevel(b)) return 1;
+      return 0;
+    });
+    levels.forEach(level => {
       const progress = readProgress(level.id);
       const completed = Object.keys(progress.completed || {}).length;
+      const practice = isPracticeLevel(level);
+      const practiceSection = practice ? level.sections[0] : null;
+      const practiceResult = practiceSection ? progress.completed?.[practiceSection.sectionId] : null;
+      const safePracticeTitle = escapeHtml(practiceSection?.packMeta?.title || level.description);
       const card = document.createElement('button');
       card.type = 'button';
-      card.className = 'level-card' + (level.ready ? '' : ' unavailable');
+      card.className = 'level-card' + (practice ? ' practice-card' : '') + (level.ready ? '' : ' unavailable');
       card.disabled = !level.ready;
       card.setAttribute('aria-label', level.ready
         ? `Play ${level.title}`
         : `${level.title} is unavailable because its question files did not pass validation`);
-      card.innerHTML =
-        `<div style="font-size:2.4rem;">${level.hub.emoji || '🏝️'}</div>` +
-        `<h2>${level.title}</h2>` +
-        `<p>${level.description}</p>` +
-        (level.ready
-          ? `<div class="level-card-progress">${completed}/${level.sections.length} islands • ${progress.xp || 0} XP</div>`
-          : '<div class="level-card-error">⚠️ Content unavailable — check this level’s question files.</div>');
+      if (practice) {
+        card.innerHTML =
+          `<div style="font-size:3.2rem;">${level.hub.emoji || '🎯'}</div>` +
+          '<div class="practice-card-copy">' +
+          '<div class="practice-card-badge">PERSONALISED PRACTICE</div>' +
+          `<h2>${level.title}</h2>` +
+          `<p>${level.ready ? safePracticeTitle : escapeHtml(level.description)}</p>` +
+          (level.ready
+            ? `<div class="level-card-progress">✨ Pack ready${practiceResult ? ` • Best ${practiceResult.score}/${practiceResult.total}` : ' • Made just for you'}</div>`
+            : '<div class="level-card-error">📥 No valid pack installed — ask a parent to add current-pack.json.</div>') +
+          '</div>';
+      } else {
+        card.innerHTML =
+          `<div style="font-size:2.4rem;">${level.hub.emoji || '🏝️'}</div>` +
+          `<h2>${level.title}</h2>` +
+          `<p>${level.description}</p>` +
+          (level.ready
+            ? `<div class="level-card-progress">${completed}/${level.sections.length} islands • ${progress.xp || 0} XP</div>`
+            : '<div class="level-card-error">⚠️ Content unavailable — check this level’s question files.</div>');
+      }
       card.onclick = () => selectLevel(level.id);
       grid.appendChild(card);
     });
+    updatePracticeCampEntry();
+  }
+
+  function updatePracticeCampEntry() {
+    const button = document.getElementById('title-practice-btn');
+    if (!button) return;
+    const practice = LEVEL_REGISTRY.get('practice-camp');
+    const packTitle = practice?.sections?.[0]?.packMeta?.title;
+    button.disabled = !practice?.ready;
+    button.classList.toggle('ready', Boolean(practice?.ready));
+    button.textContent = practice?.ready
+      ? `🎯 Practice Pack Ready — ${packTitle || 'Made Just for You'}`
+      : '📥 Practice Camp — Parent Pack Needed';
+    button.title = practice?.ready
+      ? 'Play the current parent-reviewed personalised practice pack.'
+      : 'Add a valid data/questions/practice-camp/current-pack.json file.';
+  }
+
+  function showPracticeCamp() {
+    const practice = LEVEL_REGISTRY.get('practice-camp');
+    if (practice?.ready) {
+      selectLevel(practice.id);
+      return;
+    }
+    showLevelSelect();
+    showToast('📥 Practice Camp needs a valid parent-reviewed pack.', 'combo');
   }
 
   function showLevelSelect() {
@@ -5037,7 +5213,7 @@
 
   function renderTrophyLevel(levelId) {
     const level = LEVEL_REGISTRY.get(levelId);
-    if (!level) return;
+    if (!level || isPracticeLevel(level)) return;
     const progress = readProgress(levelId);
     const grid = document.getElementById('trophy-grid');
     grid.innerHTML = '';
@@ -5072,6 +5248,7 @@
     const tabs = document.getElementById('trophy-tabs');
     tabs.innerHTML = '';
     LEVEL_REGISTRY.forEach(level => {
+      if (isPracticeLevel(level)) return;
       const tab = document.createElement('button');
       tab.className = 'btn btn-info trophy-tab';
       tab.dataset.levelId = level.id;
@@ -5079,7 +5256,9 @@
       tab.onclick = () => renderTrophyLevel(level.id);
       tabs.appendChild(tab);
     });
-    renderTrophyLevel(LEVEL_REGISTRY.has(initialLevelId) ? initialLevelId : LEVEL_REGISTRY.keys().next().value);
+    const requested = LEVEL_REGISTRY.get(initialLevelId);
+    const firstStandard = Array.from(LEVEL_REGISTRY.values()).find(level => !isPracticeLevel(level));
+    renderTrophyLevel(requested && !isPracticeLevel(requested) ? requested.id : firstStandard?.id);
     showScreen('trophy');
   }
 
@@ -5302,6 +5481,7 @@
       unlockAfter: Array.isArray(section.unlockAfter) ? section.unlockAfter : [],
       badge: section.badge || '🏅 Island Champion',
       questions: [],
+      packMeta: null,
       theme: {
         ...theme,
         islandColor: colourNumber(theme.islandColor, 0x4CAF50),
@@ -5320,6 +5500,9 @@
     }
     const section = level.sectionMap.get(pack.sectionId);
     if (!section) problems.push(`unknown sectionId "${pack.sectionId}"`);
+    if (level.kind === 'practice' && pack.mode !== 'replace') {
+      problems.push('Practice Camp mode must be "replace"');
+    }
     if (!Array.isArray(pack.questions)) {
       problems.push('questions must be an array');
     } else {
@@ -5333,8 +5516,21 @@
         }
         if (!Array.isArray(question?.options) || question.options.length !== 4) {
           problems.push(`${label}: options must contain exactly four items`);
+        } else if (new Set(question.options.map(option => String(option).trim().toLocaleLowerCase('en-GB'))).size !== 4) {
+          problems.push(`${label}: options must be distinct`);
         } else if (!question.options.includes(question.answer)) {
           problems.push(`${label}: answer does not match an option`);
+        }
+        if (level.kind === 'practice') {
+          if (!question?.domain || !question?.skillId) {
+            problems.push(`${label}: Practice Camp questions require domain and skillId`);
+          }
+          if (question?.verified !== true) {
+            problems.push(`${label}: Practice Camp questions must be parent-reviewed (verified: true)`);
+          }
+          if (!String(question?.id || '').startsWith('PC-')) {
+            problems.push(`${label}: Practice Camp question IDs must start with "PC-"`);
+          }
         }
         if (question?.id && seenIds.has(question.id)) {
           problems.push(`${label}: duplicate id`);
@@ -5366,6 +5562,7 @@
     const sections = manifest.sections.map(normaliseSection);
     const level = {
       id: levelId,
+      kind: manifest.kind === 'practice' || descriptor.kind === 'practice' ? 'practice' : 'standard',
       title: manifest.title || descriptor.title || levelId,
       description: manifest.description || '',
       subject: manifest.subject || '',
@@ -5401,6 +5598,12 @@
         const target = validateQuestionPack(level, pack, questionPath, seenIds);
         if (!target) continue;
         target.questions = pack.questions.map(question => ({ ...question }));
+        target.packMeta = {
+          title: typeof pack.title === 'string' && pack.title.trim() ? pack.title.trim() : target.title,
+          subject: typeof pack.subject === 'string' ? pack.subject.trim() : target.subject,
+          round: Number.isInteger(pack.round) ? pack.round : 1,
+          mode: pack.mode === 'append' ? 'append' : 'replace'
+        };
         target.questions.forEach(question => seenIds.add(question.id));
         level.loadedQuestionCount += target.questions.length;
         console.log(`[QUESTIONS] ${levelId}: loaded ${questionPath} into ${pack.sectionId}.`);
@@ -5409,6 +5612,7 @@
       }
     }
     level.ready =
+      level.sections.length === level.expectedSections &&
       level.loadedQuestionCount === level.expectedQuestions &&
       level.sections.every(section => section.questions.length === level.questionsPerFile);
     if (!level.ready) {
@@ -5485,6 +5689,7 @@
   function initUIControls() {
     const actions = {
       'title-play-btn': showLevelSelect,
+      'title-practice-btn': showPracticeCamp,
       'title-trophy-btn': () => showTrophies(),
       'title-locker-btn': showLocker,
       'title-learning-btn': showParentProgress,
@@ -5604,6 +5809,7 @@
   window.Game = {
     startHub,
     showLevelSelect,
+    showPracticeCamp,
     selectLevel,
     showTrophies,
     showLocker,
@@ -5661,6 +5867,7 @@
       updateLoadingBar(15);
       console.log('[BOOT] Step 2: Loading drop-in question packs...');
       const externalQuestionCount = await loadExternalQuestionPacks();
+      updatePracticeCampEntry();
       if (externalQuestionCount > 0) {
         console.log(`[BOOT] Added ${externalQuestionCount} external questions.`);
       }

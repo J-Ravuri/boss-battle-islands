@@ -5,7 +5,8 @@
   "scripts": {
     "start": "npx serve .",
     "dev": "npx live-server --port=8080",
-    "test": "node tools/validate-phase1-learning.js"
+    "test": "node tools/validate-phase1-learning.js && node tools/validate-practice-pack.js",
+    "validate:practice": "node tools/validate-practice-pack.js"
   },
   "keywords": ["education", "game", "threejs", "11-plus"],
   "license": "MIT"

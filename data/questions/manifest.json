@@ -16,6 +16,10 @@
     "level-4": {
       "title": "Level 4 — Synonyms and Antonyms",
       "manifest": "level-4/manifest.json"
+    },
+    "practice-camp": {
+      "title": "Practice Camp — Made Just for You",
+      "manifest": "practice-camp/manifest.json"
     }
   }
 }

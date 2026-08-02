@@ -1,0 +1,38 @@
+{
+  "levelId": "practice-camp",
+  "kind": "practice",
+  "title": "Practice Camp — Made Just for You",
+  "description": "A focused ten-question challenge built from your learning report",
+  "subject": "Personalised Practice",
+  "expectedQuestions": 10,
+  "expectedSections": 1,
+  "questionsPerFile": 10,
+  "hub": {
+    "name": "The Training Meadow",
+    "emoji": "🎯",
+    "homeColor": "#26A69A",
+    "homeAccent": "#B2DFDB"
+  },
+  "sections": [
+    {
+      "sectionId": "P1",
+      "subject": "Personalised Practice",
+      "title": "Your Current Focus Pack",
+      "position": [0, 3, -11],
+      "bridgeFrom": "HOME",
+      "unlockAfter": [],
+      "theme": {
+        "name": "The Focus Forge",
+        "boss": "Coach Comet",
+        "emoji": "☄️",
+        "islandColor": "#26A69A",
+        "bossColor": "#FFD54F",
+        "accent": "#80CBC4",
+        "type": "practice",
+        "bossArchetype": "PRACTICE"
+      },
+      "badge": "🎯 Focus Finisher"
+    }
+  ],
+  "files": ["current-pack.json"]
+}
