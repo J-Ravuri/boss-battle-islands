@@ -823,6 +823,7 @@
       <div id="learning-overview" style="margin:14px 0;"></div>
       <div id="learning-weak-spots" style="display:grid; gap:10px; text-align:left;"></div>
       <p id="learning-storage-note" style="color:var(--text-light); font-size:0.85rem; margin-top:16px;"></p>
+      <button class="btn btn-success" id="learning-download-btn">⬇️ Download Learning Report</button>
       <button class="btn btn-info" id="learning-close-btn">← Main Menu</button>
     </div>
   </div>
@@ -1180,6 +1181,7 @@
   const SAVE_KEY_PREFIX = 'bossBattleIslands_progress_';
   const LEARNING_STORE_KEY = 'bbi.learning.v1';
   const LEARNING_SCHEMA_VERSION = 1;
+  const LEARNING_EXPORT_SCHEMA_VERSION = 1;
   const LEARNING_EVENT_LIMIT = 3000;
   const LEARNING_EVENT_MAX_AGE_MS = 180 * 24 * 60 * 60 * 1000;
   const LEARNING_SESSION_LIMIT = 100;
@@ -1426,18 +1428,185 @@
     return { key: 'developing', label: 'Developing', color: '#F9A825' };
   }
 
+  // Create a privacy-minimised snapshot for the local practice-pack builder.
+  // Raw events, timestamps and internal identifiers deliberately never cross
+  // this boundary. The recipient can find question text in the local question
+  // bank using the exported level/section/question IDs.
+  function buildLearningSummaryExport(store) {
+    if (!store || typeof store !== 'object') {
+      throw new Error('Learning data is unavailable or malformed.');
+    }
+
+    const number = value => Math.max(0, Number(value) || 0);
+    const averageMs = stats => {
+      const attempts = number(stats?.attempts);
+      return attempts ? Math.round(number(stats?.totalResponseTimeMs) / attempts) : 0;
+    };
+    const accuracyPercent = (correct, attempts) => {
+      const total = number(attempts);
+      return total ? Math.round(number(correct) * 100 / total) : 0;
+    };
+
+    const skillStats = Object.values(store.skillStats || {})
+      .filter(stats => stats && stats.skillId)
+      .map(stats => {
+        const firstPassAttempts = number(stats.firstPassAttempts);
+        const firstPassCorrect = number(stats.firstPassCorrect);
+        return {
+          domain: String(stats.domain || 'unknown'),
+          skillId: String(stats.skillId),
+          skillLabel: String(stats.skillLabel || humaniseSkill(stats.skillId)),
+          attempts: number(stats.attempts),
+          firstPassAttempts,
+          firstPassCorrect,
+          firstPassAccuracyPercent: accuracyPercent(firstPassCorrect, firstPassAttempts),
+          retryAttempts: number(stats.retryAttempts),
+          retryCorrect: number(stats.retryCorrect),
+          wrongCount: number(stats.wrongCount),
+          sessionsPractised: new Set(Array.isArray(stats.sessionIds) ? stats.sessionIds : []).size,
+          averageResponseTimeMs: averageMs(stats),
+          status: learningStatus(stats).key,
+          recentFirstPass: (Array.isArray(stats.recentFirstPass) ? stats.recentFirstPass : [])
+            .slice(-20)
+            .map(attempt => ({
+              correct: Boolean(attempt?.correct),
+              responseTimeMs: number(attempt?.responseTimeMs)
+            }))
+        };
+      })
+      .sort((a, b) => a.skillId.localeCompare(b.skillId));
+
+    const questionStats = Object.values(store.questionStats || {})
+      .filter(stats => stats && stats.questionId)
+      .map(stats => {
+        const firstPassAttempts = number(stats.firstPassAttempts);
+        const firstPassCorrect = number(stats.firstPassCorrect);
+        return {
+          levelId: String(stats.levelId || 'unknown'),
+          sectionId: String(stats.sectionId || 'unknown'),
+          questionId: String(stats.questionId),
+          domain: String(stats.domain || 'unknown'),
+          skillId: String(stats.skillId || 'unknown.unclassified'),
+          attempts: number(stats.attempts),
+          firstPassAttempts,
+          firstPassCorrect,
+          retryAttempts: number(stats.retryAttempts),
+          retryCorrect: number(stats.retryCorrect),
+          wrongCount: number(stats.wrongCount),
+          averageResponseTimeMs: averageMs(stats)
+        };
+      })
+      .sort((a, b) => `${a.levelId}:${a.sectionId}:${a.questionId}`
+        .localeCompare(`${b.levelId}:${b.sectionId}:${b.questionId}`));
+
+    const recentSessions = (Array.isArray(store.sessionHistory) ? store.sessionHistory : [])
+      .slice(-20)
+      .map(session => ({
+        levelId: String(session?.levelId || 'unknown'),
+        sectionId: String(session?.sectionId || 'unknown'),
+        firstPassCorrect: number(session?.firstPassCorrect),
+        firstPassTotal: number(session?.firstPassTotal),
+        correctedTotal: number(session?.correctedTotal),
+        wrongAttempts: number(session?.wrongAttempts),
+        strengthenedSkillIds: Array.from(new Set(
+          (Array.isArray(session?.strengthenedSkillIds) ? session.strengthenedSkillIds : [])
+            .filter(Boolean)
+            .map(String)
+        )),
+        reinforcementSkillId: session?.reinforcementSkillId
+          ? String(session.reinforcementSkillId)
+          : null
+      }));
+
+    const firstPassAttempts = skillStats.reduce((sum, stats) => sum + stats.firstPassAttempts, 0);
+    const firstPassCorrect = skillStats.reduce((sum, stats) => sum + stats.firstPassCorrect, 0);
+    return {
+      exportType: 'boss-battle-islands-learning-summary',
+      exportSchemaVersion: LEARNING_EXPORT_SCHEMA_VERSION,
+      sourceLearningSchemaVersion: LEARNING_SCHEMA_VERSION,
+      exportedAt: new Date().toISOString(),
+      summary: {
+        attemptedQuestions: questionStats.length,
+        skillsPractised: skillStats.length,
+        sessionsIncluded: recentSessions.length,
+        firstPassAttempts,
+        firstPassCorrect,
+        firstPassAccuracyPercent: accuracyPercent(firstPassCorrect, firstPassAttempts)
+      },
+      skillStats,
+      questionStats,
+      recentSessions
+    };
+  }
+
+  function validateLearningSummaryExport(report) {
+    const forbiddenKeys = new Set([
+      'installationId', 'eventId', 'sessionId', 'runId', 'timestamp',
+      'unlocked', 'equipped', 'completed', 'xp'
+    ]);
+    const issues = [];
+    const walk = (value, path = '$') => {
+      if (!value || typeof value !== 'object') return;
+      Object.entries(value).forEach(([key, child]) => {
+        if (forbiddenKeys.has(key)) issues.push(`${path}.${key}`);
+        walk(child, `${path}.${key}`);
+      });
+    };
+    walk(report);
+    if (report?.exportType !== 'boss-battle-islands-learning-summary') issues.push('$.exportType');
+    if (report?.exportSchemaVersion !== LEARNING_EXPORT_SCHEMA_VERSION) issues.push('$.exportSchemaVersion');
+    if (!Array.isArray(report?.skillStats)) issues.push('$.skillStats');
+    if (!Array.isArray(report?.questionStats)) issues.push('$.questionStats');
+    if (!Array.isArray(report?.recentSessions)) issues.push('$.recentSessions');
+    return issues;
+  }
+
+  function downloadLearningSummary() {
+    try {
+      const store = readLearningStore();
+      if (!store || Object.keys(store.skillStats || {}).length === 0) {
+        showToast('📊 Complete an island before downloading a report', 'combo');
+        return;
+      }
+      const report = buildLearningSummaryExport(store);
+      const issues = validateLearningSummaryExport(report);
+      if (issues.length) throw new Error(`Privacy/schema check failed: ${issues.join(', ')}`);
+
+      const date = report.exportedAt.slice(0, 10);
+      const blob = new Blob([JSON.stringify(report, null, 2) + '\n'], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = `bbi-learning-summary-${date}.json`;
+      anchor.style.display = 'none';
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 0);
+      showToast('⬇️ Private learning report downloaded', 'save');
+    } catch (error) {
+      console.warn('[LEARNING] Could not export the learning report.', error);
+      showToast('⚠️ Learning report could not be downloaded', 'combo');
+    }
+  }
+
   function renderParentProgress() {
     const overview = document.getElementById('learning-overview');
     const list = document.getElementById('learning-weak-spots');
     const note = document.getElementById('learning-storage-note');
+    const downloadButton = document.getElementById('learning-download-btn');
     const store = readLearningStore();
-    if (!overview || !list || !note) return;
+    if (!overview || !list || !note || !downloadButton) return;
     if (!store || Object.keys(store.skillStats).length === 0) {
       overview.innerHTML = '<b>No learning evidence yet.</b> Complete an island to begin the report.';
       list.innerHTML = '';
       note.textContent = 'Learning data stays on this device and is separate from game progress.';
+      downloadButton.disabled = true;
+      downloadButton.title = 'Complete an island before downloading a learning report.';
       return;
     }
+    downloadButton.disabled = false;
+    downloadButton.title = 'Download privacy-minimised learning statistics as JSON.';
     const rows = Object.values(store.skillStats).map(stats => {
       const attempts = Number(stats.firstPassAttempts) || 0;
       const accuracy = attempts ? Math.round((Number(stats.firstPassCorrect) || 0) * 100 / attempts) : 0;
@@ -5329,6 +5498,7 @@
       'reward-continue-btn': finishVictoryReturn,
       'trophy-main-menu-btn': showTitle,
       'locker-close-btn': closeLocker,
+      'learning-download-btn': downloadLearningSummary,
       'learning-close-btn': showTitle,
       'settings-reset-btn': showResetConfirmation,
       'settings-close-btn': closeSettings,
@@ -5438,6 +5608,8 @@
     showTrophies,
     showLocker,
     showSettings,
+    buildLearningSummaryExport,
+    downloadLearningSummary,
     showTitle,
     showHelp,
     closeHelp,
